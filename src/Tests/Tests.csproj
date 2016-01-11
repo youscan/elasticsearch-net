@@ -179,6 +179,7 @@
     <Compile Include="CodeStandards\NamingConventions.doc.cs" />
     <Compile Include="CodeStandards\Serialization\Properties.doc.cs" />
     <Compile Include="Document\Multiple\Bulk\BulkInvalidApiTests.cs" />
+    <Compile Include="Document\Multiple\Bulk\BulkProfileTests.cs" />
     <Compile Include="Document\Multiple\Bulk\BulkUrlTests.cs" />
     <Compile Include="Document\Multiple\Bulk\BulkApiTests.cs" />
     <Compile Include="Document\Multiple\DeleteByQuery\DeleteByQueryUrlTests.cs" />
@@ -370,6 +371,10 @@
     <Compile Include="Modules\SnapshotAndRestore\Snapshot\SnapshotStatus\SnapshotStatusUrlTests.cs" />
     <Compile Include="Modules\SnapshotAndRestore\Snapshot\Snapshot\SnapshotApiTests.cs" />
     <Compile Include="Modules\SnapshotAndRestore\Snapshot\Snapshot\SnapshotUrlTests.cs" />
+    <Compile Include="Profiling\PerformanceAttribute.cs" />
+    <Compile Include="Profiling\ProfileTests.cs" />
+    <Compile Include="Profiling\ProfilingAttribute.cs" />
+    <Compile Include="Profiling\TimelineAttribute.cs" />
     <Compile Include="QueryDsl\BoolDsl\BoolApiTests.cs" />
     <Compile Include="QueryDsl\BoolDsl\BoolDsl.doc.cs" />
     <Compile Include="QueryDsl\BoolDsl\Operators\UnaryAddOperatorUsageTests.cs" />
@@ -484,6 +489,7 @@
     <Compile Include="Search\SearchTemplate\PutSearchTemplate\PutSearchTemplateApiTests.cs" />
     <Compile Include="Search\SearchTemplate\SearchTemplateCrudTests.cs" />
     <Compile Include="Search\Search\SearchApiTests.cs" />
+    <Compile Include="Search\Search\SearchProfileTests.cs" />
     <Compile Include="Search\Search\SearchUrlTests.cs" />
     <Compile Include="Search\Request\FieldsUsageTests.cs" />
     <Compile Include="Search\Request\ScriptFieldsUsageTests.cs" />

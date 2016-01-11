@@ -32,8 +32,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="JetBrains.Profiler.Windows.Api, Version=102.0.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\build\profiling\JetBrains.Profiler.Windows.Api.dll</HintPath>
+    </Reference>
+    <Reference Include="JetBrains.Profiler.Windows.SelfApi, Version=102.0.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\build\profiling\JetBrains.Profiler.Windows.SelfApi.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -154,14 +163,19 @@
     <Compile Include="Async\ValidateAsync.cs" />
     <Compile Include="Async\VerifyRepositoryAsync.cs" />
     <Compile Include="ColoredConsoleWriter.cs" />
-    <Compile Include="IProfiledOperation.cs" />
-    <Compile Include="Operation.cs" />
-    <Compile Include="Profiler.cs" />
+    <Compile Include="IProfileFactory.cs" />
+    <Compile Include="Performance\PerformanceProfile.cs" />
+    <Compile Include="Performance\PerformanceProfileFactory.cs" />
+    <Compile Include="Profile.cs" />
+    <Compile Include="ProfileFactory.cs" />
     <Compile Include="ProfilingCluster.cs" />
     <Compile Include="ProfilingTestConfiguration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Snapshot.cs" />
+    <Compile Include="ProfiledClass.cs" />
+    <Compile Include="ProfiledMethod.cs" />
+    <Compile Include="Timeline\TimelineProfile.cs" />
+    <Compile Include="Timeline\TimelineProfileFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -750,5 +764,4 @@
     </When>
   </Choose>
   <Import Project="..\..\..\packages\xunit.core\build\$(__paket__xunit_core_props).props" Condition="Exists('..\..\..\packages\xunit.core\build\$(__paket__xunit_core_props).props')" Label="Paket" />
-  <Import Project="..\..\..\packages\JetBrains.Profiler.Kernel.Windows.Api\build\JetBrains.Profiler.Kernel.Windows.Api.Targets" Condition="Exists('..\..\..\packages\JetBrains.Profiler.Kernel.Windows.Api\build\JetBrains.Profiler.Kernel.Windows.Api.Targets')" Label="Paket" />
 </Project>
