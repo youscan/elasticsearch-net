@@ -1,0 +1,29 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "Nest.TypescriptGenerator Console Application",
+  "authors": [ "russ" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "compilationOptions": {
+    "emitEntryPoint": true
+  },
+
+  "dependencies": {
+    "Elasticsearch.Net": { "target": "project" },
+    "Nest": { "target": "project" }
+  },
+
+  "commands": {
+    "Nest.TypescriptGenerator": "Nest.TypescriptGenerator"
+  },
+
+  "frameworks": {
+    "dnx451": {
+      "dependencies": {
+        "TypeLite": "1.6.0"
+      }
+    }
+  }
+}
