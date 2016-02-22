@@ -14,7 +14,7 @@ namespace Nest.TypescriptGenerator
     {
         public static void Main(string[] args)
         {
-	        var nestInterfaces = typeof (IRequest).Assembly
+	        var nestInterfaces = typeof(IRequest).Assembly
 		        .GetTypes()
 		        .Where(t => typeof(IRequest).IsAssignableFrom(t) || typeof(IResponse).IsAssignableFrom(t))
 				.Where(t => t.IsClass && !t.Name.EndsWith("Descriptor"))
