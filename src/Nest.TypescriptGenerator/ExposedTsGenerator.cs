@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Elasticsearch.Net;
 using System;
 using System.Linq;
@@ -11,6 +12,11 @@ namespace Nest.TypescriptGenerator
 	public class ExposedTsGenerator : TsGenerator
 	{
 		public TypeConvertorCollection Converters => base._typeConvertors;
+
+		public Dictionary<string,string> TypeRenames => new Dictionary<string, string>
+		{
+			{ "KeyValuePair", "Map" }
+		}; 
 
 		protected override void AppendEnumDefinition(TsEnum enumModel, ScriptBuilder sb, TsGeneratorOutput output)
 		{
@@ -88,6 +94,7 @@ namespace Nest.TypescriptGenerator
 
 		protected bool Ignore(TsClass classModel)
 		{
+			if (this.TypeRenames.ContainsKey(classModel.Name)) return false;
 			if (typeof(IRequestParameters).IsAssignableFrom(classModel.Type)) return true;
 			if (IsClrType(classModel.Type)) return true;
 			return false;
@@ -123,7 +130,6 @@ namespace Nest.TypescriptGenerator
 			return classModel;
 		}
 	}
-
 	public class Request { }
 	public class Response { }
 }

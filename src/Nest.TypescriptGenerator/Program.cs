@@ -107,8 +107,12 @@ namespace Nest.TypescriptGenerator
 		private static string GenerateTypeName(TsType type)
 		{
 			var tsClass = ((TsClass)type);
-			if (!tsClass.GenericArguments.Any()) return tsClass.Name;
-			return tsClass.Name + "<" + string.Join(", ", tsClass.GenericArguments.Select(a => a as TsCollection != null ? _scriptGenerator.GetFullyQualifiedTypeName(a) + "[]" : _scriptGenerator.GetFullyQualifiedTypeName(a))) + ">";
+			var name = _scriptGenerator.TypeRenames.ContainsKey(tsClass.Name) 
+				? _scriptGenerator.TypeRenames[tsClass.Name] 
+				: tsClass.Name;
+
+			if (!tsClass.GenericArguments.Any()) return name;
+			return name + "<" + string.Join(", ", tsClass.GenericArguments.Select(a => a is TsCollection ? _scriptGenerator.GetFullyQualifiedTypeName(a) + "[]" : _scriptGenerator.GetFullyQualifiedTypeName(a))) + ">";
 		}
 	}
 }

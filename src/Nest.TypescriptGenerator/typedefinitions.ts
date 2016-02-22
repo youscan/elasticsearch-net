@@ -347,7 +347,7 @@ interface ClusterHealthResponse extends Response {
 	initializing_shards: integer;
 	unassigned_shards: integer;
 	number_of_pending_tasks: integer;
-	/** type has a custom json converter defined */ indices: KeyValuePair<string, IndexHealthStats>[];
+	/** type has a custom json converter defined */ indices: Map<string, IndexHealthStats>[];
 }
 interface Response {
 }
@@ -360,7 +360,7 @@ interface IndexHealthStats {
 	relocating_shards: integer;
 	initializing_shards: integer;
 	unassigned_shards: integer;
-	/** type has a custom json converter defined */ shards: KeyValuePair<string, ShardHealthStats>[];
+	/** type has a custom json converter defined */ shards: Map<string, ShardHealthStats>[];
 }
 interface ShardHealthStats {
 	status: string;
@@ -408,7 +408,7 @@ interface ClusterRerouteState {
 	version: integer;
 	master_node: string;
 	blocks: BlockState;
-	/** type has a custom json converter defined */ nodes: KeyValuePair<string, NodeState>[];
+	/** type has a custom json converter defined */ nodes: Map<string, NodeState>[];
 	routing_table: RoutingTableState;
 	routing_nodes: RoutingNodesState;
 }
@@ -418,13 +418,13 @@ interface BlockState {
 interface NodeState {
 	name: string;
 	transport_address: string;
-	/** type has a custom json converter defined */ attributes: KeyValuePair<string, string>[];
+	/** type has a custom json converter defined */ attributes: Map<string, string>[];
 }
 interface RoutingTableState {
-	/** type has a custom json converter defined */ indices: KeyValuePair<string, IndexRoutingTable>[];
+	/** type has a custom json converter defined */ indices: Map<string, IndexRoutingTable>[];
 }
 interface IndexRoutingTable {
-	/** type has a custom json converter defined */ shards: KeyValuePair<string, RoutingShard[]>[];
+	/** type has a custom json converter defined */ shards: Map<string, RoutingShard[]>[];
 }
 interface RoutingShard {
 	allocation_id: AllocationId;
@@ -441,7 +441,7 @@ interface AllocationId {
 }
 interface RoutingNodesState {
 	unassigned: RoutingShard[];
-	nodes: KeyValuePair<string, RoutingShard[]>[];
+	nodes: Map<string, RoutingShard[]>[];
 }
 interface ClusterRerouteExplanation {
 	command: string;
@@ -469,12 +469,12 @@ interface ClusterGetSettingsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
 interface ClusterGetSettingsResponse extends Response {
-	persistent: KeyValuePair<string, any>[];
-	transient: KeyValuePair<string, any>[];
+	persistent: Map<string, any>[];
+	transient: Map<string, any>[];
 }
 interface ClusterPutSettingsRequest extends Request {
-	persistent: KeyValuePair<string, any>[];
-	transient: KeyValuePair<string, any>[];
+	persistent: Map<string, any>[];
+	transient: Map<string, any>[];
 	/** mapped on body but might only proxy to request querystring */ FlatSettings: boolean;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
@@ -483,8 +483,8 @@ interface ClusterPutSettingsRequest extends Request {
 }
 interface ClusterPutSettingsResponse extends Response {
 	acknowledged: boolean;
-	persistent: KeyValuePair<string, any>[];
-	transient: KeyValuePair<string, any>[];
+	persistent: Map<string, any>[];
+	transient: Map<string, any>[];
 }
 interface ClusterStateRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Local: boolean;
@@ -501,24 +501,24 @@ interface ClusterStateResponse extends Response {
 	master_node: string;
 	state_uuid: string;
 	version: long;
-	/** type has a custom json converter defined */ nodes: KeyValuePair<string, NodeState>[];
+	/** type has a custom json converter defined */ nodes: Map<string, NodeState>[];
 	metadata: MetadataState;
 	routing_table: RoutingTableState;
 	routing_nodes: RoutingNodesState;
 	blocks: BlockState;
 }
 interface MetadataState {
-	/** type has a custom json converter defined */ templates: KeyValuePair<string, TemplateMapping>[];
+	/** type has a custom json converter defined */ templates: Map<string, TemplateMapping>[];
 	cluster_uuid: string;
-	/** type has a custom json converter defined */ indices: KeyValuePair<string, MetadataIndexState>[];
+	/** type has a custom json converter defined */ indices: Map<string, MetadataIndexState>[];
 }
 interface TemplateMapping {
 	template: string;
 	order: integer;
-	settings: KeyValuePair<string, any>[];
-	mappings: KeyValuePair<TypeName, ITypeMapping>[];
-	warmers: KeyValuePair<TypeName, IWarmer>[];
-	aliases: KeyValuePair<IndexName, IAlias>[];
+	settings: Map<string, any>[];
+	mappings: Map<TypeName, ITypeMapping>[];
+	warmers: Map<TypeName, IWarmer>[];
+	aliases: Map<IndexName, IAlias>[];
 }
 interface TypeName {
 	Name: string;
@@ -540,15 +540,15 @@ interface ITypeMapping {
 	_timestamp: ITimestampField;
 	_field_names: IFieldNamesField;
 	_ttl: ITtlField;
-	/** type has a custom json converter defined */ _meta: KeyValuePair<string, any>[];
-	dynamic_templates: KeyValuePair<string, IDynamicTemplate>[];
+	/** type has a custom json converter defined */ _meta: Map<string, any>[];
+	dynamic_templates: Map<string, IDynamicTemplate>[];
 	dynamic: DynamicMapping;
-	properties: KeyValuePair<PropertyName, IProperty>[];
+	properties: Map<PropertyName, IProperty>[];
 }
 interface IMappingTransform {
 	script: string;
 	script_file: string;
-	params: KeyValuePair<string, string>[];
+	params: Map<string, string>[];
 	lang: string;
 }
 interface ISourceField {
@@ -616,7 +616,7 @@ interface IProperty {
 	index_name: string;
 	store: boolean;
 	doc_values: boolean;
-	fields: KeyValuePair<PropertyName, IProperty>[];
+	fields: Map<PropertyName, IProperty>[];
 	similarity: SimilarityOption;
 	copy_to: Field[];
 }
@@ -638,19 +638,19 @@ interface ISearchRequest {
 	track_scores: boolean;
 	min_score: double;
 	terminate_after: long;
-	/** type has a custom json converter defined */ indices_boost: KeyValuePair<IndexName, double>[];
+	/** type has a custom json converter defined */ indices_boost: Map<IndexName, double>[];
 	sort: ISort[];
-	suggest: KeyValuePair<string, ISuggestBucket>[];
+	suggest: Map<string, ISuggestBucket>[];
 	highlight: IHighlight;
 	rescore: IRescore;
 	fields: Field[];
 	fielddata_fields: Field[];
-	script_fields: KeyValuePair<string, IScriptField>[];
+	script_fields: Map<string, IScriptField>[];
 	/** type has a custom json converter defined */ _source: ISourceFilter;
-	aggs: KeyValuePair<string, IAggregationContainer>[];
+	aggs: Map<string, IAggregationContainer>[];
 	query: /** type has a custom json converter defined */ QueryContainer;
 	post_filter: /** type has a custom json converter defined */ QueryContainer;
-	inner_hits: KeyValuePair<string, IInnerHitsContainer>[];
+	inner_hits: Map<string, IInnerHitsContainer>[];
 	Preference: string;
 	Routing: string;
 	SearchType: SearchType;
@@ -719,12 +719,12 @@ interface IPhraseSuggestCollate {
 	prune: boolean;
 }
 interface IScript {
-	/** type has a custom json converter defined */ params: KeyValuePair<string, any>[];
+	/** type has a custom json converter defined */ params: Map<string, any>[];
 	lang: string;
 }
 interface ICompletionSuggester {
 	fuzzy: IFuzzySuggester;
-	context: KeyValuePair<string, any>[];
+	context: Map<string, any>[];
 }
 interface IFuzzySuggester {
 	transpositions: boolean;
@@ -748,7 +748,7 @@ interface IHighlight {
 	boundary_max_size: integer;
 	encoder: string;
 	order: string;
-	/** type has a custom json converter defined */ fields: KeyValuePair<Field, IHighlightField>[];
+	/** type has a custom json converter defined */ fields: Map<Field, IHighlightField>[];
 	require_field_match: boolean;
 	boundary_chars: string;
 }
@@ -789,7 +789,7 @@ interface ISourceFilter {
 	exclude: Field[];
 }
 interface IAggregationContainer {
-	/** type has a custom json converter defined */ meta: KeyValuePair<string, any>[];
+	/** type has a custom json converter defined */ meta: Map<string, any>[];
 	avg: IAverageAggregation;
 	date_histogram: IDateHistogramAggregation;
 	percentiles: IPercentilesAggregation;
@@ -830,14 +830,14 @@ interface IAggregationContainer {
 	bucket_script: IBucketScriptAggregation;
 	bucket_selector: IBucketSelectorAggregation;
 	sampler: ISamplerAggregation;
-	aggs: KeyValuePair<string, IAggregationContainer>[];
+	aggs: Map<string, IAggregationContainer>[];
 }
 interface IAverageAggregation {
 }
 interface IDateHistogramAggregation {
 	field: Field;
 	script: IScript;
-	params: KeyValuePair<string, any>[];
+	params: Map<string, any>[];
 	interval: Union<DateInterval, Time>;
 	format: string;
 	min_doc_count: integer;
@@ -889,7 +889,7 @@ interface IFilterAggregation {
 	filter: /** type has a custom json converter defined */ QueryContainer;
 }
 interface IFiltersAggregation {
-	filters: Union<KeyValuePair<string, IQueryContainer>[], /** type has a custom json converter defined */ QueryContainer[]>;
+	filters: Union<Map<string, IQueryContainer>[], /** type has a custom json converter defined */ QueryContainer[]>;
 	other_bucket: boolean;
 	other_bucket_key: string;
 }
@@ -1089,7 +1089,7 @@ interface IInnerHits {
 	_source: ISourceFilter;
 	version: boolean;
 	fielddata_fields: Field[];
-	script_fields: KeyValuePair<string, IScriptField>[];
+	script_fields: Map<string, IScriptField>[];
 }
 interface IHasParentQuery {
 	type: TypeName;
@@ -1164,7 +1164,7 @@ interface ILikeDocument {
 	fields: Field[];
 	_routing: string;
 	doc: any;
-	per_field_analyzer: KeyValuePair<Field, string>[];
+	per_field_analyzer: Map<Field, string>[];
 	ClrType: Type;
 	CanBeFlattened: boolean;
 }
@@ -1242,7 +1242,7 @@ interface ITemplateQuery {
 	file: string;
 	inline: string;
 	id: Id;
-	params: KeyValuePair<string, any>[];
+	params: Map<string, any>[];
 }
 interface IGeoBoundingBoxQuery {
 	BoundingBox: IBoundingBox;
@@ -1299,7 +1299,7 @@ interface IScriptQuery {
 	inline: string;
 	id: Id;
 	file: string;
-	/** type has a custom json converter defined */ params: KeyValuePair<string, any>[];
+	/** type has a custom json converter defined */ params: Map<string, any>[];
 	lang: string;
 }
 interface IExistsQuery {
@@ -1428,8 +1428,8 @@ interface ISignificantTermsAggregation {
 	shard_size: integer;
 	min_doc_count: integer;
 	execution_hint: TermsAggregationExecutionHint;
-	include: KeyValuePair<string, string>[];
-	exclude: KeyValuePair<string, string>[];
+	include: Map<string, string>[];
+	exclude: Map<string, string>[];
 	mutual_information: IMutualInformationHeuristic;
 	chi_square: IChiSquareHeuristic;
 	gnd: IGoogleNormalizedDistanceHeuristic;
@@ -1466,7 +1466,7 @@ interface ITopHitsAggregation {
 	_source: ISourceFilter;
 	highlight: IHighlight;
 	explain: boolean;
-	/** type has a custom json converter defined */ script_fields: KeyValuePair<string, IScriptField>[];
+	/** type has a custom json converter defined */ script_fields: Map<string, IScriptField>[];
 	fielddata_fields: Field[];
 	version: boolean;
 }
@@ -1478,7 +1478,7 @@ interface IScriptedMetricAggregation {
 	map_script: IScript;
 	combine_script: IScript;
 	reduce_script: IScript;
-	params: KeyValuePair<string, any>[];
+	params: Map<string, any>[];
 }
 interface IAverageBucketAggregation {
 }
@@ -1518,12 +1518,12 @@ interface ISamplerAggregation {
 	execution_hint: SamplerAggregationExecutionHint;
 }
 interface IInnerHitsContainer {
-	type: KeyValuePair<TypeName, IGlobalInnerHit>[];
-	path: KeyValuePair<Field, IGlobalInnerHit>[];
+	type: Map<TypeName, IGlobalInnerHit>[];
+	path: Map<Field, IGlobalInnerHit>[];
 }
 interface IGlobalInnerHit {
 	query: /** type has a custom json converter defined */ QueryContainer;
-	inner_hits: KeyValuePair<string, IInnerHitsContainer>[];
+	inner_hits: Map<string, IInnerHitsContainer>[];
 }
 interface IAlias {
 	filter: /** type has a custom json converter defined */ QueryContainer;
@@ -1534,7 +1534,7 @@ interface IAlias {
 interface MetadataIndexState {
 	state: string;
 	/** type has a custom json converter defined */ settings: string[];
-	mappings: KeyValuePair<TypeName, ITypeMapping>[];
+	mappings: Map<TypeName, ITypeMapping>[];
 	aliases: string[];
 }
 interface ClusterStatsRequest extends Request {
@@ -1745,7 +1745,7 @@ interface NodesInfoRequest extends Request {
 }
 interface NodesInfoResponse extends Response {
 	cluster_name: string;
-	/** type has a custom json converter defined */ nodes: KeyValuePair<string, NodeInfo>[];
+	/** type has a custom json converter defined */ nodes: Map<string, NodeInfo>[];
 }
 interface NodeInfo {
 	name: string;
@@ -1759,7 +1759,7 @@ interface NodeInfo {
 	os: NodeOperatingSystemInfo;
 	process: NodeProcessInfo;
 	jvm: NodeJvmInfo;
-	/** type has a custom json converter defined */ thread_pool: KeyValuePair<string, NodeThreadPoolInfo>[];
+	/** type has a custom json converter defined */ thread_pool: Map<string, NodeThreadPoolInfo>[];
 	network: NodeInfoNetwork;
 	transport: NodeInfoTransport;
 	http: NodeInfoHttp;
@@ -1857,7 +1857,7 @@ interface NodesStatsRequest extends Request {
 }
 interface NodesStatsResponse extends Response {
 	cluster_name: string;
-	/** type has a custom json converter defined */ nodes: KeyValuePair<string, NodeStats>[];
+	/** type has a custom json converter defined */ nodes: Map<string, NodeStats>[];
 }
 interface NodeStats {
 	timestamp: long;
@@ -1870,8 +1870,8 @@ interface NodeStats {
 	process: ProcessStats;
 	script: ScriptStats;
 	jvm: NodeJvmStats;
-	/** type has a custom json converter defined */ thread_pool: KeyValuePair<string, ThreadCountStats>[];
-	/** type has a custom json converter defined */ breakers: KeyValuePair<string, BreakerStats>[];
+	/** type has a custom json converter defined */ thread_pool: Map<string, ThreadCountStats>[];
+	/** type has a custom json converter defined */ breakers: Map<string, BreakerStats>[];
 	fs: FileSystemStats;
 	transport: TransportStats;
 	http: HttpStats;
@@ -1909,7 +1909,7 @@ interface IndexingStats {
 	noop_update_total: long;
 	throttle_time: string;
 	throttle_time_in_millis: long;
-	/** type has a custom json converter defined */ types: KeyValuePair<string, IndexingStats>[];
+	/** type has a custom json converter defined */ types: Map<string, IndexingStats>[];
 }
 interface GetStats {
 	current: long;
@@ -2018,7 +2018,7 @@ interface NodeJvmStats {
 	mem: MemoryStats;
 	threads: ThreadStats;
 	gc: GarbageCollectionStats;
-	/** type has a custom json converter defined */ buffer_pools: KeyValuePair<string, NodeBufferPool>[];
+	/** type has a custom json converter defined */ buffer_pools: Map<string, NodeBufferPool>[];
 	classes: JvmClassesStats;
 }
 interface ThreadCountStats {
@@ -2187,7 +2187,7 @@ interface DeleteByQueryRequest<T> extends Request {
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
 interface DeleteByQueryResponse extends Response {
-	/** type has a custom json converter defined */ _indices: KeyValuePair<string, DeleteByQueryIndicesResult>[];
+	/** type has a custom json converter defined */ _indices: Map<string, DeleteByQueryIndicesResult>[];
 	took: long;
 	timed_out: boolean;
 }
@@ -2264,11 +2264,11 @@ interface MultiTermVectorsResponse extends Response {
 }
 interface TermVectorsResponse extends Response {
 	found: boolean;
-	term_vectors: KeyValuePair<string, TermVector>[];
+	term_vectors: Map<string, TermVector>[];
 }
 interface TermVector {
 	field_statistics: FieldStatistics;
-	terms: KeyValuePair<string, TermVectorTerm>[];
+	terms: Map<string, TermVectorTerm>[];
 }
 interface FieldStatistics {
 	doc_count: integer;
@@ -2371,7 +2371,7 @@ interface GetResponse<T> extends Response {
 	_version: long;
 	found: boolean;
 	_source: T;
-	fields: KeyValuePair<string, any>[];
+	fields: Map<string, any>[];
 }
 interface IndexRequest<TDocument> extends Request {
 	Document: TDocument;
@@ -2425,7 +2425,7 @@ interface SourceRequest<T> extends Request {
 }
 interface TermVectorsRequest<TDocument> extends Request {
 	doc: TDocument;
-	per_field_analyzer: KeyValuePair<Field, string>[];
+	per_field_analyzer: Map<Field, string>[];
 	/** mapped on body but might only proxy to request querystring */ TermStatistics: boolean;
 	/** mapped on body but might only proxy to request querystring */ FieldStatistics: boolean;
 	/** mapped on body but might only proxy to request querystring */ Dfs: boolean;
@@ -2446,7 +2446,7 @@ interface UpdateRequest<TDocument, TPartialDocument> extends Request {
 	/** mapped on body but might only proxy to request querystring */ Script: string;
 	script_file: string;
 	lang: string;
-	/** type has a custom json converter defined */ params: KeyValuePair<string, any>[];
+	/** type has a custom json converter defined */ params: Map<string, any>[];
 	upsert: TDocument;
 	doc_as_upsert: boolean;
 	doc: TPartialDocument;
@@ -2480,7 +2480,7 @@ interface UpdateResponse<T> extends Response {
 interface InstantGet<T> {
 	found: boolean;
 	_source: T;
-	fields: KeyValuePair<string, any>[];
+	fields: Map<string, any>[];
 }
 interface BulkAliasRequest extends Request {
 	actions: IAliasAction[];
@@ -2526,7 +2526,7 @@ interface GetAliasesRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
 interface GetAliasesResponse extends Response {
-	Indices: KeyValuePair<string, AliasDefinition[]>[];
+	Indices: Map<string, AliasDefinition[]>[];
 }
 interface AliasDefinition {
 	Name: string;
@@ -2568,11 +2568,11 @@ interface AnalyzeToken {
 	position: integer;
 }
 interface /** type has a custom json converter defined */ CreateIndexRequest extends Request {
-	Settings: KeyValuePair<string, any>[];
-	Mappings: KeyValuePair<TypeName, ITypeMapping>[];
-	Warmers: KeyValuePair<TypeName, IWarmer>[];
-	Aliases: KeyValuePair<IndexName, IAlias>[];
-	Similarity: KeyValuePair<string, ISimilarity>[];
+	Settings: Map<string, any>[];
+	Mappings: Map<TypeName, ITypeMapping>[];
+	Warmers: Map<TypeName, IWarmer>[];
+	Aliases: Map<IndexName, IAlias>[];
+	Similarity: Map<string, ISimilarity>[];
 	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ UpdateAllTypes: boolean;
@@ -2603,14 +2603,14 @@ interface GetIndexRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
 interface GetIndexResponse extends Response {
-	Indices: KeyValuePair<string, /** type has a custom json converter defined */ IndexState>[];
+	Indices: Map<string, /** type has a custom json converter defined */ IndexState>[];
 }
 interface /** type has a custom json converter defined */ IndexState {
-	settings: KeyValuePair<string, any>[];
-	mappings: KeyValuePair<TypeName, ITypeMapping>[];
-	aliases: KeyValuePair<IndexName, IAlias>[];
-	warmers: KeyValuePair<TypeName, IWarmer>[];
-	similarity: KeyValuePair<string, ISimilarity>[];
+	settings: Map<string, any>[];
+	mappings: Map<TypeName, ITypeMapping>[];
+	aliases: Map<IndexName, IAlias>[];
+	warmers: Map<TypeName, IWarmer>[];
+	similarity: Map<string, ISimilarity>[];
 }
 interface IndexExistsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
@@ -2664,14 +2664,14 @@ interface GetIndexSettingsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
 interface /** type has a custom json converter defined */ GetIndexSettingsResponse extends DictionaryResponseBase<string, IIndexState> {
-	Indices: KeyValuePair<string, IIndexState>[];
+	Indices: Map<string, IIndexState>[];
 }
 interface IIndexState {
-	settings: KeyValuePair<string, any>[];
-	aliases: KeyValuePair<IndexName, IAlias>[];
-	warmers: KeyValuePair<TypeName, IWarmer>[];
-	mappings: KeyValuePair<TypeName, ITypeMapping>[];
-	similarity: KeyValuePair<string, ISimilarity>[];
+	settings: Map<string, any>[];
+	aliases: Map<IndexName, IAlias>[];
+	warmers: Map<TypeName, IWarmer>[];
+	mappings: Map<TypeName, ITypeMapping>[];
+	similarity: Map<string, ISimilarity>[];
 }
 interface DeleteIndexTemplateRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
@@ -2689,7 +2689,7 @@ interface GetIndexTemplateRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
 interface /** type has a custom json converter defined */ GetIndexTemplateResponse extends DictionaryResponseBase<string, TemplateMapping> {
-	TemplateMappings: KeyValuePair<string, TemplateMapping>[];
+	TemplateMappings: Map<string, TemplateMapping>[];
 }
 interface IndexTemplateExistsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
@@ -2700,10 +2700,10 @@ interface IndexTemplateExistsRequest extends Request {
 interface PutIndexTemplateRequest extends Request {
 	Template: string;
 	Order: integer;
-	Settings: KeyValuePair<string, any>[];
-	Mappings: KeyValuePair<TypeName, ITypeMapping>[];
-	Warmers: KeyValuePair<TypeName, IWarmer>[];
-	Aliases: KeyValuePair<IndexName, IAlias>[];
+	Settings: Map<string, any>[];
+	Mappings: Map<TypeName, ITypeMapping>[];
+	Warmers: Map<TypeName, IWarmer>[];
+	Aliases: Map<IndexName, IAlias>[];
 	/** mapped on body but might only proxy to request querystring */ Create: boolean;
 	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
@@ -2714,7 +2714,7 @@ interface PutIndexTemplateRequest extends Request {
 interface PutIndexTemplateResponse extends AcknowledgedResponseBase {
 }
 interface /** type has a custom json converter defined */ UpdateIndexSettingsRequest extends Request {
-	IndexSettings: KeyValuePair<string, any>[];
+	IndexSettings: Map<string, any>[];
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
@@ -2735,14 +2735,14 @@ interface GetFieldMappingRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
 interface GetFieldMappingResponse extends Response {
-	Indices: KeyValuePair<string, TypeFieldMappings>[];
+	Indices: Map<string, TypeFieldMappings>[];
 }
 interface TypeFieldMappings {
-	mappings: KeyValuePair<string, KeyValuePair<string, FieldMapping>[]>[];
+	mappings: Map<string, Map<string, FieldMapping>[]>[];
 }
 interface FieldMapping {
 	full_name: string;
-	/** type has a custom json converter defined */ mapping: KeyValuePair<string, IFieldMapping>[];
+	/** type has a custom json converter defined */ mapping: Map<string, IFieldMapping>[];
 }
 interface IFieldMapping {
 }
@@ -2756,7 +2756,7 @@ interface GetMappingRequest extends Request {
 }
 interface GetMappingResponse extends Response {
 	IsValid: boolean;
-	Mappings: KeyValuePair<string, /** type has a custom json converter defined */ TypeMapping[]>[];
+	Mappings: Map<string, /** type has a custom json converter defined */ TypeMapping[]>[];
 	Mapping: /** type has a custom json converter defined */ TypeMapping;
 }
 interface /** type has a custom json converter defined */ TypeMapping {
@@ -2765,13 +2765,13 @@ interface /** type has a custom json converter defined */ TypeMapping {
 	date_detection: boolean;
 	dynamic: DynamicMapping;
 	dynamic_date_formats: string[];
-	dynamic_templates: KeyValuePair<string, IDynamicTemplate>[];
+	dynamic_templates: Map<string, IDynamicTemplate>[];
 	_field_names: IFieldNamesField;
 	_index: IIndexField;
-	/** type has a custom json converter defined */ _meta: KeyValuePair<string, any>[];
+	/** type has a custom json converter defined */ _meta: Map<string, any>[];
 	numeric_detection: boolean;
 	_parent: IParentField;
-	properties: KeyValuePair<PropertyName, IProperty>[];
+	properties: Map<PropertyName, IProperty>[];
 	_routing: IRoutingField;
 	search_analyzer: string;
 	_size: ISizeField;
@@ -2784,16 +2784,16 @@ interface /** type has a custom json converter defined */ PutMappingRequest exte
 	AllField: IAllField;
 	DateDetection: boolean;
 	DynamicDateFormats: string[];
-	DynamicTemplates: KeyValuePair<string, IDynamicTemplate>[];
+	DynamicTemplates: Map<string, IDynamicTemplate>[];
 	Dynamic: DynamicMapping;
 	Analyzer: string;
 	SearchAnalyzer: string;
 	FieldNamesField: IFieldNamesField;
 	IndexField: IIndexField;
-	Meta: KeyValuePair<string, any>[];
+	Meta: Map<string, any>[];
 	NumericDetection: boolean;
 	ParentField: IParentField;
-	Properties: KeyValuePair<PropertyName, IProperty>[];
+	Properties: Map<PropertyName, IProperty>[];
 	RoutingField: IRoutingField;
 	SizeField: ISizeField;
 	SourceField: ISourceField;
@@ -2813,16 +2813,16 @@ interface PutMappingRequest<T> extends Request {
 	AllField: IAllField;
 	DateDetection: boolean;
 	DynamicDateFormats: string[];
-	DynamicTemplates: KeyValuePair<string, IDynamicTemplate>[];
+	DynamicTemplates: Map<string, IDynamicTemplate>[];
 	Dynamic: DynamicMapping;
 	Analyzer: string;
 	SearchAnalyzer: string;
 	FieldNamesField: IFieldNamesField;
 	IndexField: IIndexField;
-	Meta: KeyValuePair<string, any>[];
+	Meta: Map<string, any>[];
 	NumericDetection: boolean;
 	ParentField: IParentField;
-	Properties: KeyValuePair<PropertyName, IProperty>[];
+	Properties: Map<PropertyName, IProperty>[];
 	RoutingField: IRoutingField;
 	SizeField: ISizeField;
 	SourceField: ISourceField;
@@ -2848,7 +2848,7 @@ interface RecoveryStatusRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
 interface RecoveryStatusResponse extends Response {
-	/** type has a custom json converter defined */ Indices: KeyValuePair<string, RecoveryStatus>[];
+	/** type has a custom json converter defined */ Indices: Map<string, RecoveryStatus>[];
 }
 interface RecoveryStatus {
 	shards: ShardRecovery[];
@@ -2920,16 +2920,16 @@ interface SegmentsRequest extends Request {
 }
 interface SegmentsResponse extends Response {
 	_shards: ShardsMetaData;
-	/** type has a custom json converter defined */ indices: KeyValuePair<string, IndexSegment>[];
+	/** type has a custom json converter defined */ indices: Map<string, IndexSegment>[];
 }
 interface IndexSegment {
-	/** type has a custom json converter defined */ shards: KeyValuePair<string, ShardsSegment>[];
+	/** type has a custom json converter defined */ shards: Map<string, ShardsSegment>[];
 }
 interface ShardsSegment {
 	num_committed_segments: integer;
 	num_search_segments: integer;
 	routing: ShardSegmentRouting;
-	/** type has a custom json converter defined */ Segments: KeyValuePair<string, Segment>[];
+	/** type has a custom json converter defined */ Segments: Map<string, Segment>[];
 }
 interface ShardSegmentRouting {
 	state: string;
@@ -2959,7 +2959,7 @@ interface IndicesStatsRequest extends Request {
 interface IndicesStatsResponse extends Response {
 	_shards: ShardsMetaData;
 	_all: IndicesStats;
-	/** type has a custom json converter defined */ indices: KeyValuePair<string, IndicesStats>[];
+	/** type has a custom json converter defined */ indices: Map<string, IndicesStats>[];
 }
 interface IndicesStats {
 	primaries: IndexStats;
@@ -3045,7 +3045,7 @@ interface UpgradeStatusRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
 interface /** type has a custom json converter defined */ UpgradeStatusResponse extends Response {
-	/** type has a custom json converter defined */ Upgrades: KeyValuePair<string, UpgradeStatus>[];
+	/** type has a custom json converter defined */ Upgrades: Map<string, UpgradeStatus>[];
 	SizeInBytes: long;
 	SizeToUpgradeInBytes: string;
 	SizeToUpgradeAncientInBytes: string;
@@ -3073,7 +3073,7 @@ interface GetWarmerRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
 interface /** type has a custom json converter defined */ GetWarmerResponse extends Response {
-	/** type has a custom json converter defined */ Indices: KeyValuePair<string, KeyValuePair<TypeName, IWarmer>[]>[];
+	/** type has a custom json converter defined */ Indices: Map<string, Map<TypeName, IWarmer>[]>[];
 }
 interface /** type has a custom json converter defined */ PutWarmerRequest extends Request {
 	Search: ISearchRequest;
@@ -3142,7 +3142,7 @@ interface GetRepositoryRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
 interface /** type has a custom json converter defined */ GetRepositoryResponse extends Response {
-	Repositories: KeyValuePair<string, ISnapshotRepository>[];
+	Repositories: Map<string, ISnapshotRepository>[];
 }
 interface VerifyRepositoryRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
@@ -3151,7 +3151,7 @@ interface VerifyRepositoryRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
 interface VerifyRepositoryResponse extends Response {
-	/** type has a custom json converter defined */ nodes: KeyValuePair<string, CompactNodeInfo>[];
+	/** type has a custom json converter defined */ nodes: Map<string, CompactNodeInfo>[];
 }
 interface CompactNodeInfo {
 	name: string;
@@ -3170,7 +3170,7 @@ interface RestoreRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
 interface IUpdateIndexSettingsRequest {
-	IndexSettings: KeyValuePair<string, any>[];
+	IndexSettings: Map<string, any>[];
 	Index: Indices;
 }
 interface RestoreResponse extends Response {
@@ -3244,7 +3244,7 @@ interface SnapshotStatus {
 	state: string;
 	shards_stats: SnapshotShardsStats;
 	stats: SnapshotStats;
-	indices: KeyValuePair<string, SnapshotIndexStats>[];
+	indices: Map<string, SnapshotIndexStats>[];
 }
 interface SnapshotShardsStats {
 	initializing: long;
@@ -3265,7 +3265,7 @@ interface SnapshotStats {
 interface SnapshotIndexStats {
 	shards_stats: SnapshotShardsStats;
 	stats: SnapshotStats;
-	shards: KeyValuePair<string, SnapshotShardsStats>[];
+	shards: Map<string, SnapshotShardsStats>[];
 }
 interface /** type has a custom json converter defined */ CountRequest extends Request {
 	query: /** type has a custom json converter defined */ QueryContainer;
@@ -3338,7 +3338,7 @@ interface ExplanationDetail {
 }
 interface FieldStatsRequest extends Request {
 	fields: Field[];
-	index_constraints: KeyValuePair<Field, IIndexConstraint>[];
+	index_constraints: Map<Field, IIndexConstraint>[];
 	/** mapped on body but might only proxy to request querystring */ Level: Level;
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
@@ -3359,10 +3359,10 @@ interface IIndexConstraintComparison {
 }
 interface FieldStatsResponse extends Response {
 	_shards: ShardsMetaData;
-	indices: KeyValuePair<string, FieldStats>[];
+	indices: Map<string, FieldStats>[];
 }
 interface FieldStats {
-	fields: KeyValuePair<string, FieldStatsField>[];
+	fields: Map<string, FieldStatsField>[];
 }
 interface FieldStatsField {
 	max_doc: long;
@@ -3374,7 +3374,7 @@ interface FieldStatsField {
 	max_value: string;
 }
 interface /** type has a custom json converter defined */ MultiSearchRequest extends Request {
-	Operations: KeyValuePair<string, ISearchRequest>[];
+	Operations: Map<string, ISearchRequest>[];
 	/** mapped on body but might only proxy to request querystring */ SearchType: SearchType;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
@@ -3407,7 +3407,7 @@ interface IPercolateOperation {
 	highlight: IHighlight;
 	query: /** type has a custom json converter defined */ QueryContainer;
 	filter: /** type has a custom json converter defined */ QueryContainer;
-	aggs: KeyValuePair<string, IAggregationContainer>[];
+	aggs: Map<string, IAggregationContainer>[];
 }
 interface MultiPercolateResponse extends Response {
 	IsValid: boolean;
@@ -3423,7 +3423,7 @@ interface PercolateCountResponse extends Response {
 	ServerError: ServerError;
 }
 interface PercolatorMatch {
-	highlight: KeyValuePair<string, string[]>[];
+	highlight: Map<string, string[]>[];
 	_id: string;
 	_index: string;
 	_score: double;
@@ -3433,7 +3433,7 @@ interface PercolateRequest<TDocument> extends Request {
 	Highlight: IHighlight;
 	Query: /** type has a custom json converter defined */ QueryContainer;
 	Filter: /** type has a custom json converter defined */ QueryContainer;
-	Aggregations: KeyValuePair<string, IAggregationContainer>[];
+	Aggregations: Map<string, IAggregationContainer>[];
 	Size: integer;
 	TrackScores: boolean;
 	doc: TDocument;
@@ -3461,7 +3461,7 @@ interface PercolateCountRequest<TDocument> extends Request {
 	Highlight: IHighlight;
 	Query: /** type has a custom json converter defined */ QueryContainer;
 	Filter: /** type has a custom json converter defined */ QueryContainer;
-	Aggregations: KeyValuePair<string, IAggregationContainer>[];
+	Aggregations: Map<string, IAggregationContainer>[];
 	doc: TDocument;
 	/** mapped on body but might only proxy to request querystring */ Routing: string[];
 	/** mapped on body but might only proxy to request querystring */ Preference: string;
@@ -3476,7 +3476,7 @@ interface PercolateCountRequest<TDocument> extends Request {
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
 interface /** type has a custom json converter defined */ RegisterPercolatorRequest extends Request {
-	Metadata: KeyValuePair<string, any>[];
+	Metadata: Map<string, any>[];
 	Query: /** type has a custom json converter defined */ QueryContainer;
 }
 interface RegisterPercolatorResponse extends Response {
@@ -3511,10 +3511,10 @@ interface ScrollRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
 interface Hit<T> {
-	fields: KeyValuePair<string, any>[];
+	fields: Map<string, any>[];
 	_source: T;
 	_index: string;
-	/** type has a custom json converter defined */ inner_hits: KeyValuePair<string, InnerHitsResult>[];
+	/** type has a custom json converter defined */ inner_hits: Map<string, InnerHitsResult>[];
 	_score: double;
 	_type: string;
 	_version: long;
@@ -3524,7 +3524,7 @@ interface Hit<T> {
 	_timestamp: long;
 	_ttl: long;
 	sort: any[];
-	Highlights: KeyValuePair<string, HighlightHit>[];
+	Highlights: Map<string, HighlightHit>[];
 	_explanation: Explanation;
 	matched_queries: string[];
 }
@@ -3559,17 +3559,17 @@ interface /** type has a custom json converter defined */ SearchRequest extends 
 	terminate_after: long;
 	fields: Field[];
 	fielddata_fields: Field[];
-	script_fields: KeyValuePair<string, IScriptField>[];
+	script_fields: Map<string, IScriptField>[];
 	/** type has a custom json converter defined */ _source: ISourceFilter;
 	sort: ISort[];
-	/** type has a custom json converter defined */ indices_boost: KeyValuePair<IndexName, double>[];
+	/** type has a custom json converter defined */ indices_boost: Map<IndexName, double>[];
 	post_filter: /** type has a custom json converter defined */ QueryContainer;
-	inner_hits: KeyValuePair<string, IInnerHitsContainer>[];
+	inner_hits: Map<string, IInnerHitsContainer>[];
 	query: /** type has a custom json converter defined */ QueryContainer;
 	rescore: IRescore;
-	suggest: KeyValuePair<string, ISuggestBucket>[];
+	suggest: Map<string, ISuggestBucket>[];
 	highlight: IHighlight;
-	aggs: KeyValuePair<string, IAggregationContainer>[];
+	aggs: Map<string, IAggregationContainer>[];
 	TypeSelector: Func<any, Hit<any>, Type>;
 	/** mapped on body but might only proxy to request querystring */ Analyzer: string;
 	/** mapped on body but might only proxy to request querystring */ AnalyzeWildcard: boolean;
@@ -3603,17 +3603,17 @@ interface SearchRequest<T> extends Request {
 	TerminateAfter: long;
 	Fields: Field[];
 	FielddataFields: Field[];
-	ScriptFields: KeyValuePair<string, IScriptField>[];
+	ScriptFields: Map<string, IScriptField>[];
 	Source: ISourceFilter;
 	Sort: ISort[];
-	IndicesBoost: KeyValuePair<IndexName, double>[];
+	IndicesBoost: Map<IndexName, double>[];
 	PostFilter: /** type has a custom json converter defined */ QueryContainer;
-	InnerHits: KeyValuePair<string, IInnerHitsContainer>[];
+	InnerHits: Map<string, IInnerHitsContainer>[];
 	Query: /** type has a custom json converter defined */ QueryContainer;
 	Rescore: IRescore;
-	Suggest: KeyValuePair<string, ISuggestBucket>[];
+	Suggest: Map<string, ISuggestBucket>[];
 	Highlight: IHighlight;
-	Aggregations: KeyValuePair<string, IAggregationContainer>[];
+	Aggregations: Map<string, IAggregationContainer>[];
 	TypeSelector: Func<any, Hit<any>, Type>;
 	/** mapped on body but might only proxy to request querystring */ Analyzer: string;
 	/** mapped on body but might only proxy to request querystring */ AnalyzeWildcard: boolean;
@@ -3640,9 +3640,9 @@ interface SearchResponse<T> extends Response {
 	ApiCall: IApiCallDetails;
 	_shards: ShardsMetaData;
 	hits: HitsMetaData<T>;
-	/** type has a custom json converter defined */ aggregations: KeyValuePair<string, IAggregate>[];
+	/** type has a custom json converter defined */ aggregations: Map<string, IAggregate>[];
 	Aggs: AggregationsHelper;
-	suggest: KeyValuePair<string, Suggest[]>[];
+	suggest: Map<string, Suggest[]>[];
 	took: integer;
 	timed_out: boolean;
 	terminated_early: boolean;
@@ -3651,8 +3651,8 @@ interface SearchResponse<T> extends Response {
 	MaxScore: double;
 	Documents: T[];
 	Hits: IHit<T>[];
-	Fields: KeyValuePair<string, any>[][];
-	Highlights: KeyValuePair<string, KeyValuePair<string, HighlightHit>[]>[];
+	Fields: Map<string, any>[][];
+	Highlights: Map<string, Map<string, HighlightHit>[]>[];
 }
 interface HitsMetaData<T> {
 	total: long;
@@ -3660,7 +3660,7 @@ interface HitsMetaData<T> {
 	hits: IHit<T>[];
 }
 interface IHit<T> {
-	Fields: KeyValuePair<string, any>[];
+	Fields: Map<string, any>[];
 	Source: T;
 	Index: string;
 	Type: string;
@@ -3672,16 +3672,16 @@ interface IHit<T> {
 	Timestamp: long;
 	Ttl: long;
 	Sorts: any[];
-	Highlights: KeyValuePair<string, HighlightHit>[];
+	Highlights: Map<string, HighlightHit>[];
 	Explanation: Explanation;
 	MatchedQueries: string[];
-	InnerHits: KeyValuePair<string, InnerHitsResult>[];
+	InnerHits: Map<string, InnerHitsResult>[];
 }
 interface IAggregate {
-	Meta: KeyValuePair<string, any>[];
+	Meta: Map<string, any>[];
 }
 interface AggregationsHelper {
-	Aggregations: KeyValuePair<string, IAggregate>[];
+	Aggregations: Map<string, IAggregate>[];
 }
 interface Suggest {
 	length: integer;
@@ -3755,7 +3755,7 @@ interface SearchShardsRequest<T> extends Request {
 }
 interface SearchShardsResponse extends Response {
 	shards: SearchShard[][];
-	nodes: KeyValuePair<string, SearchNode>[];
+	nodes: Map<string, SearchNode>[];
 }
 interface SearchShard {
 	state: string;
@@ -3773,7 +3773,7 @@ interface SearchTemplateRequest extends Request {
 	template: string;
 	file: string;
 	id: string;
-	params: KeyValuePair<string, any>[];
+	params: Map<string, any>[];
 	TypeSelector: Func<any, Hit<any>, Type>;
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
@@ -3816,7 +3816,7 @@ interface PutSearchTemplateResponse extends AcknowledgedResponseBase {
 }
 interface /** type has a custom json converter defined */ SuggestRequest extends Request {
 	GlobalText: string;
-	Suggest: KeyValuePair<string, ISuggestBucket>[];
+	Suggest: Map<string, ISuggestBucket>[];
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
 	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
@@ -3827,7 +3827,7 @@ interface /** type has a custom json converter defined */ SuggestRequest extends
 }
 interface /** type has a custom json converter defined */ SuggestResponse extends Response {
 	Shards: ShardsMetaData;
-	Suggestions: KeyValuePair<string, Suggest[]>[];
+	Suggestions: Map<string, Suggest[]>[];
 }
 interface ValidateQueryRequest extends Request {
 	query: /** type has a custom json converter defined */ QueryContainer;
@@ -4041,6 +4041,10 @@ interface Node {
 	DeadUntil: Date;
 	IsAlive: boolean;
 }
+interface Map<TKey, TValue> {
+	Key: TKey;
+	Value: TValue;
+}
 interface AllTypesMarker {
 }
 interface ManyTypes {
@@ -4092,14 +4096,14 @@ interface MemoryStats {
 	non_heap_used_in_bytes: long;
 	non_heap_committed: string;
 	non_heap_committed_in_bytes: long;
-	/** type has a custom json converter defined */ pools: KeyValuePair<string, JVMPool>[];
+	/** type has a custom json converter defined */ pools: Map<string, JVMPool>[];
 }
 interface ThreadStats {
 	count: long;
 	peak_count: long;
 }
 interface GarbageCollectionStats {
-	/** type has a custom json converter defined */ collectors: KeyValuePair<string, GarbageCollectionGenerationStats>[];
+	/** type has a custom json converter defined */ collectors: Map<string, GarbageCollectionGenerationStats>[];
 }
 interface GarbageCollectionGenerationStats {
 	collection_count: long;
@@ -4120,7 +4124,7 @@ interface JvmClassesStats {
 }
 interface JVMPool {
 	used: string;
-	UsedInBytes: long;
+	used_in_bytes: long;
 	max: string;
 	max_in_bytes: long;
 	peak_used: string;
