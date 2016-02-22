@@ -40,7 +40,6 @@ namespace Nest.TypescriptGenerator
 				.WithVisibility((@class, name) => false)
 				.WithModuleNameFormatter(module => "Elasticsearch");
 
-
 			var definitions = nestInterfaces.Aggregate(typeScriptFluent, (def, t) => def.For(t));
 
 			if (!Directory.Exists(@"c:\temp"))
@@ -54,7 +53,6 @@ namespace Nest.TypescriptGenerator
 
 		private static string FormatMember(TsProperty property)
 		{
-
 			var declaringType = property.MemberInfo.DeclaringType;
 			var propertyName = property.MemberInfo.Name;
 
@@ -66,9 +64,7 @@ namespace Nest.TypescriptGenerator
 					return $"/** mapped on body but might only proxy to request querystring*/ {propertyName}";
 			}
 			var iface = declaringType.GetInterfaces().FirstOrDefault(ii => ii.Name == "I" + declaringType.Name);
-			if (iface == null) return propertyName;
-			var ifaceProperty = iface.GetProperty(propertyName);
-			if (ifaceProperty == null) return propertyName;
+			var ifaceProperty = iface?.GetProperty(propertyName);
 
 			var jsonPropertyAttribute = GetAttribute<JsonPropertyAttribute>(ifaceProperty, property.MemberInfo);
 			if (jsonPropertyAttribute != null)
@@ -95,7 +91,7 @@ namespace Nest.TypescriptGenerator
 		private static TAttribute GetAttribute<TAttribute>(PropertyInfo propertyInfo, MemberInfo memberInfo)
 			where TAttribute : Attribute
 		{
-			var attribute = propertyInfo.GetCustomAttributes(typeof(TAttribute), true).FirstOrDefault() as TAttribute;
+			var attribute = propertyInfo?.GetCustomAttributes(typeof(TAttribute), true).FirstOrDefault() as TAttribute;
 			if (attribute == null)
 				attribute = memberInfo.GetCustomAttributes(typeof(TAttribute), true).FirstOrDefault() as TAttribute;
 			return attribute;
