@@ -1,4 +1,5 @@
 using Elasticsearch.Net;
+using System;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
@@ -55,6 +56,7 @@ namespace Nest.TypescriptGenerator
 			{
 				foreach (var enumModel in enums)
 				{
+					if (Ignore(enumModel)) continue;
 					this.AppendEnumDefinition(enumModel, sb, generatorOutput);
 				}
 			}
@@ -86,10 +88,17 @@ namespace Nest.TypescriptGenerator
 		protected bool Ignore(TsClass classModel)
 		{
 			if (typeof(IRequestParameters).IsAssignableFrom(classModel.Type)) return true;
+			if (IsClrType(classModel.Type)) return true;
+			return false;
+		}
 
-			var fullName = classModel.Type.FullName ?? classModel.Type.DeclaringType?.FullName;
-			if (fullName != null && !fullName.StartsWith("Nest.") && !fullName.StartsWith("Elasticsearch.Net.")) return true;
+		protected bool Ignore(TsEnum enumModel) => IsClrType(enumModel.Type);
 
+		protected bool IsClrType(Type type)
+		{
+			var name = type.FullName ?? type.DeclaringType?.FullName;
+			if (name != null && !name.StartsWith("Nest.") && !name.StartsWith("Elasticsearch.Net."))
+				return true;
 			return false;
 		}
 	}
