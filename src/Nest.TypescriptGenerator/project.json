@@ -21,7 +21,7 @@
   "frameworks": {
     "dnx451": {
       "dependencies": {
-        "TypeLite": "1.6.0"
+        "TypeLite": "1.0.0-*"
       }
     }
   }
