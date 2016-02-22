@@ -15,6 +15,8 @@ namespace Nest.TypescriptGenerator
 {
 	public class Program
 	{
+		public static Dictionary<string, Type> RequestParameters { get; set; }
+
 		public static void Main(string[] args)
 		{
 			var isDescriptorRe = new Regex(@"Descriptor(?:\<.+$|$)");
@@ -27,10 +29,11 @@ namespace Nest.TypescriptGenerator
 				.Where(t => t.IsClass && !isDescriptorRe.IsMatch(t.Name))
 				.ToArray();
 
-			var requestParameters = lowLevelAssembly
+			RequestParameters = lowLevelAssembly
 				.GetTypes()
 				.Where(t => t.IsClass && t.Name.EndsWith("RequestParameters"))
 				.ToDictionary(t=>t.Name.Replace("Parameters", ""));
+
 			var typeScriptFluent = TypeScript.Definitions()
 				.WithTypeFormatter(FormatType)
 				.WithMemberFormatter(FormatMember)
@@ -48,24 +51,26 @@ namespace Nest.TypescriptGenerator
 			File.WriteAllText(@"c:\temp\interfaces.ts", definitions.Generate());
 		}
 
+
 		private static string FormatMember(TsProperty property)
 		{
 
 			var declaringType = property.MemberInfo.DeclaringType;
-if (declaringType.Name.Contains("Request") && requestParameters.ContainsKey(declaringType.Name))
-						{
-							var rp = requestParameters[declaringType.Name];
-							var method = rp.GetMethod(i.MemberInfo.Name);
-							if (method != null)
-							{
-			var iface = declaringType.GetInterfaces().FirstOrDefault(ii => ii.Name == "I" + declaringType.Name);
-			if (iface == null)
-				return property.MemberInfo.Name;
-			var ifaceProperty = iface.GetProperty(property.MemberInfo.Name);
-			if (ifaceProperty == null)
-				return property.MemberInfo.Name;
-			var jsonPropertyAttribute = GetAttribute<JsonPropertyAttribute>(ifaceProperty, property.MemberInfo);
 			var propertyName = property.MemberInfo.Name;
+
+			if (declaringType.Name.Contains("Request") && RequestParameters.ContainsKey(declaringType.Name))
+			{
+				var rp = RequestParameters[declaringType.Name];
+				var method = rp.GetMethod(propertyName);
+				if (method != null)
+					return $"/** mapped on body but might only proxy to request querystring*/ {propertyName}";
+			}
+			var iface = declaringType.GetInterfaces().FirstOrDefault(ii => ii.Name == "I" + declaringType.Name);
+			if (iface == null) return propertyName;
+			var ifaceProperty = iface.GetProperty(propertyName);
+			if (ifaceProperty == null) return propertyName;
+
+			var jsonPropertyAttribute = GetAttribute<JsonPropertyAttribute>(ifaceProperty, property.MemberInfo);
 			if (jsonPropertyAttribute != null)
 				propertyName = jsonPropertyAttribute.PropertyName;
 			var jsonConverterAttribute = GetAttribute<JsonConverterAttribute>(ifaceProperty, property.MemberInfo);
@@ -96,6 +101,6 @@ if (declaringType.Name.Contains("Request") && requestParameters.ContainsKey(decl
 			return attribute;
 		}
 
-		private static string HereBeDragons(string original) => $"/** herebedragons! */ {original}";
+		private static string HereBeDragons(string original) => $"/** here be converter dragons! */ {original}";
 	}
 }
