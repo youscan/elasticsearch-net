@@ -87,8 +87,6 @@ namespace Nest.TypescriptGenerator
 
 		private static string FormatType(TsType type, ITsTypeFormatter formatter)
 		{
-			var fullName = type.Type.FullName ?? type.Type.DeclaringType?.FullName;
-			if (fullName != null && !fullName.StartsWith("Nest.") && !fullName.StartsWith("Elasticsearch.Net.")) return "/** not an elasticsearch type */";
 			var iface = type.Type.GetInterfaces().FirstOrDefault(i => i.Name == "I" + type.Type.Name);
 			var name = GenerateTypeName(type);
 
