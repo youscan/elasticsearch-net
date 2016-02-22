@@ -674,7 +674,6 @@ interface TemplateMapping {
 }
 interface TypeName {
 	Name: string;
-	Type: Type;
 }
 /** type has a custom json converter defined */
 interface TypeMapping {
@@ -754,8 +753,6 @@ interface TimestampField {
 }
 interface Field {
 	Name: string;
-	Expression: Expression;
-	Property: PropertyInfo;
 	Boost: double;
 }
 /** type has a custom json converter defined */
@@ -788,8 +785,6 @@ interface Property {
 }
 interface PropertyName {
 	Name: string;
-	Expression: Expression;
-	Property: PropertyInfo;
 }
 interface Warmer {
 	types: TypeName[];
@@ -829,7 +824,6 @@ interface SearchRequest {
 }
 interface IndexName {
 	Name: string;
-	Type: Type;
 }
 interface Sort {
 	SortKey: Field;
@@ -1401,7 +1395,6 @@ interface LikeDocument {
 	_routing: string;
 	doc: any;
 	per_field_analyzer: Map<Field, string>[];
-	ClrType: Type;
 	CanBeFlattened: boolean;
 }
 /** type has a custom json converter defined */
@@ -2452,7 +2445,6 @@ interface BulkRequest extends Request {
 }
 interface BulkOperation {
 	Operation: string;
-	ClrType: Type;
 	_index: IndexName;
 	_type: TypeName;
 	_id: Id;
@@ -2557,7 +2549,6 @@ interface MultiGetOperation {
 	fields: Field[];
 	_routing: string;
 	_source: Union<boolean, SourceFilter>;
-	ClrType: Type;
 	CanBeFlattened: boolean;
 }
 interface MultiGetResponse extends Response {
@@ -4071,9 +4062,7 @@ interface MultiSearchResponse extends Response {
 }
 interface Response {
 	IsValid: boolean;
-	ApiCall: ApiCallDetails;
 	ServerError: ServerError;
-	OriginalException: Exception;
 	DebugInformation: string;
 }
 /** type has a custom json converter defined */
@@ -4223,7 +4212,6 @@ interface ClearScrollResponse extends Response {
 }
 interface ScrollRequest extends Request {
 	CovariantTypes: Types;
-	TypeSelector: Func<any, Hit<any>, Type>;
 	scroll: Time;
 	scroll_id: string;
 	/** mapped on body but might only proxy to request querystring */
@@ -4296,7 +4284,6 @@ interface SearchRequest extends Request {
 	suggest: Map<string, SuggestBucket>[];
 	highlight: Highlight;
 	aggs: Map<string, AggregationContainer>[];
-	TypeSelector: Func<any, Hit<any>, Type>;
 	/** mapped on body but might only proxy to request querystring */
 	Analyzer: string;
 	/** mapped on body but might only proxy to request querystring */
@@ -4339,7 +4326,6 @@ interface SearchRequest extends Request {
 	FilterPath: string;
 }
 interface SearchResponse<T> extends Response {
-	ApiCall: ApiCallDetails;
 	_shards: ShardsMetaData;
 	hits: HitsMetaData<T>;
 	/** type has a custom json converter defined */
@@ -4473,7 +4459,6 @@ interface SearchTemplateRequest extends Request {
 	file: string;
 	id: string;
 	params: Map<string, any>[];
-	TypeSelector: Func<any, Hit<any>, Type>;
 	/** mapped on body but might only proxy to request querystring */
 	IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */
@@ -4671,21 +4656,6 @@ enum WaitForStatus {
 	yellow = 1,
 	red = 2
 }
-enum AuditEvent {
-	SniffOnStartup = 0,
-	SniffOnFail = 1,
-	SniffOnStaleCluster = 2,
-	SniffSuccess = 3,
-	SniffFailure = 4,
-	PingSuccess = 5,
-	PingFailure = 6,
-	Resurrection = 7,
-	AllNodesDead = 8,
-	BadResponse = 9,
-	HealthyResponse = 10,
-	MaxTimeoutReached = 11,
-	MaxRetriesReached = 12
-}
 enum ExpandWildcards {
 	open = 0,
 	closed = 1,
@@ -4736,18 +4706,6 @@ enum Format {
 enum PercolateFormat {
 	ids = 0
 }
-interface ApiCallDetails {
-	Success: boolean;
-	OriginalException: Exception;
-	ServerError: ServerError;
-	HttpMethod: HttpMethod;
-	Uri: Uri;
-	HttpStatusCode: integer;
-	ResponseBodyInBytes: short[];
-	RequestBodyInBytes: short[];
-	AuditTrail: Audit[];
-	DebugInformation: string;
-}
 interface ServerError {
 	Error: Error;
 	Status: integer;
@@ -4766,25 +4724,6 @@ interface RootCause {
 	ResourceId: string;
 	ResourceType: string;
 	Type: string;
-}
-interface Audit {
-	Event: AuditEvent;
-	Started: Date;
-	Ended: Date;
-	Node: Node;
-	Path: string;
-	Exception: Exception;
-}
-interface Node {
-	Uri: Uri;
-	IsResurrected: boolean;
-	HoldsData: boolean;
-	MasterEligible: boolean;
-	Id: string;
-	Name: string;
-	FailedAttempts: integer;
-	DeadUntil: Date;
-	IsAlive: boolean;
 }
 interface Map<TKey, TValue> {
 	Key: TKey;

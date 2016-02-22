@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using Elasticsearch.Net;
+using Nest;
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
@@ -14,12 +16,34 @@ namespace Nest.TypescriptGenerator
 	{
 		public TypeConvertorCollection Converters => base._typeConvertors;
 
-		public Dictionary<string,string> TypeRenames => new Dictionary<string, string>
+		public Dictionary<string, string> TypeRenames => new Dictionary<string, string>
 		{
-			{ "KeyValuePair", "Map" }
+			{"KeyValuePair", "Map"}
 		};
 
 		public HashSet<string> Appended = new HashSet<string>();
+		private readonly HashSet<Type> _propertyTypesToIgnore = new HashSet<Type>(new[]
+			{
+				typeof (PropertyInfo),
+				typeof (Expression),
+				typeof (Type),
+				typeof (Exception),
+				typeof (IApiCallDetails),
+				typeof (Node)
+			});
+
+		private readonly HashSet<Type> _typesToIgnore = new HashSet<Type>(new[]
+			{
+				typeof (IApiCallDetails),
+				typeof (Node),
+				typeof (Audit),
+				typeof (AuditEvent)
+			});
+
+		public bool PropertyTypesToIgnore(Type propertyType)
+		{
+			return _propertyTypesToIgnore.Contains(propertyType) || (propertyType.BaseType != null && propertyType.BaseType == typeof (MulticastDelegate));
+		}
 
 		protected virtual void AppendClassDefinition(TsClass classModel, ScriptBuilder sb, TsGeneratorOutput generatorOutput)
 		{
@@ -62,7 +86,7 @@ namespace Nest.TypescriptGenerator
 			{
 				foreach (var property in members)
 				{
-					if (property.IsIgnored)
+					if (property.IsIgnored || PropertyTypesToIgnore(property.PropertyType.Type))
 					{
 						continue;
 					}
@@ -119,6 +143,8 @@ namespace Nest.TypescriptGenerator
 
 		protected override void AppendEnumDefinition(TsEnum enumModel, ScriptBuilder sb, TsGeneratorOutput output)
 		{
+			if (_typesToIgnore.Contains(enumModel.Type)) return;
+
 			string typeName = this.GetTypeName(enumModel);
 			string visibility = string.Empty;
 
@@ -198,6 +224,7 @@ namespace Nest.TypescriptGenerator
 			if (this.TypeRenames.ContainsKey(classModel.Name)) return false;
 			if (typeof(IRequestParameters).IsAssignableFrom(classModel.Type)) return true;
 			if (IsClrType(classModel.Type)) return true;
+			if (_typesToIgnore.Contains(classModel.Type)) return true;
 			return false;
 		}
 
