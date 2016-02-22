@@ -186,154 +186,267 @@ enum ClusterStatus {
 interface CatResponse<TCatRecord> extends Response {
 	Records: TCatRecord[];
 }
-interface CatAliasesRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ H: string[];
-	/** mapped on body but might only proxy to request querystring */ Help: boolean;
-	/** mapped on body but might only proxy to request querystring */ V: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface CatAliasesRequest extends RequestBase<CatAliasesRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	H: string[];
+	/** mapped on body but might only proxy to request querystring */
+	Help: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	V: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface Request {
 }
+/** type has a custom json converter defined */
 interface Time {
 	Factor: double;
 	Interval: TimeUnit;
 	Milliseconds: double;
 }
-interface CatAllocationRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Bytes: Bytes;
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ H: string[];
-	/** mapped on body but might only proxy to request querystring */ Help: boolean;
-	/** mapped on body but might only proxy to request querystring */ V: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface CatAllocationRequest extends RequestBase<CatAllocationRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Bytes: Bytes;
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	H: string[];
+	/** mapped on body but might only proxy to request querystring */
+	Help: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	V: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface CatCountRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ H: string[];
-	/** mapped on body but might only proxy to request querystring */ Help: boolean;
-	/** mapped on body but might only proxy to request querystring */ V: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface CatCountRequest extends RequestBase<CatCountRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	H: string[];
+	/** mapped on body but might only proxy to request querystring */
+	Help: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	V: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface CatFielddataRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Bytes: Bytes;
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ H: string[];
-	/** mapped on body but might only proxy to request querystring */ Help: boolean;
-	/** mapped on body but might only proxy to request querystring */ V: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface CatFielddataRequest extends RequestBase<CatFielddataRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Bytes: Bytes;
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	H: string[];
+	/** mapped on body but might only proxy to request querystring */
+	Help: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	V: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface CatHealthRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ H: string[];
-	/** mapped on body but might only proxy to request querystring */ Help: boolean;
-	/** mapped on body but might only proxy to request querystring */ Ts: boolean;
-	/** mapped on body but might only proxy to request querystring */ V: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface CatHealthRequest extends RequestBase<CatHealthRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	H: string[];
+	/** mapped on body but might only proxy to request querystring */
+	Help: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Ts: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	V: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface CatIndicesRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Bytes: Bytes;
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ H: string[];
-	/** mapped on body but might only proxy to request querystring */ Help: boolean;
-	/** mapped on body but might only proxy to request querystring */ Pri: boolean;
-	/** mapped on body but might only proxy to request querystring */ V: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface CatIndicesRequest extends RequestBase<CatIndicesRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Bytes: Bytes;
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	H: string[];
+	/** mapped on body but might only proxy to request querystring */
+	Help: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Pri: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	V: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface CatMasterRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ H: string[];
-	/** mapped on body but might only proxy to request querystring */ Help: boolean;
-	/** mapped on body but might only proxy to request querystring */ V: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface CatMasterRequest extends RequestBase<CatMasterRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	H: string[];
+	/** mapped on body but might only proxy to request querystring */
+	Help: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	V: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface CatNodesRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ H: string[];
-	/** mapped on body but might only proxy to request querystring */ Help: boolean;
-	/** mapped on body but might only proxy to request querystring */ V: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface CatNodesRequest extends RequestBase<CatNodesRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	H: string[];
+	/** mapped on body but might only proxy to request querystring */
+	Help: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	V: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface CatPendingTasksRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ H: string[];
-	/** mapped on body but might only proxy to request querystring */ Help: boolean;
-	/** mapped on body but might only proxy to request querystring */ V: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface CatPendingTasksRequest extends RequestBase<CatPendingTasksRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	H: string[];
+	/** mapped on body but might only proxy to request querystring */
+	Help: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	V: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface CatPluginsRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ H: string[];
-	/** mapped on body but might only proxy to request querystring */ Help: boolean;
-	/** mapped on body but might only proxy to request querystring */ V: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface CatPluginsRequest extends RequestBase<CatPluginsRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	H: string[];
+	/** mapped on body but might only proxy to request querystring */
+	Help: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	V: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface CatRecoveryRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Bytes: Bytes;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ H: string[];
-	/** mapped on body but might only proxy to request querystring */ Help: boolean;
-	/** mapped on body but might only proxy to request querystring */ V: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface CatRecoveryRequest extends RequestBase<CatRecoveryRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Bytes: Bytes;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	H: string[];
+	/** mapped on body but might only proxy to request querystring */
+	Help: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	V: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface CatSegmentsRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ H: string[];
-	/** mapped on body but might only proxy to request querystring */ Help: boolean;
-	/** mapped on body but might only proxy to request querystring */ V: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface CatSegmentsRequest extends RequestBase<CatSegmentsRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	H: string[];
+	/** mapped on body but might only proxy to request querystring */
+	Help: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	V: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface CatShardsRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ H: string[];
-	/** mapped on body but might only proxy to request querystring */ Help: boolean;
-	/** mapped on body but might only proxy to request querystring */ V: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface CatShardsRequest extends RequestBase<CatShardsRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	H: string[];
+	/** mapped on body but might only proxy to request querystring */
+	Help: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	V: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface CatThreadPoolRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ H: string[];
-	/** mapped on body but might only proxy to request querystring */ Help: boolean;
-	/** mapped on body but might only proxy to request querystring */ V: boolean;
-	/** mapped on body but might only proxy to request querystring */ FullId: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface CatThreadPoolRequest extends RequestBase<CatThreadPoolRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	H: string[];
+	/** mapped on body but might only proxy to request querystring */
+	Help: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	V: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	FullId: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface ClusterHealthRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Level: Level;
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
-	/** mapped on body but might only proxy to request querystring */ WaitForActiveShards: long;
-	/** mapped on body but might only proxy to request querystring */ WaitForNodes: string;
-	/** mapped on body but might only proxy to request querystring */ WaitForRelocatingShards: long;
-	/** mapped on body but might only proxy to request querystring */ WaitForStatus: WaitForStatus;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface ClusterHealthRequest extends RequestBase<ClusterHealthRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Level: Level;
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Timeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	WaitForActiveShards: long;
+	/** mapped on body but might only proxy to request querystring */
+	WaitForNodes: string;
+	/** mapped on body but might only proxy to request querystring */
+	WaitForRelocatingShards: long;
+	/** mapped on body but might only proxy to request querystring */
+	WaitForStatus: WaitForStatus;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface ClusterHealthResponse extends Response {
 	cluster_name: string;
@@ -347,7 +460,8 @@ interface ClusterHealthResponse extends Response {
 	initializing_shards: integer;
 	unassigned_shards: integer;
 	number_of_pending_tasks: integer;
-	/** type has a custom json converter defined */ indices: Map<string, IndexHealthStats>[];
+	/** type has a custom json converter defined */
+	indices: Map<string, IndexHealthStats>[];
 }
 interface Response {
 }
@@ -360,7 +474,8 @@ interface IndexHealthStats {
 	relocating_shards: integer;
 	initializing_shards: integer;
 	unassigned_shards: integer;
-	/** type has a custom json converter defined */ shards: Map<string, ShardHealthStats>[];
+	/** type has a custom json converter defined */
+	shards: Map<string, ShardHealthStats>[];
 }
 interface ShardHealthStats {
 	status: string;
@@ -370,11 +485,15 @@ interface ShardHealthStats {
 	initializing_shards: integer;
 	unassigned_shards: integer;
 }
-interface ClusterPendingTasksRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface ClusterPendingTasksRequest extends RequestBase<ClusterPendingTasksRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface ClusterPendingTasksResponse extends Response {
 	tasks: PendingTask[];
@@ -386,15 +505,23 @@ interface PendingTask {
 	time_in_queue_millis: integer;
 	time_in_queue: string;
 }
-interface /** type has a custom json converter defined */ ClusterRerouteRequest extends Request {
+/** type has a custom json converter defined */
+interface ClusterRerouteRequest extends RequestBase<ClusterRerouteRequestParameters> {
 	commands: IClusterRerouteCommand[];
-	/** mapped on body but might only proxy to request querystring */ DryRun: boolean;
-	/** mapped on body but might only proxy to request querystring */ Explain: boolean;
-	/** mapped on body but might only proxy to request querystring */ Metric: string[];
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	DryRun: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Explain: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Metric: string[];
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Timeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface IClusterRerouteCommand {
 	Name: string;
@@ -408,7 +535,8 @@ interface ClusterRerouteState {
 	version: integer;
 	master_node: string;
 	blocks: BlockState;
-	/** type has a custom json converter defined */ nodes: Map<string, NodeState>[];
+	/** type has a custom json converter defined */
+	nodes: Map<string, NodeState>[];
 	routing_table: RoutingTableState;
 	routing_nodes: RoutingNodesState;
 }
@@ -418,13 +546,16 @@ interface BlockState {
 interface NodeState {
 	name: string;
 	transport_address: string;
-	/** type has a custom json converter defined */ attributes: Map<string, string>[];
+	/** type has a custom json converter defined */
+	attributes: Map<string, string>[];
 }
 interface RoutingTableState {
-	/** type has a custom json converter defined */ indices: Map<string, IndexRoutingTable>[];
+	/** type has a custom json converter defined */
+	indices: Map<string, IndexRoutingTable>[];
 }
 interface IndexRoutingTable {
-	/** type has a custom json converter defined */ shards: Map<string, RoutingShard[]>[];
+	/** type has a custom json converter defined */
+	shards: Map<string, RoutingShard[]>[];
 }
 interface RoutingShard {
 	allocation_id: AllocationId;
@@ -461,56 +592,77 @@ interface ClusterRerouteDecision {
 	decision: string;
 	explanation: string;
 }
-interface ClusterGetSettingsRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ FlatSettings: boolean;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface ClusterGetSettingsRequest extends RequestBase<ClusterGetSettingsRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	FlatSettings: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Timeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface ClusterGetSettingsResponse extends Response {
 	persistent: Map<string, any>[];
 	transient: Map<string, any>[];
 }
-interface ClusterPutSettingsRequest extends Request {
+interface ClusterPutSettingsRequest extends RequestBase<ClusterPutSettingsRequestParameters> {
 	persistent: Map<string, any>[];
 	transient: Map<string, any>[];
-	/** mapped on body but might only proxy to request querystring */ FlatSettings: boolean;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	FlatSettings: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Timeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface ClusterPutSettingsResponse extends Response {
 	acknowledged: boolean;
 	persistent: Map<string, any>[];
 	transient: Map<string, any>[];
 }
-interface ClusterStateRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ FlatSettings: boolean;
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface ClusterStateRequest extends RequestBase<ClusterStateRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	FlatSettings: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface ClusterStateResponse extends Response {
 	cluster_name: string;
 	master_node: string;
 	state_uuid: string;
 	version: long;
-	/** type has a custom json converter defined */ nodes: Map<string, NodeState>[];
+	/** type has a custom json converter defined */
+	nodes: Map<string, NodeState>[];
 	metadata: MetadataState;
 	routing_table: RoutingTableState;
 	routing_nodes: RoutingNodesState;
 	blocks: BlockState;
 }
 interface MetadataState {
-	/** type has a custom json converter defined */ templates: Map<string, TemplateMapping>[];
+	/** type has a custom json converter defined */
+	templates: Map<string, TemplateMapping>[];
 	cluster_uuid: string;
-	/** type has a custom json converter defined */ indices: Map<string, MetadataIndexState>[];
+	/** type has a custom json converter defined */
+	indices: Map<string, MetadataIndexState>[];
 }
 interface TemplateMapping {
 	template: string;
@@ -524,11 +676,13 @@ interface TypeName {
 	Name: string;
 	Type: Type;
 }
+/** type has a custom json converter defined */
 interface ITypeMapping {
 	dynamic_date_formats: string[];
 	date_detection: boolean;
 	numeric_detection: boolean;
-	/** type has a custom json converter defined */ transform: IMappingTransform[];
+	/** type has a custom json converter defined */
+	transform: IMappingTransform[];
 	analyzer: string;
 	search_analyzer: string;
 	_source: ISourceField;
@@ -540,17 +694,20 @@ interface ITypeMapping {
 	_timestamp: ITimestampField;
 	_field_names: IFieldNamesField;
 	_ttl: ITtlField;
-	/** type has a custom json converter defined */ _meta: Map<string, any>[];
+	/** type has a custom json converter defined */
+	_meta: Map<string, any>[];
 	dynamic_templates: Map<string, IDynamicTemplate>[];
 	dynamic: DynamicMapping;
 	properties: Map<PropertyName, IProperty>[];
 }
+/** type has a custom json converter defined */
 interface IMappingTransform {
 	script: string;
 	script_file: string;
 	params: Map<string, string>[];
 	lang: string;
 }
+/** type has a custom json converter defined */
 interface ISourceField {
 	enabled: boolean;
 	compress: boolean;
@@ -558,6 +715,7 @@ interface ISourceField {
 	includes: string[];
 	excludes: string[];
 }
+/** type has a custom json converter defined */
 interface IAllField {
 	enabled: boolean;
 	store: boolean;
@@ -570,18 +728,23 @@ interface IAllField {
 	search_analyzer: string;
 	similarity: string;
 }
+/** type has a custom json converter defined */
 interface IParentField {
 	type: TypeName;
 }
+/** type has a custom json converter defined */
 interface IRoutingField {
 	required: boolean;
 }
+/** type has a custom json converter defined */
 interface IIndexField {
 	enabled: boolean;
 }
+/** type has a custom json converter defined */
 interface ISizeField {
 	enabled: boolean;
 }
+/** type has a custom json converter defined */
 interface ITimestampField {
 	enabled: boolean;
 	path: Field;
@@ -595,13 +758,16 @@ interface Field {
 	Property: PropertyInfo;
 	Boost: double;
 }
+/** type has a custom json converter defined */
 interface IFieldNamesField {
 	enabled: boolean;
 }
+/** type has a custom json converter defined */
 interface ITtlField {
 	enabled: boolean;
 	default: Time;
 }
+/** type has a custom json converter defined */
 interface IDynamicTemplate {
 	match: string;
 	unmatch: string;
@@ -629,6 +795,7 @@ interface IWarmer {
 	types: TypeName[];
 	source: ISearchRequest;
 }
+/** type has a custom json converter defined */
 interface ISearchRequest {
 	timeout: string;
 	from: integer;
@@ -638,7 +805,8 @@ interface ISearchRequest {
 	track_scores: boolean;
 	min_score: double;
 	terminate_after: long;
-	/** type has a custom json converter defined */ indices_boost: Map<IndexName, double>[];
+	/** type has a custom json converter defined */
+	indices_boost: Map<IndexName, double>[];
 	sort: ISort[];
 	suggest: Map<string, ISuggestBucket>[];
 	highlight: IHighlight;
@@ -646,10 +814,11 @@ interface ISearchRequest {
 	fields: Field[];
 	fielddata_fields: Field[];
 	script_fields: Map<string, IScriptField>[];
-	/** type has a custom json converter defined */ _source: ISourceFilter;
+	/** type has a custom json converter defined */
+	_source: ISourceFilter;
 	aggs: Map<string, IAggregationContainer>[];
-	query: /** type has a custom json converter defined */ QueryContainer;
-	post_filter: /** type has a custom json converter defined */ QueryContainer;
+	query: QueryContainer;
+	post_filter: QueryContainer;
 	inner_hits: Map<string, IInnerHitsContainer>[];
 	Preference: string;
 	Routing: string;
@@ -667,26 +836,31 @@ interface ISort {
 	missing: string;
 	order: SortOrder;
 	mode: SortMode;
-	nested_filter: /** type has a custom json converter defined */ QueryContainer;
+	nested_filter: QueryContainer;
 	nested_path: Field;
 }
-interface /** type has a custom json converter defined */ QueryContainer {
+/** type has a custom json converter defined */
+interface QueryContainer {
 }
+/** type has a custom json converter defined */
 interface ISuggestBucket {
 	text: string;
 	term: ITermSuggester;
 	phrase: IPhraseSuggester;
 	completion: ICompletionSuggester;
 }
+/** type has a custom json converter defined */
 interface ITermSuggester {
 	prefix_len: integer;
-	/** type has a custom json converter defined */ suggest_mode: SuggestMode;
+	/** type has a custom json converter defined */
+	suggest_mode: SuggestMode;
 	min_word_len: integer;
 	max_edits: integer;
 	max_inspections: integer;
 	min_doc_freq: double;
 	max_term_freq: double;
 }
+/** type has a custom json converter defined */
 interface IPhraseSuggester {
 	gram_size: integer;
 	real_word_error_likelihood: double;
@@ -697,11 +871,13 @@ interface IPhraseSuggester {
 	highlight: IPhraseSuggestHighlight;
 	collate: IPhraseSuggestCollate;
 }
+/** type has a custom json converter defined */
 interface IDirectGenerator {
 	field: Field;
 	size: integer;
 	prefix_len: integer;
-	/** type has a custom json converter defined */ suggest_mode: SuggestMode;
+	/** type has a custom json converter defined */
+	suggest_mode: SuggestMode;
 	min_word_len: integer;
 	max_edits: integer;
 	max_inspections: double;
@@ -714,18 +890,23 @@ interface IPhraseSuggestHighlight {
 	pre_tag: string;
 	post_tag: string;
 }
+/** type has a custom json converter defined */
 interface IPhraseSuggestCollate {
 	query: IScript;
 	prune: boolean;
 }
+/** type has a custom json converter defined */
 interface IScript {
-	/** type has a custom json converter defined */ params: Map<string, any>[];
+	/** type has a custom json converter defined */
+	params: Map<string, any>[];
 	lang: string;
 }
+/** type has a custom json converter defined */
 interface ICompletionSuggester {
 	fuzzy: IFuzzySuggester;
 	context: Map<string, any>[];
 }
+/** type has a custom json converter defined */
 interface IFuzzySuggester {
 	transpositions: boolean;
 	min_length: integer;
@@ -733,11 +914,13 @@ interface IFuzzySuggester {
 	fuzziness: IFuzziness;
 	unicode_aware: boolean;
 }
+/** type has a custom json converter defined */
 interface IFuzziness {
 	Auto: boolean;
 	EditDistance: integer;
 	Ratio: double;
 }
+/** type has a custom json converter defined */
 interface IHighlight {
 	pre_tags: string[];
 	post_tags: string[];
@@ -748,10 +931,12 @@ interface IHighlight {
 	boundary_max_size: integer;
 	encoder: string;
 	order: string;
-	/** type has a custom json converter defined */ fields: Map<Field, IHighlightField>[];
+	/** type has a custom json converter defined */
+	fields: Map<Field, IHighlightField>[];
 	require_field_match: boolean;
 	boundary_chars: string;
 }
+/** type has a custom json converter defined */
 interface IHighlightField {
 	Field: Field;
 	pre_tags: string[];
@@ -769,27 +954,33 @@ interface IHighlightField {
 	type: HighlighterType;
 	force_source: boolean;
 	matched_fields: Field[];
-	highlight_query: /** type has a custom json converter defined */ QueryContainer;
+	highlight_query: QueryContainer;
 }
+/** type has a custom json converter defined */
 interface IRescore {
 	window_size: integer;
 	query: IRescoreQuery;
 }
+/** type has a custom json converter defined */
 interface IRescoreQuery {
-	rescore_query: /** type has a custom json converter defined */ QueryContainer;
+	rescore_query: QueryContainer;
 	query_weight: double;
 	rescore_query_weight: double;
 	score_mode: ScoreMode;
 }
+/** type has a custom json converter defined */
 interface IScriptField {
 	script: IScript;
 }
+/** type has a custom json converter defined */
 interface ISourceFilter {
 	include: Field[];
 	exclude: Field[];
 }
+/** type has a custom json converter defined */
 interface IAggregationContainer {
-	/** type has a custom json converter defined */ meta: Map<string, any>[];
+	/** type has a custom json converter defined */
+	meta: Map<string, any>[];
 	avg: IAverageAggregation;
 	date_histogram: IDateHistogramAggregation;
 	percentiles: IPercentilesAggregation;
@@ -848,8 +1039,10 @@ interface IDateHistogramAggregation {
 	extended_bounds: ExtendedBounds<Date>;
 	missing: Date;
 }
+/** type has a custom json converter defined */
 interface Union<TFirst, TSecond> {
 }
+/** type has a custom json converter defined */
 interface HistogramOrder {
 	Key: string;
 	Order: SortOrder;
@@ -873,26 +1066,30 @@ interface IDateRangeAggregation {
 	format: string;
 	ranges: IDateRangeExpression[];
 }
+/** type has a custom json converter defined */
 interface IDateRangeExpression {
-	from: /** type has a custom json converter defined */ DateMath;
-	to: /** type has a custom json converter defined */ DateMath;
+	from: DateMath;
+	to: DateMath;
 	key: string;
 }
-interface /** type has a custom json converter defined */ DateMath {
+/** type has a custom json converter defined */
+interface DateMath {
 	Now: DateMathExpression;
 }
-interface DateMathExpression extends /** type has a custom json converter defined */ DateMath {
+/** type has a custom json converter defined */
+interface DateMathExpression extends DateMath {
 }
 interface IExtendedStatsAggregation {
 }
 interface IFilterAggregation {
-	filter: /** type has a custom json converter defined */ QueryContainer;
+	filter: QueryContainer;
 }
 interface IFiltersAggregation {
-	filters: Union<Map<string, IQueryContainer>[], /** type has a custom json converter defined */ QueryContainer[]>;
+	filters: Union<Map<string, IQueryContainer>[], QueryContainer[]>;
 	other_bucket: boolean;
 	other_bucket_key: string;
 }
+/** type has a custom json converter defined */
 interface IQueryContainer {
 	IsConditionless: boolean;
 	IsStrict: boolean;
@@ -950,60 +1147,78 @@ interface IQueryContainer {
 interface IRawQuery {
 	Raw: string;
 }
+/** type has a custom json converter defined */
 interface IBoolQuery {
-	must: /** type has a custom json converter defined */ QueryContainer[];
-	must_not: /** type has a custom json converter defined */ QueryContainer[];
-	should: /** type has a custom json converter defined */ QueryContainer[];
-	filter: /** type has a custom json converter defined */ QueryContainer[];
+	must: QueryContainer[];
+	must_not: QueryContainer[];
+	should: QueryContainer[];
+	filter: QueryContainer[];
 	minimum_should_match: MinimumShouldMatch;
 	disable_coord: boolean;
 	Locked: boolean;
 }
+/** type has a custom json converter defined */
 interface MinimumShouldMatch extends Union<integer, string> {
 }
+/** type has a custom json converter defined */
 interface IMatchAllQuery {
 	norm_field: string;
 }
+/** type has a custom json converter defined */
 interface ITermQuery {
 	value: any;
 }
+/** type has a custom json converter defined */
 interface IWildcardQuery {
-	/** type has a custom json converter defined */ rewrite: RewriteMultiTerm;
+	/** type has a custom json converter defined */
+	rewrite: RewriteMultiTerm;
 }
+/** type has a custom json converter defined */
 interface IPrefixQuery {
-	/** type has a custom json converter defined */ rewrite: RewriteMultiTerm;
+	/** type has a custom json converter defined */
+	rewrite: RewriteMultiTerm;
 }
+/** type has a custom json converter defined */
 interface IBoostingQuery {
-	positive: /** type has a custom json converter defined */ QueryContainer;
-	negative: /** type has a custom json converter defined */ QueryContainer;
+	positive: QueryContainer;
+	negative: QueryContainer;
 	negative_boost: double;
 }
+/** type has a custom json converter defined */
 interface IIdsQuery {
 	types: Types;
 	values: Id[];
 }
+/** type has a custom json converter defined */
 interface Types extends Union<AllTypesMarker, ManyTypes> {
 	All: AllTypesMarker;
 	AllTypes: AllTypesMarker;
 }
+/** type has a custom json converter defined */
 interface Id {
 }
+/** type has a custom json converter defined */
 interface ILimitQuery {
 	limit: integer;
 }
+/** type has a custom json converter defined */
 interface IConstantScoreQuery {
-	filter: /** type has a custom json converter defined */ QueryContainer;
+	filter: QueryContainer;
 }
+/** type has a custom json converter defined */
 interface IDisMaxQuery {
 	tie_breaker: double;
-	queries: /** type has a custom json converter defined */ QueryContainer[];
+	queries: QueryContainer[];
 }
+/** type has a custom json converter defined */
 interface IMultiMatchQuery {
-	/** type has a custom json converter defined */ type: TextQueryType;
+	/** type has a custom json converter defined */
+	type: TextQueryType;
 	query: string;
 	analyzer: string;
-	/** type has a custom json converter defined */ fuzzy_rewrite: RewriteMultiTerm;
-	fuzziness: /** type has a custom json converter defined */ Fuzziness;
+	/** type has a custom json converter defined */
+	fuzzy_rewrite: RewriteMultiTerm;
+	fuzziness: Fuzziness;
 	cutoff_frequency: double;
 	prefix_length: integer;
 	max_expansions: integer;
@@ -1016,14 +1231,17 @@ interface IMultiMatchQuery {
 	fields: Field[];
 	zero_terms_query: ZeroTermsQuery;
 }
-interface /** type has a custom json converter defined */ Fuzziness {
-	Auto: /** type has a custom json converter defined */ Fuzziness;
+/** type has a custom json converter defined */
+interface Fuzziness {
+	Auto: Fuzziness;
 }
+/** type has a custom json converter defined */
 interface IMatchQuery {
 	type: string;
 	query: string;
 	analyzer: string;
-	/** type has a custom json converter defined */ fuzzy_rewrite: RewriteMultiTerm;
+	/** type has a custom json converter defined */
+	fuzzy_rewrite: RewriteMultiTerm;
 	fuzziness: IFuzziness;
 	fuzzy_transpositions: boolean;
 	cutoff_frequency: double;
@@ -1035,50 +1253,61 @@ interface IMatchQuery {
 	operator: Operator;
 	zero_terms_query: ZeroTermsQuery;
 }
+/** type has a custom json converter defined */
 interface IFuzzyQuery {
 	prefix_length: integer;
 	rewrite: RewriteMultiTerm;
 	max_expansions: integer;
 	transpositions: boolean;
 }
+/** type has a custom json converter defined */
 interface IGeoShapeQuery {
 }
+/** type has a custom json converter defined */
 interface ICommonTermsQuery {
 	query: string;
 	cutoff_frequency: double;
-	/** type has a custom json converter defined */ low_freq_operator: Operator;
-	/** type has a custom json converter defined */ high_freq_operator: Operator;
+	/** type has a custom json converter defined */
+	low_freq_operator: Operator;
+	/** type has a custom json converter defined */
+	high_freq_operator: Operator;
 	minimum_should_match: MinimumShouldMatch;
 	analyzer: string;
 	disable_coord: boolean;
 }
+/** type has a custom json converter defined */
 interface ITermsQuery {
 	MinimumShouldMatch: MinimumShouldMatch;
 	DisableCoord: boolean;
 	Terms: any[];
 	TermsLookup: IFieldLookup;
 }
+/** type has a custom json converter defined */
 interface IFieldLookup {
 	index: IndexName;
 	type: TypeName;
 	id: Id;
 	path: Field;
 }
+/** type has a custom json converter defined */
 interface IRangeQuery {
 }
+/** type has a custom json converter defined */
 interface IRegexpQuery {
 	value: string;
 	flags: string;
 	max_determinized_states: integer;
 }
+/** type has a custom json converter defined */
 interface IHasChildQuery {
 	type: TypeName;
 	score_mode: ChildScoreMode;
 	min_children: integer;
 	max_children: integer;
-	query: /** type has a custom json converter defined */ QueryContainer;
+	query: QueryContainer;
 	inner_hits: IInnerHits;
 }
+/** type has a custom json converter defined */
 interface IInnerHits {
 	name: string;
 	from: integer;
@@ -1091,14 +1320,17 @@ interface IInnerHits {
 	fielddata_fields: Field[];
 	script_fields: Map<string, IScriptField>[];
 }
+/** type has a custom json converter defined */
 interface IHasParentQuery {
 	type: TypeName;
 	score_mode: ParentScoreMode;
-	query: /** type has a custom json converter defined */ QueryContainer;
+	query: QueryContainer;
 	inner_hits: IInnerHits;
 }
+/** type has a custom json converter defined */
 interface ISpanTermQuery {
 }
+/** type has a custom json converter defined */
 interface ISimpleQueryStringQuery {
 	fields: Field[];
 	query: string;
@@ -1111,6 +1343,7 @@ interface ISimpleQueryStringQuery {
 	analyze_wildcard: boolean;
 	minimum_should_match: MinimumShouldMatch;
 }
+/** type has a custom json converter defined */
 interface IQueryStringQuery {
 	query: string;
 	default_field: Field;
@@ -1121,7 +1354,7 @@ interface IQueryStringQuery {
 	lowercase_expanded_terms: boolean;
 	enable_position_increments: boolean;
 	fuzzy_max_expansions: integer;
-	fuziness: /** type has a custom json converter defined */ Fuzziness;
+	fuziness: Fuzziness;
 	fuzzy_prefix_length: integer;
 	phrase_slop: double;
 	analyze_wildcard: boolean;
@@ -1139,6 +1372,7 @@ interface IQueryStringQuery {
 	quote_field_suffix: string;
 	escape: boolean;
 }
+/** type has a custom json converter defined */
 interface IMoreLikeThisQuery {
 	fields: Field[];
 	like: Like[];
@@ -1155,8 +1389,10 @@ interface IMoreLikeThisQuery {
 	boost_terms: double;
 	include: boolean;
 }
+/** type has a custom json converter defined */
 interface Like extends Union<string, ILikeDocument> {
 }
+/** type has a custom json converter defined */
 interface ILikeDocument {
 	_index: IndexName;
 	_type: TypeName;
@@ -1168,12 +1404,15 @@ interface ILikeDocument {
 	ClrType: Type;
 	CanBeFlattened: boolean;
 }
+/** type has a custom json converter defined */
 interface StopWords extends Union<string, string[]> {
 }
+/** type has a custom json converter defined */
 interface ISpanFirstQuery {
 	match: ISpanQuery;
 	end: integer;
 }
+/** type has a custom json converter defined */
 interface ISpanQuery {
 	span_term: ISpanTermQuery;
 	span_first: ISpanFirstQuery;
@@ -1184,15 +1423,18 @@ interface ISpanQuery {
 	span_within: ISpanWithinQuery;
 	span_multi: ISpanMultiTermQuery;
 }
+/** type has a custom json converter defined */
 interface ISpanNearQuery {
 	clauses: ISpanQuery[];
 	slop: integer;
 	in_order: boolean;
 	collect_payloads: boolean;
 }
+/** type has a custom json converter defined */
 interface ISpanOrQuery {
 	clauses: ISpanQuery[];
 }
+/** type has a custom json converter defined */
 interface ISpanNotQuery {
 	include: ISpanQuery;
 	exclude: ISpanQuery;
@@ -1200,34 +1442,43 @@ interface ISpanNotQuery {
 	post: integer;
 	dist: integer;
 }
+/** type has a custom json converter defined */
 interface ISpanContainingQuery {
 	little: ISpanQuery;
 	big: ISpanQuery;
 }
+/** type has a custom json converter defined */
 interface ISpanWithinQuery {
 	little: ISpanQuery;
 	big: ISpanQuery;
 }
+/** type has a custom json converter defined */
 interface ISpanMultiTermQuery {
-	match: /** type has a custom json converter defined */ QueryContainer;
+	match: QueryContainer;
 }
+/** type has a custom json converter defined */
 interface INestedQuery {
 	score_mode: NestedScoreMode;
-	query: /** type has a custom json converter defined */ QueryContainer;
+	query: QueryContainer;
 	path: Field;
 	inner_hits: IInnerHits;
 }
+/** type has a custom json converter defined */
 interface IIndicesQuery {
-	/** type has a custom json converter defined */ indices: Indices;
-	query: /** type has a custom json converter defined */ QueryContainer;
-	/** type has a custom json converter defined */ no_match_query: /** type has a custom json converter defined */ QueryContainer;
+	/** type has a custom json converter defined */
+	indices: Indices;
+	query: QueryContainer;
+	/** type has a custom json converter defined */
+	no_match_query: QueryContainer;
 }
+/** type has a custom json converter defined */
 interface Indices extends Union<AllIndicesMarker, ManyIndices> {
 	All: Indices;
 	AllIndices: Indices;
 }
+/** type has a custom json converter defined */
 interface IFunctionScoreQuery {
-	query: /** type has a custom json converter defined */ QueryContainer;
+	query: QueryContainer;
 	functions: IScoreFunction[];
 	max_boost: double;
 	score_mode: FunctionScoreMode;
@@ -1235,15 +1486,17 @@ interface IFunctionScoreQuery {
 	min_score: double;
 }
 interface IScoreFunction {
-	filter: /** type has a custom json converter defined */ QueryContainer;
+	filter: QueryContainer;
 	weight: double;
 }
+/** type has a custom json converter defined */
 interface ITemplateQuery {
 	file: string;
 	inline: string;
 	id: Id;
 	params: Map<string, any>[];
 }
+/** type has a custom json converter defined */
 interface IGeoBoundingBoxQuery {
 	BoundingBox: IBoundingBox;
 	type: GeoExecution;
@@ -1251,6 +1504,7 @@ interface IGeoBoundingBoxQuery {
 	ignore_malformed: boolean;
 	validation_method: GeoValidationMethod;
 }
+/** type has a custom json converter defined */
 interface IBoundingBox {
 	top_left: GeoLocation;
 	bottom_right: GeoLocation;
@@ -1259,6 +1513,7 @@ interface GeoLocation {
 	lat: double;
 	lon: double;
 }
+/** type has a custom json converter defined */
 interface IGeoDistanceQuery {
 	Location: GeoLocation;
 	distance: Distance;
@@ -1268,16 +1523,19 @@ interface IGeoDistanceQuery {
 	ignore_malformed: boolean;
 	validation_method: GeoValidationMethod;
 }
+/** type has a custom json converter defined */
 interface Distance {
 	Precision: double;
 	Unit: DistanceUnit;
 }
+/** type has a custom json converter defined */
 interface IGeoPolygonQuery {
 	Points: GeoLocation[];
 	coerce: boolean;
 	ignore_malformed: boolean;
 	validation_method: GeoValidationMethod;
 }
+/** type has a custom json converter defined */
 interface IGeoDistanceRangeQuery {
 	Location: GeoLocation;
 	gte: Distance;
@@ -1290,41 +1548,51 @@ interface IGeoDistanceRangeQuery {
 	ignore_malformed: boolean;
 	validation_method: GeoValidationMethod;
 }
+/** type has a custom json converter defined */
 interface IGeoHashCellQuery {
 	Location: GeoLocation;
 	precision: Union<integer, Distance>;
 	neighbors: boolean;
 }
+/** type has a custom json converter defined */
 interface IScriptQuery {
 	inline: string;
 	id: Id;
 	file: string;
-	/** type has a custom json converter defined */ params: Map<string, any>[];
+	/** type has a custom json converter defined */
+	params: Map<string, any>[];
 	lang: string;
 }
+/** type has a custom json converter defined */
 interface IExistsQuery {
 	field: Field;
 }
+/** type has a custom json converter defined */
 interface IMissingQuery {
 	field: Field;
 	existence: boolean;
 	null_value: boolean;
 }
+/** type has a custom json converter defined */
 interface ITypeQuery {
 	value: TypeName;
 }
+/** type has a custom json converter defined */
 interface IFilteredQuery {
-	query: /** type has a custom json converter defined */ QueryContainer;
-	filter: /** type has a custom json converter defined */ QueryContainer;
+	query: QueryContainer;
+	filter: QueryContainer;
 }
+/** type has a custom json converter defined */
 interface IAndQuery {
-	filters: /** type has a custom json converter defined */ QueryContainer[];
+	filters: QueryContainer[];
 }
+/** type has a custom json converter defined */
 interface IOrQuery {
-	filters: /** type has a custom json converter defined */ QueryContainer[];
+	filters: QueryContainer[];
 }
+/** type has a custom json converter defined */
 interface INotQuery {
-	filters: /** type has a custom json converter defined */ QueryContainer[];
+	filters: QueryContainer[];
 }
 interface IGeoDistanceAggregation {
 	field: Field;
@@ -1333,6 +1601,7 @@ interface IGeoDistanceAggregation {
 	distance_type: GeoDistanceType;
 	ranges: IRange[];
 }
+/** type has a custom json converter defined */
 interface IRange {
 	from: double;
 	to: double;
@@ -1364,6 +1633,7 @@ interface IIpRangeAggregation {
 	field: Field;
 	ranges: IIpRange[];
 }
+/** type has a custom json converter defined */
 interface IIpRange {
 	from: string;
 	to: string;
@@ -1409,6 +1679,7 @@ interface ITermsAggregation {
 	show_term_doc_error_count: boolean;
 	missing: string;
 }
+/** type has a custom json converter defined */
 interface TermsOrder {
 	Key: string;
 	Order: SortOrder;
@@ -1417,6 +1688,7 @@ interface TermsOrder {
 	TermAscending: TermsOrder;
 	TermDescending: TermsOrder;
 }
+/** type has a custom json converter defined */
 interface TermsIncludeExclude {
 	pattern: string;
 	flags: string;
@@ -1435,21 +1707,26 @@ interface ISignificantTermsAggregation {
 	gnd: IGoogleNormalizedDistanceHeuristic;
 	percentage: IPercentageScoreHeuristic;
 	script_heuristic: IScriptedHeuristic;
-	background_filter: /** type has a custom json converter defined */ QueryContainer;
+	background_filter: QueryContainer;
 }
+/** type has a custom json converter defined */
 interface IMutualInformationHeuristic {
 	include_negatives: boolean;
 	background_is_superset: boolean;
 }
+/** type has a custom json converter defined */
 interface IChiSquareHeuristic {
 	include_negatives: boolean;
 	background_is_superset: boolean;
 }
+/** type has a custom json converter defined */
 interface IGoogleNormalizedDistanceHeuristic {
 	background_is_superset: boolean;
 }
+/** type has a custom json converter defined */
 interface IPercentageScoreHeuristic {
 }
+/** type has a custom json converter defined */
 interface IScriptedHeuristic {
 	script: IScript;
 }
@@ -1466,7 +1743,8 @@ interface ITopHitsAggregation {
 	_source: ISourceFilter;
 	highlight: IHighlight;
 	explain: boolean;
-	/** type has a custom json converter defined */ script_fields: Map<string, IScriptField>[];
+	/** type has a custom json converter defined */
+	script_fields: Map<string, IScriptField>[];
 	fielddata_fields: Field[];
 	version: boolean;
 }
@@ -1517,32 +1795,41 @@ interface ISamplerAggregation {
 	script: IScript;
 	execution_hint: SamplerAggregationExecutionHint;
 }
+/** type has a custom json converter defined */
 interface IInnerHitsContainer {
 	type: Map<TypeName, IGlobalInnerHit>[];
 	path: Map<Field, IGlobalInnerHit>[];
 }
+/** type has a custom json converter defined */
 interface IGlobalInnerHit {
-	query: /** type has a custom json converter defined */ QueryContainer;
+	query: QueryContainer;
 	inner_hits: Map<string, IInnerHitsContainer>[];
 }
+/** type has a custom json converter defined */
 interface IAlias {
-	filter: /** type has a custom json converter defined */ QueryContainer;
+	filter: QueryContainer;
 	routing: string;
 	index_routing: string;
 	search_routing: string;
 }
 interface MetadataIndexState {
 	state: string;
-	/** type has a custom json converter defined */ settings: string[];
+	/** type has a custom json converter defined */
+	settings: string[];
 	mappings: Map<TypeName, ITypeMapping>[];
 	aliases: string[];
 }
-interface ClusterStatsRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ FlatSettings: boolean;
-	/** mapped on body but might only proxy to request querystring */ Human: boolean;
-	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface ClusterStatsRequest extends RequestBase<ClusterStatsRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	FlatSettings: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Human: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Timeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface ClusterStatsResponse extends Response {
 	cluster_name: string;
@@ -1717,15 +2004,23 @@ interface PluginStats {
 	isolated: boolean;
 	site: boolean;
 }
-interface NodesHotThreadsRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Interval: Time;
-	/** mapped on body but might only proxy to request querystring */ Snapshots: long;
-	/** mapped on body but might only proxy to request querystring */ Threads: long;
-	/** mapped on body but might only proxy to request querystring */ IgnoreIdleThreads: boolean;
-	/** mapped on body but might only proxy to request querystring */ ThreadType: ThreadType;
-	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface NodesHotThreadsRequest extends RequestBase<NodesHotThreadsRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Interval: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Snapshots: long;
+	/** mapped on body but might only proxy to request querystring */
+	Threads: long;
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreIdleThreads: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ThreadType: ThreadType;
+	/** mapped on body but might only proxy to request querystring */
+	Timeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface NodesHotThreadsResponse extends Response {
 	HotThreads: HotThreadInformation[];
@@ -1736,16 +2031,22 @@ interface HotThreadInformation {
 	Threads: string[];
 	Hosts: string[];
 }
-interface NodesInfoRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ FlatSettings: boolean;
-	/** mapped on body but might only proxy to request querystring */ Human: boolean;
-	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface NodesInfoRequest extends RequestBase<NodesInfoRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	FlatSettings: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Human: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Timeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface NodesInfoResponse extends Response {
 	cluster_name: string;
-	/** type has a custom json converter defined */ nodes: Map<string, NodeInfo>[];
+	/** type has a custom json converter defined */
+	nodes: Map<string, NodeInfo>[];
 }
 interface NodeInfo {
 	name: string;
@@ -1755,11 +2056,13 @@ interface NodeInfo {
 	version: string;
 	build: string;
 	http_address: string;
-	/** type has a custom json converter defined */ settings: string[];
+	/** type has a custom json converter defined */
+	settings: string[];
 	os: NodeOperatingSystemInfo;
 	process: NodeProcessInfo;
 	jvm: NodeJvmInfo;
-	/** type has a custom json converter defined */ thread_pool: Map<string, NodeThreadPoolInfo>[];
+	/** type has a custom json converter defined */
+	thread_pool: Map<string, NodeThreadPoolInfo>[];
 	network: NodeInfoNetwork;
 	transport: NodeInfoTransport;
 	http: NodeInfoHttp;
@@ -1843,21 +2146,32 @@ interface NodeInfoHttp {
 	max_content_length: string;
 	max_content_length_in_bytes: long;
 }
-interface NodesStatsRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ CompletionFields: Field[];
-	/** mapped on body but might only proxy to request querystring */ FielddataFields: Field[];
-	/** mapped on body but might only proxy to request querystring */ Fields: Field[];
-	/** mapped on body but might only proxy to request querystring */ Groups: boolean;
-	/** mapped on body but might only proxy to request querystring */ Human: boolean;
-	/** mapped on body but might only proxy to request querystring */ Level: Level;
-	/** mapped on body but might only proxy to request querystring */ Types: string[];
-	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface NodesStatsRequest extends RequestBase<NodesStatsRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	CompletionFields: Field[];
+	/** mapped on body but might only proxy to request querystring */
+	FielddataFields: Field[];
+	/** mapped on body but might only proxy to request querystring */
+	Fields: Field[];
+	/** mapped on body but might only proxy to request querystring */
+	Groups: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Human: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Level: Level;
+	/** mapped on body but might only proxy to request querystring */
+	Types: string[];
+	/** mapped on body but might only proxy to request querystring */
+	Timeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface NodesStatsResponse extends Response {
 	cluster_name: string;
-	/** type has a custom json converter defined */ nodes: Map<string, NodeStats>[];
+	/** type has a custom json converter defined */
+	nodes: Map<string, NodeStats>[];
 }
 interface NodeStats {
 	timestamp: long;
@@ -1870,8 +2184,10 @@ interface NodeStats {
 	process: ProcessStats;
 	script: ScriptStats;
 	jvm: NodeJvmStats;
-	/** type has a custom json converter defined */ thread_pool: Map<string, ThreadCountStats>[];
-	/** type has a custom json converter defined */ breakers: Map<string, BreakerStats>[];
+	/** type has a custom json converter defined */
+	thread_pool: Map<string, ThreadCountStats>[];
+	/** type has a custom json converter defined */
+	breakers: Map<string, BreakerStats>[];
 	fs: FileSystemStats;
 	transport: TransportStats;
 	http: HttpStats;
@@ -1909,7 +2225,8 @@ interface IndexingStats {
 	noop_update_total: long;
 	throttle_time: string;
 	throttle_time_in_millis: long;
-	/** type has a custom json converter defined */ types: Map<string, IndexingStats>[];
+	/** type has a custom json converter defined */
+	types: Map<string, IndexingStats>[];
 }
 interface GetStats {
 	current: long;
@@ -2018,7 +2335,8 @@ interface NodeJvmStats {
 	mem: MemoryStats;
 	threads: ThreadStats;
 	gc: GarbageCollectionStats;
-	/** type has a custom json converter defined */ buffer_pools: Map<string, NodeBufferPool>[];
+	/** type has a custom json converter defined */
+	buffer_pools: Map<string, NodeBufferPool>[];
 	classes: JvmClassesStats;
 }
 interface ThreadCountStats {
@@ -2055,15 +2373,19 @@ interface HttpStats {
 	current_open: integer;
 	total_opened: long;
 }
-interface PingRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface PingRequest extends RequestBase<PingRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface PingResponse extends Response {
 }
-interface RootNodeInfoRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface RootNodeInfoRequest extends RequestBase<RootNodeInfoRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface RootNodeInfoResponse extends Response {
 	name: string;
@@ -2075,7 +2397,7 @@ interface ElasticsearchVersionInfo {
 	snapshot_build: boolean;
 	lucene_version: string;
 }
-interface RequestDescriptorBase<TDescriptor, TParameters, TInterface> extends Request {
+interface RequestDescriptorBase<TDescriptor, TParameters, TInterface> extends RequestBase<TParameters> {
 }
 interface AcknowledgedResponseBase extends Response {
 	acknowledged: boolean;
@@ -2110,15 +2432,23 @@ interface CausedBy {
 interface ShardsOperationResponseBase extends Response {
 	_shards: ShardsMetaData;
 }
-interface /** type has a custom json converter defined */ BulkRequest extends Request {
+/** type has a custom json converter defined */
+interface BulkRequest extends RequestBase<BulkRequestParameters> {
 	Operations: IBulkOperation[];
-	/** mapped on body but might only proxy to request querystring */ Consistency: Consistency;
-	/** mapped on body but might only proxy to request querystring */ Refresh: boolean;
-	/** mapped on body but might only proxy to request querystring */ Routing: string;
-	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Fields: Field[];
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	Consistency: Consistency;
+	/** mapped on body but might only proxy to request querystring */
+	Refresh: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Routing: string;
+	/** mapped on body but might only proxy to request querystring */
+	Timeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Fields: Field[];
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface IBulkOperation {
 	Operation: string;
@@ -2127,7 +2457,8 @@ interface IBulkOperation {
 	_type: TypeName;
 	_id: Id;
 	_version: long;
-	/** type has a custom json converter defined */ _version_type: VersionType;
+	/** type has a custom json converter defined */
+	_version_type: VersionType;
 	_routing: string;
 	_parent: Id;
 	_timestamp: long;
@@ -2141,6 +2472,7 @@ interface BulkResponse extends Response {
 	items: BulkResponseItemBase[];
 	ItemsWithErrors: BulkResponseItemBase[];
 }
+/** type has a custom json converter defined */
 interface BulkResponseItemBase {
 	Operation: string;
 	_index: string;
@@ -2158,22 +2490,34 @@ interface BulkError {
 	type: string;
 	reason: string;
 }
-interface DeleteByQueryRequest extends Request {
-	query: /** type has a custom json converter defined */ QueryContainer;
-	/** mapped on body but might only proxy to request querystring */ Analyzer: string;
-	/** mapped on body but might only proxy to request querystring */ DefaultOperator: DefaultOperator;
-	/** mapped on body but might only proxy to request querystring */ Df: string;
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ QueryOnQueryString: string;
-	/** mapped on body but might only proxy to request querystring */ Routing: string;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface DeleteByQueryRequest extends RequestBase<DeleteByQueryRequestParameters> {
+	query: QueryContainer;
+	/** mapped on body but might only proxy to request querystring */
+	Analyzer: string;
+	/** mapped on body but might only proxy to request querystring */
+	DefaultOperator: DefaultOperator;
+	/** mapped on body but might only proxy to request querystring */
+	Df: string;
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	QueryOnQueryString: string;
+	/** mapped on body but might only proxy to request querystring */
+	Routing: string;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	Timeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface DeleteByQueryResponse extends Response {
-	/** type has a custom json converter defined */ _indices: Map<string, DeleteByQueryIndicesResult>[];
+	/** type has a custom json converter defined */
+	_indices: Map<string, DeleteByQueryIndicesResult>[];
 	took: long;
 	timed_out: boolean;
 }
@@ -2183,18 +2527,29 @@ interface DeleteByQueryIndicesResult {
 	missing: long;
 	failed: long;
 }
-interface /** type has a custom json converter defined */ MultiGetRequest extends Request {
+/** type has a custom json converter defined */
+interface MultiGetRequest extends RequestBase<MultiGetRequestParameters> {
 	docs: IMultiGetOperation[];
-	/** mapped on body but might only proxy to request querystring */ Fields: Field[];
-	/** mapped on body but might only proxy to request querystring */ Preference: string;
-	/** mapped on body but might only proxy to request querystring */ Realtime: boolean;
-	/** mapped on body but might only proxy to request querystring */ Refresh: boolean;
-	/** mapped on body but might only proxy to request querystring */ SourceEnabled: string[];
-	/** mapped on body but might only proxy to request querystring */ SourceExclude: Field[];
-	/** mapped on body but might only proxy to request querystring */ SourceInclude: Field[];
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	Fields: Field[];
+	/** mapped on body but might only proxy to request querystring */
+	Preference: string;
+	/** mapped on body but might only proxy to request querystring */
+	Realtime: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Refresh: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	SourceEnabled: string[];
+	/** mapped on body but might only proxy to request querystring */
+	SourceExclude: Field[];
+	/** mapped on body but might only proxy to request querystring */
+	SourceInclude: Field[];
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
+/** type has a custom json converter defined */
 interface IMultiGetOperation {
 	_index: IndexName;
 	_type: TypeName;
@@ -2216,22 +2571,36 @@ interface IMultiGetHit<T> {
 	Version: long;
 	Id: string;
 }
-interface MultiTermVectorsRequest extends Request {
+interface MultiTermVectorsRequest extends RequestBase<MultiTermVectorsRequestParameters> {
 	docs: IMultiTermVectorOperation[];
-	/** mapped on body but might only proxy to request querystring */ TermStatistics: boolean;
-	/** mapped on body but might only proxy to request querystring */ FieldStatistics: boolean;
-	/** mapped on body but might only proxy to request querystring */ Fields: Field[];
-	/** mapped on body but might only proxy to request querystring */ Offsets: boolean;
-	/** mapped on body but might only proxy to request querystring */ Positions: boolean;
-	/** mapped on body but might only proxy to request querystring */ Payloads: boolean;
-	/** mapped on body but might only proxy to request querystring */ Preference: string;
-	/** mapped on body but might only proxy to request querystring */ Routing: string;
-	/** mapped on body but might only proxy to request querystring */ Parent: string;
-	/** mapped on body but might only proxy to request querystring */ Realtime: boolean;
-	/** mapped on body but might only proxy to request querystring */ Version: long;
-	/** mapped on body but might only proxy to request querystring */ VersionType: VersionType;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	TermStatistics: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	FieldStatistics: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Fields: Field[];
+	/** mapped on body but might only proxy to request querystring */
+	Offsets: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Positions: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Payloads: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Preference: string;
+	/** mapped on body but might only proxy to request querystring */
+	Routing: string;
+	/** mapped on body but might only proxy to request querystring */
+	Parent: string;
+	/** mapped on body but might only proxy to request querystring */
+	Realtime: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Version: long;
+	/** mapped on body but might only proxy to request querystring */
+	VersionType: VersionType;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface IMultiTermVectorOperation {
 	_index: IndexName;
@@ -2273,16 +2642,25 @@ interface Token {
 	position: integer;
 	start_offset: integer;
 }
-interface DeleteRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Consistency: Consistency;
-	/** mapped on body but might only proxy to request querystring */ Parent: string;
-	/** mapped on body but might only proxy to request querystring */ Refresh: boolean;
-	/** mapped on body but might only proxy to request querystring */ Routing: string;
-	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Version: long;
-	/** mapped on body but might only proxy to request querystring */ VersionType: VersionType;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface DeleteRequest extends RequestBase<DeleteRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Consistency: Consistency;
+	/** mapped on body but might only proxy to request querystring */
+	Parent: string;
+	/** mapped on body but might only proxy to request querystring */
+	Refresh: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Routing: string;
+	/** mapped on body but might only proxy to request querystring */
+	Timeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Version: long;
+	/** mapped on body but might only proxy to request querystring */
+	VersionType: VersionType;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface DeleteResponse extends Response {
 	_index: string;
@@ -2291,29 +2669,49 @@ interface DeleteResponse extends Response {
 	_version: string;
 	found: boolean;
 }
-interface DocumentExistsRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Parent: string;
-	/** mapped on body but might only proxy to request querystring */ Preference: string;
-	/** mapped on body but might only proxy to request querystring */ Realtime: boolean;
-	/** mapped on body but might only proxy to request querystring */ Refresh: boolean;
-	/** mapped on body but might only proxy to request querystring */ Routing: string;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface DocumentExistsRequest extends RequestBase<DocumentExistsRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Parent: string;
+	/** mapped on body but might only proxy to request querystring */
+	Preference: string;
+	/** mapped on body but might only proxy to request querystring */
+	Realtime: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Refresh: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Routing: string;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface GetRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Fields: Field[];
-	/** mapped on body but might only proxy to request querystring */ Parent: string;
-	/** mapped on body but might only proxy to request querystring */ Preference: string;
-	/** mapped on body but might only proxy to request querystring */ Realtime: boolean;
-	/** mapped on body but might only proxy to request querystring */ Refresh: boolean;
-	/** mapped on body but might only proxy to request querystring */ Routing: string;
-	/** mapped on body but might only proxy to request querystring */ SourceEnabled: string[];
-	/** mapped on body but might only proxy to request querystring */ SourceExclude: Field[];
-	/** mapped on body but might only proxy to request querystring */ SourceInclude: Field[];
-	/** mapped on body but might only proxy to request querystring */ Version: long;
-	/** mapped on body but might only proxy to request querystring */ VersionType: VersionType;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface GetRequest extends RequestBase<GetRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Fields: Field[];
+	/** mapped on body but might only proxy to request querystring */
+	Parent: string;
+	/** mapped on body but might only proxy to request querystring */
+	Preference: string;
+	/** mapped on body but might only proxy to request querystring */
+	Realtime: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Refresh: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Routing: string;
+	/** mapped on body but might only proxy to request querystring */
+	SourceEnabled: string[];
+	/** mapped on body but might only proxy to request querystring */
+	SourceExclude: Field[];
+	/** mapped on body but might only proxy to request querystring */
+	SourceInclude: Field[];
+	/** mapped on body but might only proxy to request querystring */
+	Version: long;
+	/** mapped on body but might only proxy to request querystring */
+	VersionType: VersionType;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface GetResponse<T> extends Response {
 	_index: string;
@@ -2324,20 +2722,32 @@ interface GetResponse<T> extends Response {
 	_source: T;
 	fields: Map<string, any>[];
 }
-interface IndexRequest<TDocument> extends Request {
+interface IndexRequest<TDocument> extends RequestBase<IndexRequestParameters> {
 	Document: TDocument;
-	/** mapped on body but might only proxy to request querystring */ Consistency: Consistency;
-	/** mapped on body but might only proxy to request querystring */ OpType: OpType;
-	/** mapped on body but might only proxy to request querystring */ Parent: string;
-	/** mapped on body but might only proxy to request querystring */ Refresh: boolean;
-	/** mapped on body but might only proxy to request querystring */ Routing: string;
-	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Timestamp: Time;
-	/** mapped on body but might only proxy to request querystring */ Ttl: Time;
-	/** mapped on body but might only proxy to request querystring */ Version: long;
-	/** mapped on body but might only proxy to request querystring */ VersionType: VersionType;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	Consistency: Consistency;
+	/** mapped on body but might only proxy to request querystring */
+	OpType: OpType;
+	/** mapped on body but might only proxy to request querystring */
+	Parent: string;
+	/** mapped on body but might only proxy to request querystring */
+	Refresh: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Routing: string;
+	/** mapped on body but might only proxy to request querystring */
+	Timeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Timestamp: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Ttl: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Version: long;
+	/** mapped on body but might only proxy to request querystring */
+	VersionType: VersionType;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface IndexResponse extends Response {
 	_index: string;
@@ -2346,65 +2756,109 @@ interface IndexResponse extends Response {
 	_version: long;
 	created: boolean;
 }
-interface SourceRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Parent: string;
-	/** mapped on body but might only proxy to request querystring */ Preference: string;
-	/** mapped on body but might only proxy to request querystring */ Realtime: boolean;
-	/** mapped on body but might only proxy to request querystring */ Refresh: boolean;
-	/** mapped on body but might only proxy to request querystring */ Routing: string;
-	/** mapped on body but might only proxy to request querystring */ SourceEnabled: string[];
-	/** mapped on body but might only proxy to request querystring */ SourceExclude: Field[];
-	/** mapped on body but might only proxy to request querystring */ SourceInclude: Field[];
-	/** mapped on body but might only proxy to request querystring */ Version: long;
-	/** mapped on body but might only proxy to request querystring */ VersionType: VersionType;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface SourceRequest extends RequestBase<SourceRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Parent: string;
+	/** mapped on body but might only proxy to request querystring */
+	Preference: string;
+	/** mapped on body but might only proxy to request querystring */
+	Realtime: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Refresh: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Routing: string;
+	/** mapped on body but might only proxy to request querystring */
+	SourceEnabled: string[];
+	/** mapped on body but might only proxy to request querystring */
+	SourceExclude: Field[];
+	/** mapped on body but might only proxy to request querystring */
+	SourceInclude: Field[];
+	/** mapped on body but might only proxy to request querystring */
+	Version: long;
+	/** mapped on body but might only proxy to request querystring */
+	VersionType: VersionType;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface TermVectorsRequest<TDocument> extends Request {
+interface TermVectorsRequest<TDocument> extends RequestBase<TermVectorsRequestParameters> {
 	doc: TDocument;
 	per_field_analyzer: Map<Field, string>[];
-	/** mapped on body but might only proxy to request querystring */ TermStatistics: boolean;
-	/** mapped on body but might only proxy to request querystring */ FieldStatistics: boolean;
-	/** mapped on body but might only proxy to request querystring */ Dfs: boolean;
-	/** mapped on body but might only proxy to request querystring */ Fields: Field[];
-	/** mapped on body but might only proxy to request querystring */ Offsets: boolean;
-	/** mapped on body but might only proxy to request querystring */ Positions: boolean;
-	/** mapped on body but might only proxy to request querystring */ Payloads: boolean;
-	/** mapped on body but might only proxy to request querystring */ Preference: string;
-	/** mapped on body but might only proxy to request querystring */ Routing: string;
-	/** mapped on body but might only proxy to request querystring */ Parent: string;
-	/** mapped on body but might only proxy to request querystring */ Realtime: boolean;
-	/** mapped on body but might only proxy to request querystring */ Version: long;
-	/** mapped on body but might only proxy to request querystring */ VersionType: VersionType;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	TermStatistics: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	FieldStatistics: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Dfs: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Fields: Field[];
+	/** mapped on body but might only proxy to request querystring */
+	Offsets: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Positions: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Payloads: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Preference: string;
+	/** mapped on body but might only proxy to request querystring */
+	Routing: string;
+	/** mapped on body but might only proxy to request querystring */
+	Parent: string;
+	/** mapped on body but might only proxy to request querystring */
+	Realtime: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Version: long;
+	/** mapped on body but might only proxy to request querystring */
+	VersionType: VersionType;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface UpdateRequest<TDocument, TPartialDocument> extends Request {
-	/** mapped on body but might only proxy to request querystring */ Script: string;
+interface UpdateRequest<TDocument, TPartialDocument> extends RequestBase<UpdateRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	script: string;
 	script_file: string;
 	lang: string;
-	/** type has a custom json converter defined */ params: Map<string, any>[];
+	/** type has a custom json converter defined */
+	params: Map<string, any>[];
 	upsert: TDocument;
 	doc_as_upsert: boolean;
 	doc: TPartialDocument;
 	detect_noop: boolean;
 	Fields: Field[];
-	/** mapped on body but might only proxy to request querystring */ Consistency: Consistency;
-	/** mapped on body but might only proxy to request querystring */ Lang: string;
-	/** mapped on body but might only proxy to request querystring */ Parent: string;
-	/** mapped on body but might only proxy to request querystring */ Refresh: boolean;
-	/** mapped on body but might only proxy to request querystring */ RetryOnConflict: long;
-	/** mapped on body but might only proxy to request querystring */ Routing: string;
+	/** mapped on body but might only proxy to request querystring */
+	Consistency: Consistency;
+	/** mapped on body but might only proxy to request querystring */
+	Lang: string;
+	/** mapped on body but might only proxy to request querystring */
+	Parent: string;
+	/** mapped on body but might only proxy to request querystring */
+	Refresh: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	RetryOnConflict: long;
+	/** mapped on body but might only proxy to request querystring */
+	Routing: string;
 	ScriptQueryString: string;
-	/** mapped on body but might only proxy to request querystring */ ScriptId: string;
-	/** mapped on body but might only proxy to request querystring */ ScriptedUpsert: boolean;
-	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Timestamp: Time;
-	/** mapped on body but might only proxy to request querystring */ Ttl: Time;
-	/** mapped on body but might only proxy to request querystring */ Version: long;
-	/** mapped on body but might only proxy to request querystring */ VersionType: VersionType;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	script_id: string;
+	/** mapped on body but might only proxy to request querystring */
+	ScriptedUpsert: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Timeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Timestamp: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Ttl: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Version: long;
+	/** mapped on body but might only proxy to request querystring */
+	VersionType: VersionType;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface UpdateResponse<T> extends Response {
 	_shards: ShardsMetaData;
@@ -2419,48 +2873,72 @@ interface InstantGet<T> {
 	_source: T;
 	fields: Map<string, any>[];
 }
-interface BulkAliasRequest extends Request {
+interface BulkAliasRequest extends RequestBase<BulkAliasRequestParameters> {
 	actions: IAliasAction[];
-	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	Timeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface IAliasAction {
 }
 interface BulkAliasResponse extends AcknowledgedResponseBase {
 }
-interface AliasExistsRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface AliasExistsRequest extends RequestBase<AliasExistsRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface DeleteAliasRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface DeleteAliasRequest extends RequestBase<DeleteAliasRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Timeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface DeleteAliasResponse extends Response {
 }
-interface GetAliasRequest extends Request {
+interface GetAliasRequest extends RequestBase<GetAliasRequestParameters> {
 	Alias: string;
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface GetAliasesRequest extends Request {
+interface GetAliasesRequest extends RequestBase<GetAliasesRequestParameters> {
 	Alias: string;
-	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	Timeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface GetAliasesResponse extends Response {
 	Indices: Map<string, AliasDefinition[]>[];
@@ -2472,27 +2950,41 @@ interface AliasDefinition {
 	index_routing: string;
 	search_routing: string;
 }
-interface PutAliasRequest extends Request {
+interface PutAliasRequest extends RequestBase<PutAliasRequestParameters> {
 	routing: string;
-	filter: /** type has a custom json converter defined */ QueryContainer;
-	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	filter: QueryContainer;
+	/** mapped on body but might only proxy to request querystring */
+	Timeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface PutAliasResponse extends Response {
 }
-interface AnalyzeRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Analyzer: string;
-	/** mapped on body but might only proxy to request querystring */ CharFilters: string[];
-	/** mapped on body but might only proxy to request querystring */ Field: Field;
-	/** mapped on body but might only proxy to request querystring */ Filters: string[];
-	/** mapped on body but might only proxy to request querystring */ PreferLocal: boolean;
-	/** mapped on body but might only proxy to request querystring */ Text: string[];
-	/** mapped on body but might only proxy to request querystring */ Tokenizer: string;
-	/** mapped on body but might only proxy to request querystring */ Format: Format;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface AnalyzeRequest extends RequestBase<AnalyzeRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Analyzer: string;
+	/** mapped on body but might only proxy to request querystring */
+	CharFilters: string[];
+	/** mapped on body but might only proxy to request querystring */
+	Field: Field;
+	/** mapped on body but might only proxy to request querystring */
+	Filters: string[];
+	/** mapped on body but might only proxy to request querystring */
+	PreferLocal: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Text: string[];
+	/** mapped on body but might only proxy to request querystring */
+	Tokenizer: string;
+	/** mapped on body but might only proxy to request querystring */
+	Format: Format;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface AnalyzeResponse extends Response {
 	tokens: AnalyzeToken[];
@@ -2504,105 +2996,160 @@ interface AnalyzeToken {
 	end_offset: integer;
 	position: integer;
 }
-interface /** type has a custom json converter defined */ CreateIndexRequest extends Request {
+/** type has a custom json converter defined */
+interface CreateIndexRequest extends RequestBase<CreateIndexRequestParameters> {
 	Settings: Map<string, any>[];
 	Mappings: Map<TypeName, ITypeMapping>[];
 	Warmers: Map<TypeName, IWarmer>[];
 	Aliases: Map<IndexName, IAlias>[];
 	Similarity: Map<string, ISimilarity>[];
-	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ UpdateAllTypes: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	Timeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	UpdateAllTypes: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface ISimilarity {
 	type: string;
 }
 interface CreateIndexResponse extends AcknowledgedResponseBase {
 }
-interface DeleteIndexRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface DeleteIndexRequest extends RequestBase<DeleteIndexRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Timeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface DeleteIndexResponse extends IndicesResponseBase {
 }
-interface GetIndexRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ FlatSettings: boolean;
-	/** mapped on body but might only proxy to request querystring */ Human: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface GetIndexRequest extends RequestBase<GetIndexRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	FlatSettings: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Human: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface GetIndexResponse extends Response {
-	Indices: Map<string, /** type has a custom json converter defined */ IndexState>[];
+	Indices: Map<string, IndexState>[];
 }
-interface /** type has a custom json converter defined */ IndexState {
+/** type has a custom json converter defined */
+interface IndexState {
 	settings: Map<string, any>[];
 	mappings: Map<TypeName, ITypeMapping>[];
 	aliases: Map<IndexName, IAlias>[];
 	warmers: Map<TypeName, IWarmer>[];
 	similarity: Map<string, ISimilarity>[];
 }
-interface IndexExistsRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface IndexExistsRequest extends RequestBase<IndexExistsRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface ExistsResponse extends Response {
 	Exists: boolean;
 }
-interface CloseIndexRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface CloseIndexRequest extends RequestBase<CloseIndexRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Timeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface CloseIndexResponse extends AcknowledgedResponseBase {
 }
-interface OpenIndexRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface OpenIndexRequest extends RequestBase<OpenIndexRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Timeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface OpenIndexResponse extends AcknowledgedResponseBase {
 }
-interface TypeExistsRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface TypeExistsRequest extends RequestBase<TypeExistsRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface GetIndexSettingsRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ FlatSettings: boolean;
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ Human: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface GetIndexSettingsRequest extends RequestBase<GetIndexSettingsRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	FlatSettings: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Human: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface /** type has a custom json converter defined */ GetIndexSettingsResponse extends DictionaryResponseBase<string, IIndexState> {
+/** type has a custom json converter defined */
+interface GetIndexSettingsResponse extends DictionaryResponseBase<string, IIndexState> {
 	Indices: Map<string, IIndexState>[];
 }
+/** type has a custom json converter defined */
 interface IIndexState {
 	settings: Map<string, any>[];
 	aliases: Map<IndexName, IAlias>[];
@@ -2610,66 +3157,101 @@ interface IIndexState {
 	mappings: Map<TypeName, ITypeMapping>[];
 	similarity: Map<string, ISimilarity>[];
 }
-interface DeleteIndexTemplateRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface DeleteIndexTemplateRequest extends RequestBase<DeleteIndexTemplateRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Timeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface DeleteIndexTemplateResponse extends AcknowledgedResponseBase {
 }
-interface GetIndexTemplateRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ FlatSettings: boolean;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface GetIndexTemplateRequest extends RequestBase<GetIndexTemplateRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	FlatSettings: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface /** type has a custom json converter defined */ GetIndexTemplateResponse extends DictionaryResponseBase<string, TemplateMapping> {
+/** type has a custom json converter defined */
+interface GetIndexTemplateResponse extends DictionaryResponseBase<string, TemplateMapping> {
 	TemplateMappings: Map<string, TemplateMapping>[];
 }
-interface IndexTemplateExistsRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface IndexTemplateExistsRequest extends RequestBase<IndexTemplateExistsRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface PutIndexTemplateRequest extends Request {
+interface PutIndexTemplateRequest extends RequestBase<PutIndexTemplateRequestParameters> {
 	Template: string;
 	Order: integer;
 	Settings: Map<string, any>[];
 	Mappings: Map<TypeName, ITypeMapping>[];
 	Warmers: Map<TypeName, IWarmer>[];
 	Aliases: Map<IndexName, IAlias>[];
-	/** mapped on body but might only proxy to request querystring */ Create: boolean;
-	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ FlatSettings: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	Create: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Timeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	FlatSettings: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface PutIndexTemplateResponse extends AcknowledgedResponseBase {
 }
-interface /** type has a custom json converter defined */ UpdateIndexSettingsRequest extends Request {
+/** type has a custom json converter defined */
+interface UpdateIndexSettingsRequest extends RequestBase<UpdateIndexSettingsRequestParameters> {
 	IndexSettings: Map<string, any>[];
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ FlatSettings: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	FlatSettings: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface UpdateIndexSettingsResponse extends AcknowledgedResponseBase {
 }
-interface GetFieldMappingRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ IncludeDefaults: boolean;
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface GetFieldMappingRequest extends RequestBase<GetFieldMappingRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	IncludeDefaults: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface GetFieldMappingResponse extends Response {
 	Indices: Map<string, TypeFieldMappings>[];
@@ -2679,24 +3261,32 @@ interface TypeFieldMappings {
 }
 interface FieldMapping {
 	full_name: string;
-	/** type has a custom json converter defined */ mapping: Map<string, IFieldMapping>[];
+	/** type has a custom json converter defined */
+	mapping: Map<string, IFieldMapping>[];
 }
 interface IFieldMapping {
 }
-interface GetMappingRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface GetMappingRequest extends RequestBase<GetMappingRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface GetMappingResponse extends Response {
 	IsValid: boolean;
-	Mappings: Map<string, /** type has a custom json converter defined */ TypeMapping[]>[];
-	Mapping: /** type has a custom json converter defined */ TypeMapping;
+	Mappings: Map<string, TypeMapping[]>[];
+	Mapping: TypeMapping;
 }
-interface /** type has a custom json converter defined */ TypeMapping {
+/** type has a custom json converter defined */
+interface TypeMapping {
 	_all: IAllField;
 	analyzer: string;
 	date_detection: boolean;
@@ -2705,7 +3295,8 @@ interface /** type has a custom json converter defined */ TypeMapping {
 	dynamic_templates: Map<string, IDynamicTemplate>[];
 	_field_names: IFieldNamesField;
 	_index: IIndexField;
-	/** type has a custom json converter defined */ _meta: Map<string, any>[];
+	/** type has a custom json converter defined */
+	_meta: Map<string, any>[];
 	numeric_detection: boolean;
 	_parent: IParentField;
 	properties: Map<PropertyName, IProperty>[];
@@ -2714,10 +3305,12 @@ interface /** type has a custom json converter defined */ TypeMapping {
 	_size: ISizeField;
 	_source: ISourceField;
 	_timestamp: ITimestampField;
-	/** type has a custom json converter defined */ transform: IMappingTransform[];
+	/** type has a custom json converter defined */
+	transform: IMappingTransform[];
 	_ttl: ITtlField;
 }
-interface /** type has a custom json converter defined */ PutMappingRequest extends Request {
+/** type has a custom json converter defined */
+interface PutMappingRequest extends RequestBase<PutMappingRequestParameters> {
 	AllField: IAllField;
 	DateDetection: boolean;
 	DynamicDateFormats: string[];
@@ -2737,26 +3330,40 @@ interface /** type has a custom json converter defined */ PutMappingRequest exte
 	TimestampField: ITimestampField;
 	Transform: IMappingTransform[];
 	TtlField: ITtlField;
-	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ UpdateAllTypes: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	Timeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	UpdateAllTypes: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface PutMappingResponse extends IndicesResponseBase {
 }
-interface RecoveryStatusRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Detailed: boolean;
-	/** mapped on body but might only proxy to request querystring */ ActiveOnly: boolean;
-	/** mapped on body but might only proxy to request querystring */ Human: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface RecoveryStatusRequest extends RequestBase<RecoveryStatusRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Detailed: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ActiveOnly: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Human: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface RecoveryStatusResponse extends Response {
-	/** type has a custom json converter defined */ Indices: Map<string, RecoveryStatus>[];
+	/** type has a custom json converter defined */
+	Indices: Map<string, RecoveryStatus>[];
 }
 interface RecoveryStatus {
 	shards: ShardRecovery[];
@@ -2816,28 +3423,40 @@ interface RecoveryStartStatus {
 	check_index_time: long;
 	total_time_in_millis: string;
 }
-interface SegmentsRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ Human: boolean;
-	/** mapped on body but might only proxy to request querystring */ OperationThreading: string;
-	/** mapped on body but might only proxy to request querystring */ Verbose: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface SegmentsRequest extends RequestBase<SegmentsRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	Human: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	OperationThreading: string;
+	/** mapped on body but might only proxy to request querystring */
+	Verbose: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface SegmentsResponse extends Response {
 	_shards: ShardsMetaData;
-	/** type has a custom json converter defined */ indices: Map<string, IndexSegment>[];
+	/** type has a custom json converter defined */
+	indices: Map<string, IndexSegment>[];
 }
 interface IndexSegment {
-	/** type has a custom json converter defined */ shards: Map<string, ShardsSegment>[];
+	/** type has a custom json converter defined */
+	shards: Map<string, ShardsSegment>[];
 }
+/** type has a custom json converter defined */
 interface ShardsSegment {
 	num_committed_segments: integer;
 	num_search_segments: integer;
 	routing: ShardSegmentRouting;
-	/** type has a custom json converter defined */ Segments: Map<string, Segment>[];
+	/** type has a custom json converter defined */
+	Segments: Map<string, Segment>[];
 }
 interface ShardSegmentRouting {
 	state: string;
@@ -2853,107 +3472,170 @@ interface Segment {
 	committed: boolean;
 	Search: boolean;
 }
-interface IndicesStatsRequest extends Request {
+interface IndicesStatsRequest extends RequestBase<IndicesStatsRequestParameters> {
 	Types: TypeName[];
-	/** mapped on body but might only proxy to request querystring */ CompletionFields: Field[];
-	/** mapped on body but might only proxy to request querystring */ FielddataFields: Field[];
-	/** mapped on body but might only proxy to request querystring */ Fields: Field[];
-	/** mapped on body but might only proxy to request querystring */ Groups: string[];
-	/** mapped on body but might only proxy to request querystring */ Human: boolean;
-	/** mapped on body but might only proxy to request querystring */ Level: Level;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	CompletionFields: Field[];
+	/** mapped on body but might only proxy to request querystring */
+	FielddataFields: Field[];
+	/** mapped on body but might only proxy to request querystring */
+	Fields: Field[];
+	/** mapped on body but might only proxy to request querystring */
+	Groups: string[];
+	/** mapped on body but might only proxy to request querystring */
+	Human: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Level: Level;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface IndicesStatsResponse extends Response {
 	_shards: ShardsMetaData;
 	_all: IndicesStats;
-	/** type has a custom json converter defined */ indices: Map<string, IndicesStats>[];
+	/** type has a custom json converter defined */
+	indices: Map<string, IndicesStats>[];
 }
 interface IndicesStats {
 	primaries: IndexStats;
 	total: IndexStats;
 }
-interface ClearCacheRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ FieldData: boolean;
-	/** mapped on body but might only proxy to request querystring */ Fields: Field[];
-	/** mapped on body but might only proxy to request querystring */ Query: boolean;
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ Recycler: boolean;
-	/** mapped on body but might only proxy to request querystring */ Request: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface ClearCacheRequest extends RequestBase<ClearCacheRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	FieldData: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Fields: Field[];
+	/** mapped on body but might only proxy to request querystring */
+	Query: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	Recycler: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Request: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface ClearCacheResponse extends ShardsOperationResponseBase {
 }
-interface FlushRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Force: boolean;
-	/** mapped on body but might only proxy to request querystring */ WaitIfOngoing: boolean;
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface FlushRequest extends RequestBase<FlushRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Force: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	WaitIfOngoing: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface FlushResponse extends ShardsOperationResponseBase {
 }
-interface OptimizeRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Flush: boolean;
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ MaxNumSegments: long;
-	/** mapped on body but might only proxy to request querystring */ OnlyExpungeDeletes: boolean;
-	/** mapped on body but might only proxy to request querystring */ OperationThreading: string;
-	/** mapped on body but might only proxy to request querystring */ WaitForMerge: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface OptimizeRequest extends RequestBase<OptimizeRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Flush: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	MaxNumSegments: long;
+	/** mapped on body but might only proxy to request querystring */
+	OnlyExpungeDeletes: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	OperationThreading: string;
+	/** mapped on body but might only proxy to request querystring */
+	WaitForMerge: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface OptimizeResponse extends ShardsOperationResponseBase {
 }
-interface RefreshRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ Force: boolean;
-	/** mapped on body but might only proxy to request querystring */ OperationThreading: string;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface RefreshRequest extends RequestBase<RefreshRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	Force: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	OperationThreading: string;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface RefreshResponse extends ShardsOperationResponseBase {
 }
-interface SyncedFlushRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface SyncedFlushRequest extends RequestBase<SyncedFlushRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface SyncedFlushResponse extends ShardsOperationResponseBase {
 }
-interface UpgradeRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ WaitForCompletion: boolean;
-	/** mapped on body but might only proxy to request querystring */ OnlyAncientSegments: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface UpgradeRequest extends RequestBase<UpgradeRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	WaitForCompletion: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	OnlyAncientSegments: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface UpgradeResponse extends Response {
 	_shards: ShardsMetaData;
 }
-interface UpgradeStatusRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ Human: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface UpgradeStatusRequest extends RequestBase<UpgradeStatusRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	Human: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface /** type has a custom json converter defined */ UpgradeStatusResponse extends Response {
-	/** type has a custom json converter defined */ Upgrades: Map<string, UpgradeStatus>[];
+/** type has a custom json converter defined */
+interface UpgradeStatusResponse extends Response {
+	/** type has a custom json converter defined */
+	Upgrades: Map<string, UpgradeStatus>[];
 	SizeInBytes: long;
 	SizeToUpgradeInBytes: string;
 	SizeToUpgradeAncientInBytes: string;
@@ -2965,106 +3647,158 @@ interface UpgradeStatus {
 	size_to_upgrade_in_bytes: string;
 	size_to_upgrade_ancient_in_bytes: string;
 }
-interface DeleteWarmerRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface DeleteWarmerRequest extends RequestBase<DeleteWarmerRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface DeleteWarmerResponse extends AcknowledgedResponseBase {
 }
-interface GetWarmerRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface GetWarmerRequest extends RequestBase<GetWarmerRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface /** type has a custom json converter defined */ GetWarmerResponse extends Response {
-	/** type has a custom json converter defined */ Indices: Map<string, Map<TypeName, IWarmer>[]>[];
+/** type has a custom json converter defined */
+interface GetWarmerResponse extends Response {
+	/** type has a custom json converter defined */
+	Indices: Map<string, Map<TypeName, IWarmer>[]>[];
 }
-interface /** type has a custom json converter defined */ PutWarmerRequest extends Request {
+/** type has a custom json converter defined */
+interface PutWarmerRequest extends RequestBase<PutWarmerRequestParameters> {
 	Search: ISearchRequest;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ RequestCache: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	RequestCache: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface PutWarmerResponse extends AcknowledgedResponseBase {
 }
-interface DeleteScriptRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Version: long;
-	/** mapped on body but might only proxy to request querystring */ VersionType: VersionType;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface DeleteScriptRequest extends RequestBase<DeleteScriptRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Version: long;
+	/** mapped on body but might only proxy to request querystring */
+	VersionType: VersionType;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface DeleteScriptResponse extends AcknowledgedResponseBase {
 }
-interface GetScriptRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Version: long;
-	/** mapped on body but might only proxy to request querystring */ VersionType: VersionType;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface GetScriptRequest extends RequestBase<GetScriptRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Version: long;
+	/** mapped on body but might only proxy to request querystring */
+	VersionType: VersionType;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface GetScriptResponse extends Response {
 	script: string;
 }
-interface PutScriptRequest extends Request {
+interface PutScriptRequest extends RequestBase<PutScriptRequestParameters> {
 	script: string;
-	/** mapped on body but might only proxy to request querystring */ OpType: OpType;
-	/** mapped on body but might only proxy to request querystring */ Version: long;
-	/** mapped on body but might only proxy to request querystring */ VersionType: VersionType;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	OpType: OpType;
+	/** mapped on body but might only proxy to request querystring */
+	Version: long;
+	/** mapped on body but might only proxy to request querystring */
+	VersionType: VersionType;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface PutScriptResponse extends AcknowledgedResponseBase {
 }
-interface /** type has a custom json converter defined */ CreateRepositoryRequest extends Request {
+/** type has a custom json converter defined */
+interface CreateRepositoryRequest extends RequestBase<CreateRepositoryRequestParameters> {
 	Repository: ISnapshotRepository;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Verify: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Timeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Verify: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface ISnapshotRepository {
 	type: string;
 }
 interface CreateRepositoryResponse extends AcknowledgedResponseBase {
 }
-interface DeleteRepositoryRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface DeleteRepositoryRequest extends RequestBase<DeleteRepositoryRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Timeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface DeleteRepositoryResponse extends AcknowledgedResponseBase {
 }
-interface GetRepositoryRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface GetRepositoryRequest extends RequestBase<GetRepositoryRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface /** type has a custom json converter defined */ GetRepositoryResponse extends Response {
+/** type has a custom json converter defined */
+interface GetRepositoryResponse extends Response {
 	Repositories: Map<string, ISnapshotRepository>[];
 }
-interface VerifyRepositoryRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface VerifyRepositoryRequest extends RequestBase<VerifyRepositoryRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Timeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface VerifyRepositoryResponse extends Response {
-	/** type has a custom json converter defined */ nodes: Map<string, CompactNodeInfo>[];
+	/** type has a custom json converter defined */
+	nodes: Map<string, CompactNodeInfo>[];
 }
 interface CompactNodeInfo {
 	name: string;
 }
-interface RestoreRequest extends Request {
+interface RestoreRequest extends RequestBase<RestoreRequestParameters> {
 	indices: Indices;
 	ignore_unavailable: boolean;
 	include_global_state: boolean;
@@ -3072,11 +3806,16 @@ interface RestoreRequest extends Request {
 	rename_replacement: string;
 	index_settings: IUpdateIndexSettingsRequest;
 	ignore_index_settings: string[];
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ WaitForCompletion: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	WaitForCompletion: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
+/** type has a custom json converter defined */
 interface IUpdateIndexSettingsRequest {
 	IndexSettings: Map<string, any>[];
 	Index: Indices;
@@ -3089,17 +3828,23 @@ interface SnapshotRestore {
 	indices: IndexName[];
 	shards: ShardsMetaData;
 }
-interface DeleteSnapshotRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface DeleteSnapshotRequest extends RequestBase<DeleteSnapshotRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface DeleteSnapshotResponse extends AcknowledgedResponseBase {
 }
-interface GetSnapshotRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface GetSnapshotRequest extends RequestBase<GetSnapshotRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface GetSnapshotResponse extends Response {
 	snapshots: Snapshot[];
@@ -3124,24 +3869,32 @@ interface SnapshotShardFailure {
 	reason: string;
 	status: string;
 }
-interface SnapshotRequest extends Request {
-	/** type has a custom json converter defined */ indices: Indices;
+interface SnapshotRequest extends RequestBase<SnapshotRequestParameters> {
+	/** type has a custom json converter defined */
+	indices: Indices;
 	ignore_unavailable: boolean;
 	include_global_state: boolean;
 	partial: boolean;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ WaitForCompletion: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	WaitForCompletion: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface SnapshotResponse extends Response {
 	accepted: boolean;
 	snapshot: Snapshot;
 }
-interface SnapshotStatusRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface SnapshotStatusRequest extends RequestBase<SnapshotStatusRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface SnapshotStatusResponse extends Response {
 	snapshots: SnapshotStatus[];
@@ -3175,46 +3928,78 @@ interface SnapshotIndexStats {
 	stats: SnapshotStats;
 	shards: Map<string, SnapshotShardsStats>[];
 }
-interface /** type has a custom json converter defined */ CountRequest extends Request {
-	query: /** type has a custom json converter defined */ QueryContainer;
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ MinScore: double;
-	/** mapped on body but might only proxy to request querystring */ Preference: string;
-	/** mapped on body but might only proxy to request querystring */ Routing: string;
-	/** mapped on body but might only proxy to request querystring */ QueryOnQueryString: string;
-	/** mapped on body but might only proxy to request querystring */ Analyzer: string;
-	/** mapped on body but might only proxy to request querystring */ AnalyzeWildcard: boolean;
-	/** mapped on body but might only proxy to request querystring */ DefaultOperator: DefaultOperator;
-	/** mapped on body but might only proxy to request querystring */ Df: string;
-	/** mapped on body but might only proxy to request querystring */ Lenient: boolean;
-	/** mapped on body but might only proxy to request querystring */ LowercaseExpandedTerms: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+/** type has a custom json converter defined */
+interface CountRequest extends RequestBase<CountRequestParameters> {
+	query: QueryContainer;
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	MinScore: double;
+	/** mapped on body but might only proxy to request querystring */
+	Preference: string;
+	/** mapped on body but might only proxy to request querystring */
+	Routing: string;
+	/** mapped on body but might only proxy to request querystring */
+	QueryOnQueryString: string;
+	/** mapped on body but might only proxy to request querystring */
+	Analyzer: string;
+	/** mapped on body but might only proxy to request querystring */
+	AnalyzeWildcard: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	DefaultOperator: DefaultOperator;
+	/** mapped on body but might only proxy to request querystring */
+	Df: string;
+	/** mapped on body but might only proxy to request querystring */
+	Lenient: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	LowercaseExpandedTerms: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface CountResponse extends Response {
 	count: long;
 	_shards: ShardsMetaData;
 }
-interface ExplainRequest<TDocument> extends Request {
-	query: /** type has a custom json converter defined */ QueryContainer;
-	/** mapped on body but might only proxy to request querystring */ AnalyzeWildcard: boolean;
-	/** mapped on body but might only proxy to request querystring */ Analyzer: string;
-	/** mapped on body but might only proxy to request querystring */ DefaultOperator: DefaultOperator;
-	/** mapped on body but might only proxy to request querystring */ Df: string;
-	/** mapped on body but might only proxy to request querystring */ Fields: Field[];
-	/** mapped on body but might only proxy to request querystring */ Lenient: boolean;
-	/** mapped on body but might only proxy to request querystring */ LowercaseExpandedTerms: boolean;
-	/** mapped on body but might only proxy to request querystring */ Parent: string;
-	/** mapped on body but might only proxy to request querystring */ Preference: string;
-	/** mapped on body but might only proxy to request querystring */ QueryOnQueryString: string;
-	/** mapped on body but might only proxy to request querystring */ Routing: string;
-	/** mapped on body but might only proxy to request querystring */ SourceEnabled: string[];
-	/** mapped on body but might only proxy to request querystring */ SourceExclude: Field[];
-	/** mapped on body but might only proxy to request querystring */ SourceInclude: Field[];
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface ExplainRequest<TDocument> extends RequestBase<ExplainRequestParameters> {
+	query: QueryContainer;
+	/** mapped on body but might only proxy to request querystring */
+	AnalyzeWildcard: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Analyzer: string;
+	/** mapped on body but might only proxy to request querystring */
+	DefaultOperator: DefaultOperator;
+	/** mapped on body but might only proxy to request querystring */
+	Df: string;
+	/** mapped on body but might only proxy to request querystring */
+	Fields: Field[];
+	/** mapped on body but might only proxy to request querystring */
+	Lenient: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	LowercaseExpandedTerms: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Parent: string;
+	/** mapped on body but might only proxy to request querystring */
+	Preference: string;
+	/** mapped on body but might only proxy to request querystring */
+	QueryOnQueryString: string;
+	/** mapped on body but might only proxy to request querystring */
+	Routing: string;
+	/** mapped on body but might only proxy to request querystring */
+	SourceEnabled: string[];
+	/** mapped on body but might only proxy to request querystring */
+	SourceExclude: Field[];
+	/** mapped on body but might only proxy to request querystring */
+	SourceInclude: Field[];
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface ExplainResponse<T> extends Response {
 	matched: boolean;
@@ -3226,15 +4011,21 @@ interface ExplanationDetail {
 	description: string;
 	details: ExplanationDetail[];
 }
-interface FieldStatsRequest extends Request {
+interface FieldStatsRequest extends RequestBase<FieldStatsRequestParameters> {
 	fields: Field[];
 	index_constraints: Map<Field, IIndexConstraint>[];
-	/** mapped on body but might only proxy to request querystring */ Level: Level;
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	Level: Level;
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface IIndexConstraint {
 	min_value: IIndexConstraintComparison;
@@ -3263,11 +4054,15 @@ interface FieldStatsField {
 	min_value: string;
 	max_value: string;
 }
-interface /** type has a custom json converter defined */ MultiSearchRequest extends Request {
+/** type has a custom json converter defined */
+interface MultiSearchRequest extends RequestBase<MultiSearchRequestParameters> {
 	Operations: Map<string, ISearchRequest>[];
-	/** mapped on body but might only proxy to request querystring */ SearchType: SearchType;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	SearchType: SearchType;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface MultiSearchResponse extends Response {
 	IsValid: boolean;
@@ -3281,13 +4076,19 @@ interface IResponse {
 	OriginalException: Exception;
 	DebugInformation: string;
 }
-interface /** type has a custom json converter defined */ MultiPercolateRequest extends Request {
+/** type has a custom json converter defined */
+interface MultiPercolateRequest extends RequestBase<MultiPercolateRequestParameters> {
 	Percolations: IPercolateOperation[];
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface IPercolateOperation {
 	MultiPercolateName: string;
@@ -3295,8 +4096,8 @@ interface IPercolateOperation {
 	track_scores: boolean;
 	sort: ISort[];
 	highlight: IHighlight;
-	query: /** type has a custom json converter defined */ QueryContainer;
-	filter: /** type has a custom json converter defined */ QueryContainer;
+	query: QueryContainer;
+	filter: QueryContainer;
 	aggs: Map<string, IAggregationContainer>[];
 }
 interface MultiPercolateResponse extends Response {
@@ -3318,56 +4119,82 @@ interface PercolatorMatch {
 	_index: string;
 	_score: double;
 }
-interface PercolateRequest<TDocument> extends Request {
+interface PercolateRequest<TDocument> extends RequestBase<PercolateRequestParameters> {
 	MultiPercolateName: string;
 	Highlight: IHighlight;
-	Query: /** type has a custom json converter defined */ QueryContainer;
-	Filter: /** type has a custom json converter defined */ QueryContainer;
+	Query: QueryContainer;
+	Filter: QueryContainer;
 	Aggregations: Map<string, IAggregationContainer>[];
 	Size: integer;
 	TrackScores: boolean;
 	doc: TDocument;
 	Sort: ISort[];
-	/** mapped on body but might only proxy to request querystring */ Routing: string[];
-	/** mapped on body but might only proxy to request querystring */ Preference: string;
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ PercolateIndex: string;
-	/** mapped on body but might only proxy to request querystring */ PercolateType: string;
-	/** mapped on body but might only proxy to request querystring */ PercolateRouting: string;
-	/** mapped on body but might only proxy to request querystring */ PercolatePreference: string;
-	/** mapped on body but might only proxy to request querystring */ PercolateFormat: PercolateFormat;
-	/** mapped on body but might only proxy to request querystring */ Version: long;
-	/** mapped on body but might only proxy to request querystring */ VersionType: VersionType;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	Routing: string[];
+	/** mapped on body but might only proxy to request querystring */
+	Preference: string;
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	PercolateIndex: string;
+	/** mapped on body but might only proxy to request querystring */
+	PercolateType: string;
+	/** mapped on body but might only proxy to request querystring */
+	PercolateRouting: string;
+	/** mapped on body but might only proxy to request querystring */
+	PercolatePreference: string;
+	/** mapped on body but might only proxy to request querystring */
+	PercolateFormat: PercolateFormat;
+	/** mapped on body but might only proxy to request querystring */
+	Version: long;
+	/** mapped on body but might only proxy to request querystring */
+	VersionType: VersionType;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface PercolateCountRequest<TDocument> extends Request {
+interface PercolateCountRequest<TDocument> extends RequestBase<PercolateCountRequestParameters> {
 	MultiPercolateName: string;
 	Size: integer;
 	TrackScores: boolean;
 	Sort: ISort[];
 	Highlight: IHighlight;
-	Query: /** type has a custom json converter defined */ QueryContainer;
-	Filter: /** type has a custom json converter defined */ QueryContainer;
+	Query: QueryContainer;
+	Filter: QueryContainer;
 	Aggregations: Map<string, IAggregationContainer>[];
 	doc: TDocument;
-	/** mapped on body but might only proxy to request querystring */ Routing: string[];
-	/** mapped on body but might only proxy to request querystring */ Preference: string;
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ PercolateIndex: string;
-	/** mapped on body but might only proxy to request querystring */ PercolateType: string;
-	/** mapped on body but might only proxy to request querystring */ Version: long;
-	/** mapped on body but might only proxy to request querystring */ VersionType: VersionType;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	Routing: string[];
+	/** mapped on body but might only proxy to request querystring */
+	Preference: string;
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	PercolateIndex: string;
+	/** mapped on body but might only proxy to request querystring */
+	PercolateType: string;
+	/** mapped on body but might only proxy to request querystring */
+	Version: long;
+	/** mapped on body but might only proxy to request querystring */
+	VersionType: VersionType;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface /** type has a custom json converter defined */ RegisterPercolatorRequest extends Request {
+/** type has a custom json converter defined */
+interface RegisterPercolatorRequest extends RequestBase<IndexRequestParameters> {
 	Metadata: Map<string, any>[];
-	Query: /** type has a custom json converter defined */ QueryContainer;
+	Query: QueryContainer;
 }
 interface RegisterPercolatorResponse extends Response {
 	created: boolean;
@@ -3376,7 +4203,7 @@ interface RegisterPercolatorResponse extends Response {
 	_id: string;
 	_version: integer;
 }
-interface UnregisterPercolatorRequest extends Request {
+interface UnregisterPercolatorRequest extends RequestBase<DeleteRequestParameters> {
 }
 interface UnregisterPercolatorResponse extends Response {
 	found: boolean;
@@ -3385,26 +4212,31 @@ interface UnregisterPercolatorResponse extends Response {
 	_id: string;
 	_version: integer;
 }
-interface ClearScrollRequest extends Request {
+interface ClearScrollRequest extends RequestBase<ClearScrollRequestParameters> {
 	scroll_id: string[];
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface ClearScrollResponse extends Response {
 }
-interface ScrollRequest extends Request {
+interface ScrollRequest extends RequestBase<ScrollRequestParameters> {
 	CovariantTypes: Types;
 	TypeSelector: Func<any, Hit<any>, Type>;
 	scroll: Time;
 	scroll_id: string;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface Hit<T> {
 	fields: Map<string, any>[];
 	_source: T;
 	_index: string;
-	/** type has a custom json converter defined */ inner_hits: Map<string, InnerHitsResult>[];
+	/** type has a custom json converter defined */
+	inner_hits: Map<string, InnerHitsResult>[];
 	_score: double;
 	_type: string;
 	_version: long;
@@ -3436,9 +4268,11 @@ interface Explanation {
 	description: string;
 	details: ExplanationDetail[];
 }
+/** type has a custom json converter defined */
 interface ILazyDocument {
 }
-interface /** type has a custom json converter defined */ SearchRequest extends Request {
+/** type has a custom json converter defined */
+interface SearchRequest extends RequestBase<SearchRequestParameters> {
 	timeout: string;
 	from: integer;
 	size: integer;
@@ -3450,43 +4284,66 @@ interface /** type has a custom json converter defined */ SearchRequest extends 
 	fields: Field[];
 	fielddata_fields: Field[];
 	script_fields: Map<string, IScriptField>[];
-	/** type has a custom json converter defined */ _source: ISourceFilter;
+	/** type has a custom json converter defined */
+	_source: ISourceFilter;
 	sort: ISort[];
-	/** type has a custom json converter defined */ indices_boost: Map<IndexName, double>[];
-	post_filter: /** type has a custom json converter defined */ QueryContainer;
+	/** type has a custom json converter defined */
+	indices_boost: Map<IndexName, double>[];
+	post_filter: QueryContainer;
 	inner_hits: Map<string, IInnerHitsContainer>[];
-	query: /** type has a custom json converter defined */ QueryContainer;
+	query: QueryContainer;
 	rescore: IRescore;
 	suggest: Map<string, ISuggestBucket>[];
 	highlight: IHighlight;
 	aggs: Map<string, IAggregationContainer>[];
 	TypeSelector: Func<any, Hit<any>, Type>;
-	/** mapped on body but might only proxy to request querystring */ Analyzer: string;
-	/** mapped on body but might only proxy to request querystring */ AnalyzeWildcard: boolean;
-	/** mapped on body but might only proxy to request querystring */ DefaultOperator: DefaultOperator;
-	/** mapped on body but might only proxy to request querystring */ Df: string;
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ Lenient: boolean;
-	/** mapped on body but might only proxy to request querystring */ LowercaseExpandedTerms: boolean;
-	/** mapped on body but might only proxy to request querystring */ Preference: string;
-	/** mapped on body but might only proxy to request querystring */ Routing: string[];
-	/** mapped on body but might only proxy to request querystring */ Scroll: Time;
-	/** mapped on body but might only proxy to request querystring */ SearchType: SearchType;
-	/** mapped on body but might only proxy to request querystring */ Stats: string[];
-	/** mapped on body but might only proxy to request querystring */ SuggestField: Field;
-	/** mapped on body but might only proxy to request querystring */ SuggestMode: SuggestMode;
-	/** mapped on body but might only proxy to request querystring */ SuggestSize: long;
-	/** mapped on body but might only proxy to request querystring */ SuggestText: string;
-	/** mapped on body but might only proxy to request querystring */ RequestCache: boolean;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	Analyzer: string;
+	/** mapped on body but might only proxy to request querystring */
+	AnalyzeWildcard: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	DefaultOperator: DefaultOperator;
+	/** mapped on body but might only proxy to request querystring */
+	Df: string;
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	Lenient: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	LowercaseExpandedTerms: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Preference: string;
+	/** mapped on body but might only proxy to request querystring */
+	Routing: string[];
+	/** mapped on body but might only proxy to request querystring */
+	Scroll: Time;
+	/** mapped on body but might only proxy to request querystring */
+	SearchType: SearchType;
+	/** mapped on body but might only proxy to request querystring */
+	Stats: string[];
+	/** mapped on body but might only proxy to request querystring */
+	SuggestField: Field;
+	/** mapped on body but might only proxy to request querystring */
+	SuggestMode: SuggestMode;
+	/** mapped on body but might only proxy to request querystring */
+	SuggestSize: long;
+	/** mapped on body but might only proxy to request querystring */
+	SuggestText: string;
+	/** mapped on body but might only proxy to request querystring */
+	RequestCache: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface SearchResponse<T> extends Response {
 	ApiCall: IApiCallDetails;
 	_shards: ShardsMetaData;
 	hits: HitsMetaData<T>;
-	/** type has a custom json converter defined */ aggregations: Map<string, IAggregate>[];
+	/** type has a custom json converter defined */
+	aggregations: Map<string, IAggregate>[];
 	Aggs: AggregationsHelper;
 	suggest: Map<string, Suggest[]>[];
 	took: integer;
@@ -3535,40 +4392,65 @@ interface Suggest {
 	text: string;
 	options: SuggestOption[];
 }
+/** type has a custom json converter defined */
 interface SuggestOption {
 	freq: integer;
 	score: double;
 	text: string;
 	highlighted: string;
 }
-interface /** type has a custom json converter defined */ SearchExistsRequest extends Request {
-	query: /** type has a custom json converter defined */ QueryContainer;
+/** type has a custom json converter defined */
+interface SearchExistsRequest extends RequestBase<SearchExistsRequestParameters> {
+	query: QueryContainer;
 	QueryString: string;
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ MinScore: double;
-	/** mapped on body but might only proxy to request querystring */ Preference: string;
-	/** mapped on body but might only proxy to request querystring */ Routing: string;
-	/** mapped on body but might only proxy to request querystring */ QueryOnQueryString: string;
-	/** mapped on body but might only proxy to request querystring */ Analyzer: string;
-	/** mapped on body but might only proxy to request querystring */ AnalyzeWildcard: boolean;
-	/** mapped on body but might only proxy to request querystring */ DefaultOperator: DefaultOperator;
-	/** mapped on body but might only proxy to request querystring */ Df: string;
-	/** mapped on body but might only proxy to request querystring */ Lenient: boolean;
-	/** mapped on body but might only proxy to request querystring */ LowercaseExpandedTerms: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	MinScore: double;
+	/** mapped on body but might only proxy to request querystring */
+	Preference: string;
+	/** mapped on body but might only proxy to request querystring */
+	Routing: string;
+	/** mapped on body but might only proxy to request querystring */
+	QueryOnQueryString: string;
+	/** mapped on body but might only proxy to request querystring */
+	Analyzer: string;
+	/** mapped on body but might only proxy to request querystring */
+	AnalyzeWildcard: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	DefaultOperator: DefaultOperator;
+	/** mapped on body but might only proxy to request querystring */
+	Df: string;
+	/** mapped on body but might only proxy to request querystring */
+	Lenient: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	LowercaseExpandedTerms: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface SearchShardsRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Preference: string;
-	/** mapped on body but might only proxy to request querystring */ Routing: string;
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface SearchShardsRequest extends RequestBase<SearchShardsRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Preference: string;
+	/** mapped on body but might only proxy to request querystring */
+	Routing: string;
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface SearchShardsResponse extends Response {
 	shards: SearchShard[][];
@@ -3586,81 +4468,128 @@ interface SearchNode {
 	name: string;
 	transport_address: string;
 }
-interface SearchTemplateRequest extends Request {
+interface SearchTemplateRequest extends RequestBase<SearchTemplateRequestParameters> {
 	template: string;
 	file: string;
 	id: string;
 	params: Map<string, any>[];
 	TypeSelector: Func<any, Hit<any>, Type>;
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ Preference: string;
-	/** mapped on body but might only proxy to request querystring */ Routing: string[];
-	/** mapped on body but might only proxy to request querystring */ Scroll: Time;
-	/** mapped on body but might only proxy to request querystring */ SearchType: SearchType;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	Preference: string;
+	/** mapped on body but might only proxy to request querystring */
+	Routing: string[];
+	/** mapped on body but might only proxy to request querystring */
+	Scroll: Time;
+	/** mapped on body but might only proxy to request querystring */
+	SearchType: SearchType;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface DeleteSearchTemplateRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Version: long;
-	/** mapped on body but might only proxy to request querystring */ VersionType: VersionType;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface DeleteSearchTemplateRequest extends RequestBase<DeleteSearchTemplateRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Version: long;
+	/** mapped on body but might only proxy to request querystring */
+	VersionType: VersionType;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface DeleteSearchTemplateResponse extends AcknowledgedResponseBase {
 }
-interface GetSearchTemplateRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Version: long;
-	/** mapped on body but might only proxy to request querystring */ VersionType: VersionType;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface GetSearchTemplateRequest extends RequestBase<GetSearchTemplateRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Version: long;
+	/** mapped on body but might only proxy to request querystring */
+	VersionType: VersionType;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface GetSearchTemplateResponse extends Response {
 	template: string;
 }
-interface /** type has a custom json converter defined */ PutSearchTemplateRequest extends Request {
+/** type has a custom json converter defined */
+interface PutSearchTemplateRequest extends RequestBase<PutSearchTemplateRequestParameters> {
 	template: string;
-	/** mapped on body but might only proxy to request querystring */ OpType: OpType;
-	/** mapped on body but might only proxy to request querystring */ Version: long;
-	/** mapped on body but might only proxy to request querystring */ VersionType: VersionType;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	OpType: OpType;
+	/** mapped on body but might only proxy to request querystring */
+	Version: long;
+	/** mapped on body but might only proxy to request querystring */
+	VersionType: VersionType;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface PutSearchTemplateResponse extends AcknowledgedResponseBase {
 }
-interface /** type has a custom json converter defined */ SuggestRequest extends Request {
+/** type has a custom json converter defined */
+interface SuggestRequest extends RequestBase<SuggestRequestParameters> {
 	GlobalText: string;
 	Suggest: Map<string, ISuggestBucket>[];
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ Preference: string;
-	/** mapped on body but might only proxy to request querystring */ Routing: string;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	Preference: string;
+	/** mapped on body but might only proxy to request querystring */
+	Routing: string;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface /** type has a custom json converter defined */ SuggestResponse extends Response {
+/** type has a custom json converter defined */
+interface SuggestResponse extends Response {
 	Shards: ShardsMetaData;
 	Suggestions: Map<string, Suggest[]>[];
 }
-interface ValidateQueryRequest extends Request {
-	query: /** type has a custom json converter defined */ QueryContainer;
-	/** mapped on body but might only proxy to request querystring */ Explain: boolean;
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ OperationThreading: string;
-	/** mapped on body but might only proxy to request querystring */ QueryOnQueryString: string;
-	/** mapped on body but might only proxy to request querystring */ Analyzer: string;
-	/** mapped on body but might only proxy to request querystring */ AnalyzeWildcard: boolean;
-	/** mapped on body but might only proxy to request querystring */ DefaultOperator: DefaultOperator;
-	/** mapped on body but might only proxy to request querystring */ Df: string;
-	/** mapped on body but might only proxy to request querystring */ Lenient: boolean;
-	/** mapped on body but might only proxy to request querystring */ LowercaseExpandedTerms: boolean;
-	/** mapped on body but might only proxy to request querystring */ Rewrite: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface ValidateQueryRequest extends RequestBase<ValidateQueryRequestParameters> {
+	query: QueryContainer;
+	/** mapped on body but might only proxy to request querystring */
+	Explain: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	OperationThreading: string;
+	/** mapped on body but might only proxy to request querystring */
+	QueryOnQueryString: string;
+	/** mapped on body but might only proxy to request querystring */
+	Analyzer: string;
+	/** mapped on body but might only proxy to request querystring */
+	AnalyzeWildcard: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	DefaultOperator: DefaultOperator;
+	/** mapped on body but might only proxy to request querystring */
+	Df: string;
+	/** mapped on body but might only proxy to request querystring */
+	Lenient: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	LowercaseExpandedTerms: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Rewrite: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 interface ValidateQueryResponse extends Response {
 	valid: boolean;
@@ -3673,32 +4602,51 @@ interface ValidationExplanation {
 	error: string;
 	explanation: string;
 }
-interface CatHelpRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Help: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface CatHelpRequest extends RequestBase<CatHelpRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Help: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface CatNodeattrsRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Local: boolean;
-	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
-	/** mapped on body but might only proxy to request querystring */ H: string[];
-	/** mapped on body but might only proxy to request querystring */ Help: boolean;
-	/** mapped on body but might only proxy to request querystring */ V: boolean;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface CatNodeattrsRequest extends RequestBase<CatNodeattrsRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Local: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	MasterTimeout: Time;
+	/** mapped on body but might only proxy to request querystring */
+	H: string[];
+	/** mapped on body but might only proxy to request querystring */
+	Help: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	V: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface IndicesShardStoresRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Status: string[];
-	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
-	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
-	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
-	/** mapped on body but might only proxy to request querystring */ OperationThreading: string;
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface IndicesShardStoresRequest extends RequestBase<IndicesShardStoresRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Status: string[];
+	/** mapped on body but might only proxy to request querystring */
+	IgnoreUnavailable: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	AllowNoIndices: boolean;
+	/** mapped on body but might only proxy to request querystring */
+	ExpandWildcards: ExpandWildcards;
+	/** mapped on body but might only proxy to request querystring */
+	OperationThreading: string;
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
-interface RenderSearchTemplateRequest extends Request {
-	/** mapped on body but might only proxy to request querystring */ Source: string;
-	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
+interface RenderSearchTemplateRequest extends RequestBase<RenderSearchTemplateRequestParameters> {
+	/** mapped on body but might only proxy to request querystring */
+	Source: string;
+	/** mapped on body but might only proxy to request querystring */
+	FilterPath: string;
 }
 enum HttpMethod {
 	GET = 0,
@@ -3878,7 +4826,8 @@ interface ThreadStats {
 	peak_count: long;
 }
 interface GarbageCollectionStats {
-	/** type has a custom json converter defined */ collectors: Map<string, GarbageCollectionGenerationStats>[];
+	/** type has a custom json converter defined */
+	collectors: Map<string, GarbageCollectionGenerationStats>[];
 }
 interface GarbageCollectionGenerationStats {
 	collection_count: long;

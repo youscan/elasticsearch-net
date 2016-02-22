@@ -60,15 +60,6 @@ namespace Nest.TypescriptGenerator
 			var propertyName = property.MemberInfo.Name;
 
 			if (declaringType == null) return propertyName;
-			var nonGenericTypeName = RemoveGeneric.Replace(declaringType.Name, "$1");
-			
-			if (declaringType.Name.Contains("Request") && RequestParameters.ContainsKey(nonGenericTypeName))
-			{
-				var rp = RequestParameters[nonGenericTypeName];
-				var method = rp.GetMethod(propertyName);
-				if (method != null)
-					return $"/** mapped on body but might only proxy to request querystring */ {propertyName}";
-			}
 			var iface = declaringType.GetInterfaces().FirstOrDefault(ii => ii.Name == "I" + declaringType.Name);
 			var ifaceProperty = iface?.GetProperty(propertyName);
 
@@ -78,31 +69,14 @@ namespace Nest.TypescriptGenerator
 			if (!string.IsNullOrWhiteSpace(jsonPropertyAttribute?.PropertyName))
 				propertyName = jsonPropertyAttribute.PropertyName;
 
-			var jsonConverterAttribute = ifaceProperty?.GetCustomAttribute<JsonConverterAttribute>() ??
-			                             property.MemberInfo.GetCustomAttribute<JsonConverterAttribute>();
-
-			if (jsonConverterAttribute != null)
-				propertyName = HereBeDragons(propertyName);
-
 			return propertyName;
 		}
 
 
 		private static string FormatType(TsType type, ITsTypeFormatter formatter)
 		{
-			var iface = type.Type.GetInterfaces().FirstOrDefault(i => i.Name == "I" + type.Type.Name);
-			var name = GenerateTypeName(type);
-
-			if (iface == null) return name;
-
-			var jsonConverterAttribute = iface.GetCustomAttribute<JsonConverterAttribute>() ??
-			                             type.Type.GetCustomAttribute<JsonConverterAttribute>();
-
-			return jsonConverterAttribute != null ? HereBeDragons(name) : name;
+			return GenerateTypeName(type);
 		}
-
-		private static string HereBeDragons(string original) => 
-			$"/** type has a custom json converter defined */ {original}";
 
 		private static string GenerateTypeName(TsType type)
 		{
