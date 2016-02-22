@@ -1,3 +1,4 @@
+using Elasticsearch.Net;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
@@ -44,8 +45,8 @@ namespace Nest.TypescriptGenerator
 			var classes = module.Classes.Where(c => !_typeConvertors.IsConvertorRegistered(c.Type) && !c.IsIgnored).ToList();
 			var enums = module.Enums.Where(e => !_typeConvertors.IsConvertorRegistered(e.Type) && !e.IsIgnored).ToList();
 			if ((generatorOutput == TsGeneratorOutput.Enums && enums.Count == 0) ||
-			    (generatorOutput == TsGeneratorOutput.Properties && classes.Count == 0) ||
-			    (enums.Count == 0 && classes.Count == 0))
+				(generatorOutput == TsGeneratorOutput.Properties && classes.Count == 0) ||
+				(enums.Count == 0 && classes.Count == 0))
 			{
 				return;
 			}
@@ -59,11 +60,11 @@ namespace Nest.TypescriptGenerator
 			}
 
 			if (((generatorOutput & TsGeneratorOutput.Properties) == TsGeneratorOutput.Properties)
-			    || (generatorOutput & TsGeneratorOutput.Fields) == TsGeneratorOutput.Fields)
+				|| (generatorOutput & TsGeneratorOutput.Fields) == TsGeneratorOutput.Fields)
 			{
 				foreach (var classModel in classes)
 				{
-
+					if (Ignore(classModel)) continue;
 					this.AppendClassDefinition(classModel, sb, generatorOutput);
 				}
 			}
@@ -81,5 +82,7 @@ namespace Nest.TypescriptGenerator
 				}
 			}
 		}
+
+		protected bool Ignore(TsClass classModel) => typeof(IRequestParameters).IsAssignableFrom(classModel.Type);
 	}
 }

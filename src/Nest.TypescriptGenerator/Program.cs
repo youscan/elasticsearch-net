@@ -49,12 +49,7 @@ namespace Nest.TypescriptGenerator
 
 			var definitions = nestInterfaces.Aggregate(typeScriptFluent, (def, t) => def.For(t));
 
-			if (!Directory.Exists(@"c:\temp"))
-			{
-				Directory.CreateDirectory(@"c:\temp");
-			}
-
-			File.WriteAllText(@"c:\temp\interfaces.ts", definitions.Generate());
+			File.WriteAllText("typedefinitions.ts", definitions.Generate());
 		}
 
 		public static Regex RemoveGeneric { get; } = new Regex(@"^(.+)(?:\`.+)$");
