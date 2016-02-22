@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using TypeLite;
 using TypeLite.TsModels;
@@ -25,6 +26,7 @@ namespace Nest.TypescriptGenerator
 
 			var nestAssembly = typeof(IRequest<>).Assembly;
 			var lowLevelAssembly = typeof(IElasticLowLevelClient).Assembly;
+
 			var nestInterfaces = nestAssembly
 				.GetTypes()
 				.Where(t => typeof(IRequest).IsAssignableFrom(t) || typeof(IResponse).IsAssignableFrom(t))
@@ -42,7 +44,8 @@ namespace Nest.TypescriptGenerator
 				.WithTypeFormatter(FormatType)
 				.WithMemberFormatter(FormatMember)
 				.WithVisibility((@class, name) => false)
-				.WithModuleNameFormatter(module => "Elasticsearch");
+				.AsConstEnums(false)
+				.WithModuleNameFormatter(module => string.Empty);
 
 			var definitions = nestInterfaces.Aggregate(typeScriptFluent, (def, t) => def.For(t));
 
@@ -54,11 +57,12 @@ namespace Nest.TypescriptGenerator
 			File.WriteAllText(@"c:\temp\interfaces.ts", definitions.Generate());
 		}
 
-
 		private static string FormatMember(TsProperty property)
 		{
 			var declaringType = property.MemberInfo.DeclaringType;
 			var propertyName = property.MemberInfo.Name;
+
+			if (declaringType == null) return propertyName;
 
 			if (declaringType.Name.Contains("Request") && RequestParameters.ContainsKey(declaringType.Name))
 			{
@@ -77,7 +81,7 @@ namespace Nest.TypescriptGenerator
 				propertyName = jsonPropertyAttribute.PropertyName;
 
 			var jsonConverterAttribute = ifaceProperty?.GetCustomAttribute<JsonConverterAttribute>() ??
-										 property.MemberInfo.GetCustomAttribute<JsonConverterAttribute>();
+			                             property.MemberInfo.GetCustomAttribute<JsonConverterAttribute>();
 
 			if (jsonConverterAttribute != null)
 				propertyName = HereBeDragons(propertyName);
