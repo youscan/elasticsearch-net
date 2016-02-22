@@ -183,10 +183,10 @@ enum ClusterStatus {
 	yellow = 1,
 	red = 2
 }
-interface CatResponse<TCatRecord> extends ResponseBase {
+interface CatResponse<TCatRecord> extends Response {
 	Records: TCatRecord[];
 }
-interface CatAliasesRequest extends RequestBase<CatAliasesRequestParameters> {
+interface CatAliasesRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Local: boolean;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ H: string[];
@@ -195,14 +195,14 @@ interface CatAliasesRequest extends RequestBase<CatAliasesRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface RequestBase<TParameters> {
+interface Request {
 }
 interface Time {
 	Factor: double;
 	Interval: TimeUnit;
 	Milliseconds: double;
 }
-interface CatAllocationRequest extends RequestBase<CatAllocationRequestParameters> {
+interface CatAllocationRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Bytes: Bytes;
 	/** mapped on body but might only proxy to request querystring */ Local: boolean;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
@@ -212,7 +212,7 @@ interface CatAllocationRequest extends RequestBase<CatAllocationRequestParameter
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface CatCountRequest extends RequestBase<CatCountRequestParameters> {
+interface CatCountRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Local: boolean;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ H: string[];
@@ -221,7 +221,7 @@ interface CatCountRequest extends RequestBase<CatCountRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface CatFielddataRequest extends RequestBase<CatFielddataRequestParameters> {
+interface CatFielddataRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Bytes: Bytes;
 	/** mapped on body but might only proxy to request querystring */ Local: boolean;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
@@ -231,7 +231,7 @@ interface CatFielddataRequest extends RequestBase<CatFielddataRequestParameters>
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface CatHealthRequest extends RequestBase<CatHealthRequestParameters> {
+interface CatHealthRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Local: boolean;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ H: string[];
@@ -241,7 +241,7 @@ interface CatHealthRequest extends RequestBase<CatHealthRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface CatIndicesRequest extends RequestBase<CatIndicesRequestParameters> {
+interface CatIndicesRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Bytes: Bytes;
 	/** mapped on body but might only proxy to request querystring */ Local: boolean;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
@@ -252,7 +252,7 @@ interface CatIndicesRequest extends RequestBase<CatIndicesRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface CatMasterRequest extends RequestBase<CatMasterRequestParameters> {
+interface CatMasterRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Local: boolean;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ H: string[];
@@ -261,7 +261,7 @@ interface CatMasterRequest extends RequestBase<CatMasterRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface CatNodesRequest extends RequestBase<CatNodesRequestParameters> {
+interface CatNodesRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Local: boolean;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ H: string[];
@@ -270,7 +270,7 @@ interface CatNodesRequest extends RequestBase<CatNodesRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface CatPendingTasksRequest extends RequestBase<CatPendingTasksRequestParameters> {
+interface CatPendingTasksRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Local: boolean;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ H: string[];
@@ -279,7 +279,7 @@ interface CatPendingTasksRequest extends RequestBase<CatPendingTasksRequestParam
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface CatPluginsRequest extends RequestBase<CatPluginsRequestParameters> {
+interface CatPluginsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Local: boolean;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ H: string[];
@@ -288,7 +288,7 @@ interface CatPluginsRequest extends RequestBase<CatPluginsRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface CatRecoveryRequest extends RequestBase<CatRecoveryRequestParameters> {
+interface CatRecoveryRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Bytes: Bytes;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ H: string[];
@@ -297,14 +297,14 @@ interface CatRecoveryRequest extends RequestBase<CatRecoveryRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface CatSegmentsRequest extends RequestBase<CatSegmentsRequestParameters> {
+interface CatSegmentsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ H: string[];
 	/** mapped on body but might only proxy to request querystring */ Help: boolean;
 	/** mapped on body but might only proxy to request querystring */ V: boolean;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface CatShardsRequest extends RequestBase<CatShardsRequestParameters> {
+interface CatShardsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Local: boolean;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ H: string[];
@@ -313,7 +313,7 @@ interface CatShardsRequest extends RequestBase<CatShardsRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface CatThreadPoolRequest extends RequestBase<CatThreadPoolRequestParameters> {
+interface CatThreadPoolRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Local: boolean;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ H: string[];
@@ -323,7 +323,7 @@ interface CatThreadPoolRequest extends RequestBase<CatThreadPoolRequestParameter
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface ClusterHealthRequest extends RequestBase<ClusterHealthRequestParameters> {
+interface ClusterHealthRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Level: Level;
 	/** mapped on body but might only proxy to request querystring */ Local: boolean;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
@@ -335,7 +335,7 @@ interface ClusterHealthRequest extends RequestBase<ClusterHealthRequestParameter
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface ClusterHealthResponse extends ResponseBase {
+interface ClusterHealthResponse extends Response {
 	cluster_name: string;
 	status: string;
 	timed_out: boolean;
@@ -349,12 +349,7 @@ interface ClusterHealthResponse extends ResponseBase {
 	number_of_pending_tasks: integer;
 	/** type has a custom json converter defined */ indices: KeyValuePair<string, IndexHealthStats>[];
 }
-interface ResponseBase {
-	IsValid: boolean;
-	ApiCall: IApiCallDetails;
-	ServerError: ServerError;
-	OriginalException: Exception;
-	DebugInformation: string;
+interface Response {
 }
 interface IndexHealthStats {
 	status: string;
@@ -375,13 +370,13 @@ interface ShardHealthStats {
 	initializing_shards: integer;
 	unassigned_shards: integer;
 }
-interface ClusterPendingTasksRequest extends RequestBase<ClusterPendingTasksRequestParameters> {
+interface ClusterPendingTasksRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Local: boolean;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface ClusterPendingTasksResponse extends ResponseBase {
+interface ClusterPendingTasksResponse extends Response {
 	tasks: PendingTask[];
 }
 interface PendingTask {
@@ -391,7 +386,7 @@ interface PendingTask {
 	time_in_queue_millis: integer;
 	time_in_queue: string;
 }
-interface /** type has a custom json converter defined */ ClusterRerouteRequest extends RequestBase<ClusterRerouteRequestParameters> {
+interface /** type has a custom json converter defined */ ClusterRerouteRequest extends Request {
 	commands: IClusterRerouteCommand[];
 	/** mapped on body but might only proxy to request querystring */ DryRun: boolean;
 	/** mapped on body but might only proxy to request querystring */ Explain: boolean;
@@ -404,7 +399,7 @@ interface /** type has a custom json converter defined */ ClusterRerouteRequest 
 interface IClusterRerouteCommand {
 	Name: string;
 }
-interface ClusterRerouteResponse extends ResponseBase {
+interface ClusterRerouteResponse extends Response {
 	Version: integer;
 	state: ClusterRerouteState;
 	explanations: ClusterRerouteExplanation[];
@@ -466,18 +461,18 @@ interface ClusterRerouteDecision {
 	decision: string;
 	explanation: string;
 }
-interface ClusterGetSettingsRequest extends RequestBase<ClusterGetSettingsRequestParameters> {
+interface ClusterGetSettingsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ FlatSettings: boolean;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface ClusterGetSettingsResponse extends ResponseBase {
+interface ClusterGetSettingsResponse extends Response {
 	persistent: KeyValuePair<string, any>[];
 	transient: KeyValuePair<string, any>[];
 }
-interface ClusterPutSettingsRequest extends RequestBase<ClusterPutSettingsRequestParameters> {
+interface ClusterPutSettingsRequest extends Request {
 	persistent: KeyValuePair<string, any>[];
 	transient: KeyValuePair<string, any>[];
 	/** mapped on body but might only proxy to request querystring */ FlatSettings: boolean;
@@ -486,12 +481,12 @@ interface ClusterPutSettingsRequest extends RequestBase<ClusterPutSettingsReques
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface ClusterPutSettingsResponse extends ResponseBase {
+interface ClusterPutSettingsResponse extends Response {
 	acknowledged: boolean;
 	persistent: KeyValuePair<string, any>[];
 	transient: KeyValuePair<string, any>[];
 }
-interface ClusterStateRequest extends RequestBase<ClusterStateRequestParameters> {
+interface ClusterStateRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Local: boolean;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ FlatSettings: boolean;
@@ -501,7 +496,7 @@ interface ClusterStateRequest extends RequestBase<ClusterStateRequestParameters>
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface ClusterStateResponse extends ResponseBase {
+interface ClusterStateResponse extends Response {
 	cluster_name: string;
 	master_node: string;
 	state_uuid: string;
@@ -1542,14 +1537,14 @@ interface MetadataIndexState {
 	mappings: KeyValuePair<TypeName, ITypeMapping>[];
 	aliases: string[];
 }
-interface ClusterStatsRequest extends RequestBase<ClusterStatsRequestParameters> {
+interface ClusterStatsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ FlatSettings: boolean;
 	/** mapped on body but might only proxy to request querystring */ Human: boolean;
 	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface ClusterStatsResponse extends ResponseBase {
+interface ClusterStatsResponse extends Response {
 	cluster_name: string;
 	timestamp: long;
 	status: ClusterStatus;
@@ -1722,7 +1717,7 @@ interface PluginStats {
 	isolated: boolean;
 	site: boolean;
 }
-interface NodesHotThreadsRequest extends RequestBase<NodesHotThreadsRequestParameters> {
+interface NodesHotThreadsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Interval: Time;
 	/** mapped on body but might only proxy to request querystring */ Snapshots: long;
 	/** mapped on body but might only proxy to request querystring */ Threads: long;
@@ -1732,7 +1727,7 @@ interface NodesHotThreadsRequest extends RequestBase<NodesHotThreadsRequestParam
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface NodesHotThreadsResponse extends ResponseBase {
+interface NodesHotThreadsResponse extends Response {
 	HotThreads: HotThreadInformation[];
 }
 interface HotThreadInformation {
@@ -1741,14 +1736,14 @@ interface HotThreadInformation {
 	Threads: string[];
 	Hosts: string[];
 }
-interface NodesInfoRequest extends RequestBase<NodesInfoRequestParameters> {
+interface NodesInfoRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ FlatSettings: boolean;
 	/** mapped on body but might only proxy to request querystring */ Human: boolean;
 	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface NodesInfoResponse extends ResponseBase {
+interface NodesInfoResponse extends Response {
 	cluster_name: string;
 	/** type has a custom json converter defined */ nodes: KeyValuePair<string, NodeInfo>[];
 }
@@ -1848,7 +1843,7 @@ interface NodeInfoHttp {
 	max_content_length: string;
 	max_content_length_in_bytes: long;
 }
-interface NodesStatsRequest extends RequestBase<NodesStatsRequestParameters> {
+interface NodesStatsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ CompletionFields: Field[];
 	/** mapped on body but might only proxy to request querystring */ FielddataFields: Field[];
 	/** mapped on body but might only proxy to request querystring */ Fields: Field[];
@@ -1860,7 +1855,7 @@ interface NodesStatsRequest extends RequestBase<NodesStatsRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface NodesStatsResponse extends ResponseBase {
+interface NodesStatsResponse extends Response {
 	cluster_name: string;
 	/** type has a custom json converter defined */ nodes: KeyValuePair<string, NodeStats>[];
 }
@@ -2060,17 +2055,17 @@ interface HttpStats {
 	current_open: integer;
 	total_opened: long;
 }
-interface PingRequest extends RequestBase<PingRequestParameters> {
+interface PingRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface PingResponse extends ResponseBase {
+interface PingResponse extends Response {
 }
-interface RootNodeInfoRequest extends RequestBase<RootNodeInfoRequestParameters> {
+interface RootNodeInfoRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface RootNodeInfoResponse extends ResponseBase {
+interface RootNodeInfoResponse extends Response {
 	name: string;
 	tagline: string;
 	version: ElasticsearchVersionInfo;
@@ -2080,14 +2075,14 @@ interface ElasticsearchVersionInfo {
 	snapshot_build: boolean;
 	lucene_version: string;
 }
-interface RequestDescriptorBase<TDescriptor, TParameters, TInterface> extends RequestBase<TParameters> {
+interface RequestDescriptorBase<TDescriptor, TParameters, TInterface> extends Request {
 }
-interface AcknowledgedResponseBase extends ResponseBase {
+interface AcknowledgedResponseBase extends Response {
 	acknowledged: boolean;
 }
-interface DictionaryResponseBase<TKey, TValue> extends ResponseBase {
+interface DictionaryResponseBase<TKey, TValue> extends Response {
 }
-interface IndicesResponseBase extends ResponseBase {
+interface IndicesResponseBase extends Response {
 	acknowledged: boolean;
 	_shards: ShardsMetaData;
 }
@@ -2112,10 +2107,10 @@ interface CausedBy {
 	Type: string;
 	Reason: string;
 }
-interface ShardsOperationResponseBase extends ResponseBase {
+interface ShardsOperationResponseBase extends Response {
 	_shards: ShardsMetaData;
 }
-interface /** type has a custom json converter defined */ BulkRequest extends RequestBase<BulkRequestParameters> {
+interface /** type has a custom json converter defined */ BulkRequest extends Request {
 	Operations: IBulkOperation[];
 	/** mapped on body but might only proxy to request querystring */ Consistency: Consistency;
 	/** mapped on body but might only proxy to request querystring */ Refresh: boolean;
@@ -2139,7 +2134,7 @@ interface IBulkOperation {
 	_ttl: Time;
 	_retry_on_conflict: integer;
 }
-interface BulkResponse extends ResponseBase {
+interface BulkResponse extends Response {
 	IsValid: boolean;
 	took: integer;
 	errors: boolean;
@@ -2163,7 +2158,7 @@ interface BulkError {
 	type: string;
 	reason: string;
 }
-interface DeleteByQueryRequest extends RequestBase<DeleteByQueryRequestParameters> {
+interface DeleteByQueryRequest extends Request {
 	query: /** type has a custom json converter defined */ QueryContainer;
 	/** mapped on body but might only proxy to request querystring */ Analyzer: string;
 	/** mapped on body but might only proxy to request querystring */ DefaultOperator: DefaultOperator;
@@ -2177,7 +2172,7 @@ interface DeleteByQueryRequest extends RequestBase<DeleteByQueryRequestParameter
 	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface DeleteByQueryRequest<T> extends RequestBase<DeleteByQueryRequestParameters> {
+interface DeleteByQueryRequest<T> extends Request {
 	Query: /** type has a custom json converter defined */ QueryContainer;
 	/** mapped on body but might only proxy to request querystring */ Analyzer: string;
 	/** mapped on body but might only proxy to request querystring */ DefaultOperator: DefaultOperator;
@@ -2191,7 +2186,7 @@ interface DeleteByQueryRequest<T> extends RequestBase<DeleteByQueryRequestParame
 	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface DeleteByQueryResponse extends ResponseBase {
+interface DeleteByQueryResponse extends Response {
 	/** type has a custom json converter defined */ _indices: KeyValuePair<string, DeleteByQueryIndicesResult>[];
 	took: long;
 	timed_out: boolean;
@@ -2202,7 +2197,7 @@ interface DeleteByQueryIndicesResult {
 	missing: long;
 	failed: long;
 }
-interface /** type has a custom json converter defined */ MultiGetRequest extends RequestBase<MultiGetRequestParameters> {
+interface /** type has a custom json converter defined */ MultiGetRequest extends Request {
 	docs: IMultiGetOperation[];
 	/** mapped on body but might only proxy to request querystring */ Fields: Field[];
 	/** mapped on body but might only proxy to request querystring */ Preference: string;
@@ -2224,7 +2219,7 @@ interface IMultiGetOperation {
 	ClrType: Type;
 	CanBeFlattened: boolean;
 }
-interface MultiGetResponse extends ResponseBase {
+interface MultiGetResponse extends Response {
 	Documents: IMultiGetHit<any>[];
 }
 interface IMultiGetHit<T> {
@@ -2235,7 +2230,7 @@ interface IMultiGetHit<T> {
 	Version: long;
 	Id: string;
 }
-interface MultiTermVectorsRequest extends RequestBase<MultiTermVectorsRequestParameters> {
+interface MultiTermVectorsRequest extends Request {
 	docs: IMultiTermVectorOperation[];
 	/** mapped on body but might only proxy to request querystring */ TermStatistics: boolean;
 	/** mapped on body but might only proxy to request querystring */ FieldStatistics: boolean;
@@ -2264,10 +2259,10 @@ interface IMultiTermVectorOperation {
 	term_statistics: boolean;
 	field_statistics: boolean;
 }
-interface MultiTermVectorsResponse extends ResponseBase {
+interface MultiTermVectorsResponse extends Response {
 	docs: TermVectorsResponse[];
 }
-interface TermVectorsResponse extends ResponseBase {
+interface TermVectorsResponse extends Response {
 	found: boolean;
 	term_vectors: KeyValuePair<string, TermVector>[];
 }
@@ -2292,7 +2287,7 @@ interface Token {
 	position: integer;
 	start_offset: integer;
 }
-interface DeleteRequest extends RequestBase<DeleteRequestParameters> {
+interface DeleteRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Consistency: Consistency;
 	/** mapped on body but might only proxy to request querystring */ Parent: string;
 	/** mapped on body but might only proxy to request querystring */ Refresh: boolean;
@@ -2303,7 +2298,7 @@ interface DeleteRequest extends RequestBase<DeleteRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface DeleteRequest<T> extends RequestBase<DeleteRequestParameters> {
+interface DeleteRequest<T> extends Request {
 	/** mapped on body but might only proxy to request querystring */ Consistency: Consistency;
 	/** mapped on body but might only proxy to request querystring */ Parent: string;
 	/** mapped on body but might only proxy to request querystring */ Refresh: boolean;
@@ -2314,14 +2309,14 @@ interface DeleteRequest<T> extends RequestBase<DeleteRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface DeleteResponse extends ResponseBase {
+interface DeleteResponse extends Response {
 	_index: string;
 	_type: string;
 	_id: string;
 	_version: string;
 	found: boolean;
 }
-interface DocumentExistsRequest extends RequestBase<DocumentExistsRequestParameters> {
+interface DocumentExistsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Parent: string;
 	/** mapped on body but might only proxy to request querystring */ Preference: string;
 	/** mapped on body but might only proxy to request querystring */ Realtime: boolean;
@@ -2330,7 +2325,7 @@ interface DocumentExistsRequest extends RequestBase<DocumentExistsRequestParamet
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface DocumentExistsRequest<T> extends RequestBase<DocumentExistsRequestParameters> {
+interface DocumentExistsRequest<T> extends Request {
 	/** mapped on body but might only proxy to request querystring */ Parent: string;
 	/** mapped on body but might only proxy to request querystring */ Preference: string;
 	/** mapped on body but might only proxy to request querystring */ Realtime: boolean;
@@ -2339,7 +2334,7 @@ interface DocumentExistsRequest<T> extends RequestBase<DocumentExistsRequestPara
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface GetRequest extends RequestBase<GetRequestParameters> {
+interface GetRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Fields: Field[];
 	/** mapped on body but might only proxy to request querystring */ Parent: string;
 	/** mapped on body but might only proxy to request querystring */ Preference: string;
@@ -2354,7 +2349,7 @@ interface GetRequest extends RequestBase<GetRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface GetRequest<T> extends RequestBase<GetRequestParameters> {
+interface GetRequest<T> extends Request {
 	/** mapped on body but might only proxy to request querystring */ Fields: Field[];
 	/** mapped on body but might only proxy to request querystring */ Parent: string;
 	/** mapped on body but might only proxy to request querystring */ Preference: string;
@@ -2369,7 +2364,7 @@ interface GetRequest<T> extends RequestBase<GetRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface GetResponse<T> extends ResponseBase {
+interface GetResponse<T> extends Response {
 	_index: string;
 	_type: string;
 	_id: string;
@@ -2378,7 +2373,7 @@ interface GetResponse<T> extends ResponseBase {
 	_source: T;
 	fields: KeyValuePair<string, any>[];
 }
-interface IndexRequest<TDocument> extends RequestBase<IndexRequestParameters> {
+interface IndexRequest<TDocument> extends Request {
 	Document: TDocument;
 	/** mapped on body but might only proxy to request querystring */ Consistency: Consistency;
 	/** mapped on body but might only proxy to request querystring */ OpType: OpType;
@@ -2393,14 +2388,14 @@ interface IndexRequest<TDocument> extends RequestBase<IndexRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface IndexResponse extends ResponseBase {
+interface IndexResponse extends Response {
 	_index: string;
 	_type: string;
 	_id: string;
 	_version: long;
 	created: boolean;
 }
-interface SourceRequest extends RequestBase<SourceRequestParameters> {
+interface SourceRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Parent: string;
 	/** mapped on body but might only proxy to request querystring */ Preference: string;
 	/** mapped on body but might only proxy to request querystring */ Realtime: boolean;
@@ -2414,7 +2409,7 @@ interface SourceRequest extends RequestBase<SourceRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface SourceRequest<T> extends RequestBase<SourceRequestParameters> {
+interface SourceRequest<T> extends Request {
 	/** mapped on body but might only proxy to request querystring */ Parent: string;
 	/** mapped on body but might only proxy to request querystring */ Preference: string;
 	/** mapped on body but might only proxy to request querystring */ Realtime: boolean;
@@ -2428,7 +2423,7 @@ interface SourceRequest<T> extends RequestBase<SourceRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface TermVectorsRequest<TDocument> extends RequestBase<TermVectorsRequestParameters> {
+interface TermVectorsRequest<TDocument> extends Request {
 	doc: TDocument;
 	per_field_analyzer: KeyValuePair<Field, string>[];
 	/** mapped on body but might only proxy to request querystring */ TermStatistics: boolean;
@@ -2447,7 +2442,7 @@ interface TermVectorsRequest<TDocument> extends RequestBase<TermVectorsRequestPa
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface UpdateRequest<TDocument, TPartialDocument> extends RequestBase<UpdateRequestParameters> {
+interface UpdateRequest<TDocument, TPartialDocument> extends Request {
 	/** mapped on body but might only proxy to request querystring */ Script: string;
 	script_file: string;
 	lang: string;
@@ -2474,7 +2469,7 @@ interface UpdateRequest<TDocument, TPartialDocument> extends RequestBase<UpdateR
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface UpdateResponse<T> extends ResponseBase {
+interface UpdateResponse<T> extends Response {
 	_shards: ShardsMetaData;
 	_index: string;
 	_type: string;
@@ -2487,7 +2482,7 @@ interface InstantGet<T> {
 	_source: T;
 	fields: KeyValuePair<string, any>[];
 }
-interface BulkAliasRequest extends RequestBase<BulkAliasRequestParameters> {
+interface BulkAliasRequest extends Request {
 	actions: IAliasAction[];
 	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
@@ -2498,7 +2493,7 @@ interface IAliasAction {
 }
 interface BulkAliasResponse extends AcknowledgedResponseBase {
 }
-interface AliasExistsRequest extends RequestBase<AliasExistsRequestParameters> {
+interface AliasExistsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
 	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
@@ -2506,15 +2501,15 @@ interface AliasExistsRequest extends RequestBase<AliasExistsRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface DeleteAliasRequest extends RequestBase<DeleteAliasRequestParameters> {
+interface DeleteAliasRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface DeleteAliasResponse extends ResponseBase {
+interface DeleteAliasResponse extends Response {
 }
-interface GetAliasRequest extends RequestBase<GetAliasRequestParameters> {
+interface GetAliasRequest extends Request {
 	Alias: string;
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
@@ -2523,14 +2518,14 @@ interface GetAliasRequest extends RequestBase<GetAliasRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface GetAliasesRequest extends RequestBase<GetAliasesRequestParameters> {
+interface GetAliasesRequest extends Request {
 	Alias: string;
 	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
 	/** mapped on body but might only proxy to request querystring */ Local: boolean;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface GetAliasesResponse extends ResponseBase {
+interface GetAliasesResponse extends Response {
 	Indices: KeyValuePair<string, AliasDefinition[]>[];
 }
 interface AliasDefinition {
@@ -2540,7 +2535,7 @@ interface AliasDefinition {
 	index_routing: string;
 	search_routing: string;
 }
-interface PutAliasRequest extends RequestBase<PutAliasRequestParameters> {
+interface PutAliasRequest extends Request {
 	routing: string;
 	filter: /** type has a custom json converter defined */ QueryContainer;
 	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
@@ -2548,9 +2543,9 @@ interface PutAliasRequest extends RequestBase<PutAliasRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface PutAliasResponse extends ResponseBase {
+interface PutAliasResponse extends Response {
 }
-interface AnalyzeRequest extends RequestBase<AnalyzeRequestParameters> {
+interface AnalyzeRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Analyzer: string;
 	/** mapped on body but might only proxy to request querystring */ CharFilters: string[];
 	/** mapped on body but might only proxy to request querystring */ Field: Field;
@@ -2562,7 +2557,7 @@ interface AnalyzeRequest extends RequestBase<AnalyzeRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface AnalyzeResponse extends ResponseBase {
+interface AnalyzeResponse extends Response {
 	tokens: AnalyzeToken[];
 }
 interface AnalyzeToken {
@@ -2572,7 +2567,7 @@ interface AnalyzeToken {
 	end_offset: integer;
 	position: integer;
 }
-interface /** type has a custom json converter defined */ CreateIndexRequest extends RequestBase<CreateIndexRequestParameters> {
+interface /** type has a custom json converter defined */ CreateIndexRequest extends Request {
 	Settings: KeyValuePair<string, any>[];
 	Mappings: KeyValuePair<TypeName, ITypeMapping>[];
 	Warmers: KeyValuePair<TypeName, IWarmer>[];
@@ -2589,7 +2584,7 @@ interface ISimilarity {
 }
 interface CreateIndexResponse extends AcknowledgedResponseBase {
 }
-interface DeleteIndexRequest extends RequestBase<DeleteIndexRequestParameters> {
+interface DeleteIndexRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
@@ -2597,7 +2592,7 @@ interface DeleteIndexRequest extends RequestBase<DeleteIndexRequestParameters> {
 }
 interface DeleteIndexResponse extends IndicesResponseBase {
 }
-interface GetIndexRequest extends RequestBase<GetIndexRequestParameters> {
+interface GetIndexRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Local: boolean;
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
@@ -2607,7 +2602,7 @@ interface GetIndexRequest extends RequestBase<GetIndexRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface GetIndexResponse extends ResponseBase {
+interface GetIndexResponse extends Response {
 	Indices: KeyValuePair<string, /** type has a custom json converter defined */ IndexState>[];
 }
 interface /** type has a custom json converter defined */ IndexState {
@@ -2617,7 +2612,7 @@ interface /** type has a custom json converter defined */ IndexState {
 	warmers: KeyValuePair<TypeName, IWarmer>[];
 	similarity: KeyValuePair<string, ISimilarity>[];
 }
-interface IndexExistsRequest extends RequestBase<IndexExistsRequestParameters> {
+interface IndexExistsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
 	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
@@ -2625,10 +2620,10 @@ interface IndexExistsRequest extends RequestBase<IndexExistsRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface ExistsResponse extends ResponseBase {
+interface ExistsResponse extends Response {
 	Exists: boolean;
 }
-interface CloseIndexRequest extends RequestBase<CloseIndexRequestParameters> {
+interface CloseIndexRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
@@ -2639,7 +2634,7 @@ interface CloseIndexRequest extends RequestBase<CloseIndexRequestParameters> {
 }
 interface CloseIndexResponse extends AcknowledgedResponseBase {
 }
-interface OpenIndexRequest extends RequestBase<OpenIndexRequestParameters> {
+interface OpenIndexRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
@@ -2650,7 +2645,7 @@ interface OpenIndexRequest extends RequestBase<OpenIndexRequestParameters> {
 }
 interface OpenIndexResponse extends AcknowledgedResponseBase {
 }
-interface TypeExistsRequest extends RequestBase<TypeExistsRequestParameters> {
+interface TypeExistsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
 	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
@@ -2658,7 +2653,7 @@ interface TypeExistsRequest extends RequestBase<TypeExistsRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface GetIndexSettingsRequest extends RequestBase<GetIndexSettingsRequestParameters> {
+interface GetIndexSettingsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
 	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
@@ -2678,7 +2673,7 @@ interface IIndexState {
 	mappings: KeyValuePair<TypeName, ITypeMapping>[];
 	similarity: KeyValuePair<string, ISimilarity>[];
 }
-interface DeleteIndexTemplateRequest extends RequestBase<DeleteIndexTemplateRequestParameters> {
+interface DeleteIndexTemplateRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
@@ -2686,7 +2681,7 @@ interface DeleteIndexTemplateRequest extends RequestBase<DeleteIndexTemplateRequ
 }
 interface DeleteIndexTemplateResponse extends AcknowledgedResponseBase {
 }
-interface GetIndexTemplateRequest extends RequestBase<GetIndexTemplateRequestParameters> {
+interface GetIndexTemplateRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ FlatSettings: boolean;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ Local: boolean;
@@ -2696,13 +2691,13 @@ interface GetIndexTemplateRequest extends RequestBase<GetIndexTemplateRequestPar
 interface /** type has a custom json converter defined */ GetIndexTemplateResponse extends DictionaryResponseBase<string, TemplateMapping> {
 	TemplateMappings: KeyValuePair<string, TemplateMapping>[];
 }
-interface IndexTemplateExistsRequest extends RequestBase<IndexTemplateExistsRequestParameters> {
+interface IndexTemplateExistsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ Local: boolean;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface PutIndexTemplateRequest extends RequestBase<PutIndexTemplateRequestParameters> {
+interface PutIndexTemplateRequest extends Request {
 	Template: string;
 	Order: integer;
 	Settings: KeyValuePair<string, any>[];
@@ -2718,7 +2713,7 @@ interface PutIndexTemplateRequest extends RequestBase<PutIndexTemplateRequestPar
 }
 interface PutIndexTemplateResponse extends AcknowledgedResponseBase {
 }
-interface /** type has a custom json converter defined */ UpdateIndexSettingsRequest extends RequestBase<UpdateIndexSettingsRequestParameters> {
+interface /** type has a custom json converter defined */ UpdateIndexSettingsRequest extends Request {
 	IndexSettings: KeyValuePair<string, any>[];
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
@@ -2730,7 +2725,7 @@ interface /** type has a custom json converter defined */ UpdateIndexSettingsReq
 }
 interface UpdateIndexSettingsResponse extends AcknowledgedResponseBase {
 }
-interface GetFieldMappingRequest extends RequestBase<GetFieldMappingRequestParameters> {
+interface GetFieldMappingRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ IncludeDefaults: boolean;
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
@@ -2739,7 +2734,7 @@ interface GetFieldMappingRequest extends RequestBase<GetFieldMappingRequestParam
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface GetFieldMappingResponse extends ResponseBase {
+interface GetFieldMappingResponse extends Response {
 	Indices: KeyValuePair<string, TypeFieldMappings>[];
 }
 interface TypeFieldMappings {
@@ -2751,7 +2746,7 @@ interface FieldMapping {
 }
 interface IFieldMapping {
 }
-interface GetMappingRequest extends RequestBase<GetMappingRequestParameters> {
+interface GetMappingRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
 	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
@@ -2759,7 +2754,7 @@ interface GetMappingRequest extends RequestBase<GetMappingRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface GetMappingResponse extends ResponseBase {
+interface GetMappingResponse extends Response {
 	IsValid: boolean;
 	Mappings: KeyValuePair<string, /** type has a custom json converter defined */ TypeMapping[]>[];
 	Mapping: /** type has a custom json converter defined */ TypeMapping;
@@ -2785,7 +2780,7 @@ interface /** type has a custom json converter defined */ TypeMapping {
 	/** type has a custom json converter defined */ transform: IMappingTransform[];
 	_ttl: ITtlField;
 }
-interface /** type has a custom json converter defined */ PutMappingRequest extends RequestBase<PutMappingRequestParameters> {
+interface /** type has a custom json converter defined */ PutMappingRequest extends Request {
 	AllField: IAllField;
 	DateDetection: boolean;
 	DynamicDateFormats: string[];
@@ -2814,7 +2809,7 @@ interface /** type has a custom json converter defined */ PutMappingRequest exte
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface PutMappingRequest<T> extends RequestBase<PutMappingRequestParameters> {
+interface PutMappingRequest<T> extends Request {
 	AllField: IAllField;
 	DateDetection: boolean;
 	DynamicDateFormats: string[];
@@ -2845,14 +2840,14 @@ interface PutMappingRequest<T> extends RequestBase<PutMappingRequestParameters> 
 }
 interface PutMappingResponse extends IndicesResponseBase {
 }
-interface RecoveryStatusRequest extends RequestBase<RecoveryStatusRequestParameters> {
+interface RecoveryStatusRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Detailed: boolean;
 	/** mapped on body but might only proxy to request querystring */ ActiveOnly: boolean;
 	/** mapped on body but might only proxy to request querystring */ Human: boolean;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface RecoveryStatusResponse extends ResponseBase {
+interface RecoveryStatusResponse extends Response {
 	/** type has a custom json converter defined */ Indices: KeyValuePair<string, RecoveryStatus>[];
 }
 interface RecoveryStatus {
@@ -2913,7 +2908,7 @@ interface RecoveryStartStatus {
 	check_index_time: long;
 	total_time_in_millis: string;
 }
-interface SegmentsRequest extends RequestBase<SegmentsRequestParameters> {
+interface SegmentsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
 	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
@@ -2923,7 +2918,7 @@ interface SegmentsRequest extends RequestBase<SegmentsRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface SegmentsResponse extends ResponseBase {
+interface SegmentsResponse extends Response {
 	_shards: ShardsMetaData;
 	/** type has a custom json converter defined */ indices: KeyValuePair<string, IndexSegment>[];
 }
@@ -2950,7 +2945,7 @@ interface Segment {
 	committed: boolean;
 	Search: boolean;
 }
-interface IndicesStatsRequest extends RequestBase<IndicesStatsRequestParameters> {
+interface IndicesStatsRequest extends Request {
 	Types: TypeName[];
 	/** mapped on body but might only proxy to request querystring */ CompletionFields: Field[];
 	/** mapped on body but might only proxy to request querystring */ FielddataFields: Field[];
@@ -2961,7 +2956,7 @@ interface IndicesStatsRequest extends RequestBase<IndicesStatsRequestParameters>
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface IndicesStatsResponse extends ResponseBase {
+interface IndicesStatsResponse extends Response {
 	_shards: ShardsMetaData;
 	_all: IndicesStats;
 	/** type has a custom json converter defined */ indices: KeyValuePair<string, IndicesStats>[];
@@ -2970,7 +2965,7 @@ interface IndicesStats {
 	primaries: IndexStats;
 	total: IndexStats;
 }
-interface ClearCacheRequest extends RequestBase<ClearCacheRequestParameters> {
+interface ClearCacheRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ FieldData: boolean;
 	/** mapped on body but might only proxy to request querystring */ Fields: Field[];
 	/** mapped on body but might only proxy to request querystring */ Query: boolean;
@@ -2984,7 +2979,7 @@ interface ClearCacheRequest extends RequestBase<ClearCacheRequestParameters> {
 }
 interface ClearCacheResponse extends ShardsOperationResponseBase {
 }
-interface FlushRequest extends RequestBase<FlushRequestParameters> {
+interface FlushRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Force: boolean;
 	/** mapped on body but might only proxy to request querystring */ WaitIfOngoing: boolean;
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
@@ -2995,7 +2990,7 @@ interface FlushRequest extends RequestBase<FlushRequestParameters> {
 }
 interface FlushResponse extends ShardsOperationResponseBase {
 }
-interface OptimizeRequest extends RequestBase<OptimizeRequestParameters> {
+interface OptimizeRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Flush: boolean;
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
@@ -3009,7 +3004,7 @@ interface OptimizeRequest extends RequestBase<OptimizeRequestParameters> {
 }
 interface OptimizeResponse extends ShardsOperationResponseBase {
 }
-interface RefreshRequest extends RequestBase<RefreshRequestParameters> {
+interface RefreshRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
 	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
@@ -3020,7 +3015,7 @@ interface RefreshRequest extends RequestBase<RefreshRequestParameters> {
 }
 interface RefreshResponse extends ShardsOperationResponseBase {
 }
-interface SyncedFlushRequest extends RequestBase<SyncedFlushRequestParameters> {
+interface SyncedFlushRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
 	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
@@ -3029,7 +3024,7 @@ interface SyncedFlushRequest extends RequestBase<SyncedFlushRequestParameters> {
 }
 interface SyncedFlushResponse extends ShardsOperationResponseBase {
 }
-interface UpgradeRequest extends RequestBase<UpgradeRequestParameters> {
+interface UpgradeRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
 	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
@@ -3038,10 +3033,10 @@ interface UpgradeRequest extends RequestBase<UpgradeRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface UpgradeResponse extends ResponseBase {
+interface UpgradeResponse extends Response {
 	_shards: ShardsMetaData;
 }
-interface UpgradeStatusRequest extends RequestBase<UpgradeStatusRequestParameters> {
+interface UpgradeStatusRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
 	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
@@ -3049,7 +3044,7 @@ interface UpgradeStatusRequest extends RequestBase<UpgradeStatusRequestParameter
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface /** type has a custom json converter defined */ UpgradeStatusResponse extends ResponseBase {
+interface /** type has a custom json converter defined */ UpgradeStatusResponse extends Response {
 	/** type has a custom json converter defined */ Upgrades: KeyValuePair<string, UpgradeStatus>[];
 	SizeInBytes: long;
 	SizeToUpgradeInBytes: string;
@@ -3062,14 +3057,14 @@ interface UpgradeStatus {
 	size_to_upgrade_in_bytes: string;
 	size_to_upgrade_ancient_in_bytes: string;
 }
-interface DeleteWarmerRequest extends RequestBase<DeleteWarmerRequestParameters> {
+interface DeleteWarmerRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
 interface DeleteWarmerResponse extends AcknowledgedResponseBase {
 }
-interface GetWarmerRequest extends RequestBase<GetWarmerRequestParameters> {
+interface GetWarmerRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
 	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
@@ -3077,10 +3072,10 @@ interface GetWarmerRequest extends RequestBase<GetWarmerRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface /** type has a custom json converter defined */ GetWarmerResponse extends ResponseBase {
+interface /** type has a custom json converter defined */ GetWarmerResponse extends Response {
 	/** type has a custom json converter defined */ Indices: KeyValuePair<string, KeyValuePair<TypeName, IWarmer>[]>[];
 }
-interface /** type has a custom json converter defined */ PutWarmerRequest extends RequestBase<PutWarmerRequestParameters> {
+interface /** type has a custom json converter defined */ PutWarmerRequest extends Request {
 	Search: ISearchRequest;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
@@ -3092,7 +3087,7 @@ interface /** type has a custom json converter defined */ PutWarmerRequest exten
 }
 interface PutWarmerResponse extends AcknowledgedResponseBase {
 }
-interface DeleteScriptRequest extends RequestBase<DeleteScriptRequestParameters> {
+interface DeleteScriptRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Version: long;
 	/** mapped on body but might only proxy to request querystring */ VersionType: VersionType;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
@@ -3100,16 +3095,16 @@ interface DeleteScriptRequest extends RequestBase<DeleteScriptRequestParameters>
 }
 interface DeleteScriptResponse extends AcknowledgedResponseBase {
 }
-interface GetScriptRequest extends RequestBase<GetScriptRequestParameters> {
+interface GetScriptRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Version: long;
 	/** mapped on body but might only proxy to request querystring */ VersionType: VersionType;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface GetScriptResponse extends ResponseBase {
+interface GetScriptResponse extends Response {
 	script: string;
 }
-interface PutScriptRequest extends RequestBase<PutScriptRequestParameters> {
+interface PutScriptRequest extends Request {
 	script: string;
 	/** mapped on body but might only proxy to request querystring */ OpType: OpType;
 	/** mapped on body but might only proxy to request querystring */ Version: long;
@@ -3119,7 +3114,7 @@ interface PutScriptRequest extends RequestBase<PutScriptRequestParameters> {
 }
 interface PutScriptResponse extends AcknowledgedResponseBase {
 }
-interface /** type has a custom json converter defined */ CreateRepositoryRequest extends RequestBase<CreateRepositoryRequestParameters> {
+interface /** type has a custom json converter defined */ CreateRepositoryRequest extends Request {
 	Repository: ISnapshotRepository;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
@@ -3132,7 +3127,7 @@ interface ISnapshotRepository {
 }
 interface CreateRepositoryResponse extends AcknowledgedResponseBase {
 }
-interface DeleteRepositoryRequest extends RequestBase<DeleteRepositoryRequestParameters> {
+interface DeleteRepositoryRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
@@ -3140,28 +3135,28 @@ interface DeleteRepositoryRequest extends RequestBase<DeleteRepositoryRequestPar
 }
 interface DeleteRepositoryResponse extends AcknowledgedResponseBase {
 }
-interface GetRepositoryRequest extends RequestBase<GetRepositoryRequestParameters> {
+interface GetRepositoryRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ Local: boolean;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface /** type has a custom json converter defined */ GetRepositoryResponse extends ResponseBase {
+interface /** type has a custom json converter defined */ GetRepositoryResponse extends Response {
 	Repositories: KeyValuePair<string, ISnapshotRepository>[];
 }
-interface VerifyRepositoryRequest extends RequestBase<VerifyRepositoryRequestParameters> {
+interface VerifyRepositoryRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface VerifyRepositoryResponse extends ResponseBase {
+interface VerifyRepositoryResponse extends Response {
 	/** type has a custom json converter defined */ nodes: KeyValuePair<string, CompactNodeInfo>[];
 }
 interface CompactNodeInfo {
 	name: string;
 }
-interface RestoreRequest extends RequestBase<RestoreRequestParameters> {
+interface RestoreRequest extends Request {
 	indices: Indices;
 	ignore_unavailable: boolean;
 	include_global_state: boolean;
@@ -3178,7 +3173,7 @@ interface IUpdateIndexSettingsRequest {
 	IndexSettings: KeyValuePair<string, any>[];
 	Index: Indices;
 }
-interface RestoreResponse extends ResponseBase {
+interface RestoreResponse extends Response {
 	snapshot: SnapshotRestore;
 }
 interface SnapshotRestore {
@@ -3186,19 +3181,19 @@ interface SnapshotRestore {
 	indices: IndexName[];
 	shards: ShardsMetaData;
 }
-interface DeleteSnapshotRequest extends RequestBase<DeleteSnapshotRequestParameters> {
+interface DeleteSnapshotRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
 interface DeleteSnapshotResponse extends AcknowledgedResponseBase {
 }
-interface GetSnapshotRequest extends RequestBase<GetSnapshotRequestParameters> {
+interface GetSnapshotRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface GetSnapshotResponse extends ResponseBase {
+interface GetSnapshotResponse extends Response {
 	snapshots: Snapshot[];
 }
 interface Snapshot {
@@ -3221,7 +3216,7 @@ interface SnapshotShardFailure {
 	reason: string;
 	status: string;
 }
-interface SnapshotRequest extends RequestBase<SnapshotRequestParameters> {
+interface SnapshotRequest extends Request {
 	/** type has a custom json converter defined */ indices: Indices;
 	ignore_unavailable: boolean;
 	include_global_state: boolean;
@@ -3231,16 +3226,16 @@ interface SnapshotRequest extends RequestBase<SnapshotRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface SnapshotResponse extends ResponseBase {
+interface SnapshotResponse extends Response {
 	accepted: boolean;
 	snapshot: Snapshot;
 }
-interface SnapshotStatusRequest extends RequestBase<SnapshotStatusRequestParameters> {
+interface SnapshotStatusRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface SnapshotStatusResponse extends ResponseBase {
+interface SnapshotStatusResponse extends Response {
 	snapshots: SnapshotStatus[];
 }
 interface SnapshotStatus {
@@ -3272,7 +3267,7 @@ interface SnapshotIndexStats {
 	stats: SnapshotStats;
 	shards: KeyValuePair<string, SnapshotShardsStats>[];
 }
-interface /** type has a custom json converter defined */ CountRequest extends RequestBase<CountRequestParameters> {
+interface /** type has a custom json converter defined */ CountRequest extends Request {
 	query: /** type has a custom json converter defined */ QueryContainer;
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
@@ -3290,7 +3285,7 @@ interface /** type has a custom json converter defined */ CountRequest extends R
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface CountRequest<T> extends RequestBase<CountRequestParameters> {
+interface CountRequest<T> extends Request {
 	Query: /** type has a custom json converter defined */ QueryContainer;
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
@@ -3308,11 +3303,11 @@ interface CountRequest<T> extends RequestBase<CountRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface CountResponse extends ResponseBase {
+interface CountResponse extends Response {
 	count: long;
 	_shards: ShardsMetaData;
 }
-interface ExplainRequest<TDocument> extends RequestBase<ExplainRequestParameters> {
+interface ExplainRequest<TDocument> extends Request {
 	query: /** type has a custom json converter defined */ QueryContainer;
 	/** mapped on body but might only proxy to request querystring */ AnalyzeWildcard: boolean;
 	/** mapped on body but might only proxy to request querystring */ Analyzer: string;
@@ -3331,7 +3326,7 @@ interface ExplainRequest<TDocument> extends RequestBase<ExplainRequestParameters
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface ExplainResponse<T> extends ResponseBase {
+interface ExplainResponse<T> extends Response {
 	matched: boolean;
 	explanation: ExplanationDetail;
 	get: InstantGet<T>;
@@ -3341,7 +3336,7 @@ interface ExplanationDetail {
 	description: string;
 	details: ExplanationDetail[];
 }
-interface FieldStatsRequest extends RequestBase<FieldStatsRequestParameters> {
+interface FieldStatsRequest extends Request {
 	fields: Field[];
 	index_constraints: KeyValuePair<Field, IIndexConstraint>[];
 	/** mapped on body but might only proxy to request querystring */ Level: Level;
@@ -3362,7 +3357,7 @@ interface IIndexConstraintComparison {
 	lt: string;
 	format: string;
 }
-interface FieldStatsResponse extends ResponseBase {
+interface FieldStatsResponse extends Response {
 	_shards: ShardsMetaData;
 	indices: KeyValuePair<string, FieldStats>[];
 }
@@ -3378,13 +3373,13 @@ interface FieldStatsField {
 	min_value: string;
 	max_value: string;
 }
-interface /** type has a custom json converter defined */ MultiSearchRequest extends RequestBase<MultiSearchRequestParameters> {
+interface /** type has a custom json converter defined */ MultiSearchRequest extends Request {
 	Operations: KeyValuePair<string, ISearchRequest>[];
 	/** mapped on body but might only proxy to request querystring */ SearchType: SearchType;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface MultiSearchResponse extends ResponseBase {
+interface MultiSearchResponse extends Response {
 	IsValid: boolean;
 	TotalResponses: integer;
 	AllResponses: IResponse[];
@@ -3396,7 +3391,7 @@ interface IResponse {
 	OriginalException: Exception;
 	DebugInformation: string;
 }
-interface /** type has a custom json converter defined */ MultiPercolateRequest extends RequestBase<MultiPercolateRequestParameters> {
+interface /** type has a custom json converter defined */ MultiPercolateRequest extends Request {
 	Percolations: IPercolateOperation[];
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
@@ -3414,14 +3409,14 @@ interface IPercolateOperation {
 	filter: /** type has a custom json converter defined */ QueryContainer;
 	aggs: KeyValuePair<string, IAggregationContainer>[];
 }
-interface MultiPercolateResponse extends ResponseBase {
+interface MultiPercolateResponse extends Response {
 	IsValid: boolean;
 	Responses: PercolateResponse[];
 }
 interface PercolateResponse extends PercolateCountResponse {
 	matches: PercolatorMatch[];
 }
-interface PercolateCountResponse extends ResponseBase {
+interface PercolateCountResponse extends Response {
 	took: integer;
 	total: long;
 	_shards: ShardsMetaData;
@@ -3433,7 +3428,7 @@ interface PercolatorMatch {
 	_index: string;
 	_score: double;
 }
-interface PercolateRequest<TDocument> extends RequestBase<PercolateRequestParameters> {
+interface PercolateRequest<TDocument> extends Request {
 	MultiPercolateName: string;
 	Highlight: IHighlight;
 	Query: /** type has a custom json converter defined */ QueryContainer;
@@ -3458,7 +3453,7 @@ interface PercolateRequest<TDocument> extends RequestBase<PercolateRequestParame
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface PercolateCountRequest<TDocument> extends RequestBase<PercolateCountRequestParameters> {
+interface PercolateCountRequest<TDocument> extends Request {
 	MultiPercolateName: string;
 	Size: integer;
 	TrackScores: boolean;
@@ -3480,34 +3475,34 @@ interface PercolateCountRequest<TDocument> extends RequestBase<PercolateCountReq
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface /** type has a custom json converter defined */ RegisterPercolatorRequest extends RequestBase<IndexRequestParameters> {
+interface /** type has a custom json converter defined */ RegisterPercolatorRequest extends Request {
 	Metadata: KeyValuePair<string, any>[];
 	Query: /** type has a custom json converter defined */ QueryContainer;
 }
-interface RegisterPercolatorResponse extends ResponseBase {
+interface RegisterPercolatorResponse extends Response {
 	created: boolean;
 	_index: string;
 	_type: string;
 	_id: string;
 	_version: integer;
 }
-interface UnregisterPercolatorRequest extends RequestBase<DeleteRequestParameters> {
+interface UnregisterPercolatorRequest extends Request {
 }
-interface UnregisterPercolatorResponse extends ResponseBase {
+interface UnregisterPercolatorResponse extends Response {
 	found: boolean;
 	_index: string;
 	_type: string;
 	_id: string;
 	_version: integer;
 }
-interface ClearScrollRequest extends RequestBase<ClearScrollRequestParameters> {
+interface ClearScrollRequest extends Request {
 	scroll_id: string[];
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface ClearScrollResponse extends ResponseBase {
+interface ClearScrollResponse extends Response {
 }
-interface ScrollRequest extends RequestBase<ScrollRequestParameters> {
+interface ScrollRequest extends Request {
 	CovariantTypes: Types;
 	TypeSelector: Func<any, Hit<any>, Type>;
 	scroll: Time;
@@ -3553,7 +3548,7 @@ interface Explanation {
 }
 interface ILazyDocument {
 }
-interface /** type has a custom json converter defined */ SearchRequest extends RequestBase<SearchRequestParameters> {
+interface /** type has a custom json converter defined */ SearchRequest extends Request {
 	timeout: string;
 	from: integer;
 	size: integer;
@@ -3597,7 +3592,7 @@ interface /** type has a custom json converter defined */ SearchRequest extends 
 	/** mapped on body but might only proxy to request querystring */ RequestCache: boolean;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface SearchRequest<T> extends RequestBase<SearchRequestParameters> {
+interface SearchRequest<T> extends Request {
 	Timeout: string;
 	From: integer;
 	Size: integer;
@@ -3641,7 +3636,7 @@ interface SearchRequest<T> extends RequestBase<SearchRequestParameters> {
 	/** mapped on body but might only proxy to request querystring */ RequestCache: boolean;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface SearchResponse<T> extends ResponseBase {
+interface SearchResponse<T> extends Response {
 	ApiCall: IApiCallDetails;
 	_shards: ShardsMetaData;
 	hits: HitsMetaData<T>;
@@ -3700,7 +3695,7 @@ interface SuggestOption {
 	text: string;
 	highlighted: string;
 }
-interface /** type has a custom json converter defined */ SearchExistsRequest extends RequestBase<SearchExistsRequestParameters> {
+interface /** type has a custom json converter defined */ SearchExistsRequest extends Request {
 	query: /** type has a custom json converter defined */ QueryContainer;
 	QueryString: string;
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
@@ -3719,7 +3714,7 @@ interface /** type has a custom json converter defined */ SearchExistsRequest ex
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface SearchExistsRequest<T> extends RequestBase<SearchExistsRequestParameters> {
+interface SearchExistsRequest<T> extends Request {
 	Query: /** type has a custom json converter defined */ QueryContainer;
 	QueryString: string;
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
@@ -3738,7 +3733,7 @@ interface SearchExistsRequest<T> extends RequestBase<SearchExistsRequestParamete
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface SearchShardsRequest extends RequestBase<SearchShardsRequestParameters> {
+interface SearchShardsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Preference: string;
 	/** mapped on body but might only proxy to request querystring */ Routing: string;
 	/** mapped on body but might only proxy to request querystring */ Local: boolean;
@@ -3748,7 +3743,7 @@ interface SearchShardsRequest extends RequestBase<SearchShardsRequestParameters>
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface SearchShardsRequest<T> extends RequestBase<SearchShardsRequestParameters> {
+interface SearchShardsRequest<T> extends Request {
 	/** mapped on body but might only proxy to request querystring */ Preference: string;
 	/** mapped on body but might only proxy to request querystring */ Routing: string;
 	/** mapped on body but might only proxy to request querystring */ Local: boolean;
@@ -3758,7 +3753,7 @@ interface SearchShardsRequest<T> extends RequestBase<SearchShardsRequestParamete
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface SearchShardsResponse extends ResponseBase {
+interface SearchShardsResponse extends Response {
 	shards: SearchShard[][];
 	nodes: KeyValuePair<string, SearchNode>[];
 }
@@ -3774,7 +3769,7 @@ interface SearchNode {
 	name: string;
 	transport_address: string;
 }
-interface SearchTemplateRequest extends RequestBase<SearchTemplateRequestParameters> {
+interface SearchTemplateRequest extends Request {
 	template: string;
 	file: string;
 	id: string;
@@ -3790,9 +3785,9 @@ interface SearchTemplateRequest extends RequestBase<SearchTemplateRequestParamet
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface SearchTemplateRequest<T> extends SearchTemplateRequest {
+interface SearchTemplateRequest<T> extends Request {
 }
-interface DeleteSearchTemplateRequest extends RequestBase<DeleteSearchTemplateRequestParameters> {
+interface DeleteSearchTemplateRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Version: long;
 	/** mapped on body but might only proxy to request querystring */ VersionType: VersionType;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
@@ -3800,16 +3795,16 @@ interface DeleteSearchTemplateRequest extends RequestBase<DeleteSearchTemplateRe
 }
 interface DeleteSearchTemplateResponse extends AcknowledgedResponseBase {
 }
-interface GetSearchTemplateRequest extends RequestBase<GetSearchTemplateRequestParameters> {
+interface GetSearchTemplateRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Version: long;
 	/** mapped on body but might only proxy to request querystring */ VersionType: VersionType;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface GetSearchTemplateResponse extends ResponseBase {
+interface GetSearchTemplateResponse extends Response {
 	template: string;
 }
-interface /** type has a custom json converter defined */ PutSearchTemplateRequest extends RequestBase<PutSearchTemplateRequestParameters> {
+interface /** type has a custom json converter defined */ PutSearchTemplateRequest extends Request {
 	template: string;
 	/** mapped on body but might only proxy to request querystring */ OpType: OpType;
 	/** mapped on body but might only proxy to request querystring */ Version: long;
@@ -3819,7 +3814,7 @@ interface /** type has a custom json converter defined */ PutSearchTemplateReque
 }
 interface PutSearchTemplateResponse extends AcknowledgedResponseBase {
 }
-interface /** type has a custom json converter defined */ SuggestRequest extends RequestBase<SuggestRequestParameters> {
+interface /** type has a custom json converter defined */ SuggestRequest extends Request {
 	GlobalText: string;
 	Suggest: KeyValuePair<string, ISuggestBucket>[];
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
@@ -3830,11 +3825,11 @@ interface /** type has a custom json converter defined */ SuggestRequest extends
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface /** type has a custom json converter defined */ SuggestResponse extends ResponseBase {
+interface /** type has a custom json converter defined */ SuggestResponse extends Response {
 	Shards: ShardsMetaData;
 	Suggestions: KeyValuePair<string, Suggest[]>[];
 }
-interface ValidateQueryRequest extends RequestBase<ValidateQueryRequestParameters> {
+interface ValidateQueryRequest extends Request {
 	query: /** type has a custom json converter defined */ QueryContainer;
 	/** mapped on body but might only proxy to request querystring */ Explain: boolean;
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
@@ -3852,7 +3847,7 @@ interface ValidateQueryRequest extends RequestBase<ValidateQueryRequestParameter
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface ValidateQueryRequest<T> extends RequestBase<ValidateQueryRequestParameters> {
+interface ValidateQueryRequest<T> extends Request {
 	Query: /** type has a custom json converter defined */ QueryContainer;
 	/** mapped on body but might only proxy to request querystring */ Explain: boolean;
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
@@ -3870,7 +3865,7 @@ interface ValidateQueryRequest<T> extends RequestBase<ValidateQueryRequestParame
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface ValidateQueryResponse extends ResponseBase {
+interface ValidateQueryResponse extends Response {
 	valid: boolean;
 	_shards: ShardsMetaData;
 	explanations: ValidationExplanation[];
@@ -3881,12 +3876,12 @@ interface ValidationExplanation {
 	error: string;
 	explanation: string;
 }
-interface CatHelpRequest extends RequestBase<CatHelpRequestParameters> {
+interface CatHelpRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Help: boolean;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface CatNodeattrsRequest extends RequestBase<CatNodeattrsRequestParameters> {
+interface CatNodeattrsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Local: boolean;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ H: string[];
@@ -3895,7 +3890,7 @@ interface CatNodeattrsRequest extends RequestBase<CatNodeattrsRequestParameters>
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface IndicesShardStoresRequest extends RequestBase<IndicesShardStoresRequestParameters> {
+interface IndicesShardStoresRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Status: string[];
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
@@ -3904,7 +3899,7 @@ interface IndicesShardStoresRequest extends RequestBase<IndicesShardStoresReques
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface RenderSearchTemplateRequest extends RequestBase<RenderSearchTemplateRequestParameters> {
+interface RenderSearchTemplateRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }

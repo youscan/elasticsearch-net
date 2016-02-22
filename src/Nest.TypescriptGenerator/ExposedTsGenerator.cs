@@ -66,8 +66,9 @@ namespace Nest.TypescriptGenerator
 			{
 				foreach (var classModel in classes)
 				{
-					if (Ignore(classModel)) continue;
-					this.AppendClassDefinition(classModel, sb, generatorOutput);
+					var c = ReMapClass(classModel);
+					if (Ignore(c)) continue;
+					this.AppendClassDefinition(c, sb, generatorOutput);
 				}
 			}
 
@@ -101,5 +102,28 @@ namespace Nest.TypescriptGenerator
 				return true;
 			return false;
 		}
+
+		protected TsClass ReMapClass(TsClass classModel)
+		{
+			if (typeof(RequestBase<>) == classModel.Type)
+				return new TsClass(typeof(Request));
+
+			if (typeof(ResponseBase) == classModel.Type)
+				return new TsClass(typeof(Response));
+
+			if (classModel.BaseType != null)
+			{
+				if (typeof(IRequest).IsAssignableFrom(classModel.BaseType.Type))
+					classModel.BaseType = new TsClass(typeof(Request));
+
+				if (classModel.BaseType.Type == typeof(ResponseBase))
+					classModel.BaseType = new TsClass(typeof(Response));
+			}
+
+			return classModel;
+		}
 	}
+
+	public class Request { }
+	public class Response { }
 }
