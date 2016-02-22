@@ -16,7 +16,9 @@ namespace Nest.TypescriptGenerator
 		public Dictionary<string,string> TypeRenames => new Dictionary<string, string>
 		{
 			{ "KeyValuePair", "Map" }
-		}; 
+		};
+
+		public HashSet<string> Appended = new HashSet<string>();
 
 		protected override void AppendEnumDefinition(TsEnum enumModel, ScriptBuilder sb, TsGeneratorOutput output)
 		{
@@ -74,7 +76,9 @@ namespace Nest.TypescriptGenerator
 				{
 					var c = ReMapClass(classModel);
 					if (Ignore(c)) continue;
+					if (this.Appended.Contains(c.Name)) continue;
 					this.AppendClassDefinition(c, sb, generatorOutput);
+					this.Appended.Add(c.Name);
 				}
 			}
 
@@ -130,6 +134,8 @@ namespace Nest.TypescriptGenerator
 			return classModel;
 		}
 	}
+
 	public class Request { }
+
 	public class Response { }
 }
