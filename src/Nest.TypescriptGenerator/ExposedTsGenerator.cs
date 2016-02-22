@@ -219,7 +219,7 @@ namespace Nest.TypescriptGenerator
 
 			if (classModel.BaseType != null)
 			{
-				if (typeof(IRequest<>).IsAssignableFrom(classModel.BaseType.Type))
+				if (typeof(IRequest).IsAssignableFrom(classModel.BaseType.Type))
 					classModel.BaseType = new TsClass(typeof(Request));
 
 				if (classModel.BaseType.Type == typeof(ResponseBase))

@@ -84,7 +84,9 @@ namespace Nest.TypescriptGenerator
 			var name = _scriptGenerator.TypeRenames.ContainsKey(tsClass.Name) 
 				? _scriptGenerator.TypeRenames[tsClass.Name] 
 				: tsClass.Name;
-
+			var interfaceRegex = new Regex("(?-i)^I[A-Z].*$");
+			if (interfaceRegex.IsMatch(name))
+				name = name.TrimStart('I');
 			if (!tsClass.GenericArguments.Any()) return name;
 			return name + "<" + string.Join(", ", tsClass.GenericArguments.Select(a => a is TsCollection ? _scriptGenerator.GetFullyQualifiedTypeName(a) + "[]" : _scriptGenerator.GetFullyQualifiedTypeName(a))) + ">";
 		}
