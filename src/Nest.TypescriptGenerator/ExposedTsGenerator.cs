@@ -83,6 +83,14 @@ namespace Nest.TypescriptGenerator
 			}
 		}
 
-		protected bool Ignore(TsClass classModel) => typeof(IRequestParameters).IsAssignableFrom(classModel.Type);
+		protected bool Ignore(TsClass classModel)
+		{
+			if (typeof(IRequestParameters).IsAssignableFrom(classModel.Type)) return true;
+
+			var fullName = classModel.Type.FullName ?? classModel.Type.DeclaringType?.FullName;
+			if (fullName != null && !fullName.StartsWith("Nest.") && !fullName.StartsWith("Elasticsearch.Net.")) return true;
+
+			return false;
+		}
 	}
 }
