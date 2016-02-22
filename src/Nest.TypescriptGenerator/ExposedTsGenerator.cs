@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Elasticsearch.Net;
 using System;
 using System.Linq;
@@ -11,6 +12,11 @@ namespace Nest.TypescriptGenerator
 	public class ExposedTsGenerator : TsGenerator
 	{
 		public TypeConvertorCollection Converters => base._typeConvertors;
+
+		public Dictionary<string,string> TypeRenames => new Dictionary<string, string>
+		{
+			{ "KeyValuePair", "Map" }
+		}; 
 
 		protected override void AppendEnumDefinition(TsEnum enumModel, ScriptBuilder sb, TsGeneratorOutput output)
 		{
