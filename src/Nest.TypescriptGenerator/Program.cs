@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using TypeLite;
 using TypeLite.TsModels;
@@ -16,6 +18,7 @@ namespace Nest.TypescriptGenerator
 	public class Program
 	{
 		public static Dictionary<string, Type> RequestParameters { get; set; }
+		private static ExposedTsGenerator _scriptGenerator;
 
 		public static void Main(string[] args)
 		{
@@ -23,6 +26,7 @@ namespace Nest.TypescriptGenerator
 
 			var nestAssembly = typeof(IRequest<>).Assembly;
 			var lowLevelAssembly = typeof(IElasticLowLevelClient).Assembly;
+
 			var nestInterfaces = nestAssembly
 				.GetTypes()
 				.Where(t => typeof(IRequest).IsAssignableFrom(t) || typeof(IResponse).IsAssignableFrom(t))
@@ -34,13 +38,14 @@ namespace Nest.TypescriptGenerator
 				.Where(t => t.IsClass && t.Name.EndsWith("RequestParameters"))
 				.ToDictionary(t=>t.Name.Replace("Parameters", ""));
 
-			var typeScriptFluent = TypeScript.Definitions()
+			_scriptGenerator = new ExposedTsGenerator();
+
+			var typeScriptFluent = TypeScript.Definitions(_scriptGenerator)
 				.WithTypeFormatter(FormatType)
 				.WithMemberFormatter(FormatMember)
 				.WithVisibility((@class, name) => false)
-				.WithModuleNameFormatter(module => {
-					return "Elasticsearch";
-				});
+				.AsConstEnums(false)
+				.WithModuleNameFormatter(module => string.Empty);
 
 			var definitions = nestInterfaces.Aggregate(typeScriptFluent, (def, t) => def.For(t));
 
@@ -59,23 +64,31 @@ namespace Nest.TypescriptGenerator
 			var declaringType = property.MemberInfo.DeclaringType;
 			var propertyName = property.MemberInfo.Name;
 
+			if (declaringType == null) return propertyName;
 			var nonGenericTypeName = RemoveGeneric.Replace(declaringType.Name, "$1");
+			
 			if (declaringType.Name.Contains("Request") && RequestParameters.ContainsKey(nonGenericTypeName))
 			{
 				var rp = RequestParameters[nonGenericTypeName];
 				var method = rp.GetMethod(propertyName);
 				if (method != null)
-					return $"/** mapped on body but might only proxy to request querystring*/ {propertyName}";
+					return $"/** mapped on body but might only proxy to request querystring */ {propertyName}";
 			}
 			var iface = declaringType.GetInterfaces().FirstOrDefault(ii => ii.Name == "I" + declaringType.Name);
 			var ifaceProperty = iface?.GetProperty(propertyName);
 
-			var jsonPropertyAttribute = GetAttribute<JsonPropertyAttribute>(ifaceProperty, property.MemberInfo);
-			if (jsonPropertyAttribute != null && !string.IsNullOrWhiteSpace(jsonPropertyAttribute.PropertyName))
+			var jsonPropertyAttribute = ifaceProperty?.GetCustomAttribute<JsonPropertyAttribute>() ??
+			                            property.MemberInfo.GetCustomAttribute<JsonPropertyAttribute>();
+
+			if (!string.IsNullOrWhiteSpace(jsonPropertyAttribute?.PropertyName))
 				propertyName = jsonPropertyAttribute.PropertyName;
-			var jsonConverterAttribute = GetAttribute<JsonConverterAttribute>(ifaceProperty, property.MemberInfo);
+
+			var jsonConverterAttribute = ifaceProperty?.GetCustomAttribute<JsonConverterAttribute>() ??
+			                             property.MemberInfo.GetCustomAttribute<JsonConverterAttribute>();
+
 			if (jsonConverterAttribute != null)
 				propertyName = HereBeDragons(propertyName);
+
 			return propertyName;
 		}
 
@@ -83,25 +96,24 @@ namespace Nest.TypescriptGenerator
 		private static string FormatType(TsType type, ITsTypeFormatter formatter)
 		{
 			var iface = type.Type.GetInterfaces().FirstOrDefault(i => i.Name == "I" + type.Type.Name);
-			if (iface == null)
-				return type.Type.Name;
-			var jsonConverterAttribute = iface.GetCustomAttributes(typeof(JsonConverterAttribute), true).FirstOrDefault() as JsonConverterAttribute;
-			if (jsonConverterAttribute == null)
-				jsonConverterAttribute = type.Type.GetCustomAttributes(typeof(JsonConverterAttribute), true).FirstOrDefault() as JsonConverterAttribute;
-			if (jsonConverterAttribute != null)
-				return HereBeDragons(type.Type.Name);
-			return type.Type.Name;
+			var name = GenerateTypeName(type);
+
+			if (iface == null) return name;
+
+			var jsonConverterAttribute = iface.GetCustomAttribute<JsonConverterAttribute>() ??
+			                             type.Type.GetCustomAttribute<JsonConverterAttribute>();
+
+			return jsonConverterAttribute != null ? HereBeDragons(name) : name;
 		}
 
-		private static TAttribute GetAttribute<TAttribute>(PropertyInfo propertyInfo, MemberInfo memberInfo)
-			where TAttribute : Attribute
+		private static string HereBeDragons(string original) => 
+			$"/** type has a custom json converter defined */ {original}";
+
+		private static string GenerateTypeName(TsType type)
 		{
-			var attribute = propertyInfo?.GetCustomAttributes(typeof(TAttribute), true).FirstOrDefault() as TAttribute;
-			if (attribute == null)
-				attribute = memberInfo.GetCustomAttributes(typeof(TAttribute), true).FirstOrDefault() as TAttribute;
-			return attribute;
+			var tsClass = ((TsClass)type);
+			if (!tsClass.GenericArguments.Any()) return tsClass.Name;
+			return tsClass.Name + "<" + string.Join(", ", tsClass.GenericArguments.Select(a => a as TsCollection != null ? _scriptGenerator.GetFullyQualifiedTypeName(a) + "[]" : _scriptGenerator.GetFullyQualifiedTypeName(a))) + ">";
 		}
-
-		private static string HereBeDragons(string original) => $"/** here be converter dragons! */ {original}";
 	}
 }
