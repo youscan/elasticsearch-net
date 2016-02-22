@@ -54,7 +54,6 @@ namespace Nest.TypescriptGenerator
 
 		private static string FormatMember(TsProperty property)
 		{
-
 			var declaringType = property.MemberInfo.DeclaringType;
 			var propertyName = property.MemberInfo.Name;
 
@@ -63,7 +62,7 @@ namespace Nest.TypescriptGenerator
 				var rp = RequestParameters[declaringType.Name];
 				var method = rp.GetMethod(propertyName);
 				if (method != null)
-					return $"/** mapped on body but might only proxy to request querystring*/ {propertyName}";
+					return $"/** mapped on body but might only proxy to request querystring */ {propertyName}";
 			}
 			var iface = declaringType.GetInterfaces().FirstOrDefault(ii => ii.Name == "I" + declaringType.Name);
 			if (iface == null) return propertyName;
@@ -81,6 +80,8 @@ namespace Nest.TypescriptGenerator
 
 		private static string FormatType(TsType type, ITsTypeFormatter formatter)
 		{
+			var fullName = type.Type.FullName ?? type.Type.DeclaringType?.FullName;
+			if (fullName != null && !fullName.StartsWith("Nest.")) return "/** not an elasticsearch type */";
 			var iface = type.Type.GetInterfaces().FirstOrDefault(i => i.Name == "I" + type.Type.Name);
 			if (iface == null)
 				return type.Type.Name;
