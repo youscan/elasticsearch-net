@@ -387,7 +387,7 @@ interface PendingTask {
 	time_in_queue: string;
 }
 interface /** type has a custom json converter defined */ ClusterRerouteRequest extends Request {
-	commands: IClusterRerouteCommand[];
+	commands: ClusterRerouteCommand[];
 	/** mapped on body but might only proxy to request querystring */ DryRun: boolean;
 	/** mapped on body but might only proxy to request querystring */ Explain: boolean;
 	/** mapped on body but might only proxy to request querystring */ Metric: string[];
@@ -396,7 +396,7 @@ interface /** type has a custom json converter defined */ ClusterRerouteRequest 
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface IClusterRerouteCommand {
+interface ClusterRerouteCommand {
 	Name: string;
 }
 interface ClusterRerouteResponse extends Response {
@@ -516,49 +516,49 @@ interface TemplateMapping {
 	template: string;
 	order: integer;
 	settings: Map<string, any>[];
-	mappings: Map<TypeName, ITypeMapping>[];
-	warmers: Map<TypeName, IWarmer>[];
-	aliases: Map<IndexName, IAlias>[];
+	mappings: Map<TypeName, TypeMapping>[];
+	warmers: Map<TypeName, Warmer>[];
+	aliases: Map<IndexName, Alias>[];
 }
 interface TypeName {
 	Name: string;
 	Type: Type;
 }
-interface ITypeMapping {
+interface TypeMapping {
 	dynamic_date_formats: string[];
 	date_detection: boolean;
 	numeric_detection: boolean;
-	/** type has a custom json converter defined */ transform: IMappingTransform[];
+	/** type has a custom json converter defined */ transform: MappingTransform[];
 	analyzer: string;
 	search_analyzer: string;
-	_source: ISourceField;
-	_all: IAllField;
-	_parent: IParentField;
-	_routing: IRoutingField;
-	_index: IIndexField;
-	_size: ISizeField;
-	_timestamp: ITimestampField;
-	_field_names: IFieldNamesField;
-	_ttl: ITtlField;
+	_source: SourceField;
+	_all: AllField;
+	_parent: ParentField;
+	_routing: RoutingField;
+	_index: ndexField;
+	_size: SizeField;
+	_timestamp: TimestampField;
+	_field_names: FieldNamesField;
+	_ttl: TtlField;
 	/** type has a custom json converter defined */ _meta: Map<string, any>[];
-	dynamic_templates: Map<string, IDynamicTemplate>[];
+	dynamic_templates: Map<string, DynamicTemplate>[];
 	dynamic: DynamicMapping;
-	properties: Map<PropertyName, IProperty>[];
+	properties: Map<PropertyName, Property>[];
 }
-interface IMappingTransform {
+interface MappingTransform {
 	script: string;
 	script_file: string;
 	params: Map<string, string>[];
 	lang: string;
 }
-interface ISourceField {
+interface SourceField {
 	enabled: boolean;
 	compress: boolean;
 	compress_threshold: string;
 	includes: string[];
 	excludes: string[];
 }
-interface IAllField {
+interface AllField {
 	enabled: boolean;
 	store: boolean;
 	store_term_vectors: boolean;
@@ -570,19 +570,19 @@ interface IAllField {
 	search_analyzer: string;
 	similarity: string;
 }
-interface IParentField {
+interface ParentField {
 	type: TypeName;
 }
-interface IRoutingField {
+interface RoutingField {
 	required: boolean;
 }
-interface IIndexField {
+interface ndexField {
 	enabled: boolean;
 }
-interface ISizeField {
+interface SizeField {
 	enabled: boolean;
 }
-interface ITimestampField {
+interface TimestampField {
 	enabled: boolean;
 	path: Field;
 	format: string;
@@ -595,28 +595,28 @@ interface Field {
 	Property: PropertyInfo;
 	Boost: double;
 }
-interface IFieldNamesField {
+interface FieldNamesField {
 	enabled: boolean;
 }
-interface ITtlField {
+interface TtlField {
 	enabled: boolean;
 	default: Time;
 }
-interface IDynamicTemplate {
+interface DynamicTemplate {
 	match: string;
 	unmatch: string;
 	match_mapping_type: string;
 	path_match: string;
 	path_unmatch: string;
-	mapping: IProperty;
+	mapping: Property;
 }
-interface IProperty {
+interface Property {
 	Name: PropertyName;
 	type: TypeName;
 	index_name: string;
 	store: boolean;
 	doc_values: boolean;
-	fields: Map<PropertyName, IProperty>[];
+	fields: Map<PropertyName, Property>[];
 	similarity: SimilarityOption;
 	copy_to: Field[];
 }
@@ -625,11 +625,11 @@ interface PropertyName {
 	Expression: Expression;
 	Property: PropertyInfo;
 }
-interface IWarmer {
+interface Warmer {
 	types: TypeName[];
-	source: ISearchRequest;
+	source: SearchRequest;
 }
-interface ISearchRequest {
+interface SearchRequest {
 	timeout: string;
 	from: integer;
 	size: integer;
@@ -639,18 +639,18 @@ interface ISearchRequest {
 	min_score: double;
 	terminate_after: long;
 	/** type has a custom json converter defined */ indices_boost: Map<IndexName, double>[];
-	sort: ISort[];
-	suggest: Map<string, ISuggestBucket>[];
-	highlight: IHighlight;
-	rescore: IRescore;
+	sort: Sort[];
+	suggest: Map<string, SuggestBucket>[];
+	highlight: Highlight;
+	rescore: Rescore;
 	fields: Field[];
 	fielddata_fields: Field[];
-	script_fields: Map<string, IScriptField>[];
-	/** type has a custom json converter defined */ _source: ISourceFilter;
-	aggs: Map<string, IAggregationContainer>[];
+	script_fields: Map<string, ScriptField>[];
+	/** type has a custom json converter defined */ _source: SourceFilter;
+	aggs: Map<string, AggregationContainer>[];
 	query: /** type has a custom json converter defined */ QueryContainer;
 	post_filter: /** type has a custom json converter defined */ QueryContainer;
-	inner_hits: Map<string, IInnerHitsContainer>[];
+	inner_hits: Map<string, nnerHitsContainer>[];
 	Preference: string;
 	Routing: string;
 	SearchType: SearchType;
@@ -662,7 +662,7 @@ interface IndexName {
 	Name: string;
 	Type: Type;
 }
-interface ISort {
+interface Sort {
 	SortKey: Field;
 	missing: string;
 	order: SortOrder;
@@ -672,13 +672,13 @@ interface ISort {
 }
 interface /** type has a custom json converter defined */ QueryContainer {
 }
-interface ISuggestBucket {
+interface SuggestBucket {
 	text: string;
-	term: ITermSuggester;
-	phrase: IPhraseSuggester;
-	completion: ICompletionSuggester;
+	term: TermSuggester;
+	phrase: PhraseSuggester;
+	completion: CompletionSuggester;
 }
-interface ITermSuggester {
+interface TermSuggester {
 	prefix_len: integer;
 	/** type has a custom json converter defined */ suggest_mode: SuggestMode;
 	min_word_len: integer;
@@ -687,17 +687,17 @@ interface ITermSuggester {
 	min_doc_freq: double;
 	max_term_freq: double;
 }
-interface IPhraseSuggester {
+interface PhraseSuggester {
 	gram_size: integer;
 	real_word_error_likelihood: double;
 	confidence: double;
 	max_errors: double;
 	separator: string;
-	direct_generator: IDirectGenerator[];
-	highlight: IPhraseSuggestHighlight;
-	collate: IPhraseSuggestCollate;
+	direct_generator: DirectGenerator[];
+	highlight: PhraseSuggestHighlight;
+	collate: PhraseSuggestCollate;
 }
-interface IDirectGenerator {
+interface DirectGenerator {
 	field: Field;
 	size: integer;
 	prefix_len: integer;
@@ -710,35 +710,35 @@ interface IDirectGenerator {
 	pre_filter: string;
 	post_filter: string;
 }
-interface IPhraseSuggestHighlight {
+interface PhraseSuggestHighlight {
 	pre_tag: string;
 	post_tag: string;
 }
-interface IPhraseSuggestCollate {
-	query: IScript;
+interface PhraseSuggestCollate {
+	query: Script;
 	prune: boolean;
 }
-interface IScript {
+interface Script {
 	/** type has a custom json converter defined */ params: Map<string, any>[];
 	lang: string;
 }
-interface ICompletionSuggester {
-	fuzzy: IFuzzySuggester;
+interface CompletionSuggester {
+	fuzzy: FuzzySuggester;
 	context: Map<string, any>[];
 }
-interface IFuzzySuggester {
+interface FuzzySuggester {
 	transpositions: boolean;
 	min_length: integer;
 	prefix_length: integer;
-	fuzziness: IFuzziness;
+	fuzziness: Fuzziness;
 	unicode_aware: boolean;
 }
-interface IFuzziness {
+interface Fuzziness {
 	Auto: boolean;
 	EditDistance: integer;
 	Ratio: double;
 }
-interface IHighlight {
+interface Highlight {
 	pre_tags: string[];
 	post_tags: string[];
 	fragment_size: integer;
@@ -748,11 +748,11 @@ interface IHighlight {
 	boundary_max_size: integer;
 	encoder: string;
 	order: string;
-	/** type has a custom json converter defined */ fields: Map<Field, IHighlightField>[];
+	/** type has a custom json converter defined */ fields: Map<Field, HighlightField>[];
 	require_field_match: boolean;
 	boundary_chars: string;
 }
-interface IHighlightField {
+interface HighlightField {
 	Field: Field;
 	pre_tags: string[];
 	post_tags: string[];
@@ -771,72 +771,72 @@ interface IHighlightField {
 	matched_fields: Field[];
 	highlight_query: /** type has a custom json converter defined */ QueryContainer;
 }
-interface IRescore {
+interface Rescore {
 	window_size: integer;
-	query: IRescoreQuery;
+	query: RescoreQuery;
 }
-interface IRescoreQuery {
+interface RescoreQuery {
 	rescore_query: /** type has a custom json converter defined */ QueryContainer;
 	query_weight: double;
 	rescore_query_weight: double;
 	score_mode: ScoreMode;
 }
-interface IScriptField {
-	script: IScript;
+interface ScriptField {
+	script: Script;
 }
-interface ISourceFilter {
+interface SourceFilter {
 	include: Field[];
 	exclude: Field[];
 }
-interface IAggregationContainer {
+interface AggregationContainer {
 	/** type has a custom json converter defined */ meta: Map<string, any>[];
-	avg: IAverageAggregation;
-	date_histogram: IDateHistogramAggregation;
-	percentiles: IPercentilesAggregation;
-	date_range: IDateRangeAggregation;
-	extended_stats: IExtendedStatsAggregation;
-	filter: IFilterAggregation;
-	filters: IFiltersAggregation;
-	geo_distance: IGeoDistanceAggregation;
-	geohash_grid: IGeoHashGridAggregation;
-	geo_bounds: IGeoBoundsAggregation;
-	histogram: IHistogramAggregation;
-	global: IGlobalAggregation;
-	ip_range: IIpRangeAggregation;
-	max: IMaxAggregation;
-	min: IMinAggregation;
-	cardinality: ICardinalityAggregation;
-	missing: IMissingAggregation;
-	nested: INestedAggregation;
-	reverse_nested: IReverseNestedAggregation;
-	range: IRangeAggregation;
-	stats: IStatsAggregator;
-	sum: ISumAggregation;
-	terms: ITermsAggregation;
-	significant_terms: ISignificantTermsAggregation;
-	value_count: IValueCountAggregation;
-	percentile_ranks: IPercentileRanksAggregation;
-	top_hits: ITopHitsAggregation;
-	children: IChildrenAggregation;
-	scripted_metric: IScriptedMetricAggregation;
-	avg_bucket: IAverageBucketAggregation;
-	derivative: IDerivativeAggregation;
-	max_bucket: IMaxBucketAggregation;
-	min_bucket: IMinBucketAggregation;
-	sum_bucket: ISumBucketAggregation;
-	moving_avg: IMovingAverageAggregation;
-	cumulative_sum: ICumulativeSumAggregation;
-	serial_diff: ISerialDifferencingAggregation;
-	bucket_script: IBucketScriptAggregation;
-	bucket_selector: IBucketSelectorAggregation;
-	sampler: ISamplerAggregation;
-	aggs: Map<string, IAggregationContainer>[];
+	avg: AverageAggregation;
+	date_histogram: DateHistogramAggregation;
+	percentiles: PercentilesAggregation;
+	date_range: DateRangeAggregation;
+	extended_stats: ExtendedStatsAggregation;
+	filter: FilterAggregation;
+	filters: FiltersAggregation;
+	geo_distance: GeoDistanceAggregation;
+	geohash_grid: GeoHashGridAggregation;
+	geo_bounds: GeoBoundsAggregation;
+	histogram: HistogramAggregation;
+	global: GlobalAggregation;
+	ip_range: pRangeAggregation;
+	max: MaxAggregation;
+	min: MinAggregation;
+	cardinality: CardinalityAggregation;
+	missing: MissingAggregation;
+	nested: NestedAggregation;
+	reverse_nested: ReverseNestedAggregation;
+	range: RangeAggregation;
+	stats: StatsAggregator;
+	sum: SumAggregation;
+	terms: TermsAggregation;
+	significant_terms: SignificantTermsAggregation;
+	value_count: ValueCountAggregation;
+	percentile_ranks: PercentileRanksAggregation;
+	top_hits: TopHitsAggregation;
+	children: ChildrenAggregation;
+	scripted_metric: ScriptedMetricAggregation;
+	avg_bucket: AverageBucketAggregation;
+	derivative: DerivativeAggregation;
+	max_bucket: MaxBucketAggregation;
+	min_bucket: MinBucketAggregation;
+	sum_bucket: SumBucketAggregation;
+	moving_avg: MovingAverageAggregation;
+	cumulative_sum: CumulativeSumAggregation;
+	serial_diff: SerialDifferencingAggregation;
+	bucket_script: BucketScriptAggregation;
+	bucket_selector: BucketSelectorAggregation;
+	sampler: SamplerAggregation;
+	aggs: Map<string, AggregationContainer>[];
 }
-interface IAverageAggregation {
+interface AverageAggregation {
 }
-interface IDateHistogramAggregation {
+interface DateHistogramAggregation {
 	field: Field;
-	script: IScript;
+	script: Script;
 	params: Map<string, any>[];
 	interval: Union<DateInterval, Time>;
 	format: string;
@@ -862,18 +862,18 @@ interface ExtendedBounds<T> {
 	min: T;
 	max: T;
 }
-interface IPercentilesAggregation {
+interface PercentilesAggregation {
 	Percents: double[];
-	Method: IPercentilesMethod;
+	Method: PercentilesMethod;
 }
-interface IPercentilesMethod {
+interface PercentilesMethod {
 }
-interface IDateRangeAggregation {
+interface DateRangeAggregation {
 	field: Field;
 	format: string;
-	ranges: IDateRangeExpression[];
+	ranges: DateRangeExpression[];
 }
-interface IDateRangeExpression {
+interface DateRangeExpression {
 	from: /** type has a custom json converter defined */ DateMath;
 	to: /** type has a custom json converter defined */ DateMath;
 	key: string;
@@ -883,74 +883,74 @@ interface /** type has a custom json converter defined */ DateMath {
 }
 interface DateMathExpression extends /** type has a custom json converter defined */ DateMath {
 }
-interface IExtendedStatsAggregation {
+interface ExtendedStatsAggregation {
 }
-interface IFilterAggregation {
+interface FilterAggregation {
 	filter: /** type has a custom json converter defined */ QueryContainer;
 }
-interface IFiltersAggregation {
-	filters: Union<Map<string, IQueryContainer>[], /** type has a custom json converter defined */ QueryContainer[]>;
+interface FiltersAggregation {
+	filters: Union<Map<string, QueryContainer>[], /** type has a custom json converter defined */ QueryContainer[]>;
 	other_bucket: boolean;
 	other_bucket_key: string;
 }
-interface IQueryContainer {
+interface QueryContainer {
 	IsConditionless: boolean;
 	IsStrict: boolean;
 	IsVerbatim: boolean;
-	RawQuery: IRawQuery;
-	bool: IBoolQuery;
-	match_all: IMatchAllQuery;
-	term: ITermQuery;
-	wildcard: IWildcardQuery;
-	prefix: IPrefixQuery;
-	boosting: IBoostingQuery;
-	ids: IIdsQuery;
-	limit: ILimitQuery;
-	constant_score: IConstantScoreQuery;
-	dis_max: IDisMaxQuery;
-	multi_match: IMultiMatchQuery;
-	match: IMatchQuery;
-	fuzzy: IFuzzyQuery;
-	geo_shape: IGeoShapeQuery;
-	common: ICommonTermsQuery;
-	terms: ITermsQuery;
-	range: IRangeQuery;
-	regexp: IRegexpQuery;
-	has_child: IHasChildQuery;
-	has_parent: IHasParentQuery;
-	span_term: ISpanTermQuery;
-	simple_query_string: ISimpleQueryStringQuery;
-	query_string: IQueryStringQuery;
-	mlt: IMoreLikeThisQuery;
-	span_first: ISpanFirstQuery;
-	span_or: ISpanOrQuery;
-	span_near: ISpanNearQuery;
-	span_not: ISpanNotQuery;
-	span_containing: ISpanContainingQuery;
-	span_within: ISpanWithinQuery;
-	span_multi: ISpanMultiTermQuery;
-	nested: INestedQuery;
-	indices: IIndicesQuery;
-	function_score: IFunctionScoreQuery;
-	template: ITemplateQuery;
-	geo_bounding_box: IGeoBoundingBoxQuery;
-	geo_distance: IGeoDistanceQuery;
-	geo_polygon: IGeoPolygonQuery;
-	geo_distance_range: IGeoDistanceRangeQuery;
-	geohash_cell: IGeoHashCellQuery;
-	script: IScriptQuery;
-	exists: IExistsQuery;
-	missing: IMissingQuery;
-	type: ITypeQuery;
-	filtered: IFilteredQuery;
-	and: IAndQuery;
-	or: IOrQuery;
-	not: INotQuery;
+	RawQuery: RawQuery;
+	bool: BoolQuery;
+	match_all: MatchAllQuery;
+	term: TermQuery;
+	wildcard: WildcardQuery;
+	prefix: PrefixQuery;
+	boosting: BoostingQuery;
+	ids: dsQuery;
+	limit: LimitQuery;
+	constant_score: ConstantScoreQuery;
+	dis_max: DisMaxQuery;
+	multi_match: MultiMatchQuery;
+	match: MatchQuery;
+	fuzzy: FuzzyQuery;
+	geo_shape: GeoShapeQuery;
+	common: CommonTermsQuery;
+	terms: TermsQuery;
+	range: RangeQuery;
+	regexp: RegexpQuery;
+	has_child: HasChildQuery;
+	has_parent: HasParentQuery;
+	span_term: SpanTermQuery;
+	simple_query_string: SimpleQueryStringQuery;
+	query_string: QueryStringQuery;
+	mlt: MoreLikeThisQuery;
+	span_first: SpanFirstQuery;
+	span_or: SpanOrQuery;
+	span_near: SpanNearQuery;
+	span_not: SpanNotQuery;
+	span_containing: SpanContainingQuery;
+	span_within: SpanWithinQuery;
+	span_multi: SpanMultiTermQuery;
+	nested: NestedQuery;
+	indices: ndicesQuery;
+	function_score: FunctionScoreQuery;
+	template: TemplateQuery;
+	geo_bounding_box: GeoBoundingBoxQuery;
+	geo_distance: GeoDistanceQuery;
+	geo_polygon: GeoPolygonQuery;
+	geo_distance_range: GeoDistanceRangeQuery;
+	geohash_cell: GeoHashCellQuery;
+	script: ScriptQuery;
+	exists: ExistsQuery;
+	missing: MissingQuery;
+	type: TypeQuery;
+	filtered: FilteredQuery;
+	and: AndQuery;
+	or: OrQuery;
+	not: NotQuery;
 }
-interface IRawQuery {
+interface RawQuery {
 	Raw: string;
 }
-interface IBoolQuery {
+interface BoolQuery {
 	must: /** type has a custom json converter defined */ QueryContainer[];
 	must_not: /** type has a custom json converter defined */ QueryContainer[];
 	should: /** type has a custom json converter defined */ QueryContainer[];
@@ -961,24 +961,24 @@ interface IBoolQuery {
 }
 interface MinimumShouldMatch extends Union<integer, string> {
 }
-interface IMatchAllQuery {
+interface MatchAllQuery {
 	norm_field: string;
 }
-interface ITermQuery {
+interface TermQuery {
 	value: any;
 }
-interface IWildcardQuery {
+interface WildcardQuery {
 	/** type has a custom json converter defined */ rewrite: RewriteMultiTerm;
 }
-interface IPrefixQuery {
+interface PrefixQuery {
 	/** type has a custom json converter defined */ rewrite: RewriteMultiTerm;
 }
-interface IBoostingQuery {
+interface BoostingQuery {
 	positive: /** type has a custom json converter defined */ QueryContainer;
 	negative: /** type has a custom json converter defined */ QueryContainer;
 	negative_boost: double;
 }
-interface IIdsQuery {
+interface dsQuery {
 	types: Types;
 	values: Id[];
 }
@@ -988,17 +988,17 @@ interface Types extends Union<AllTypesMarker, ManyTypes> {
 }
 interface Id {
 }
-interface ILimitQuery {
+interface LimitQuery {
 	limit: integer;
 }
-interface IConstantScoreQuery {
+interface ConstantScoreQuery {
 	filter: /** type has a custom json converter defined */ QueryContainer;
 }
-interface IDisMaxQuery {
+interface DisMaxQuery {
 	tie_breaker: double;
 	queries: /** type has a custom json converter defined */ QueryContainer[];
 }
-interface IMultiMatchQuery {
+interface MultiMatchQuery {
 	/** type has a custom json converter defined */ type: TextQueryType;
 	query: string;
 	analyzer: string;
@@ -1019,12 +1019,12 @@ interface IMultiMatchQuery {
 interface /** type has a custom json converter defined */ Fuzziness {
 	Auto: /** type has a custom json converter defined */ Fuzziness;
 }
-interface IMatchQuery {
+interface MatchQuery {
 	type: string;
 	query: string;
 	analyzer: string;
 	/** type has a custom json converter defined */ fuzzy_rewrite: RewriteMultiTerm;
-	fuzziness: IFuzziness;
+	fuzziness: Fuzziness;
 	fuzzy_transpositions: boolean;
 	cutoff_frequency: double;
 	prefix_length: integer;
@@ -1035,15 +1035,15 @@ interface IMatchQuery {
 	operator: Operator;
 	zero_terms_query: ZeroTermsQuery;
 }
-interface IFuzzyQuery {
+interface FuzzyQuery {
 	prefix_length: integer;
 	rewrite: RewriteMultiTerm;
 	max_expansions: integer;
 	transpositions: boolean;
 }
-interface IGeoShapeQuery {
+interface GeoShapeQuery {
 }
-interface ICommonTermsQuery {
+interface CommonTermsQuery {
 	query: string;
 	cutoff_frequency: double;
 	/** type has a custom json converter defined */ low_freq_operator: Operator;
@@ -1052,54 +1052,54 @@ interface ICommonTermsQuery {
 	analyzer: string;
 	disable_coord: boolean;
 }
-interface ITermsQuery {
+interface TermsQuery {
 	MinimumShouldMatch: MinimumShouldMatch;
 	DisableCoord: boolean;
 	Terms: any[];
-	TermsLookup: IFieldLookup;
+	TermsLookup: FieldLookup;
 }
-interface IFieldLookup {
+interface FieldLookup {
 	index: IndexName;
 	type: TypeName;
 	id: Id;
 	path: Field;
 }
-interface IRangeQuery {
+interface RangeQuery {
 }
-interface IRegexpQuery {
+interface RegexpQuery {
 	value: string;
 	flags: string;
 	max_determinized_states: integer;
 }
-interface IHasChildQuery {
+interface HasChildQuery {
 	type: TypeName;
 	score_mode: ChildScoreMode;
 	min_children: integer;
 	max_children: integer;
 	query: /** type has a custom json converter defined */ QueryContainer;
-	inner_hits: IInnerHits;
+	inner_hits: nnerHits;
 }
-interface IInnerHits {
+interface nnerHits {
 	name: string;
 	from: integer;
 	size: integer;
-	sort: ISort[];
-	highlight: IHighlight;
+	sort: Sort[];
+	highlight: Highlight;
 	explain: boolean;
-	_source: ISourceFilter;
+	_source: SourceFilter;
 	version: boolean;
 	fielddata_fields: Field[];
-	script_fields: Map<string, IScriptField>[];
+	script_fields: Map<string, ScriptField>[];
 }
-interface IHasParentQuery {
+interface HasParentQuery {
 	type: TypeName;
 	score_mode: ParentScoreMode;
 	query: /** type has a custom json converter defined */ QueryContainer;
-	inner_hits: IInnerHits;
+	inner_hits: nnerHits;
 }
-interface ISpanTermQuery {
+interface SpanTermQuery {
 }
-interface ISimpleQueryStringQuery {
+interface SimpleQueryStringQuery {
 	fields: Field[];
 	query: string;
 	analyzer: string;
@@ -1111,7 +1111,7 @@ interface ISimpleQueryStringQuery {
 	analyze_wildcard: boolean;
 	minimum_should_match: MinimumShouldMatch;
 }
-interface IQueryStringQuery {
+interface QueryStringQuery {
 	query: string;
 	default_field: Field;
 	default_operator: Operator;
@@ -1139,7 +1139,7 @@ interface IQueryStringQuery {
 	quote_field_suffix: string;
 	escape: boolean;
 }
-interface IMoreLikeThisQuery {
+interface MoreLikeThisQuery {
 	fields: Field[];
 	like: Like[];
 	unlike: Like[];
@@ -1155,9 +1155,9 @@ interface IMoreLikeThisQuery {
 	boost_terms: double;
 	include: boolean;
 }
-interface Like extends Union<string, ILikeDocument> {
+interface Like extends Union<string, LikeDocument> {
 }
-interface ILikeDocument {
+interface LikeDocument {
 	_index: IndexName;
 	_type: TypeName;
 	_id: Id;
@@ -1170,54 +1170,54 @@ interface ILikeDocument {
 }
 interface StopWords extends Union<string, string[]> {
 }
-interface ISpanFirstQuery {
-	match: ISpanQuery;
+interface SpanFirstQuery {
+	match: SpanQuery;
 	end: integer;
 }
-interface ISpanQuery {
-	span_term: ISpanTermQuery;
-	span_first: ISpanFirstQuery;
-	span_near: ISpanNearQuery;
-	span_or: ISpanOrQuery;
-	span_not: ISpanNotQuery;
-	span_containing: ISpanContainingQuery;
-	span_within: ISpanWithinQuery;
-	span_multi: ISpanMultiTermQuery;
+interface SpanQuery {
+	span_term: SpanTermQuery;
+	span_first: SpanFirstQuery;
+	span_near: SpanNearQuery;
+	span_or: SpanOrQuery;
+	span_not: SpanNotQuery;
+	span_containing: SpanContainingQuery;
+	span_within: SpanWithinQuery;
+	span_multi: SpanMultiTermQuery;
 }
-interface ISpanNearQuery {
-	clauses: ISpanQuery[];
+interface SpanNearQuery {
+	clauses: SpanQuery[];
 	slop: integer;
 	in_order: boolean;
 	collect_payloads: boolean;
 }
-interface ISpanOrQuery {
-	clauses: ISpanQuery[];
+interface SpanOrQuery {
+	clauses: SpanQuery[];
 }
-interface ISpanNotQuery {
-	include: ISpanQuery;
-	exclude: ISpanQuery;
+interface SpanNotQuery {
+	include: SpanQuery;
+	exclude: SpanQuery;
 	pre: integer;
 	post: integer;
 	dist: integer;
 }
-interface ISpanContainingQuery {
-	little: ISpanQuery;
-	big: ISpanQuery;
+interface SpanContainingQuery {
+	little: SpanQuery;
+	big: SpanQuery;
 }
-interface ISpanWithinQuery {
-	little: ISpanQuery;
-	big: ISpanQuery;
+interface SpanWithinQuery {
+	little: SpanQuery;
+	big: SpanQuery;
 }
-interface ISpanMultiTermQuery {
+interface SpanMultiTermQuery {
 	match: /** type has a custom json converter defined */ QueryContainer;
 }
-interface INestedQuery {
+interface NestedQuery {
 	score_mode: NestedScoreMode;
 	query: /** type has a custom json converter defined */ QueryContainer;
 	path: Field;
-	inner_hits: IInnerHits;
+	inner_hits: nnerHits;
 }
-interface IIndicesQuery {
+interface ndicesQuery {
 	/** type has a custom json converter defined */ indices: Indices;
 	query: /** type has a custom json converter defined */ QueryContainer;
 	/** type has a custom json converter defined */ no_match_query: /** type has a custom json converter defined */ QueryContainer;
@@ -1226,32 +1226,32 @@ interface Indices extends Union<AllIndicesMarker, ManyIndices> {
 	All: Indices;
 	AllIndices: Indices;
 }
-interface IFunctionScoreQuery {
+interface FunctionScoreQuery {
 	query: /** type has a custom json converter defined */ QueryContainer;
-	functions: IScoreFunction[];
+	functions: ScoreFunction[];
 	max_boost: double;
 	score_mode: FunctionScoreMode;
 	boost_mode: FunctionBoostMode;
 	min_score: double;
 }
-interface IScoreFunction {
+interface ScoreFunction {
 	filter: /** type has a custom json converter defined */ QueryContainer;
 	weight: double;
 }
-interface ITemplateQuery {
+interface TemplateQuery {
 	file: string;
 	inline: string;
 	id: Id;
 	params: Map<string, any>[];
 }
-interface IGeoBoundingBoxQuery {
-	BoundingBox: IBoundingBox;
+interface GeoBoundingBoxQuery {
+	BoundingBox: BoundingBox;
 	type: GeoExecution;
 	coerce: boolean;
 	ignore_malformed: boolean;
 	validation_method: GeoValidationMethod;
 }
-interface IBoundingBox {
+interface BoundingBox {
 	top_left: GeoLocation;
 	bottom_right: GeoLocation;
 }
@@ -1259,7 +1259,7 @@ interface GeoLocation {
 	lat: double;
 	lon: double;
 }
-interface IGeoDistanceQuery {
+interface GeoDistanceQuery {
 	Location: GeoLocation;
 	distance: Distance;
 	optimize_bbox: GeoOptimizeBBox;
@@ -1272,13 +1272,13 @@ interface Distance {
 	Precision: double;
 	Unit: DistanceUnit;
 }
-interface IGeoPolygonQuery {
+interface GeoPolygonQuery {
 	Points: GeoLocation[];
 	coerce: boolean;
 	ignore_malformed: boolean;
 	validation_method: GeoValidationMethod;
 }
-interface IGeoDistanceRangeQuery {
+interface GeoDistanceRangeQuery {
 	Location: GeoLocation;
 	gte: Distance;
 	lte: Distance;
@@ -1290,66 +1290,66 @@ interface IGeoDistanceRangeQuery {
 	ignore_malformed: boolean;
 	validation_method: GeoValidationMethod;
 }
-interface IGeoHashCellQuery {
+interface GeoHashCellQuery {
 	Location: GeoLocation;
 	precision: Union<integer, Distance>;
 	neighbors: boolean;
 }
-interface IScriptQuery {
+interface ScriptQuery {
 	inline: string;
 	id: Id;
 	file: string;
 	/** type has a custom json converter defined */ params: Map<string, any>[];
 	lang: string;
 }
-interface IExistsQuery {
+interface ExistsQuery {
 	field: Field;
 }
-interface IMissingQuery {
+interface MissingQuery {
 	field: Field;
 	existence: boolean;
 	null_value: boolean;
 }
-interface ITypeQuery {
+interface TypeQuery {
 	value: TypeName;
 }
-interface IFilteredQuery {
+interface FilteredQuery {
 	query: /** type has a custom json converter defined */ QueryContainer;
 	filter: /** type has a custom json converter defined */ QueryContainer;
 }
-interface IAndQuery {
+interface AndQuery {
 	filters: /** type has a custom json converter defined */ QueryContainer[];
 }
-interface IOrQuery {
+interface OrQuery {
 	filters: /** type has a custom json converter defined */ QueryContainer[];
 }
-interface INotQuery {
+interface NotQuery {
 	filters: /** type has a custom json converter defined */ QueryContainer[];
 }
-interface IGeoDistanceAggregation {
+interface GeoDistanceAggregation {
 	field: Field;
 	origin: GeoLocation;
 	unit: DistanceUnit;
 	distance_type: GeoDistanceType;
-	ranges: IRange[];
+	ranges: Range[];
 }
-interface IRange {
+interface Range {
 	from: double;
 	to: double;
 	key: string;
 }
-interface IGeoHashGridAggregation {
+interface GeoHashGridAggregation {
 	field: Field;
 	size: integer;
 	shard_size: integer;
 	precision: GeoHashPrecision;
 }
-interface IGeoBoundsAggregation {
+interface GeoBoundsAggregation {
 	wrap_longitude: boolean;
 }
-interface IHistogramAggregation {
+interface HistogramAggregation {
 	field: Field;
-	script: IScript;
+	script: Script;
 	interval: double;
 	min_doc_count: integer;
 	order: HistogramOrder;
@@ -1358,46 +1358,46 @@ interface IHistogramAggregation {
 	post_offset: long;
 	missing: double;
 }
-interface IGlobalAggregation {
+interface GlobalAggregation {
 }
-interface IIpRangeAggregation {
+interface pRangeAggregation {
 	field: Field;
-	ranges: IIpRange[];
+	ranges: pRange[];
 }
-interface IIpRange {
+interface pRange {
 	from: string;
 	to: string;
 	mask: string;
 }
-interface IMaxAggregation {
+interface MaxAggregation {
 }
-interface IMinAggregation {
+interface MinAggregation {
 }
-interface ICardinalityAggregation {
+interface CardinalityAggregation {
 	precision_threshold: integer;
 	rehash: boolean;
 }
-interface IMissingAggregation {
+interface MissingAggregation {
 	field: Field;
 }
-interface INestedAggregation {
+interface NestedAggregation {
 	path: Field;
 }
-interface IReverseNestedAggregation {
+interface ReverseNestedAggregation {
 	path: Field;
 }
-interface IRangeAggregation {
+interface RangeAggregation {
 	field: Field;
-	script: IScript;
-	ranges: IRange[];
+	script: Script;
+	ranges: Range[];
 }
-interface IStatsAggregator {
+interface StatsAggregator {
 }
-interface ISumAggregation {
+interface SumAggregation {
 }
-interface ITermsAggregation {
+interface TermsAggregation {
 	field: Field;
-	script: IScript;
+	script: Script;
 	size: integer;
 	shard_size: integer;
 	min_doc_count: integer;
@@ -1422,7 +1422,7 @@ interface TermsIncludeExclude {
 	flags: string;
 	Values: string[];
 }
-interface ISignificantTermsAggregation {
+interface SignificantTermsAggregation {
 	field: Field;
 	size: integer;
 	shard_size: integer;
@@ -1430,102 +1430,102 @@ interface ISignificantTermsAggregation {
 	execution_hint: TermsAggregationExecutionHint;
 	include: Map<string, string>[];
 	exclude: Map<string, string>[];
-	mutual_information: IMutualInformationHeuristic;
-	chi_square: IChiSquareHeuristic;
-	gnd: IGoogleNormalizedDistanceHeuristic;
-	percentage: IPercentageScoreHeuristic;
-	script_heuristic: IScriptedHeuristic;
+	mutual_information: MutualInformationHeuristic;
+	chi_square: ChiSquareHeuristic;
+	gnd: GoogleNormalizedDistanceHeuristic;
+	percentage: PercentageScoreHeuristic;
+	script_heuristic: ScriptedHeuristic;
 	background_filter: /** type has a custom json converter defined */ QueryContainer;
 }
-interface IMutualInformationHeuristic {
+interface MutualInformationHeuristic {
 	include_negatives: boolean;
 	background_is_superset: boolean;
 }
-interface IChiSquareHeuristic {
+interface ChiSquareHeuristic {
 	include_negatives: boolean;
 	background_is_superset: boolean;
 }
-interface IGoogleNormalizedDistanceHeuristic {
+interface GoogleNormalizedDistanceHeuristic {
 	background_is_superset: boolean;
 }
-interface IPercentageScoreHeuristic {
+interface PercentageScoreHeuristic {
 }
-interface IScriptedHeuristic {
-	script: IScript;
+interface ScriptedHeuristic {
+	script: Script;
 }
-interface IValueCountAggregation {
+interface ValueCountAggregation {
 }
-interface IPercentileRanksAggregation {
+interface PercentileRanksAggregation {
 	Values: double[];
-	Method: IPercentilesMethod;
+	Method: PercentilesMethod;
 }
-interface ITopHitsAggregation {
+interface TopHitsAggregation {
 	from: integer;
 	size: integer;
-	sort: ISort[];
-	_source: ISourceFilter;
-	highlight: IHighlight;
+	sort: Sort[];
+	_source: SourceFilter;
+	highlight: Highlight;
 	explain: boolean;
-	/** type has a custom json converter defined */ script_fields: Map<string, IScriptField>[];
+	/** type has a custom json converter defined */ script_fields: Map<string, ScriptField>[];
 	fielddata_fields: Field[];
 	version: boolean;
 }
-interface IChildrenAggregation {
+interface ChildrenAggregation {
 	type: TypeName;
 }
-interface IScriptedMetricAggregation {
-	init_script: IScript;
-	map_script: IScript;
-	combine_script: IScript;
-	reduce_script: IScript;
+interface ScriptedMetricAggregation {
+	init_script: Script;
+	map_script: Script;
+	combine_script: Script;
+	reduce_script: Script;
 	params: Map<string, any>[];
 }
-interface IAverageBucketAggregation {
+interface AverageBucketAggregation {
 }
-interface IDerivativeAggregation {
+interface DerivativeAggregation {
 }
-interface IMaxBucketAggregation {
+interface MaxBucketAggregation {
 }
-interface IMinBucketAggregation {
+interface MinBucketAggregation {
 }
-interface ISumBucketAggregation {
+interface SumBucketAggregation {
 }
-interface IMovingAverageAggregation {
-	Model: IMovingAverageModel;
+interface MovingAverageAggregation {
+	Model: MovingAverageModel;
 	window: integer;
 	minimize: boolean;
 	predict: integer;
 }
-interface IMovingAverageModel {
+interface MovingAverageModel {
 	Name: string;
 }
-interface ICumulativeSumAggregation {
+interface CumulativeSumAggregation {
 }
-interface ISerialDifferencingAggregation {
+interface SerialDifferencingAggregation {
 	lag: integer;
 }
-interface IBucketScriptAggregation {
-	script: IScript;
+interface BucketScriptAggregation {
+	script: Script;
 }
-interface IBucketSelectorAggregation {
-	script: IScript;
+interface BucketSelectorAggregation {
+	script: Script;
 }
-interface ISamplerAggregation {
+interface SamplerAggregation {
 	shard_size: integer;
 	field: Field;
 	max_docs_per_value: integer;
-	script: IScript;
+	script: Script;
 	execution_hint: SamplerAggregationExecutionHint;
 }
-interface IInnerHitsContainer {
-	type: Map<TypeName, IGlobalInnerHit>[];
-	path: Map<Field, IGlobalInnerHit>[];
+interface nnerHitsContainer {
+	type: Map<TypeName, GlobalInnerHit>[];
+	path: Map<Field, GlobalInnerHit>[];
 }
-interface IGlobalInnerHit {
+interface GlobalInnerHit {
 	query: /** type has a custom json converter defined */ QueryContainer;
-	inner_hits: Map<string, IInnerHitsContainer>[];
+	inner_hits: Map<string, nnerHitsContainer>[];
 }
-interface IAlias {
+interface Alias {
 	filter: /** type has a custom json converter defined */ QueryContainer;
 	routing: string;
 	index_routing: string;
@@ -1534,7 +1534,7 @@ interface IAlias {
 interface MetadataIndexState {
 	state: string;
 	/** type has a custom json converter defined */ settings: string[];
-	mappings: Map<TypeName, ITypeMapping>[];
+	mappings: Map<TypeName, TypeMapping>[];
 	aliases: string[];
 }
 interface ClusterStatsRequest extends Request {
@@ -2111,7 +2111,7 @@ interface ShardsOperationResponseBase extends Response {
 	_shards: ShardsMetaData;
 }
 interface /** type has a custom json converter defined */ BulkRequest extends Request {
-	Operations: IBulkOperation[];
+	Operations: BulkOperation[];
 	/** mapped on body but might only proxy to request querystring */ Consistency: Consistency;
 	/** mapped on body but might only proxy to request querystring */ Refresh: boolean;
 	/** mapped on body but might only proxy to request querystring */ Routing: string;
@@ -2120,7 +2120,7 @@ interface /** type has a custom json converter defined */ BulkRequest extends Re
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface IBulkOperation {
+interface BulkOperation {
 	Operation: string;
 	ClrType: Type;
 	_index: IndexName;
@@ -2184,7 +2184,7 @@ interface DeleteByQueryIndicesResult {
 	failed: long;
 }
 interface /** type has a custom json converter defined */ MultiGetRequest extends Request {
-	docs: IMultiGetOperation[];
+	docs: MultiGetOperation[];
 	/** mapped on body but might only proxy to request querystring */ Fields: Field[];
 	/** mapped on body but might only proxy to request querystring */ Preference: string;
 	/** mapped on body but might only proxy to request querystring */ Realtime: boolean;
@@ -2195,20 +2195,20 @@ interface /** type has a custom json converter defined */ MultiGetRequest extend
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface IMultiGetOperation {
+interface MultiGetOperation {
 	_index: IndexName;
 	_type: TypeName;
 	_id: Id;
 	fields: Field[];
 	_routing: string;
-	_source: Union<boolean, ISourceFilter>;
+	_source: Union<boolean, SourceFilter>;
 	ClrType: Type;
 	CanBeFlattened: boolean;
 }
 interface MultiGetResponse extends Response {
-	Documents: IMultiGetHit<any>[];
+	Documents: MultiGetHit<any>[];
 }
-interface IMultiGetHit<T> {
+interface MultiGetHit<T> {
 	Source: T;
 	Index: string;
 	Found: boolean;
@@ -2217,7 +2217,7 @@ interface IMultiGetHit<T> {
 	Id: string;
 }
 interface MultiTermVectorsRequest extends Request {
-	docs: IMultiTermVectorOperation[];
+	docs: MultiTermVectorOperation[];
 	/** mapped on body but might only proxy to request querystring */ TermStatistics: boolean;
 	/** mapped on body but might only proxy to request querystring */ FieldStatistics: boolean;
 	/** mapped on body but might only proxy to request querystring */ Fields: Field[];
@@ -2233,7 +2233,7 @@ interface MultiTermVectorsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface IMultiTermVectorOperation {
+interface MultiTermVectorOperation {
 	_index: IndexName;
 	_type: TypeName;
 	_id: Id;
@@ -2420,13 +2420,13 @@ interface InstantGet<T> {
 	fields: Map<string, any>[];
 }
 interface BulkAliasRequest extends Request {
-	actions: IAliasAction[];
+	actions: AliasAction[];
 	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface IAliasAction {
+interface AliasAction {
 }
 interface BulkAliasResponse extends AcknowledgedResponseBase {
 }
@@ -2467,7 +2467,7 @@ interface GetAliasesResponse extends Response {
 }
 interface AliasDefinition {
 	Name: string;
-	filter: IQueryContainer;
+	filter: QueryContainer;
 	routing: string;
 	index_routing: string;
 	search_routing: string;
@@ -2506,17 +2506,17 @@ interface AnalyzeToken {
 }
 interface /** type has a custom json converter defined */ CreateIndexRequest extends Request {
 	Settings: Map<string, any>[];
-	Mappings: Map<TypeName, ITypeMapping>[];
-	Warmers: Map<TypeName, IWarmer>[];
-	Aliases: Map<IndexName, IAlias>[];
-	Similarity: Map<string, ISimilarity>[];
+	Mappings: Map<TypeName, TypeMapping>[];
+	Warmers: Map<TypeName, Warmer>[];
+	Aliases: Map<IndexName, Alias>[];
+	Similarity: Map<string, Similarity>[];
 	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ UpdateAllTypes: boolean;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface ISimilarity {
+interface Similarity {
 	type: string;
 }
 interface CreateIndexResponse extends AcknowledgedResponseBase {
@@ -2544,10 +2544,10 @@ interface GetIndexResponse extends Response {
 }
 interface /** type has a custom json converter defined */ IndexState {
 	settings: Map<string, any>[];
-	mappings: Map<TypeName, ITypeMapping>[];
-	aliases: Map<IndexName, IAlias>[];
-	warmers: Map<TypeName, IWarmer>[];
-	similarity: Map<string, ISimilarity>[];
+	mappings: Map<TypeName, TypeMapping>[];
+	aliases: Map<IndexName, Alias>[];
+	warmers: Map<TypeName, Warmer>[];
+	similarity: Map<string, Similarity>[];
 }
 interface IndexExistsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
@@ -2600,15 +2600,15 @@ interface GetIndexSettingsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface /** type has a custom json converter defined */ GetIndexSettingsResponse extends DictionaryResponseBase<string, IIndexState> {
-	Indices: Map<string, IIndexState>[];
+interface /** type has a custom json converter defined */ GetIndexSettingsResponse extends DictionaryResponseBase<string, ndexState> {
+	Indices: Map<string, ndexState>[];
 }
-interface IIndexState {
+interface ndexState {
 	settings: Map<string, any>[];
-	aliases: Map<IndexName, IAlias>[];
-	warmers: Map<TypeName, IWarmer>[];
-	mappings: Map<TypeName, ITypeMapping>[];
-	similarity: Map<string, ISimilarity>[];
+	aliases: Map<IndexName, Alias>[];
+	warmers: Map<TypeName, Warmer>[];
+	mappings: Map<TypeName, TypeMapping>[];
+	similarity: Map<string, Similarity>[];
 }
 interface DeleteIndexTemplateRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
@@ -2638,9 +2638,9 @@ interface PutIndexTemplateRequest extends Request {
 	Template: string;
 	Order: integer;
 	Settings: Map<string, any>[];
-	Mappings: Map<TypeName, ITypeMapping>[];
-	Warmers: Map<TypeName, IWarmer>[];
-	Aliases: Map<IndexName, IAlias>[];
+	Mappings: Map<TypeName, TypeMapping>[];
+	Warmers: Map<TypeName, Warmer>[];
+	Aliases: Map<IndexName, Alias>[];
 	/** mapped on body but might only proxy to request querystring */ Create: boolean;
 	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
@@ -2679,9 +2679,9 @@ interface TypeFieldMappings {
 }
 interface FieldMapping {
 	full_name: string;
-	/** type has a custom json converter defined */ mapping: Map<string, IFieldMapping>[];
+	/** type has a custom json converter defined */ mapping: Map<string, FieldMapping>[];
 }
-interface IFieldMapping {
+interface FieldMapping {
 }
 interface GetMappingRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
@@ -2697,46 +2697,46 @@ interface GetMappingResponse extends Response {
 	Mapping: /** type has a custom json converter defined */ TypeMapping;
 }
 interface /** type has a custom json converter defined */ TypeMapping {
-	_all: IAllField;
+	_all: AllField;
 	analyzer: string;
 	date_detection: boolean;
 	dynamic: DynamicMapping;
 	dynamic_date_formats: string[];
-	dynamic_templates: Map<string, IDynamicTemplate>[];
-	_field_names: IFieldNamesField;
-	_index: IIndexField;
+	dynamic_templates: Map<string, DynamicTemplate>[];
+	_field_names: FieldNamesField;
+	_index: ndexField;
 	/** type has a custom json converter defined */ _meta: Map<string, any>[];
 	numeric_detection: boolean;
-	_parent: IParentField;
-	properties: Map<PropertyName, IProperty>[];
-	_routing: IRoutingField;
+	_parent: ParentField;
+	properties: Map<PropertyName, Property>[];
+	_routing: RoutingField;
 	search_analyzer: string;
-	_size: ISizeField;
-	_source: ISourceField;
-	_timestamp: ITimestampField;
-	/** type has a custom json converter defined */ transform: IMappingTransform[];
-	_ttl: ITtlField;
+	_size: SizeField;
+	_source: SourceField;
+	_timestamp: TimestampField;
+	/** type has a custom json converter defined */ transform: MappingTransform[];
+	_ttl: TtlField;
 }
 interface /** type has a custom json converter defined */ PutMappingRequest extends Request {
-	AllField: IAllField;
+	AllField: AllField;
 	DateDetection: boolean;
 	DynamicDateFormats: string[];
-	DynamicTemplates: Map<string, IDynamicTemplate>[];
+	DynamicTemplates: Map<string, DynamicTemplate>[];
 	Dynamic: DynamicMapping;
 	Analyzer: string;
 	SearchAnalyzer: string;
-	FieldNamesField: IFieldNamesField;
-	IndexField: IIndexField;
+	FieldNamesField: FieldNamesField;
+	IndexField: ndexField;
 	Meta: Map<string, any>[];
 	NumericDetection: boolean;
-	ParentField: IParentField;
-	Properties: Map<PropertyName, IProperty>[];
-	RoutingField: IRoutingField;
-	SizeField: ISizeField;
-	SourceField: ISourceField;
-	TimestampField: ITimestampField;
-	Transform: IMappingTransform[];
-	TtlField: ITtlField;
+	ParentField: ParentField;
+	Properties: Map<PropertyName, Property>[];
+	RoutingField: RoutingField;
+	SizeField: SizeField;
+	SourceField: SourceField;
+	TimestampField: TimestampField;
+	Transform: MappingTransform[];
+	TtlField: TtlField;
 	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
@@ -2981,10 +2981,10 @@ interface GetWarmerRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
 interface /** type has a custom json converter defined */ GetWarmerResponse extends Response {
-	/** type has a custom json converter defined */ Indices: Map<string, Map<TypeName, IWarmer>[]>[];
+	/** type has a custom json converter defined */ Indices: Map<string, Map<TypeName, Warmer>[]>[];
 }
 interface /** type has a custom json converter defined */ PutWarmerRequest extends Request {
-	Search: ISearchRequest;
+	Search: SearchRequest;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
@@ -3023,14 +3023,14 @@ interface PutScriptRequest extends Request {
 interface PutScriptResponse extends AcknowledgedResponseBase {
 }
 interface /** type has a custom json converter defined */ CreateRepositoryRequest extends Request {
-	Repository: ISnapshotRepository;
+	Repository: SnapshotRepository;
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ Timeout: Time;
 	/** mapped on body but might only proxy to request querystring */ Verify: boolean;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface ISnapshotRepository {
+interface SnapshotRepository {
 	type: string;
 }
 interface CreateRepositoryResponse extends AcknowledgedResponseBase {
@@ -3050,7 +3050,7 @@ interface GetRepositoryRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
 interface /** type has a custom json converter defined */ GetRepositoryResponse extends Response {
-	Repositories: Map<string, ISnapshotRepository>[];
+	Repositories: Map<string, SnapshotRepository>[];
 }
 interface VerifyRepositoryRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
@@ -3070,14 +3070,14 @@ interface RestoreRequest extends Request {
 	include_global_state: boolean;
 	rename_pattern: string;
 	rename_replacement: string;
-	index_settings: IUpdateIndexSettingsRequest;
+	index_settings: UpdateIndexSettingsRequest;
 	ignore_index_settings: string[];
 	/** mapped on body but might only proxy to request querystring */ MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */ WaitForCompletion: boolean;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface IUpdateIndexSettingsRequest {
+interface UpdateIndexSettingsRequest {
 	IndexSettings: Map<string, any>[];
 	Index: Indices;
 }
@@ -3228,7 +3228,7 @@ interface ExplanationDetail {
 }
 interface FieldStatsRequest extends Request {
 	fields: Field[];
-	index_constraints: Map<Field, IIndexConstraint>[];
+	index_constraints: Map<Field, ndexConstraint>[];
 	/** mapped on body but might only proxy to request querystring */ Level: Level;
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
@@ -3236,11 +3236,11 @@ interface FieldStatsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface IIndexConstraint {
-	min_value: IIndexConstraintComparison;
-	max_value: IIndexConstraintComparison;
+interface ndexConstraint {
+	min_value: ndexConstraintComparison;
+	max_value: ndexConstraintComparison;
 }
-interface IIndexConstraintComparison {
+interface ndexConstraintComparison {
 	gte: string;
 	gt: string;
 	lte: string;
@@ -3264,7 +3264,7 @@ interface FieldStatsField {
 	max_value: string;
 }
 interface /** type has a custom json converter defined */ MultiSearchRequest extends Request {
-	Operations: Map<string, ISearchRequest>[];
+	Operations: Map<string, SearchRequest>[];
 	/** mapped on body but might only proxy to request querystring */ SearchType: SearchType;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
@@ -3272,32 +3272,32 @@ interface /** type has a custom json converter defined */ MultiSearchRequest ext
 interface MultiSearchResponse extends Response {
 	IsValid: boolean;
 	TotalResponses: integer;
-	AllResponses: IResponse[];
+	AllResponses: Response[];
 }
-interface IResponse {
+interface Response {
 	IsValid: boolean;
-	ApiCall: IApiCallDetails;
+	ApiCall: ApiCallDetails;
 	ServerError: ServerError;
 	OriginalException: Exception;
 	DebugInformation: string;
 }
 interface /** type has a custom json converter defined */ MultiPercolateRequest extends Request {
-	Percolations: IPercolateOperation[];
+	Percolations: PercolateOperation[];
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
 	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
 	/** mapped on body but might only proxy to request querystring */ Source: string;
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
-interface IPercolateOperation {
+interface PercolateOperation {
 	MultiPercolateName: string;
 	size: integer;
 	track_scores: boolean;
-	sort: ISort[];
-	highlight: IHighlight;
+	sort: Sort[];
+	highlight: Highlight;
 	query: /** type has a custom json converter defined */ QueryContainer;
 	filter: /** type has a custom json converter defined */ QueryContainer;
-	aggs: Map<string, IAggregationContainer>[];
+	aggs: Map<string, AggregationContainer>[];
 }
 interface MultiPercolateResponse extends Response {
 	IsValid: boolean;
@@ -3320,14 +3320,14 @@ interface PercolatorMatch {
 }
 interface PercolateRequest<TDocument> extends Request {
 	MultiPercolateName: string;
-	Highlight: IHighlight;
+	Highlight: Highlight;
 	Query: /** type has a custom json converter defined */ QueryContainer;
 	Filter: /** type has a custom json converter defined */ QueryContainer;
-	Aggregations: Map<string, IAggregationContainer>[];
+	Aggregations: Map<string, AggregationContainer>[];
 	Size: integer;
 	TrackScores: boolean;
 	doc: TDocument;
-	Sort: ISort[];
+	Sort: Sort[];
 	/** mapped on body but might only proxy to request querystring */ Routing: string[];
 	/** mapped on body but might only proxy to request querystring */ Preference: string;
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
@@ -3347,11 +3347,11 @@ interface PercolateCountRequest<TDocument> extends Request {
 	MultiPercolateName: string;
 	Size: integer;
 	TrackScores: boolean;
-	Sort: ISort[];
-	Highlight: IHighlight;
+	Sort: Sort[];
+	Highlight: Highlight;
 	Query: /** type has a custom json converter defined */ QueryContainer;
 	Filter: /** type has a custom json converter defined */ QueryContainer;
-	Aggregations: Map<string, IAggregationContainer>[];
+	Aggregations: Map<string, AggregationContainer>[];
 	doc: TDocument;
 	/** mapped on body but might only proxy to request querystring */ Routing: string[];
 	/** mapped on body but might only proxy to request querystring */ Preference: string;
@@ -3424,7 +3424,7 @@ interface InnerHitsResult {
 interface InnerHitsMetaData {
 	total: long;
 	max_score: double;
-	hits: Hit<ILazyDocument>[];
+	hits: Hit<LazyDocument>[];
 }
 interface HighlightHit {
 	DocumentId: string;
@@ -3436,7 +3436,7 @@ interface Explanation {
 	description: string;
 	details: ExplanationDetail[];
 }
-interface ILazyDocument {
+interface LazyDocument {
 }
 interface /** type has a custom json converter defined */ SearchRequest extends Request {
 	timeout: string;
@@ -3449,17 +3449,17 @@ interface /** type has a custom json converter defined */ SearchRequest extends 
 	terminate_after: long;
 	fields: Field[];
 	fielddata_fields: Field[];
-	script_fields: Map<string, IScriptField>[];
-	/** type has a custom json converter defined */ _source: ISourceFilter;
-	sort: ISort[];
+	script_fields: Map<string, ScriptField>[];
+	/** type has a custom json converter defined */ _source: SourceFilter;
+	sort: Sort[];
 	/** type has a custom json converter defined */ indices_boost: Map<IndexName, double>[];
 	post_filter: /** type has a custom json converter defined */ QueryContainer;
-	inner_hits: Map<string, IInnerHitsContainer>[];
+	inner_hits: Map<string, nnerHitsContainer>[];
 	query: /** type has a custom json converter defined */ QueryContainer;
-	rescore: IRescore;
-	suggest: Map<string, ISuggestBucket>[];
-	highlight: IHighlight;
-	aggs: Map<string, IAggregationContainer>[];
+	rescore: Rescore;
+	suggest: Map<string, SuggestBucket>[];
+	highlight: Highlight;
+	aggs: Map<string, AggregationContainer>[];
 	TypeSelector: Func<any, Hit<any>, Type>;
 	/** mapped on body but might only proxy to request querystring */ Analyzer: string;
 	/** mapped on body but might only proxy to request querystring */ AnalyzeWildcard: boolean;
@@ -3483,10 +3483,10 @@ interface /** type has a custom json converter defined */ SearchRequest extends 
 	/** mapped on body but might only proxy to request querystring */ FilterPath: string;
 }
 interface SearchResponse<T> extends Response {
-	ApiCall: IApiCallDetails;
+	ApiCall: ApiCallDetails;
 	_shards: ShardsMetaData;
 	hits: HitsMetaData<T>;
-	/** type has a custom json converter defined */ aggregations: Map<string, IAggregate>[];
+	/** type has a custom json converter defined */ aggregations: Map<string, Aggregate>[];
 	Aggs: AggregationsHelper;
 	suggest: Map<string, Suggest[]>[];
 	took: integer;
@@ -3496,16 +3496,16 @@ interface SearchResponse<T> extends Response {
 	Total: long;
 	MaxScore: double;
 	Documents: T[];
-	Hits: IHit<T>[];
+	Hits: Hit<T>[];
 	Fields: Map<string, any>[][];
 	Highlights: Map<string, Map<string, HighlightHit>[]>[];
 }
 interface HitsMetaData<T> {
 	total: long;
 	max_score: double;
-	hits: IHit<T>[];
+	hits: Hit<T>[];
 }
-interface IHit<T> {
+interface Hit<T> {
 	Fields: Map<string, any>[];
 	Source: T;
 	Index: string;
@@ -3523,11 +3523,11 @@ interface IHit<T> {
 	MatchedQueries: string[];
 	InnerHits: Map<string, InnerHitsResult>[];
 }
-interface IAggregate {
+interface Aggregate {
 	Meta: Map<string, any>[];
 }
 interface AggregationsHelper {
-	Aggregations: Map<string, IAggregate>[];
+	Aggregations: Map<string, Aggregate>[];
 }
 interface Suggest {
 	length: integer;
@@ -3631,7 +3631,7 @@ interface PutSearchTemplateResponse extends AcknowledgedResponseBase {
 }
 interface /** type has a custom json converter defined */ SuggestRequest extends Request {
 	GlobalText: string;
-	Suggest: Map<string, ISuggestBucket>[];
+	Suggest: Map<string, SuggestBucket>[];
 	/** mapped on body but might only proxy to request querystring */ IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */ AllowNoIndices: boolean;
 	/** mapped on body but might only proxy to request querystring */ ExpandWildcards: ExpandWildcards;
@@ -3788,7 +3788,7 @@ enum Format {
 enum PercolateFormat {
 	ids = 0
 }
-interface IApiCallDetails {
+interface ApiCallDetails {
 	Success: boolean;
 	OriginalException: Exception;
 	ServerError: ServerError;
