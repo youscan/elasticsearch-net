@@ -22,7 +22,7 @@ namespace Nest.TypescriptGenerator
 
 		public static void Main(string[] args)
 		{
-			var isDescriptorRe = new Regex(@"Descriptor(?:\<.+$|$)");
+			var isDescriptorRe = new Regex(@"Descriptor(?:\`.+$|$)");
 
 			var nestAssembly = typeof(IRequest<>).Assembly;
 			var lowLevelAssembly = typeof(IElasticLowLevelClient).Assembly;
@@ -52,16 +52,19 @@ namespace Nest.TypescriptGenerator
 			File.WriteAllText("typedefinitions.ts", definitions.Generate());
 		}
 
+		public static Regex RemoveGeneric { get; } = new Regex(@"^(.+)(?:\`.+)$");
+
 		private static string FormatMember(TsProperty property)
 		{
 			var declaringType = property.MemberInfo.DeclaringType;
 			var propertyName = property.MemberInfo.Name;
 
 			if (declaringType == null) return propertyName;
-
-			if (declaringType.Name.Contains("Request") && RequestParameters.ContainsKey(declaringType.Name))
+			var nonGenericTypeName = RemoveGeneric.Replace(declaringType.Name, "$1");
+			
+			if (declaringType.Name.Contains("Request") && RequestParameters.ContainsKey(nonGenericTypeName))
 			{
-				var rp = RequestParameters[declaringType.Name];
+				var rp = RequestParameters[nonGenericTypeName];
 				var method = rp.GetMethod(propertyName);
 				if (method != null)
 					return $"/** mapped on body but might only proxy to request querystring */ {propertyName}";
@@ -83,6 +86,7 @@ namespace Nest.TypescriptGenerator
 
 			return propertyName;
 		}
+
 
 		private static string FormatType(TsType type, ITsTypeFormatter formatter)
 		{
