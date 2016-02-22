@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using TypeLite;
@@ -12,7 +13,7 @@ namespace Nest.TypescriptGenerator
 		protected override void AppendEnumDefinition(TsEnum enumModel, ScriptBuilder sb, TsGeneratorOutput output)
 		{
 			string typeName = this.GetTypeName(enumModel);
-			string visibility = string.Empty; //(output & TsGeneratorOutput.Enums) == TsGeneratorOutput.Enums || (output & TsGeneratorOutput.Constants) == TsGeneratorOutput.Constants ? "export " : "";
+			string visibility = string.Empty;
 
 			_docAppender.AppendEnumDoc(sb, enumModel, typeName);
 
@@ -36,6 +37,49 @@ namespace Nest.TypescriptGenerator
 			sb.AppendLineIndented("}");
 
 			_generatedEnums.Add(enumModel);
+		}
+
+		protected override void AppendModule(TsModule module, ScriptBuilder sb, TsGeneratorOutput generatorOutput)
+		{
+			var classes = module.Classes.Where(c => !_typeConvertors.IsConvertorRegistered(c.Type) && !c.IsIgnored).ToList();
+			var enums = module.Enums.Where(e => !_typeConvertors.IsConvertorRegistered(e.Type) && !e.IsIgnored).ToList();
+			if ((generatorOutput == TsGeneratorOutput.Enums && enums.Count == 0) ||
+			    (generatorOutput == TsGeneratorOutput.Properties && classes.Count == 0) ||
+			    (enums.Count == 0 && classes.Count == 0))
+			{
+				return;
+			}
+
+			if ((generatorOutput & TsGeneratorOutput.Enums) == TsGeneratorOutput.Enums)
+			{
+				foreach (var enumModel in enums)
+				{
+					this.AppendEnumDefinition(enumModel, sb, generatorOutput);
+				}
+			}
+
+			if (((generatorOutput & TsGeneratorOutput.Properties) == TsGeneratorOutput.Properties)
+			    || (generatorOutput & TsGeneratorOutput.Fields) == TsGeneratorOutput.Fields)
+			{
+				foreach (var classModel in classes)
+				{
+
+					this.AppendClassDefinition(classModel, sb, generatorOutput);
+				}
+			}
+
+			if ((generatorOutput & TsGeneratorOutput.Constants) == TsGeneratorOutput.Constants)
+			{
+				foreach (var classModel in classes)
+				{
+					if (classModel.IsIgnored)
+					{
+						continue;
+					}
+
+					this.AppendConstantModule(classModel, sb);
+				}
+			}
 		}
 	}
 }
