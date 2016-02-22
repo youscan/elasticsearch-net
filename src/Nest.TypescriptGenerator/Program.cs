@@ -67,7 +67,7 @@ namespace Nest.TypescriptGenerator
 			var ifaceProperty = iface?.GetProperty(propertyName);
 
 			var jsonPropertyAttribute = GetAttribute<JsonPropertyAttribute>(ifaceProperty, property.MemberInfo);
-			if (jsonPropertyAttribute != null)
+			if (jsonPropertyAttribute != null && !string.IsNullOrWhiteSpace(jsonPropertyAttribute.PropertyName))
 				propertyName = jsonPropertyAttribute.PropertyName;
 			var jsonConverterAttribute = GetAttribute<JsonConverterAttribute>(ifaceProperty, property.MemberInfo);
 			if (jsonConverterAttribute != null)
