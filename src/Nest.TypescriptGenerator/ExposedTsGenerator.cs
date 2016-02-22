@@ -93,6 +93,7 @@ namespace Nest.TypescriptGenerator
 
 		protected bool Ignore(TsClass classModel)
 		{
+			if (this.TypeRenames.ContainsKey(classModel.Name)) return false;
 			if (typeof(IRequestParameters).IsAssignableFrom(classModel.Type)) return true;
 			if (IsClrType(classModel.Type)) return true;
 			return false;

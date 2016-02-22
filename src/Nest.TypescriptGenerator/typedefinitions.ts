@@ -4046,6 +4046,10 @@ interface Node {
 	DeadUntil: Date;
 	IsAlive: boolean;
 }
+interface Map<TKey, TValue> {
+	Key: TKey;
+	Value: TValue;
+}
 interface AllTypesMarker {
 }
 interface ManyTypes {
@@ -4125,7 +4129,7 @@ interface JvmClassesStats {
 }
 interface JVMPool {
 	used: string;
-	UsedInBytes: long;
+	used_in_bytes: long;
 	max: string;
 	max_in_bytes: long;
 	peak_used: string;
