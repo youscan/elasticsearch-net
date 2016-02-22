@@ -4,25 +4,37 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using TypeLite;
 using TypeLite.TsModels;
+using Elasticsearch.Net;
 
 namespace Nest.TypescriptGenerator
 {
 	public class Program
 	{
+		public static Dictionary<string, Type> RequestParameters { get; set; }
 		private static ExposedTsGenerator _scriptGenerator;
 
 		public static void Main(string[] args)
 		{
-			var nestInterfaces = typeof(IRequest).Assembly
+			var isDescriptorRe = new Regex(@"Descriptor(?:\<.+$|$)");
+
+			var nestAssembly = typeof(IRequest<>).Assembly;
+			var lowLevelAssembly = typeof(IElasticLowLevelClient).Assembly;
+			var nestInterfaces = nestAssembly
 				.GetTypes()
 				.Where(t => typeof(IRequest).IsAssignableFrom(t) || typeof(IResponse).IsAssignableFrom(t))
-				.Where(t => t.IsClass && !t.Name.EndsWith("Descriptor"))
+				.Where(t => t.IsClass && !isDescriptorRe.IsMatch(t.Name))
 				.ToArray();
+
+			RequestParameters = lowLevelAssembly
+				.GetTypes()
+				.Where(t => t.IsClass && t.Name.EndsWith("RequestParameters"))
+				.ToDictionary(t=>t.Name.Replace("Parameters", ""));
 
 			_scriptGenerator = new ExposedTsGenerator();
 
@@ -42,24 +54,29 @@ namespace Nest.TypescriptGenerator
 			File.WriteAllText(@"c:\temp\interfaces.ts", definitions.Generate());
 		}
 
+
 		private static string FormatMember(TsProperty property)
 		{
 			var declaringType = property.MemberInfo.DeclaringType;
-			var iface = declaringType.GetInterfaces().FirstOrDefault(ii => ii.Name == "I" + declaringType.Name);
-			if (iface == null)
-				return property.MemberInfo.Name;
-			var ifaceProperty = iface.GetProperty(property.MemberInfo.Name);
-			if (ifaceProperty == null)
-				return property.MemberInfo.Name;
+			var propertyName = property.MemberInfo.Name;
 
-			var jsonPropertyAttribute = ifaceProperty.GetCustomAttribute<JsonPropertyAttribute>() ??
+			if (declaringType.Name.Contains("Request") && RequestParameters.ContainsKey(declaringType.Name))
+			{
+				var rp = RequestParameters[declaringType.Name];
+				var method = rp.GetMethod(propertyName);
+				if (method != null)
+					return $"/** mapped on body but might only proxy to request querystring */ {propertyName}";
+			}
+			var iface = declaringType.GetInterfaces().FirstOrDefault(ii => ii.Name == "I" + declaringType.Name);
+			var ifaceProperty = iface?.GetProperty(propertyName);
+
+			var jsonPropertyAttribute = ifaceProperty?.GetCustomAttribute<JsonPropertyAttribute>() ??
 			                            property.MemberInfo.GetCustomAttribute<JsonPropertyAttribute>();
 
-			var propertyName = property.MemberInfo.Name;
-			if (jsonPropertyAttribute != null)
+			if (!string.IsNullOrWhiteSpace(jsonPropertyAttribute?.PropertyName))
 				propertyName = jsonPropertyAttribute.PropertyName;
 
-			var jsonConverterAttribute = ifaceProperty.GetCustomAttribute<JsonConverterAttribute>() ??
+			var jsonConverterAttribute = ifaceProperty?.GetCustomAttribute<JsonConverterAttribute>() ??
 										 property.MemberInfo.GetCustomAttribute<JsonConverterAttribute>();
 
 			if (jsonConverterAttribute != null)
@@ -70,6 +87,8 @@ namespace Nest.TypescriptGenerator
 
 		private static string FormatType(TsType type, ITsTypeFormatter formatter)
 		{
+			var fullName = type.Type.FullName ?? type.Type.DeclaringType?.FullName;
+			if (fullName != null && !fullName.StartsWith("Nest.") && !fullName.StartsWith("Elasticsearch.Net.")) return "/** not an elasticsearch type */";
 			var iface = type.Type.GetInterfaces().FirstOrDefault(i => i.Name == "I" + type.Type.Name);
 			var name = GenerateTypeName(type);
 
@@ -81,7 +100,8 @@ namespace Nest.TypescriptGenerator
 			return jsonConverterAttribute != null ? HereBeDragons(name) : name;
 		}
 
-		private static string HereBeDragons(string original) => $"/** type has a custom json converter defined */ {original}";
+		private static string HereBeDragons(string original) => 
+			$"/** type has a custom json converter defined */ {original}";
 
 		private static string GenerateTypeName(TsType type)
 		{
