@@ -12,7 +12,7 @@ using TypeLite.TsModels;
 
 namespace Nest.TypescriptGenerator
 {
-	public class ExposedTsGenerator : TsGenerator
+	public class MachineApiGenerator : TsGenerator
 	{
 		public TypeConvertorCollection Converters => base._typeConvertors;
 
@@ -39,6 +39,12 @@ namespace Nest.TypescriptGenerator
 				typeof (Audit),
 				typeof (AuditEvent)
 			});
+
+		private readonly Dictionary<Type, string[]> _typesPropertiesToIgnore = new Dictionary<Type, string[]>
+		{
+			{ typeof(IResponse), new [] { nameof(IResponse.IsValid), nameof(IResponse.DebugInformation) } }
+		};
+			
 
 		public bool PropertyTypesToIgnore(Type propertyType)
 		{
@@ -86,16 +92,16 @@ namespace Nest.TypescriptGenerator
 			{
 				foreach (var property in members)
 				{
-					if (property.IsIgnored || PropertyTypesToIgnore(property.PropertyType.Type))
+					if (property.IsIgnored || 
+						PropertyTypesToIgnore(property.PropertyType.Type) || 
+						(_typesPropertiesToIgnore.ContainsKey(classModel.Type) && _typesPropertiesToIgnore[classModel.Type].Contains(property.Name)))
 					{
 						continue;
 					}
 
-					// TODO: Add Here Be Dragons here
 					AddDocCommentForCustomJsonConverter(sb, property);
-
 					_docAppender.AppendPropertyDoc(sb, property, this.GetPropertyName(property), this.GetPropertyType(property));
-					sb.AppendLineIndented(string.Format("{0}: {1};", this.GetPropertyName(property), this.GetPropertyType(property)));
+					sb.AppendLineIndented($"{this.GetPropertyName(property)}: {this.GetPropertyType(property)};");
 				}
 			}
 

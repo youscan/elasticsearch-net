@@ -688,7 +688,7 @@ interface TypeMapping {
 	_all: AllField;
 	_parent: ParentField;
 	_routing: RoutingField;
-	_index: ndexField;
+	_index: IndexField;
 	_size: SizeField;
 	_timestamp: TimestampField;
 	_field_names: FieldNamesField;
@@ -736,7 +736,7 @@ interface RoutingField {
 	required: boolean;
 }
 /** type has a custom json converter defined */
-interface ndexField {
+interface IndexField {
 	enabled: boolean;
 }
 /** type has a custom json converter defined */
@@ -814,7 +814,7 @@ interface SearchRequest {
 	aggs: Map<string, AggregationContainer>[];
 	query: QueryContainer;
 	post_filter: QueryContainer;
-	inner_hits: Map<string, nnerHitsContainer>[];
+	inner_hits: Map<string, InnerHitsContainer>[];
 	Preference: string;
 	Routing: string;
 	SearchType: SearchType;
@@ -987,7 +987,7 @@ interface AggregationContainer {
 	geo_bounds: GeoBoundsAggregation;
 	histogram: HistogramAggregation;
 	global: GlobalAggregation;
-	ip_range: pRangeAggregation;
+	ip_range: IpRangeAggregation;
 	max: MaxAggregation;
 	min: MinAggregation;
 	cardinality: CardinalityAggregation;
@@ -1095,7 +1095,7 @@ interface QueryContainer {
 	wildcard: WildcardQuery;
 	prefix: PrefixQuery;
 	boosting: BoostingQuery;
-	ids: dsQuery;
+	ids: IdsQuery;
 	limit: LimitQuery;
 	constant_score: ConstantScoreQuery;
 	dis_max: DisMaxQuery;
@@ -1121,7 +1121,7 @@ interface QueryContainer {
 	span_within: SpanWithinQuery;
 	span_multi: SpanMultiTermQuery;
 	nested: NestedQuery;
-	indices: ndicesQuery;
+	indices: IndicesQuery;
 	function_score: FunctionScoreQuery;
 	template: TemplateQuery;
 	geo_bounding_box: GeoBoundingBoxQuery;
@@ -1179,7 +1179,7 @@ interface BoostingQuery {
 	negative_boost: double;
 }
 /** type has a custom json converter defined */
-interface dsQuery {
+interface IdsQuery {
 	types: Types;
 	values: Id[];
 }
@@ -1299,10 +1299,10 @@ interface HasChildQuery {
 	min_children: integer;
 	max_children: integer;
 	query: QueryContainer;
-	inner_hits: nnerHits;
+	inner_hits: InnerHits;
 }
 /** type has a custom json converter defined */
-interface nnerHits {
+interface InnerHits {
 	name: string;
 	from: integer;
 	size: integer;
@@ -1319,7 +1319,7 @@ interface HasParentQuery {
 	type: TypeName;
 	score_mode: ParentScoreMode;
 	query: QueryContainer;
-	inner_hits: nnerHits;
+	inner_hits: InnerHits;
 }
 /** type has a custom json converter defined */
 interface SpanTermQuery {
@@ -1454,10 +1454,10 @@ interface NestedQuery {
 	score_mode: NestedScoreMode;
 	query: QueryContainer;
 	path: Field;
-	inner_hits: nnerHits;
+	inner_hits: InnerHits;
 }
 /** type has a custom json converter defined */
-interface ndicesQuery {
+interface IndicesQuery {
 	/** type has a custom json converter defined */
 	indices: Indices;
 	query: QueryContainer;
@@ -1622,12 +1622,12 @@ interface HistogramAggregation {
 }
 interface GlobalAggregation {
 }
-interface pRangeAggregation {
+interface IpRangeAggregation {
 	field: Field;
-	ranges: pRange[];
+	ranges: IpRange[];
 }
 /** type has a custom json converter defined */
-interface pRange {
+interface IpRange {
 	from: string;
 	to: string;
 	mask: string;
@@ -1789,14 +1789,14 @@ interface SamplerAggregation {
 	execution_hint: SamplerAggregationExecutionHint;
 }
 /** type has a custom json converter defined */
-interface nnerHitsContainer {
+interface InnerHitsContainer {
 	type: Map<TypeName, GlobalInnerHit>[];
 	path: Map<Field, GlobalInnerHit>[];
 }
 /** type has a custom json converter defined */
 interface GlobalInnerHit {
 	query: QueryContainer;
-	inner_hits: Map<string, nnerHitsContainer>[];
+	inner_hits: Map<string, InnerHitsContainer>[];
 }
 /** type has a custom json converter defined */
 interface Alias {
@@ -3137,11 +3137,11 @@ interface GetIndexSettingsRequest extends Request {
 	FilterPath: string;
 }
 /** type has a custom json converter defined */
-interface GetIndexSettingsResponse extends DictionaryResponseBase<string, ndexState> {
-	Indices: Map<string, ndexState>[];
+interface GetIndexSettingsResponse extends DictionaryResponseBase<string, IndexState> {
+	Indices: Map<string, IndexState>[];
 }
 /** type has a custom json converter defined */
-interface ndexState {
+interface IndexState {
 	settings: Map<string, any>[];
 	aliases: Map<IndexName, Alias>[];
 	warmers: Map<TypeName, Warmer>[];
@@ -3285,7 +3285,7 @@ interface TypeMapping {
 	dynamic_date_formats: string[];
 	dynamic_templates: Map<string, DynamicTemplate>[];
 	_field_names: FieldNamesField;
-	_index: ndexField;
+	_index: IndexField;
 	/** type has a custom json converter defined */
 	_meta: Map<string, any>[];
 	numeric_detection: boolean;
@@ -3310,7 +3310,7 @@ interface PutMappingRequest extends Request {
 	Analyzer: string;
 	SearchAnalyzer: string;
 	FieldNamesField: FieldNamesField;
-	IndexField: ndexField;
+	IndexField: IndexField;
 	Meta: Map<string, any>[];
 	NumericDetection: boolean;
 	ParentField: ParentField;
@@ -4004,7 +4004,7 @@ interface ExplanationDetail {
 }
 interface FieldStatsRequest extends Request {
 	fields: Field[];
-	index_constraints: Map<Field, ndexConstraint>[];
+	index_constraints: Map<Field, IndexConstraint>[];
 	/** mapped on body but might only proxy to request querystring */
 	Level: Level;
 	/** mapped on body but might only proxy to request querystring */
@@ -4018,11 +4018,11 @@ interface FieldStatsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
 	FilterPath: string;
 }
-interface ndexConstraint {
-	min_value: ndexConstraintComparison;
-	max_value: ndexConstraintComparison;
+interface IndexConstraint {
+	min_value: IndexConstraintComparison;
+	max_value: IndexConstraintComparison;
 }
-interface ndexConstraintComparison {
+interface IndexConstraintComparison {
 	gte: string;
 	gt: string;
 	lte: string;
@@ -4061,9 +4061,7 @@ interface MultiSearchResponse extends Response {
 	AllResponses: Response[];
 }
 interface Response {
-	IsValid: boolean;
 	ServerError: ServerError;
-	DebugInformation: string;
 }
 /** type has a custom json converter defined */
 interface MultiPercolateRequest extends Request {
@@ -4278,7 +4276,7 @@ interface SearchRequest extends Request {
 	/** type has a custom json converter defined */
 	indices_boost: Map<IndexName, double>[];
 	post_filter: QueryContainer;
-	inner_hits: Map<string, nnerHitsContainer>[];
+	inner_hits: Map<string, InnerHitsContainer>[];
 	query: QueryContainer;
 	rescore: Rescore;
 	suggest: Map<string, SuggestBucket>[];

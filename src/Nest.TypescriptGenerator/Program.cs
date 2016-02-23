@@ -18,7 +18,9 @@ namespace Nest.TypescriptGenerator
 	public class Program
 	{
 		public static Dictionary<string, Type> RequestParameters { get; set; }
-		private static ExposedTsGenerator _scriptGenerator;
+		private static MachineApiGenerator _scriptGenerator;
+		private static readonly Regex InterfaceRegex = new Regex("(?-i)^I[A-Z].*$");
+		public static Regex RemoveGeneric { get; } = new Regex(@"^(.+)(?:\`.+)$");
 
 		public static void Main(string[] args)
 		{
@@ -38,7 +40,7 @@ namespace Nest.TypescriptGenerator
 				.Where(t => t.IsClass && t.Name.EndsWith("RequestParameters"))
 				.ToDictionary(t=>t.Name.Replace("Parameters", ""));
 
-			_scriptGenerator = new ExposedTsGenerator();
+			_scriptGenerator = new MachineApiGenerator();
 
 			var typeScriptFluent = TypeScript.Definitions(_scriptGenerator)
 				.WithTypeFormatter(FormatType)
@@ -51,8 +53,6 @@ namespace Nest.TypescriptGenerator
 
 			File.WriteAllText("typedefinitions.ts", definitions.Generate());
 		}
-
-		public static Regex RemoveGeneric { get; } = new Regex(@"^(.+)(?:\`.+)$");
 
 		private static string FormatMember(TsProperty property)
 		{
@@ -80,13 +80,15 @@ namespace Nest.TypescriptGenerator
 
 		private static string GenerateTypeName(TsType type)
 		{
-			var tsClass = ((TsClass)type);
+			var tsClass = (TsClass)type;
+
 			var name = _scriptGenerator.TypeRenames.ContainsKey(tsClass.Name) 
 				? _scriptGenerator.TypeRenames[tsClass.Name] 
 				: tsClass.Name;
-			var interfaceRegex = new Regex("(?-i)^I[A-Z].*$");
-			if (interfaceRegex.IsMatch(name))
-				name = name.TrimStart('I');
+
+			if (InterfaceRegex.IsMatch(name))
+				name = name.Substring(1);
+
 			if (!tsClass.GenericArguments.Any()) return name;
 			return name + "<" + string.Join(", ", tsClass.GenericArguments.Select(a => a is TsCollection ? _scriptGenerator.GetFullyQualifiedTypeName(a) + "[]" : _scriptGenerator.GetFullyQualifiedTypeName(a))) + ">";
 		}
