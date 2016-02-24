@@ -45,13 +45,26 @@ namespace Nest.TypescriptGenerator
 			var typeScriptFluent = TypeScript.Definitions(_scriptGenerator)
 				.WithTypeFormatter(FormatType)
 				.WithMemberFormatter(FormatMember)
+				.WithMemberTypeFormatter(FormatMemberType)
 				.WithVisibility((@class, name) => false)
 				.AsConstEnums(false)
 				.WithModuleNameFormatter(module => string.Empty);
 
+			typeScriptFluent.For(typeof (Map<,>));
+			typeScriptFluent.For<DateInterval>();
 			var definitions = nestInterfaces.Aggregate(typeScriptFluent, (def, t) => def.For(t));
 
 			File.WriteAllText("typedefinitions.ts", definitions.Generate());
+		}
+
+		private static string FormatMemberType(TsProperty tsProperty, string memberTypeName)
+		{
+			var asCollection = tsProperty.PropertyType as TsCollection;
+			var isCollection = asCollection != null;
+
+			return memberTypeName.StartsWith("Map<")
+				? memberTypeName
+				: memberTypeName + (isCollection ? string.Concat(Enumerable.Repeat("[]", asCollection.Dimension)) : "");
 		}
 
 		private static string FormatMember(TsProperty property)
@@ -90,7 +103,17 @@ namespace Nest.TypescriptGenerator
 				name = name.Substring(1);
 
 			if (!tsClass.GenericArguments.Any()) return name;
-			return name + "<" + string.Join(", ", tsClass.GenericArguments.Select(a => a is TsCollection ? _scriptGenerator.GetFullyQualifiedTypeName(a) + "[]" : _scriptGenerator.GetFullyQualifiedTypeName(a))) + ">";
+
+			return name + "<" + string.Join(", ", tsClass.GenericArguments.Select(WriteArrayIfCollection)) + ">";
+		}
+
+		private static string WriteArrayIfCollection(TsType a)
+		{
+			var fullyQualifiedTypeName = _scriptGenerator.GetFullyQualifiedTypeName(a);
+
+			return a is TsCollection && !fullyQualifiedTypeName.StartsWith("Map<") 
+				? fullyQualifiedTypeName + "[]" 
+				: fullyQualifiedTypeName;
 		}
 	}
 }

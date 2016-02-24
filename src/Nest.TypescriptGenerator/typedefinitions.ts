@@ -5,6 +5,18 @@ interface long {}
 interface float {}
 interface double {}
 
+interface Map<TKey, TValue> {
+}
+enum DateInterval {
+	second = 0,
+	minute = 1,
+	hour = 2,
+	day = 3,
+	week = 4,
+	month = 5,
+	quarter = 6,
+	year = 7
+}
 enum TimeUnit {
 	ms = 0,
 	s = 1,
@@ -461,7 +473,7 @@ interface ClusterHealthResponse extends Response {
 	unassigned_shards: integer;
 	number_of_pending_tasks: integer;
 	/** type has a custom json converter defined */
-	indices: Map<string, IndexHealthStats>[];
+	indices: Map<string, IndexHealthStats>;
 }
 interface Response {
 }
@@ -475,7 +487,7 @@ interface IndexHealthStats {
 	initializing_shards: integer;
 	unassigned_shards: integer;
 	/** type has a custom json converter defined */
-	shards: Map<string, ShardHealthStats>[];
+	shards: Map<string, ShardHealthStats>;
 }
 interface ShardHealthStats {
 	status: string;
@@ -536,7 +548,7 @@ interface ClusterRerouteState {
 	master_node: string;
 	blocks: BlockState;
 	/** type has a custom json converter defined */
-	nodes: Map<string, NodeState>[];
+	nodes: Map<string, NodeState>;
 	routing_table: RoutingTableState;
 	routing_nodes: RoutingNodesState;
 }
@@ -547,15 +559,15 @@ interface NodeState {
 	name: string;
 	transport_address: string;
 	/** type has a custom json converter defined */
-	attributes: Map<string, string>[];
+	attributes: Map<string, string>;
 }
 interface RoutingTableState {
 	/** type has a custom json converter defined */
-	indices: Map<string, IndexRoutingTable>[];
+	indices: Map<string, IndexRoutingTable>;
 }
 interface IndexRoutingTable {
 	/** type has a custom json converter defined */
-	shards: Map<string, RoutingShard[]>[];
+	shards: Map<string, RoutingShard[]>;
 }
 interface RoutingShard {
 	allocation_id: AllocationId;
@@ -572,7 +584,7 @@ interface AllocationId {
 }
 interface RoutingNodesState {
 	unassigned: RoutingShard[];
-	nodes: Map<string, RoutingShard[]>[];
+	nodes: Map<string, RoutingShard[]>;
 }
 interface ClusterRerouteExplanation {
 	command: string;
@@ -605,12 +617,12 @@ interface ClusterGetSettingsRequest extends Request {
 	FilterPath: string;
 }
 interface ClusterGetSettingsResponse extends Response {
-	persistent: Map<string, any>[];
-	transient: Map<string, any>[];
+	persistent: Map<string, any>;
+	transient: Map<string, any>;
 }
 interface ClusterPutSettingsRequest extends Request {
-	persistent: Map<string, any>[];
-	transient: Map<string, any>[];
+	persistent: Map<string, any>;
+	transient: Map<string, any>;
 	/** mapped on body but might only proxy to request querystring */
 	FlatSettings: boolean;
 	/** mapped on body but might only proxy to request querystring */
@@ -624,8 +636,8 @@ interface ClusterPutSettingsRequest extends Request {
 }
 interface ClusterPutSettingsResponse extends Response {
 	acknowledged: boolean;
-	persistent: Map<string, any>[];
-	transient: Map<string, any>[];
+	persistent: Map<string, any>;
+	transient: Map<string, any>;
 }
 interface ClusterStateRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
@@ -651,7 +663,7 @@ interface ClusterStateResponse extends Response {
 	state_uuid: string;
 	version: long;
 	/** type has a custom json converter defined */
-	nodes: Map<string, NodeState>[];
+	nodes: Map<string, NodeState>;
 	metadata: MetadataState;
 	routing_table: RoutingTableState;
 	routing_nodes: RoutingNodesState;
@@ -659,18 +671,18 @@ interface ClusterStateResponse extends Response {
 }
 interface MetadataState {
 	/** type has a custom json converter defined */
-	templates: Map<string, TemplateMapping>[];
+	templates: Map<string, TemplateMapping>;
 	cluster_uuid: string;
 	/** type has a custom json converter defined */
-	indices: Map<string, MetadataIndexState>[];
+	indices: Map<string, MetadataIndexState>;
 }
 interface TemplateMapping {
 	template: string;
 	order: integer;
-	settings: Map<string, any>[];
-	mappings: Map<TypeName, TypeMapping>[];
-	warmers: Map<TypeName, Warmer>[];
-	aliases: Map<IndexName, Alias>[];
+	settings: Map<string, any>;
+	mappings: Map<TypeName, TypeMapping>;
+	warmers: Map<TypeName, Warmer>;
+	aliases: Map<IndexName, Alias>;
 }
 interface TypeName {
 	Name: string;
@@ -694,16 +706,16 @@ interface TypeMapping {
 	_field_names: FieldNamesField;
 	_ttl: TtlField;
 	/** type has a custom json converter defined */
-	_meta: Map<string, any>[];
-	dynamic_templates: Map<string, DynamicTemplate>[];
+	_meta: Map<string, any>;
+	dynamic_templates: Map<string, DynamicTemplate>;
 	dynamic: DynamicMapping;
-	properties: Map<PropertyName, Property>[];
+	properties: Map<PropertyName, Property>;
 }
 /** type has a custom json converter defined */
 interface MappingTransform {
 	script: string;
 	script_file: string;
-	params: Map<string, string>[];
+	params: Map<string, string>;
 	lang: string;
 }
 /** type has a custom json converter defined */
@@ -779,7 +791,7 @@ interface Property {
 	index_name: string;
 	store: boolean;
 	doc_values: boolean;
-	fields: Map<PropertyName, Property>[];
+	fields: Map<PropertyName, Property>;
 	similarity: SimilarityOption;
 	copy_to: Field[];
 }
@@ -801,20 +813,20 @@ interface SearchRequest {
 	min_score: double;
 	terminate_after: long;
 	/** type has a custom json converter defined */
-	indices_boost: Map<IndexName, double>[];
+	indices_boost: Map<IndexName, double>;
 	sort: Sort[];
-	suggest: Map<string, SuggestBucket>[];
+	suggest: Map<string, SuggestBucket>;
 	highlight: Highlight;
 	rescore: Rescore;
 	fields: Field[];
 	fielddata_fields: Field[];
-	script_fields: Map<string, ScriptField>[];
+	script_fields: Map<string, ScriptField>;
 	/** type has a custom json converter defined */
 	_source: SourceFilter;
-	aggs: Map<string, AggregationContainer>[];
+	aggs: Map<string, AggregationContainer>;
 	query: QueryContainer;
 	post_filter: QueryContainer;
-	inner_hits: Map<string, InnerHitsContainer>[];
+	inner_hits: Map<string, InnerHitsContainer>;
 	Preference: string;
 	Routing: string;
 	SearchType: SearchType;
@@ -892,13 +904,13 @@ interface PhraseSuggestCollate {
 /** type has a custom json converter defined */
 interface Script {
 	/** type has a custom json converter defined */
-	params: Map<string, any>[];
+	params: Map<string, any>;
 	lang: string;
 }
 /** type has a custom json converter defined */
 interface CompletionSuggester {
 	fuzzy: FuzzySuggester;
-	context: Map<string, any>[];
+	context: Map<string, any>;
 }
 /** type has a custom json converter defined */
 interface FuzzySuggester {
@@ -926,7 +938,7 @@ interface Highlight {
 	encoder: string;
 	order: string;
 	/** type has a custom json converter defined */
-	fields: Map<Field, HighlightField>[];
+	fields: Map<Field, HighlightField>;
 	require_field_match: boolean;
 	boundary_chars: string;
 }
@@ -974,7 +986,7 @@ interface SourceFilter {
 /** type has a custom json converter defined */
 interface AggregationContainer {
 	/** type has a custom json converter defined */
-	meta: Map<string, any>[];
+	meta: Map<string, any>;
 	avg: AverageAggregation;
 	date_histogram: DateHistogramAggregation;
 	percentiles: PercentilesAggregation;
@@ -1015,14 +1027,17 @@ interface AggregationContainer {
 	bucket_script: BucketScriptAggregation;
 	bucket_selector: BucketSelectorAggregation;
 	sampler: SamplerAggregation;
-	aggs: Map<string, AggregationContainer>[];
+	aggs: Map<string, AggregationContainer>;
 }
 interface AverageAggregation {
+}
+/** type has a custom json converter defined */
+interface Union<TFirst, TSecond> {
 }
 interface DateHistogramAggregation {
 	field: Field;
 	script: Script;
-	params: Map<string, any>[];
+	params: Map<string, any>;
 	interval: Union<DateInterval, Time>;
 	format: string;
 	min_doc_count: integer;
@@ -1032,9 +1047,6 @@ interface DateHistogramAggregation {
 	order: HistogramOrder;
 	extended_bounds: ExtendedBounds<Date>;
 	missing: Date;
-}
-/** type has a custom json converter defined */
-interface Union<TFirst, TSecond> {
 }
 /** type has a custom json converter defined */
 interface HistogramOrder {
@@ -1079,7 +1091,7 @@ interface FilterAggregation {
 	filter: QueryContainer;
 }
 interface FiltersAggregation {
-	filters: Union<Map<string, QueryContainer>[], QueryContainer[]>;
+	filters: Union<Map<string, QueryContainer>, QueryContainer[]>;
 	other_bucket: boolean;
 	other_bucket_key: string;
 }
@@ -1312,7 +1324,7 @@ interface InnerHits {
 	_source: SourceFilter;
 	version: boolean;
 	fielddata_fields: Field[];
-	script_fields: Map<string, ScriptField>[];
+	script_fields: Map<string, ScriptField>;
 }
 /** type has a custom json converter defined */
 interface HasParentQuery {
@@ -1394,7 +1406,7 @@ interface LikeDocument {
 	fields: Field[];
 	_routing: string;
 	doc: any;
-	per_field_analyzer: Map<Field, string>[];
+	per_field_analyzer: Map<Field, string>;
 	CanBeFlattened: boolean;
 }
 /** type has a custom json converter defined */
@@ -1487,7 +1499,7 @@ interface TemplateQuery {
 	file: string;
 	inline: string;
 	id: Id;
-	params: Map<string, any>[];
+	params: Map<string, any>;
 }
 /** type has a custom json converter defined */
 interface GeoBoundingBoxQuery {
@@ -1553,7 +1565,7 @@ interface ScriptQuery {
 	id: Id;
 	file: string;
 	/** type has a custom json converter defined */
-	params: Map<string, any>[];
+	params: Map<string, any>;
 	lang: string;
 }
 /** type has a custom json converter defined */
@@ -1693,8 +1705,8 @@ interface SignificantTermsAggregation {
 	shard_size: integer;
 	min_doc_count: integer;
 	execution_hint: TermsAggregationExecutionHint;
-	include: Map<string, string>[];
-	exclude: Map<string, string>[];
+	include: Map<string, string>;
+	exclude: Map<string, string>;
 	mutual_information: MutualInformationHeuristic;
 	chi_square: ChiSquareHeuristic;
 	gnd: GoogleNormalizedDistanceHeuristic;
@@ -1737,7 +1749,7 @@ interface TopHitsAggregation {
 	highlight: Highlight;
 	explain: boolean;
 	/** type has a custom json converter defined */
-	script_fields: Map<string, ScriptField>[];
+	script_fields: Map<string, ScriptField>;
 	fielddata_fields: Field[];
 	version: boolean;
 }
@@ -1749,7 +1761,7 @@ interface ScriptedMetricAggregation {
 	map_script: Script;
 	combine_script: Script;
 	reduce_script: Script;
-	params: Map<string, any>[];
+	params: Map<string, any>;
 }
 interface AverageBucketAggregation {
 }
@@ -1790,13 +1802,13 @@ interface SamplerAggregation {
 }
 /** type has a custom json converter defined */
 interface InnerHitsContainer {
-	type: Map<TypeName, GlobalInnerHit>[];
-	path: Map<Field, GlobalInnerHit>[];
+	type: Map<TypeName, GlobalInnerHit>;
+	path: Map<Field, GlobalInnerHit>;
 }
 /** type has a custom json converter defined */
 interface GlobalInnerHit {
 	query: QueryContainer;
-	inner_hits: Map<string, InnerHitsContainer>[];
+	inner_hits: Map<string, InnerHitsContainer>;
 }
 /** type has a custom json converter defined */
 interface Alias {
@@ -1809,7 +1821,7 @@ interface MetadataIndexState {
 	state: string;
 	/** type has a custom json converter defined */
 	settings: string[];
-	mappings: Map<TypeName, TypeMapping>[];
+	mappings: Map<TypeName, TypeMapping>;
 	aliases: string[];
 }
 interface ClusterStatsRequest extends Request {
@@ -2039,7 +2051,7 @@ interface NodesInfoRequest extends Request {
 interface NodesInfoResponse extends Response {
 	cluster_name: string;
 	/** type has a custom json converter defined */
-	nodes: Map<string, NodeInfo>[];
+	nodes: Map<string, NodeInfo>;
 }
 interface NodeInfo {
 	name: string;
@@ -2055,7 +2067,7 @@ interface NodeInfo {
 	process: NodeProcessInfo;
 	jvm: NodeJvmInfo;
 	/** type has a custom json converter defined */
-	thread_pool: Map<string, NodeThreadPoolInfo>[];
+	thread_pool: Map<string, NodeThreadPoolInfo>;
 	network: NodeInfoNetwork;
 	transport: NodeInfoTransport;
 	http: NodeInfoHttp;
@@ -2164,7 +2176,7 @@ interface NodesStatsRequest extends Request {
 interface NodesStatsResponse extends Response {
 	cluster_name: string;
 	/** type has a custom json converter defined */
-	nodes: Map<string, NodeStats>[];
+	nodes: Map<string, NodeStats>;
 }
 interface NodeStats {
 	timestamp: long;
@@ -2178,9 +2190,9 @@ interface NodeStats {
 	script: ScriptStats;
 	jvm: NodeJvmStats;
 	/** type has a custom json converter defined */
-	thread_pool: Map<string, ThreadCountStats>[];
+	thread_pool: Map<string, ThreadCountStats>;
 	/** type has a custom json converter defined */
-	breakers: Map<string, BreakerStats>[];
+	breakers: Map<string, BreakerStats>;
 	fs: FileSystemStats;
 	transport: TransportStats;
 	http: HttpStats;
@@ -2219,7 +2231,7 @@ interface IndexingStats {
 	throttle_time: string;
 	throttle_time_in_millis: long;
 	/** type has a custom json converter defined */
-	types: Map<string, IndexingStats>[];
+	types: Map<string, IndexingStats>;
 }
 interface GetStats {
 	current: long;
@@ -2329,7 +2341,7 @@ interface NodeJvmStats {
 	threads: ThreadStats;
 	gc: GarbageCollectionStats;
 	/** type has a custom json converter defined */
-	buffer_pools: Map<string, NodeBufferPool>[];
+	buffer_pools: Map<string, NodeBufferPool>;
 	classes: JvmClassesStats;
 }
 interface ThreadCountStats {
@@ -2509,7 +2521,7 @@ interface DeleteByQueryRequest extends Request {
 }
 interface DeleteByQueryResponse extends Response {
 	/** type has a custom json converter defined */
-	_indices: Map<string, DeleteByQueryIndicesResult>[];
+	_indices: Map<string, DeleteByQueryIndicesResult>;
 	took: long;
 	timed_out: boolean;
 }
@@ -2610,11 +2622,11 @@ interface MultiTermVectorsResponse extends Response {
 }
 interface TermVectorsResponse extends Response {
 	found: boolean;
-	term_vectors: Map<string, TermVector>[];
+	term_vectors: Map<string, TermVector>;
 }
 interface TermVector {
 	field_statistics: FieldStatistics;
-	terms: Map<string, TermVectorTerm>[];
+	terms: Map<string, TermVectorTerm>;
 }
 interface FieldStatistics {
 	doc_count: integer;
@@ -2711,7 +2723,7 @@ interface GetResponse<T> extends Response {
 	_version: long;
 	found: boolean;
 	_source: T;
-	fields: Map<string, any>[];
+	fields: Map<string, any>;
 }
 interface IndexRequest<TDocument> extends Request {
 	Document: TDocument;
@@ -2775,7 +2787,7 @@ interface SourceRequest extends Request {
 }
 interface TermVectorsRequest<TDocument> extends Request {
 	doc: TDocument;
-	per_field_analyzer: Map<Field, string>[];
+	per_field_analyzer: Map<Field, string>;
 	/** mapped on body but might only proxy to request querystring */
 	TermStatistics: boolean;
 	/** mapped on body but might only proxy to request querystring */
@@ -2813,7 +2825,7 @@ interface UpdateRequest<TDocument, TPartialDocument> extends Request {
 	script_file: string;
 	lang: string;
 	/** type has a custom json converter defined */
-	params: Map<string, any>[];
+	params: Map<string, any>;
 	upsert: TDocument;
 	doc_as_upsert: boolean;
 	doc: TPartialDocument;
@@ -2862,7 +2874,7 @@ interface UpdateResponse<T> extends Response {
 interface InstantGet<T> {
 	found: boolean;
 	_source: T;
-	fields: Map<string, any>[];
+	fields: Map<string, any>;
 }
 interface BulkAliasRequest extends Request {
 	actions: AliasAction[];
@@ -2877,7 +2889,7 @@ interface BulkAliasRequest extends Request {
 }
 interface AliasAction {
 }
-interface BulkAliasResponse extends AcknowledgedResponseBase {
+interface BulkAliasResponse extends Response {
 }
 interface AliasExistsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
@@ -2932,7 +2944,7 @@ interface GetAliasesRequest extends Request {
 	FilterPath: string;
 }
 interface GetAliasesResponse extends Response {
-	Indices: Map<string, AliasDefinition[]>[];
+	Indices: Map<string, AliasDefinition[]>;
 }
 interface AliasDefinition {
 	Name: string;
@@ -2989,11 +3001,11 @@ interface AnalyzeToken {
 }
 /** type has a custom json converter defined */
 interface CreateIndexRequest extends Request {
-	Settings: Map<string, any>[];
-	Mappings: Map<TypeName, TypeMapping>[];
-	Warmers: Map<TypeName, Warmer>[];
-	Aliases: Map<IndexName, Alias>[];
-	Similarity: Map<string, Similarity>[];
+	Settings: Map<string, any>;
+	Mappings: Map<TypeName, TypeMapping>;
+	Warmers: Map<TypeName, Warmer>;
+	Aliases: Map<IndexName, Alias>;
+	Similarity: Map<string, Similarity>;
 	/** mapped on body but might only proxy to request querystring */
 	Timeout: Time;
 	/** mapped on body but might only proxy to request querystring */
@@ -3008,7 +3020,7 @@ interface CreateIndexRequest extends Request {
 interface Similarity {
 	type: string;
 }
-interface CreateIndexResponse extends AcknowledgedResponseBase {
+interface CreateIndexResponse extends Response {
 }
 interface DeleteIndexRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
@@ -3020,7 +3032,7 @@ interface DeleteIndexRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
 	FilterPath: string;
 }
-interface DeleteIndexResponse extends IndicesResponseBase {
+interface DeleteIndexResponse extends Response {
 }
 interface GetIndexRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
@@ -3041,15 +3053,15 @@ interface GetIndexRequest extends Request {
 	FilterPath: string;
 }
 interface GetIndexResponse extends Response {
-	Indices: Map<string, IndexState>[];
+	Indices: Map<string, IndexState>;
 }
 /** type has a custom json converter defined */
 interface IndexState {
-	settings: Map<string, any>[];
-	mappings: Map<TypeName, TypeMapping>[];
-	aliases: Map<IndexName, Alias>[];
-	warmers: Map<TypeName, Warmer>[];
-	similarity: Map<string, Similarity>[];
+	settings: Map<string, any>;
+	mappings: Map<TypeName, TypeMapping>;
+	aliases: Map<IndexName, Alias>;
+	warmers: Map<TypeName, Warmer>;
+	similarity: Map<string, Similarity>;
 }
 interface IndexExistsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
@@ -3084,7 +3096,7 @@ interface CloseIndexRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
 	FilterPath: string;
 }
-interface CloseIndexResponse extends AcknowledgedResponseBase {
+interface CloseIndexResponse extends Response {
 }
 interface OpenIndexRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
@@ -3102,7 +3114,7 @@ interface OpenIndexRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
 	FilterPath: string;
 }
-interface OpenIndexResponse extends AcknowledgedResponseBase {
+interface OpenIndexResponse extends Response {
 }
 interface TypeExistsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
@@ -3137,16 +3149,16 @@ interface GetIndexSettingsRequest extends Request {
 	FilterPath: string;
 }
 /** type has a custom json converter defined */
-interface GetIndexSettingsResponse extends DictionaryResponseBase<string, IndexState> {
-	Indices: Map<string, IndexState>[];
+interface GetIndexSettingsResponse extends Response {
+	Indices: Map<string, IndexState>;
 }
 /** type has a custom json converter defined */
 interface IndexState {
-	settings: Map<string, any>[];
-	aliases: Map<IndexName, Alias>[];
-	warmers: Map<TypeName, Warmer>[];
-	mappings: Map<TypeName, TypeMapping>[];
-	similarity: Map<string, Similarity>[];
+	settings: Map<string, any>;
+	aliases: Map<IndexName, Alias>;
+	warmers: Map<TypeName, Warmer>;
+	mappings: Map<TypeName, TypeMapping>;
+	similarity: Map<string, Similarity>;
 }
 interface DeleteIndexTemplateRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
@@ -3158,7 +3170,7 @@ interface DeleteIndexTemplateRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
 	FilterPath: string;
 }
-interface DeleteIndexTemplateResponse extends AcknowledgedResponseBase {
+interface DeleteIndexTemplateResponse extends Response {
 }
 interface GetIndexTemplateRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
@@ -3173,8 +3185,8 @@ interface GetIndexTemplateRequest extends Request {
 	FilterPath: string;
 }
 /** type has a custom json converter defined */
-interface GetIndexTemplateResponse extends DictionaryResponseBase<string, TemplateMapping> {
-	TemplateMappings: Map<string, TemplateMapping>[];
+interface GetIndexTemplateResponse extends Response {
+	TemplateMappings: Map<string, TemplateMapping>;
 }
 interface IndexTemplateExistsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
@@ -3189,10 +3201,10 @@ interface IndexTemplateExistsRequest extends Request {
 interface PutIndexTemplateRequest extends Request {
 	Template: string;
 	Order: integer;
-	Settings: Map<string, any>[];
-	Mappings: Map<TypeName, TypeMapping>[];
-	Warmers: Map<TypeName, Warmer>[];
-	Aliases: Map<IndexName, Alias>[];
+	Settings: Map<string, any>;
+	Mappings: Map<TypeName, TypeMapping>;
+	Warmers: Map<TypeName, Warmer>;
+	Aliases: Map<IndexName, Alias>;
 	/** mapped on body but might only proxy to request querystring */
 	Create: boolean;
 	/** mapped on body but might only proxy to request querystring */
@@ -3206,11 +3218,11 @@ interface PutIndexTemplateRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
 	FilterPath: string;
 }
-interface PutIndexTemplateResponse extends AcknowledgedResponseBase {
+interface PutIndexTemplateResponse extends Response {
 }
 /** type has a custom json converter defined */
 interface UpdateIndexSettingsRequest extends Request {
-	IndexSettings: Map<string, any>[];
+	IndexSettings: Map<string, any>;
 	/** mapped on body but might only proxy to request querystring */
 	MasterTimeout: Time;
 	/** mapped on body but might only proxy to request querystring */
@@ -3226,7 +3238,7 @@ interface UpdateIndexSettingsRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
 	FilterPath: string;
 }
-interface UpdateIndexSettingsResponse extends AcknowledgedResponseBase {
+interface UpdateIndexSettingsResponse extends Response {
 }
 interface GetFieldMappingRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
@@ -3245,15 +3257,15 @@ interface GetFieldMappingRequest extends Request {
 	FilterPath: string;
 }
 interface GetFieldMappingResponse extends Response {
-	Indices: Map<string, TypeFieldMappings>[];
+	Indices: Map<string, TypeFieldMappings>;
 }
 interface TypeFieldMappings {
-	mappings: Map<string, Map<string, FieldMapping>[]>[];
+	mappings: Map<string, Map<string, FieldMapping>>;
 }
 interface FieldMapping {
 	full_name: string;
 	/** type has a custom json converter defined */
-	mapping: Map<string, FieldMapping>[];
+	mapping: Map<string, FieldMapping>;
 }
 interface FieldMapping {
 }
@@ -3273,7 +3285,7 @@ interface GetMappingRequest extends Request {
 }
 interface GetMappingResponse extends Response {
 	IsValid: boolean;
-	Mappings: Map<string, TypeMapping[]>[];
+	Mappings: Map<string, TypeMapping[]>;
 	Mapping: TypeMapping;
 }
 /** type has a custom json converter defined */
@@ -3283,14 +3295,14 @@ interface TypeMapping {
 	date_detection: boolean;
 	dynamic: DynamicMapping;
 	dynamic_date_formats: string[];
-	dynamic_templates: Map<string, DynamicTemplate>[];
+	dynamic_templates: Map<string, DynamicTemplate>;
 	_field_names: FieldNamesField;
 	_index: IndexField;
 	/** type has a custom json converter defined */
-	_meta: Map<string, any>[];
+	_meta: Map<string, any>;
 	numeric_detection: boolean;
 	_parent: ParentField;
-	properties: Map<PropertyName, Property>[];
+	properties: Map<PropertyName, Property>;
 	_routing: RoutingField;
 	search_analyzer: string;
 	_size: SizeField;
@@ -3305,16 +3317,16 @@ interface PutMappingRequest extends Request {
 	AllField: AllField;
 	DateDetection: boolean;
 	DynamicDateFormats: string[];
-	DynamicTemplates: Map<string, DynamicTemplate>[];
+	DynamicTemplates: Map<string, DynamicTemplate>;
 	Dynamic: DynamicMapping;
 	Analyzer: string;
 	SearchAnalyzer: string;
 	FieldNamesField: FieldNamesField;
 	IndexField: IndexField;
-	Meta: Map<string, any>[];
+	Meta: Map<string, any>;
 	NumericDetection: boolean;
 	ParentField: ParentField;
-	Properties: Map<PropertyName, Property>[];
+	Properties: Map<PropertyName, Property>;
 	RoutingField: RoutingField;
 	SizeField: SizeField;
 	SourceField: SourceField;
@@ -3338,7 +3350,7 @@ interface PutMappingRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
 	FilterPath: string;
 }
-interface PutMappingResponse extends IndicesResponseBase {
+interface PutMappingResponse extends Response {
 }
 interface RecoveryStatusRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
@@ -3354,7 +3366,7 @@ interface RecoveryStatusRequest extends Request {
 }
 interface RecoveryStatusResponse extends Response {
 	/** type has a custom json converter defined */
-	Indices: Map<string, RecoveryStatus>[];
+	Indices: Map<string, RecoveryStatus>;
 }
 interface RecoveryStatus {
 	shards: ShardRecovery[];
@@ -3435,11 +3447,11 @@ interface SegmentsRequest extends Request {
 interface SegmentsResponse extends Response {
 	_shards: ShardsMetaData;
 	/** type has a custom json converter defined */
-	indices: Map<string, IndexSegment>[];
+	indices: Map<string, IndexSegment>;
 }
 interface IndexSegment {
 	/** type has a custom json converter defined */
-	shards: Map<string, ShardsSegment>[];
+	shards: Map<string, ShardsSegment>;
 }
 /** type has a custom json converter defined */
 interface ShardsSegment {
@@ -3447,7 +3459,7 @@ interface ShardsSegment {
 	num_search_segments: integer;
 	routing: ShardSegmentRouting;
 	/** type has a custom json converter defined */
-	Segments: Map<string, Segment>[];
+	Segments: Map<string, Segment>;
 }
 interface ShardSegmentRouting {
 	state: string;
@@ -3486,7 +3498,7 @@ interface IndicesStatsResponse extends Response {
 	_shards: ShardsMetaData;
 	_all: IndicesStats;
 	/** type has a custom json converter defined */
-	indices: Map<string, IndicesStats>[];
+	indices: Map<string, IndicesStats>;
 }
 interface IndicesStats {
 	primaries: IndexStats;
@@ -3514,7 +3526,7 @@ interface ClearCacheRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
 	FilterPath: string;
 }
-interface ClearCacheResponse extends ShardsOperationResponseBase {
+interface ClearCacheResponse extends Response {
 }
 interface FlushRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
@@ -3532,7 +3544,7 @@ interface FlushRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
 	FilterPath: string;
 }
-interface FlushResponse extends ShardsOperationResponseBase {
+interface FlushResponse extends Response {
 }
 interface OptimizeRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
@@ -3556,7 +3568,7 @@ interface OptimizeRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
 	FilterPath: string;
 }
-interface OptimizeResponse extends ShardsOperationResponseBase {
+interface OptimizeResponse extends Response {
 }
 interface RefreshRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
@@ -3574,7 +3586,7 @@ interface RefreshRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
 	FilterPath: string;
 }
-interface RefreshResponse extends ShardsOperationResponseBase {
+interface RefreshResponse extends Response {
 }
 interface SyncedFlushRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
@@ -3588,7 +3600,7 @@ interface SyncedFlushRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
 	FilterPath: string;
 }
-interface SyncedFlushResponse extends ShardsOperationResponseBase {
+interface SyncedFlushResponse extends Response {
 }
 interface UpgradeRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
@@ -3626,7 +3638,7 @@ interface UpgradeStatusRequest extends Request {
 /** type has a custom json converter defined */
 interface UpgradeStatusResponse extends Response {
 	/** type has a custom json converter defined */
-	Upgrades: Map<string, UpgradeStatus>[];
+	Upgrades: Map<string, UpgradeStatus>;
 	SizeInBytes: long;
 	SizeToUpgradeInBytes: string;
 	SizeToUpgradeAncientInBytes: string;
@@ -3646,7 +3658,7 @@ interface DeleteWarmerRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
 	FilterPath: string;
 }
-interface DeleteWarmerResponse extends AcknowledgedResponseBase {
+interface DeleteWarmerResponse extends Response {
 }
 interface GetWarmerRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
@@ -3665,7 +3677,7 @@ interface GetWarmerRequest extends Request {
 /** type has a custom json converter defined */
 interface GetWarmerResponse extends Response {
 	/** type has a custom json converter defined */
-	Indices: Map<string, Map<TypeName, Warmer>[]>[];
+	Indices: Map<string, Map<TypeName, Warmer>>;
 }
 /** type has a custom json converter defined */
 interface PutWarmerRequest extends Request {
@@ -3685,7 +3697,7 @@ interface PutWarmerRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
 	FilterPath: string;
 }
-interface PutWarmerResponse extends AcknowledgedResponseBase {
+interface PutWarmerResponse extends Response {
 }
 interface DeleteScriptRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
@@ -3697,7 +3709,7 @@ interface DeleteScriptRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
 	FilterPath: string;
 }
-interface DeleteScriptResponse extends AcknowledgedResponseBase {
+interface DeleteScriptResponse extends Response {
 }
 interface GetScriptRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
@@ -3725,7 +3737,7 @@ interface PutScriptRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
 	FilterPath: string;
 }
-interface PutScriptResponse extends AcknowledgedResponseBase {
+interface PutScriptResponse extends Response {
 }
 /** type has a custom json converter defined */
 interface CreateRepositoryRequest extends Request {
@@ -3744,7 +3756,7 @@ interface CreateRepositoryRequest extends Request {
 interface SnapshotRepository {
 	type: string;
 }
-interface CreateRepositoryResponse extends AcknowledgedResponseBase {
+interface CreateRepositoryResponse extends Response {
 }
 interface DeleteRepositoryRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
@@ -3756,7 +3768,7 @@ interface DeleteRepositoryRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
 	FilterPath: string;
 }
-interface DeleteRepositoryResponse extends AcknowledgedResponseBase {
+interface DeleteRepositoryResponse extends Response {
 }
 interface GetRepositoryRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
@@ -3770,7 +3782,7 @@ interface GetRepositoryRequest extends Request {
 }
 /** type has a custom json converter defined */
 interface GetRepositoryResponse extends Response {
-	Repositories: Map<string, SnapshotRepository>[];
+	Repositories: Map<string, SnapshotRepository>;
 }
 interface VerifyRepositoryRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
@@ -3784,7 +3796,7 @@ interface VerifyRepositoryRequest extends Request {
 }
 interface VerifyRepositoryResponse extends Response {
 	/** type has a custom json converter defined */
-	nodes: Map<string, CompactNodeInfo>[];
+	nodes: Map<string, CompactNodeInfo>;
 }
 interface CompactNodeInfo {
 	name: string;
@@ -3808,7 +3820,7 @@ interface RestoreRequest extends Request {
 }
 /** type has a custom json converter defined */
 interface UpdateIndexSettingsRequest {
-	IndexSettings: Map<string, any>[];
+	IndexSettings: Map<string, any>;
 	Index: Indices;
 }
 interface RestoreResponse extends Response {
@@ -3827,7 +3839,7 @@ interface DeleteSnapshotRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
 	FilterPath: string;
 }
-interface DeleteSnapshotResponse extends AcknowledgedResponseBase {
+interface DeleteSnapshotResponse extends Response {
 }
 interface GetSnapshotRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
@@ -3896,7 +3908,7 @@ interface SnapshotStatus {
 	state: string;
 	shards_stats: SnapshotShardsStats;
 	stats: SnapshotStats;
-	indices: Map<string, SnapshotIndexStats>[];
+	indices: Map<string, SnapshotIndexStats>;
 }
 interface SnapshotShardsStats {
 	initializing: long;
@@ -3917,7 +3929,7 @@ interface SnapshotStats {
 interface SnapshotIndexStats {
 	shards_stats: SnapshotShardsStats;
 	stats: SnapshotStats;
-	shards: Map<string, SnapshotShardsStats>[];
+	shards: Map<string, SnapshotShardsStats>;
 }
 /** type has a custom json converter defined */
 interface CountRequest extends Request {
@@ -4004,7 +4016,7 @@ interface ExplanationDetail {
 }
 interface FieldStatsRequest extends Request {
 	fields: Field[];
-	index_constraints: Map<Field, IndexConstraint>[];
+	index_constraints: Map<Field, IndexConstraint>;
 	/** mapped on body but might only proxy to request querystring */
 	Level: Level;
 	/** mapped on body but might only proxy to request querystring */
@@ -4031,10 +4043,10 @@ interface IndexConstraintComparison {
 }
 interface FieldStatsResponse extends Response {
 	_shards: ShardsMetaData;
-	indices: Map<string, FieldStats>[];
+	indices: Map<string, FieldStats>;
 }
 interface FieldStats {
-	fields: Map<string, FieldStatsField>[];
+	fields: Map<string, FieldStatsField>;
 }
 interface FieldStatsField {
 	max_doc: long;
@@ -4047,7 +4059,7 @@ interface FieldStatsField {
 }
 /** type has a custom json converter defined */
 interface MultiSearchRequest extends Request {
-	Operations: Map<string, SearchRequest>[];
+	Operations: Map<string, SearchRequest>;
 	/** mapped on body but might only proxy to request querystring */
 	SearchType: SearchType;
 	/** mapped on body but might only proxy to request querystring */
@@ -4085,13 +4097,13 @@ interface PercolateOperation {
 	highlight: Highlight;
 	query: QueryContainer;
 	filter: QueryContainer;
-	aggs: Map<string, AggregationContainer>[];
+	aggs: Map<string, AggregationContainer>;
 }
 interface MultiPercolateResponse extends Response {
 	IsValid: boolean;
 	Responses: PercolateResponse[];
 }
-interface PercolateResponse extends PercolateCountResponse {
+interface PercolateResponse extends Response {
 	matches: PercolatorMatch[];
 }
 interface PercolateCountResponse extends Response {
@@ -4101,7 +4113,7 @@ interface PercolateCountResponse extends Response {
 	ServerError: ServerError;
 }
 interface PercolatorMatch {
-	highlight: Map<string, string[]>[];
+	highlight: Map<string, string[]>;
 	_id: string;
 	_index: string;
 	_score: double;
@@ -4111,7 +4123,7 @@ interface PercolateRequest<TDocument> extends Request {
 	Highlight: Highlight;
 	Query: QueryContainer;
 	Filter: QueryContainer;
-	Aggregations: Map<string, AggregationContainer>[];
+	Aggregations: Map<string, AggregationContainer>;
 	Size: integer;
 	TrackScores: boolean;
 	doc: TDocument;
@@ -4153,7 +4165,7 @@ interface PercolateCountRequest<TDocument> extends Request {
 	Highlight: Highlight;
 	Query: QueryContainer;
 	Filter: QueryContainer;
-	Aggregations: Map<string, AggregationContainer>[];
+	Aggregations: Map<string, AggregationContainer>;
 	doc: TDocument;
 	/** mapped on body but might only proxy to request querystring */
 	Routing: string[];
@@ -4180,7 +4192,7 @@ interface PercolateCountRequest<TDocument> extends Request {
 }
 /** type has a custom json converter defined */
 interface RegisterPercolatorRequest extends Request {
-	Metadata: Map<string, any>[];
+	Metadata: Map<string, any>;
 	Query: QueryContainer;
 }
 interface RegisterPercolatorResponse extends Response {
@@ -4218,11 +4230,11 @@ interface ScrollRequest extends Request {
 	FilterPath: string;
 }
 interface Hit<T> {
-	fields: Map<string, any>[];
+	fields: Map<string, any>;
 	_source: T;
 	_index: string;
 	/** type has a custom json converter defined */
-	inner_hits: Map<string, InnerHitsResult>[];
+	inner_hits: Map<string, InnerHitsResult>;
 	_score: double;
 	_type: string;
 	_version: long;
@@ -4232,7 +4244,7 @@ interface Hit<T> {
 	_timestamp: long;
 	_ttl: long;
 	sort: any[];
-	Highlights: Map<string, HighlightHit>[];
+	Highlights: Map<string, HighlightHit>;
 	_explanation: Explanation;
 	matched_queries: string[];
 }
@@ -4269,19 +4281,19 @@ interface SearchRequest extends Request {
 	terminate_after: long;
 	fields: Field[];
 	fielddata_fields: Field[];
-	script_fields: Map<string, ScriptField>[];
+	script_fields: Map<string, ScriptField>;
 	/** type has a custom json converter defined */
 	_source: SourceFilter;
 	sort: Sort[];
 	/** type has a custom json converter defined */
-	indices_boost: Map<IndexName, double>[];
+	indices_boost: Map<IndexName, double>;
 	post_filter: QueryContainer;
-	inner_hits: Map<string, InnerHitsContainer>[];
+	inner_hits: Map<string, InnerHitsContainer>;
 	query: QueryContainer;
 	rescore: Rescore;
-	suggest: Map<string, SuggestBucket>[];
+	suggest: Map<string, SuggestBucket>;
 	highlight: Highlight;
-	aggs: Map<string, AggregationContainer>[];
+	aggs: Map<string, AggregationContainer>;
 	/** mapped on body but might only proxy to request querystring */
 	Analyzer: string;
 	/** mapped on body but might only proxy to request querystring */
@@ -4327,9 +4339,9 @@ interface SearchResponse<T> extends Response {
 	_shards: ShardsMetaData;
 	hits: HitsMetaData<T>;
 	/** type has a custom json converter defined */
-	aggregations: Map<string, Aggregate>[];
+	aggregations: Map<string, Aggregate>;
 	Aggs: AggregationsHelper;
-	suggest: Map<string, Suggest[]>[];
+	suggest: Map<string, Suggest[]>;
 	took: integer;
 	timed_out: boolean;
 	terminated_early: boolean;
@@ -4338,8 +4350,8 @@ interface SearchResponse<T> extends Response {
 	MaxScore: double;
 	Documents: T[];
 	Hits: Hit<T>[];
-	Fields: Map<string, any>[][];
-	Highlights: Map<string, Map<string, HighlightHit>[]>[];
+	Fields: Map<string, any>;
+	Highlights: Map<string, Map<string, HighlightHit>>;
 }
 interface HitsMetaData<T> {
 	total: long;
@@ -4347,7 +4359,7 @@ interface HitsMetaData<T> {
 	hits: Hit<T>[];
 }
 interface Hit<T> {
-	Fields: Map<string, any>[];
+	Fields: Map<string, any>;
 	Source: T;
 	Index: string;
 	Type: string;
@@ -4359,16 +4371,16 @@ interface Hit<T> {
 	Timestamp: long;
 	Ttl: long;
 	Sorts: any[];
-	Highlights: Map<string, HighlightHit>[];
+	Highlights: Map<string, HighlightHit>;
 	Explanation: Explanation;
 	MatchedQueries: string[];
-	InnerHits: Map<string, InnerHitsResult>[];
+	InnerHits: Map<string, InnerHitsResult>;
 }
 interface Aggregate {
-	Meta: Map<string, any>[];
+	Meta: Map<string, any>;
 }
 interface AggregationsHelper {
-	Aggregations: Map<string, Aggregate>[];
+	Aggregations: Map<string, Aggregate>;
 }
 interface Suggest {
 	length: integer;
@@ -4438,7 +4450,7 @@ interface SearchShardsRequest extends Request {
 }
 interface SearchShardsResponse extends Response {
 	shards: SearchShard[][];
-	nodes: Map<string, SearchNode>[];
+	nodes: Map<string, SearchNode>;
 }
 interface SearchShard {
 	state: string;
@@ -4456,7 +4468,7 @@ interface SearchTemplateRequest extends Request {
 	template: string;
 	file: string;
 	id: string;
-	params: Map<string, any>[];
+	params: Map<string, any>;
 	/** mapped on body but might only proxy to request querystring */
 	IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */
@@ -4486,7 +4498,7 @@ interface DeleteSearchTemplateRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
 	FilterPath: string;
 }
-interface DeleteSearchTemplateResponse extends AcknowledgedResponseBase {
+interface DeleteSearchTemplateResponse extends Response {
 }
 interface GetSearchTemplateRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
@@ -4515,12 +4527,12 @@ interface PutSearchTemplateRequest extends Request {
 	/** mapped on body but might only proxy to request querystring */
 	FilterPath: string;
 }
-interface PutSearchTemplateResponse extends AcknowledgedResponseBase {
+interface PutSearchTemplateResponse extends Response {
 }
 /** type has a custom json converter defined */
 interface SuggestRequest extends Request {
 	GlobalText: string;
-	Suggest: Map<string, SuggestBucket>[];
+	Suggest: Map<string, SuggestBucket>;
 	/** mapped on body but might only proxy to request querystring */
 	IgnoreUnavailable: boolean;
 	/** mapped on body but might only proxy to request querystring */
@@ -4539,7 +4551,7 @@ interface SuggestRequest extends Request {
 /** type has a custom json converter defined */
 interface SuggestResponse extends Response {
 	Shards: ShardsMetaData;
-	Suggestions: Map<string, Suggest[]>[];
+	Suggestions: Map<string, Suggest[]>;
 }
 interface ValidateQueryRequest extends Request {
 	query: QueryContainer;
@@ -4764,7 +4776,7 @@ interface ThreadStats {
 }
 interface GarbageCollectionStats {
 	/** type has a custom json converter defined */
-	collectors: Map<string, GarbageCollectionGenerationStats>[];
+	collectors: Map<string, GarbageCollectionGenerationStats>;
 }
 interface GarbageCollectionGenerationStats {
 	collection_count: long;
