@@ -14,7 +14,13 @@ namespace Nest.TypescriptGenerator
 {
 	public class MachineApiGenerator : TsGenerator
 	{
+		private readonly Dictionary<string, string> _namespaceMapping;
 		public TypeConvertorCollection Converters => base._typeConvertors;
+
+		public MachineApiGenerator(Dictionary<string, string> namespaceMapping) : base()
+		{
+			_namespaceMapping = namespaceMapping;
+		}
 
 		public Dictionary<string, string> TypeRenames => new Dictionary<string, string>
 		{
@@ -53,9 +59,10 @@ namespace Nest.TypescriptGenerator
 
 		protected virtual void AppendClassDefinition(TsClass classModel, ScriptBuilder sb, TsGeneratorOutput generatorOutput)
 		{
+			AddNamespaceHeader(classModel.Name, sb);
+
 			string typeName = this.GetTypeName(classModel);
 			string visibility = this.GetTypeVisibility(classModel, typeName) ? "export " : "";
-
 
 			AddDocCommentForCustomJsonConverter(sb, classModel);
 			_docAppender.AppendClassDoc(sb, classModel, typeName);
@@ -110,6 +117,14 @@ namespace Nest.TypescriptGenerator
 			_generatedClasses.Add(classModel);
 		}
 
+		private void AddNamespaceHeader(string name, ScriptBuilder sb)
+		{
+			string ns;
+			sb.AppendLineIndented(this._namespaceMapping.TryGetValue(name, out ns)
+				? $"/**namespace:{ns} */"
+				: $"/**namespace:DefaultLanguageConstruct */");
+		}
+
 		private void AddDocCommentForCustomJsonConverter(ScriptBuilder sb, TsProperty property)
 		{
 			var declaringType = property.MemberInfo.DeclaringType;
@@ -122,7 +137,7 @@ namespace Nest.TypescriptGenerator
 				var rp = Program.RequestParameters[nonGenericTypeName];
 				var method = rp.GetMethod(propertyName);
 				if (method != null)
-					sb.AppendLineIndented("/** mapped on body but might only proxy to request querystring */");
+					sb.AppendLineIndented("/**ambiguous_origin*/");
 			}
 			var iface = declaringType.GetInterfaces().FirstOrDefault(ii => ii.Name == "I" + declaringType.Name);
 			var ifaceProperty = iface?.GetProperty(propertyName);
@@ -131,7 +146,7 @@ namespace Nest.TypescriptGenerator
 			                             property.MemberInfo.GetCustomAttribute<JsonConverterAttribute>();
 
 			if (jsonConverterAttribute != null)
-				sb.AppendLineIndented("/** type has a custom json converter defined */");
+				sb.AppendLineIndented("/**custom_serialization */");
 		}
 
 		private void AddDocCommentForCustomJsonConverter(ScriptBuilder sb, TsClass classModel)
@@ -143,12 +158,13 @@ namespace Nest.TypescriptGenerator
 
 			if (jsonConverterAttribute != null)
 			{
-				sb.AppendLineIndented("/** type has a custom json converter defined */");
+				sb.AppendLineIndented("/**custom_serialization*/");
 			}
 		}
 
 		protected override void AppendEnumDefinition(TsEnum enumModel, ScriptBuilder sb, TsGeneratorOutput output)
 		{
+			AddNamespaceHeader(enumModel.Name, sb);
 			if (_typesToIgnore.Contains(enumModel.Type)) return;
 
 			string typeName = this.GetTypeName(enumModel);

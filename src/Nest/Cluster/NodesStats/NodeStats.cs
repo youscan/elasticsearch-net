@@ -91,10 +91,10 @@ namespace Nest
 		[JsonProperty("mem")]
 		public ExtendedMemoryStats Memory { get; internal set; }
 		[JsonProperty("swap")]
-		public MemoryStats Swap { get; internal set; }
+		public OsMemoryStats Swap { get; internal set; }
 
 		[JsonObject]
-		public class MemoryStats
+		public class OsMemoryStats
 		{
 			[JsonProperty("total")]
 			public string Total { get; internal set; }
@@ -116,7 +116,7 @@ namespace Nest
 		}
 
 		[JsonObject]
-		public class ExtendedMemoryStats : MemoryStats
+		public class ExtendedMemoryStats : OsMemoryStats
 		{
 			[JsonProperty("free_percent")]
 			public int FreePercent { get; internal set; }
@@ -136,7 +136,7 @@ namespace Nest
 		[JsonProperty("cpu")]
 		public CPUStats CPU { get; internal set; }
 		[JsonProperty("mem")]
-		public MemoryStats Memory { get; internal set; }
+		public ProcessMemoryStats Memory { get; internal set; }
 
 		[JsonObject]
 		public class CPUStats
@@ -158,7 +158,7 @@ namespace Nest
 		}
 
 		[JsonObject]
-		public class MemoryStats
+		public class ProcessMemoryStats
 		{
 			[JsonProperty("resident")]
 			public string Resident { get; internal set; }

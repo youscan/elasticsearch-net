@@ -20,8 +20,17 @@
 
   "frameworks": {
     "dnx451": {
+      "frameworkAssemblies": {
+        "System.Runtime": "",
+        "System.Collections": "",
+        "System.Runtime.Serialization": "",
+        "System.Threading.Tasks": "",
+        "System.Text.Encoding": ""
+      },
       "dependencies": {
-        "TypeLite": "1.0.0-*"
+        "TypeLite": "1.0.0-*",
+        "Microsoft.CSharp": "4.0.1-beta-23409",
+        "Microsoft.CodeAnalysis": "1.1.1"
       }
     }
   }

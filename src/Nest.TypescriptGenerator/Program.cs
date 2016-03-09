@@ -22,8 +22,38 @@ namespace Nest.TypescriptGenerator
 		private static readonly Regex InterfaceRegex = new Regex("(?-i)^I[A-Z].*$");
 		public static Regex RemoveGeneric { get; } = new Regex(@"^(.+)(?:\`.+)$");
 
+		private static string NestFolder = @"..\..\src\Nest";
+
+		private static readonly string[] SkipFolders = { "_Generated", "Debug", "Release" };
+		public static IEnumerable<References> InputFiles() =>
+			from f in Directory.GetFiles(NestFolder, $"*.cs", SearchOption.AllDirectories)
+			let dir = new DirectoryInfo(f)
+			where dir?.Parent != null && !SkipFolders.Contains(dir.Parent.Name)
+			select new References(new FileInfo(f));
+
 		public static void Main(string[] args)
 		{
+
+			var currentDirectory = new DirectoryInfo(Directory.GetCurrentDirectory());
+
+			var references = InputFiles()
+				.SelectMany(r => r.Declarations, (r, s) => new { r, s });
+
+			var dictionary = new Dictionary<string, string>();
+			foreach(var r in references)
+			{
+				if (dictionary.ContainsKey(r.s) && (r.s.EndsWith("Request") || r.s.EndsWith("Descriptor")) )
+				{
+				}
+				else if (dictionary.ContainsKey(r.s))
+				{
+				}
+				else
+				{
+					dictionary.Add(r.s, r.r.Namespace);
+				}
+			}
+
 			var isDescriptorRe = new Regex(@"Descriptor(?:\`.+$|$)");
 
 			var nestAssembly = typeof(IRequest<>).Assembly;
@@ -40,7 +70,7 @@ namespace Nest.TypescriptGenerator
 				.Where(t => t.IsClass && t.Name.EndsWith("RequestParameters"))
 				.ToDictionary(t=>t.Name.Replace("Parameters", ""));
 
-			_scriptGenerator = new MachineApiGenerator();
+			_scriptGenerator = new MachineApiGenerator(dictionary);
 
 			var typeScriptFluent = TypeScript.Definitions(_scriptGenerator)
 				.WithTypeFormatter(FormatType)
