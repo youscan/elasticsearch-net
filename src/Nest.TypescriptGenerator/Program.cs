@@ -121,6 +121,8 @@ namespace Nest.TypescriptGenerator
 			return propertyName;
 		}
 
+		private static Regex SnakeCaseRe = new Regex("(?<=.)([A-Z])");
+		private static string SnakeCase(string token) => SnakeCaseRe.Replace(token, "_$0").ToLowerInvariant();
 
 		private static string FormatType(TsType type, ITsTypeFormatter formatter)
 		{
@@ -135,9 +137,9 @@ namespace Nest.TypescriptGenerator
 				? _scriptGenerator.TypeRenames[tsClass.Name] 
 				: tsClass.Name;
 
-			if (InterfaceRegex.IsMatch(name))
-				name = name.Substring(1);
+			if (InterfaceRegex.IsMatch(name)) name = name.Substring(1);
 
+			name = SnakeCase(name);
 			if (!tsClass.GenericArguments.Any()) return name;
 
 			return name + "<" + string.Join(", ", tsClass.GenericArguments.Select(WriteArrayIfCollection)) + ">";
