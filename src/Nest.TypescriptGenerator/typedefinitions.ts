@@ -19,6 +19,105 @@ enum DateInterval {
 	quarter = 6,
 	year = 7
 }
+/**namespace:Analysis.Languages */
+enum Language {
+	Arabic = 0,
+	Armenian = 1,
+	Basque = 2,
+	Brazilian = 3,
+	Bulgarian = 4,
+	Catalan = 5,
+	Chinese = 6,
+	Cjk = 7,
+	Czech = 8,
+	Danish = 9,
+	Dutch = 10,
+	English = 11,
+	Finnish = 12,
+	French = 13,
+	Galician = 14,
+	German = 15,
+	Greek = 16,
+	Hindi = 17,
+	Hungarian = 18,
+	Indonesian = 19,
+	Irish = 20,
+	Italian = 21,
+	Latvian = 22,
+	Norwegian = 23,
+	Persian = 24,
+	Portuguese = 25,
+	Romanian = 26,
+	Russian = 27,
+	Sorani = 28,
+	Spanish = 29,
+	Swedish = 30,
+	Turkish = 31,
+	Thai = 32
+}
+/**namespace:Analysis.Languages */
+enum SnowballLanguage {
+	Armenian = 0,
+	Basque = 1,
+	Catalan = 2,
+	Danish = 3,
+	Dutch = 4,
+	English = 5,
+	Finnish = 6,
+	French = 7,
+	Ferman = 8,
+	German2 = 9,
+	Hungarian = 10,
+	Italian = 11,
+	Kp = 12,
+	Lovins = 13,
+	Norwegian = 14,
+	Porter = 15,
+	Portuguese = 16,
+	Romanian = 17,
+	Russian = 18,
+	Spanish = 19,
+	Swedish = 20,
+	Turkish = 21
+}
+/**namespace:Analysis.TokenFilters.DelimitedPayload */
+enum DelimitedPayloadEncoding {
+	int = 0,
+	float = 1,
+	identity = 2
+}
+/**namespace:Analysis.TokenFilters.EdgeNGram */
+enum EdgeNGramSide {
+	front = 0,
+	back = 1
+}
+/**namespace:Analysis.TokenFilters.Phonetic */
+enum PhoneticEncoder {
+	metaphone = 0,
+	doublemetaphone = 1,
+	soundex = 2,
+	refinedsoundex = 3,
+	caverphone1 = 4,
+	caverphone2 = 5,
+	cologne = 6,
+	nysiis = 7,
+	koelnerphonetik = 8,
+	haasephonetik = 9,
+	beidermorse = 10
+}
+/**namespace:Analysis.TokenFilters.Synonym */
+enum SynonymFormat {
+	solr = 0,
+	wordnet = 1
+}
+/**namespace:Analysis.Tokenizers.NGram */
+enum TokenChar {
+	letter = 0,
+	digit = 1,
+	whitespace = 2,
+	punctuation = 3,
+	symbol = 4
+}
 /**namespace:CommonOptions.TimeUnit */
 enum TimeUnit {
 	ms = 0,
@@ -223,6 +322,1789 @@ enum ClusterStatus {
 	green = 0,
 	yellow = 1,
 	red = 2
+}
+/**namespace:Modules.Indices.Fielddata.Numeric */
+enum NumericFielddataFormat {
+	array = 0,
+	doc_values = 1,
+	disabled = 2
+}
+/**namespace:Mapping */
+enum NonStringIndexOption {
+	no = 0
+}
+/**namespace:Mapping.Types.Core.Date */
+enum NumericResolutionUnit {
+	milliseconds = 0,
+	seconds = 1
+}
+/**namespace:Mapping.Norms */
+enum NormsLoading {
+	lazy = 0,
+	eager = 1
+}
+/**namespace:Modules.Indices.Fielddata.String */
+enum StringFielddataFormat {
+	paged_bytes = 0,
+	doc_values = 1,
+	disabled = 2
+}
+/**namespace:Mapping */
+enum FieldIndexOption {
+	analyzed = 0,
+	not_analyzed = 1,
+	no = 2
+}
+/**namespace:Mapping */
+enum TermVectorOption {
+	no = 0,
+	yes = 1,
+	with_offsets = 2,
+	with_positions = 3,
+	with_positions_offsets = 4,
+	with_positions_offsets_payloads = 5
+}
+/**namespace:Mapping.Types.Core.String */
+enum IndexOptions {
+	docs = 0,
+	freqs = 1,
+	positions = 2,
+	offsets = 3
+}
+/**namespace:Modules.Indices.Fielddata.GeoPoint */
+enum GeoPointFielddataFormat {
+	array = 0,
+	doc_values = 1,
+	compressed = 2,
+	disabled = 3
+}
+/**namespace:Mapping.Types.Geo.GeoShape */
+enum GeoTree {
+	geohash = 0,
+	quadtree = 1
+}
+/**namespace:Mapping.Types.Geo.GeoShape */
+enum GeoOrientation {
+	cw = 0,
+	ccw = 1
+}
+/**namespace:Cluster.ClusterReroute.Commands */
+interface ClusterRerouteCommand {
+	Name: string;
+}
+/**namespace:Mapping */
+/**custom_serialization*/
+interface TypeMapping {
+	dynamic_date_formats: string[];
+	date_detection: boolean;
+	numeric_detection: boolean;
+	/**custom_serialization */
+	transform: MappingTransform[];
+	analyzer: string;
+	search_analyzer: string;
+	_source: SourceField;
+	_all: AllField;
+	_parent: ParentField;
+	_routing: RoutingField;
+	_index: IndexField;
+	_size: SizeField;
+	_timestamp: TimestampField;
+	_field_names: FieldNamesField;
+	_ttl: TtlField;
+	/**custom_serialization */
+	_meta: Map<string, any>;
+	dynamic_templates: Map<string, DynamicTemplate>;
+	dynamic: DynamicMapping;
+	properties: Map<PropertyName, Property>;
+}
+/**namespace:Mapping.Transform */
+/**custom_serialization*/
+interface MappingTransform {
+	script: string;
+	script_file: string;
+	params: Map<string, string>;
+	lang: string;
+}
+/**namespace:Mapping.MetaFields.Source */
+/**custom_serialization*/
+interface SourceField {
+	enabled: boolean;
+	compress: boolean;
+	compress_threshold: string;
+	includes: string[];
+	excludes: string[];
+}
+/**namespace:Mapping.MetaFields.All */
+/**custom_serialization*/
+interface AllField {
+	enabled: boolean;
+	store: boolean;
+	store_term_vectors: boolean;
+	store_term_vector_offsets: boolean;
+	store_term_vector_positions: boolean;
+	store_term_vector_payloads: boolean;
+	omit_norms: boolean;
+	analyzer: string;
+	search_analyzer: string;
+	similarity: string;
+}
+/**namespace:Mapping.MetaFields.Parent */
+/**custom_serialization*/
+interface ParentField {
+	type: TypeName;
+}
+/**namespace:Mapping.MetaFields.Routing */
+/**custom_serialization*/
+interface RoutingField {
+	required: boolean;
+}
+/**namespace:Mapping.MetaFields.Index */
+/**custom_serialization*/
+interface IndexField {
+	enabled: boolean;
+}
+/**namespace:Mapping.MetaFields.Size */
+/**custom_serialization*/
+interface SizeField {
+	enabled: boolean;
+}
+/**namespace:Mapping.MetaFields.Timestamp */
+/**custom_serialization*/
+interface TimestampField {
+	enabled: boolean;
+	path: Field;
+	format: string;
+	default: string;
+	ignore_missing: boolean;
+}
+/**namespace:Mapping.MetaFields.FieldNames */
+/**custom_serialization*/
+interface FieldNamesField {
+	enabled: boolean;
+}
+/**namespace:Mapping.MetaFields.Ttl */
+/**custom_serialization*/
+interface TtlField {
+	enabled: boolean;
+	default: Time;
+}
+/**namespace:Mapping.DynamicTemplate */
+/**custom_serialization*/
+interface DynamicTemplate {
+	match: string;
+	unmatch: string;
+	match_mapping_type: string;
+	path_match: string;
+	path_unmatch: string;
+	mapping: Property;
+}
+/**namespace:Mapping.Types */
+interface Property {
+	Name: PropertyName;
+	type: TypeName;
+	index_name: string;
+	store: boolean;
+	doc_values: boolean;
+	fields: Map<PropertyName, Property>;
+	similarity: SimilarityOption;
+	copy_to: Field[];
+}
+/**namespace:Indices.Warmers */
+interface Warmer {
+	types: TypeName[];
+	source: SearchRequest;
+}
+/**namespace:Search.Search */
+/**custom_serialization*/
+interface SearchRequest {
+	timeout: string;
+	from: integer;
+	size: integer;
+	explain: boolean;
+	version: boolean;
+	track_scores: boolean;
+	min_score: double;
+	terminate_after: long;
+	/**custom_serialization */
+	indices_boost: Map<IndexName, double>;
+	sort: Sort[];
+	suggest: Map<string, SuggestBucket>;
+	highlight: Highlight;
+	rescore: Rescore;
+	fields: Field[];
+	fielddata_fields: Field[];
+	script_fields: Map<string, ScriptField>;
+	/**custom_serialization */
+	_source: SourceFilter;
+	aggs: Map<string, AggregationContainer>;
+	query: QueryContainer;
+	post_filter: QueryContainer;
+	inner_hits: Map<string, InnerHitsContainer>;
+	Preference: string;
+	Routing: string;
+	SearchType: SearchType;
+	IgnoreUnavalable: boolean;
+	Index: Indices;
+	Type: Types;
+}
+/**namespace:Search.Search.Sort */
+interface Sort {
+	SortKey: Field;
+	missing: string;
+	order: SortOrder;
+	mode: SortMode;
+	nested_filter: QueryContainer;
+	nested_path: Field;
+}
+/**namespace:Search.Suggesters */
+/**custom_serialization*/
+interface SuggestBucket {
+	text: string;
+	term: TermSuggester;
+	phrase: PhraseSuggester;
+	completion: CompletionSuggester;
+}
+/**namespace:Search.Suggesters.TermSuggester */
+/**custom_serialization*/
+interface TermSuggester {
+	prefix_len: integer;
+	/**custom_serialization */
+	suggest_mode: SuggestMode;
+	min_word_len: integer;
+	max_edits: integer;
+	max_inspections: integer;
+	min_doc_freq: double;
+	max_term_freq: double;
+}
+/**namespace:Search.Suggesters.PhraseSuggester */
+/**custom_serialization*/
+interface PhraseSuggester {
+	gram_size: integer;
+	real_word_error_likelihood: double;
+	confidence: double;
+	max_errors: double;
+	separator: string;
+	direct_generator: DirectGenerator[];
+	highlight: PhraseSuggestHighlight;
+	collate: PhraseSuggestCollate;
+}
+/**namespace:Search.Suggesters.PhraseSuggester */
+/**custom_serialization*/
+interface DirectGenerator {
+	field: Field;
+	size: integer;
+	prefix_len: integer;
+	/**custom_serialization */
+	suggest_mode: SuggestMode;
+	min_word_len: integer;
+	max_edits: integer;
+	max_inspections: double;
+	min_doc_freq: double;
+	max_term_freq: double;
+	pre_filter: string;
+	post_filter: string;
+}
+/**namespace:Search.Suggesters.PhraseSuggester */
+interface PhraseSuggestHighlight {
+	pre_tag: string;
+	post_tag: string;
+}
+/**namespace:Search.Suggesters.PhraseSuggester */
+/**custom_serialization*/
+interface PhraseSuggestCollate {
+	query: Script;
+	prune: boolean;
+}
+/**namespace:CommonOptions.Scripting */
+/**custom_serialization*/
+interface Script {
+	/**custom_serialization */
+	params: Map<string, any>;
+	lang: string;
+}
+/**namespace:Search.Suggesters.CompletionSuggester */
+/**custom_serialization*/
+interface CompletionSuggester {
+	fuzzy: FuzzySuggester;
+	context: Map<string, any>;
+}
+/**namespace:Search.Suggesters.CompletionSuggester */
+/**custom_serialization*/
+interface FuzzySuggester {
+	transpositions: boolean;
+	min_length: integer;
+	prefix_length: integer;
+	fuzziness: Fuzziness;
+	unicode_aware: boolean;
+}
+/**namespace:CommonOptions.Fuzziness */
+/**custom_serialization*/
+interface Fuzziness {
+	Auto: boolean;
+	EditDistance: integer;
+	Ratio: double;
+}
+/**namespace:Search.Search.Highlighting */
+/**custom_serialization*/
+interface Highlight {
+	pre_tags: string[];
+	post_tags: string[];
+	fragment_size: integer;
+	tags_schema: string;
+	number_of_fragments: integer;
+	fragment_offset: integer;
+	boundary_max_size: integer;
+	encoder: string;
+	order: string;
+	/**custom_serialization */
+	fields: Map<Field, HighlightField>;
+	require_field_match: boolean;
+	boundary_chars: string;
+}
+/**namespace:Search.Search.Highlighting */
+/**custom_serialization*/
+interface HighlightField {
+	Field: Field;
+	pre_tags: string[];
+	post_tags: string[];
+	fragment_size: integer;
+	no_match_size: integer;
+	number_of_fragments: integer;
+	fragment_offset: integer;
+	boundary_max_size: integer;
+	encoder: string;
+	order: string;
+	tags_schema: string;
+	require_field_match: boolean;
+	boundary_chars: string;
+	type: HighlighterType;
+	force_source: boolean;
+	matched_fields: Field[];
+	highlight_query: QueryContainer;
+}
+/**namespace:Search.Search.Rescoring */
+/**custom_serialization*/
+interface Rescore {
+	window_size: integer;
+	query: RescoreQuery;
+}
+/**namespace:Search.Search.Rescoring */
+/**custom_serialization*/
+interface RescoreQuery {
+	rescore_query: QueryContainer;
+	query_weight: double;
+	rescore_query_weight: double;
+	score_mode: ScoreMode;
+}
+/**namespace:CommonOptions.Scripting */
+/**custom_serialization*/
+interface ScriptField {
+	script: Script;
+}
+/**namespace:Search.Search.SourceFiltering */
+/**custom_serialization*/
+interface SourceFilter {
+	include: Field[];
+	exclude: Field[];
+}
+/**namespace:Aggregations */
+/**custom_serialization*/
+interface AggregationContainer {
+	/**custom_serialization */
+	meta: Map<string, any>;
+	avg: AverageAggregation;
+	date_histogram: DateHistogramAggregation;
+	percentiles: PercentilesAggregation;
+	date_range: DateRangeAggregation;
+	extended_stats: ExtendedStatsAggregation;
+	filter: FilterAggregation;
+	filters: FiltersAggregation;
+	geo_distance: GeoDistanceAggregation;
+	geohash_grid: GeoHashGridAggregation;
+	geo_bounds: GeoBoundsAggregation;
+	histogram: HistogramAggregation;
+	global: GlobalAggregation;
+	ip_range: IpRangeAggregation;
+	max: MaxAggregation;
+	min: MinAggregation;
+	cardinality: CardinalityAggregation;
+	missing: MissingAggregation;
+	nested: NestedAggregation;
+	reverse_nested: ReverseNestedAggregation;
+	range: RangeAggregation;
+	stats: StatsAggregator;
+	sum: SumAggregation;
+	terms: TermsAggregation;
+	significant_terms: SignificantTermsAggregation;
+	value_count: ValueCountAggregation;
+	percentile_ranks: PercentileRanksAggregation;
+	top_hits: TopHitsAggregation;
+	children: ChildrenAggregation;
+	scripted_metric: ScriptedMetricAggregation;
+	avg_bucket: AverageBucketAggregation;
+	derivative: DerivativeAggregation;
+	max_bucket: MaxBucketAggregation;
+	min_bucket: MinBucketAggregation;
+	sum_bucket: SumBucketAggregation;
+	moving_avg: MovingAverageAggregation;
+	cumulative_sum: CumulativeSumAggregation;
+	serial_diff: SerialDifferencingAggregation;
+	bucket_script: BucketScriptAggregation;
+	bucket_selector: BucketSelectorAggregation;
+	sampler: SamplerAggregation;
+	aggs: Map<string, AggregationContainer>;
+}
+/**namespace:Aggregations.Metric.Average */
+interface AverageAggregation {
+}
+/**namespace:Aggregations.Bucket.DateHistogram */
+interface DateHistogramAggregation {
+	field: Field;
+	script: Script;
+	params: Map<string, any>;
+	interval: Union<DateInterval, Time>;
+	format: string;
+	min_doc_count: integer;
+	time_zone: string;
+	factor: integer;
+	offset: string;
+	order: HistogramOrder;
+	extended_bounds: ExtendedBounds<Date>;
+	missing: Date;
+}
+/**namespace:Aggregations.Metric.Percentiles */
+interface PercentilesAggregation {
+	Percents: double[];
+	Method: PercentilesMethod;
+}
+/**namespace:Aggregations.Metric.Percentiles.Methods */
+interface PercentilesMethod {
+}
+/**namespace:Aggregations.Bucket.DateRange */
+interface DateRangeAggregation {
+	field: Field;
+	format: string;
+	ranges: DateRangeExpression[];
+}
+/**namespace:Aggregations.Bucket.DateRange */
+/**custom_serialization*/
+interface DateRangeExpression {
+	from: DateMath;
+	to: DateMath;
+	key: string;
+}
+/**namespace:Aggregations.Metric.ExtendedStats */
+interface ExtendedStatsAggregation {
+}
+/**namespace:Aggregations.Bucket.Filter */
+interface FilterAggregation {
+	filter: QueryContainer;
+}
+/**namespace:Aggregations.Bucket.Filters */
+interface FiltersAggregation {
+	filters: Union<Map<string, QueryContainer>, QueryContainer[]>;
+	other_bucket: boolean;
+	other_bucket_key: string;
+}
+/**namespace:QueryDsl.Abstractions.Container */
+/**custom_serialization*/
+interface QueryContainer {
+	IsConditionless: boolean;
+	IsStrict: boolean;
+	IsVerbatim: boolean;
+	RawQuery: RawQuery;
+	bool: BoolQuery;
+	match_all: MatchAllQuery;
+	term: TermQuery;
+	wildcard: WildcardQuery;
+	prefix: PrefixQuery;
+	boosting: BoostingQuery;
+	ids: IdsQuery;
+	limit: LimitQuery;
+	constant_score: ConstantScoreQuery;
+	dis_max: DisMaxQuery;
+	multi_match: MultiMatchQuery;
+	match: MatchQuery;
+	fuzzy: FuzzyQuery;
+	geo_shape: GeoShapeQuery;
+	common: CommonTermsQuery;
+	terms: TermsQuery;
+	range: RangeQuery;
+	regexp: RegexpQuery;
+	has_child: HasChildQuery;
+	has_parent: HasParentQuery;
+	span_term: SpanTermQuery;
+	simple_query_string: SimpleQueryStringQuery;
+	query_string: QueryStringQuery;
+	mlt: MoreLikeThisQuery;
+	span_first: SpanFirstQuery;
+	span_or: SpanOrQuery;
+	span_near: SpanNearQuery;
+	span_not: SpanNotQuery;
+	span_containing: SpanContainingQuery;
+	span_within: SpanWithinQuery;
+	span_multi: SpanMultiTermQuery;
+	nested: NestedQuery;
+	indices: IndicesQuery;
+	function_score: FunctionScoreQuery;
+	template: TemplateQuery;
+	geo_bounding_box: GeoBoundingBoxQuery;
+	geo_distance: GeoDistanceQuery;
+	geo_polygon: GeoPolygonQuery;
+	geo_distance_range: GeoDistanceRangeQuery;
+	geohash_cell: GeoHashCellQuery;
+	script: ScriptQuery;
+	exists: ExistsQuery;
+	missing: MissingQuery;
+	type: TypeQuery;
+	filtered: FilteredQuery;
+	and: AndQuery;
+	or: OrQuery;
+	not: NotQuery;
+}
+/**namespace:QueryDsl.NestSpecific */
+interface RawQuery {
+	Raw: string;
+}
+/**namespace:QueryDsl.Compound.Bool */
+/**custom_serialization*/
+interface BoolQuery {
+	must: QueryContainer[];
+	must_not: QueryContainer[];
+	should: QueryContainer[];
+	filter: QueryContainer[];
+	minimum_should_match: MinimumShouldMatch;
+	disable_coord: boolean;
+	Locked: boolean;
+}
+/**namespace:QueryDsl */
+/**custom_serialization*/
+interface MatchAllQuery {
+	norm_field: string;
+}
+/**namespace:QueryDsl.TermLevel.Term */
+/**custom_serialization*/
+interface TermQuery {
+	value: any;
+}
+/**namespace:QueryDsl.TermLevel.Wildcard */
+/**custom_serialization*/
+interface WildcardQuery {
+	/**custom_serialization */
+	rewrite: RewriteMultiTerm;
+}
+/**namespace:QueryDsl.TermLevel.Prefix */
+/**custom_serialization*/
+interface PrefixQuery {
+	/**custom_serialization */
+	rewrite: RewriteMultiTerm;
+}
+/**namespace:QueryDsl.Compound.Boosting */
+/**custom_serialization*/
+interface BoostingQuery {
+	positive: QueryContainer;
+	negative: QueryContainer;
+	negative_boost: double;
+}
+/**namespace:QueryDsl.TermLevel.Ids */
+/**custom_serialization*/
+interface IdsQuery {
+	types: Types;
+	values: Id[];
+}
+/**namespace:QueryDsl.Compound.Limit */
+/**custom_serialization*/
+interface LimitQuery {
+	limit: integer;
+}
+/**namespace:QueryDsl.Compound.ConstantScore */
+/**custom_serialization*/
+interface ConstantScoreQuery {
+	filter: QueryContainer;
+}
+/**namespace:QueryDsl.Compound.Dismax */
+/**custom_serialization*/
+interface DisMaxQuery {
+	tie_breaker: double;
+	queries: QueryContainer[];
+}
+/**namespace:QueryDsl.FullText.MultiMatch */
+/**custom_serialization*/
+interface MultiMatchQuery {
+	/**custom_serialization */
+	type: TextQueryType;
+	query: string;
+	analyzer: string;
+	/**custom_serialization */
+	fuzzy_rewrite: RewriteMultiTerm;
+	fuzziness: Fuzziness;
+	cutoff_frequency: double;
+	prefix_length: integer;
+	max_expansions: integer;
+	slop: integer;
+	lenient: boolean;
+	use_dis_max: boolean;
+	tie_breaker: double;
+	minimum_should_match: MinimumShouldMatch;
+	operator: Operator;
+	fields: Field[];
+	zero_terms_query: ZeroTermsQuery;
+}
+/**namespace:QueryDsl.FullText.Match */
+/**custom_serialization*/
+interface MatchQuery {
+	type: string;
+	query: string;
+	analyzer: string;
+	/**custom_serialization */
+	fuzzy_rewrite: RewriteMultiTerm;
+	fuzziness: Fuzziness;
+	fuzzy_transpositions: boolean;
+	cutoff_frequency: double;
+	prefix_length: integer;
+	max_expansions: integer;
+	slop: integer;
+	lenient: boolean;
+	minimum_should_match: MinimumShouldMatch;
+	operator: Operator;
+	zero_terms_query: ZeroTermsQuery;
+}
+/**namespace:QueryDsl.TermLevel.Fuzzy */
+/**custom_serialization*/
+interface FuzzyQuery {
+	prefix_length: integer;
+	rewrite: RewriteMultiTerm;
+	max_expansions: integer;
+	transpositions: boolean;
+}
+/**namespace:QueryDsl.Geo.Shape */
+/**custom_serialization*/
+interface GeoShapeQuery {
+}
+/**namespace:QueryDsl.FullText.CommonTerms */
+/**custom_serialization*/
+interface CommonTermsQuery {
+	query: string;
+	cutoff_frequency: double;
+	/**custom_serialization */
+	low_freq_operator: Operator;
+	/**custom_serialization */
+	high_freq_operator: Operator;
+	minimum_should_match: MinimumShouldMatch;
+	analyzer: string;
+	disable_coord: boolean;
+}
+/**namespace:QueryDsl.TermLevel.Terms */
+/**custom_serialization*/
+interface TermsQuery {
+	MinimumShouldMatch: MinimumShouldMatch;
+	DisableCoord: boolean;
+	Terms: any[];
+	TermsLookup: FieldLookup;
+}
+/**namespace:QueryDsl.Abstractions.FieldLookup */
+/**custom_serialization*/
+interface FieldLookup {
+	index: IndexName;
+	type: TypeName;
+	id: Id;
+	path: Field;
+}
+/**namespace:QueryDsl.TermLevel.Range */
+/**custom_serialization*/
+interface RangeQuery {
+}
+/**namespace:QueryDsl.TermLevel.Regexp */
+/**custom_serialization*/
+interface RegexpQuery {
+	value: string;
+	flags: string;
+	max_determinized_states: integer;
+}
+/**namespace:QueryDsl.Joining.HasChild */
+/**custom_serialization*/
+interface HasChildQuery {
+	type: TypeName;
+	score_mode: ChildScoreMode;
+	min_children: integer;
+	max_children: integer;
+	query: QueryContainer;
+	inner_hits: InnerHits;
+}
+/**namespace:Search.Search.InnerHits */
+/**custom_serialization*/
+interface InnerHits {
+	name: string;
+	from: integer;
+	size: integer;
+	sort: Sort[];
+	highlight: Highlight;
+	explain: boolean;
+	_source: SourceFilter;
+	version: boolean;
+	fielddata_fields: Field[];
+	script_fields: Map<string, ScriptField>;
+}
+/**namespace:QueryDsl.Joining.HasParent */
+/**custom_serialization*/
+interface HasParentQuery {
+	type: TypeName;
+	score_mode: ParentScoreMode;
+	query: QueryContainer;
+	inner_hits: InnerHits;
+}
+/**namespace:QueryDsl.Span.Term */
+/**custom_serialization*/
+interface SpanTermQuery {
+}
+/**namespace:QueryDsl.FullText.SimpleQueryString */
+/**custom_serialization*/
+interface SimpleQueryStringQuery {
+	fields: Field[];
+	query: string;
+	analyzer: string;
+	default_operator: Operator;
+	flags: SimpleQueryStringFlags;
+	locale: string;
+	lowercase_expanded_terms: boolean;
+	lenient: boolean;
+	analyze_wildcard: boolean;
+	minimum_should_match: MinimumShouldMatch;
+}
+/**namespace:QueryDsl.FullText.QueryString */
+/**custom_serialization*/
+interface QueryStringQuery {
+	query: string;
+	default_field: Field;
+	default_operator: Operator;
+	analyzer: string;
+	quote_analyzer: string;
+	allow_leading_wildcard: boolean;
+	lowercase_expanded_terms: boolean;
+	enable_position_increments: boolean;
+	fuzzy_max_expansions: integer;
+	fuziness: Fuzziness;
+	fuzzy_prefix_length: integer;
+	phrase_slop: double;
+	analyze_wildcard: boolean;
+	auto_generate_phrase_queries: boolean;
+	max_determinized_states: integer;
+	minimum_should_match: MinimumShouldMatch;
+	lenient: boolean;
+	locale: string;
+	time_zone: string;
+	fields: Field[];
+	use_dis_max: boolean;
+	tie_breaker: double;
+	rewrite: RewriteMultiTerm;
+	fuzzy_rewrite: RewriteMultiTerm;
+	quote_field_suffix: string;
+	escape: boolean;
+}
+/**namespace:QueryDsl.Specialized.MoreLikeThis */
+/**custom_serialization*/
+interface MoreLikeThisQuery {
+	fields: Field[];
+	like: Like[];
+	unlike: Like[];
+	max_query_terms: integer;
+	min_term_freq: integer;
+	min_doc_freq: integer;
+	max_doc_freq: integer;
+	min_word_len: integer;
+	max_word_len: integer;
+	stop_words: StopWords;
+	analyzer: string;
+	minimum_should_match: MinimumShouldMatch;
+	boost_terms: double;
+	include: boolean;
+}
+/**namespace:QueryDsl.Specialized.MoreLikeThis.Like */
+/**custom_serialization*/
+interface LikeDocument {
+	_index: IndexName;
+	_type: TypeName;
+	_id: Id;
+	fields: Field[];
+	_routing: string;
+	doc: any;
+	per_field_analyzer: Map<Field, string>;
+	CanBeFlattened: boolean;
+}
+/**namespace:QueryDsl.Span.First */
+/**custom_serialization*/
+interface SpanFirstQuery {
+	match: SpanQuery;
+	end: integer;
+}
+/**namespace:QueryDsl.Span */
+/**custom_serialization*/
+interface SpanQuery {
+	span_term: SpanTermQuery;
+	span_first: SpanFirstQuery;
+	span_near: SpanNearQuery;
+	span_or: SpanOrQuery;
+	span_not: SpanNotQuery;
+	span_containing: SpanContainingQuery;
+	span_within: SpanWithinQuery;
+	span_multi: SpanMultiTermQuery;
+}
+/**namespace:QueryDsl.Span.Near */
+/**custom_serialization*/
+interface SpanNearQuery {
+	clauses: SpanQuery[];
+	slop: integer;
+	in_order: boolean;
+	collect_payloads: boolean;
+}
+/**namespace:QueryDsl.Span.Or */
+/**custom_serialization*/
+interface SpanOrQuery {
+	clauses: SpanQuery[];
+}
+/**namespace:QueryDsl.Span.Not */
+/**custom_serialization*/
+interface SpanNotQuery {
+	include: SpanQuery;
+	exclude: SpanQuery;
+	pre: integer;
+	post: integer;
+	dist: integer;
+}
+/**namespace:QueryDsl.Span.Containing */
+/**custom_serialization*/
+interface SpanContainingQuery {
+	little: SpanQuery;
+	big: SpanQuery;
+}
+/**namespace:QueryDsl.Span.Within */
+/**custom_serialization*/
+interface SpanWithinQuery {
+	little: SpanQuery;
+	big: SpanQuery;
+}
+/**namespace:QueryDsl.Span.MultiTerm */
+/**custom_serialization*/
+interface SpanMultiTermQuery {
+	match: QueryContainer;
+}
+/**namespace:QueryDsl.Joining.Nested */
+/**custom_serialization*/
+interface NestedQuery {
+	score_mode: NestedScoreMode;
+	query: QueryContainer;
+	path: Field;
+	inner_hits: InnerHits;
+}
+/**namespace:QueryDsl.Compound.Indices */
+/**custom_serialization*/
+interface IndicesQuery {
+	/**custom_serialization */
+	indices: Indices;
+	query: QueryContainer;
+	/**custom_serialization */
+	no_match_query: QueryContainer;
+}
+/**namespace:QueryDsl.Compound.FunctionScore */
+/**custom_serialization*/
+interface FunctionScoreQuery {
+	query: QueryContainer;
+	functions: ScoreFunction[];
+	max_boost: double;
+	score_mode: FunctionScoreMode;
+	boost_mode: FunctionBoostMode;
+	min_score: double;
+}
+/**namespace:QueryDsl.Compound.FunctionScore.Functions */
+interface ScoreFunction {
+	filter: QueryContainer;
+	weight: double;
+}
+/**namespace:QueryDsl.Specialized.Template */
+/**custom_serialization*/
+interface TemplateQuery {
+	file: string;
+	inline: string;
+	id: Id;
+	params: Map<string, any>;
+}
+/**namespace:QueryDsl.Geo.BoundingBox */
+/**custom_serialization*/
+interface GeoBoundingBoxQuery {
+	BoundingBox: BoundingBox;
+	type: GeoExecution;
+	coerce: boolean;
+	ignore_malformed: boolean;
+	validation_method: GeoValidationMethod;
+}
+/**namespace:QueryDsl.Geo.BoundingBox */
+/**custom_serialization*/
+interface BoundingBox {
+	top_left: GeoLocation;
+	bottom_right: GeoLocation;
+}
+/**namespace:QueryDsl.Geo.Distance */
+/**custom_serialization*/
+interface GeoDistanceQuery {
+	Location: GeoLocation;
+	distance: Distance;
+	optimize_bbox: GeoOptimizeBBox;
+	distance_type: GeoDistanceType;
+	coerce: boolean;
+	ignore_malformed: boolean;
+	validation_method: GeoValidationMethod;
+}
+/**namespace:QueryDsl.Geo.Polygon */
+/**custom_serialization*/
+interface GeoPolygonQuery {
+	Points: GeoLocation[];
+	coerce: boolean;
+	ignore_malformed: boolean;
+	validation_method: GeoValidationMethod;
+}
+/**namespace:QueryDsl.Geo.DistanceRange */
+/**custom_serialization*/
+interface GeoDistanceRangeQuery {
+	Location: GeoLocation;
+	gte: Distance;
+	lte: Distance;
+	gt: Distance;
+	lt: Distance;
+	distance_type: GeoDistanceType;
+	optimize_bbox: GeoOptimizeBBox;
+	coerce: boolean;
+	ignore_malformed: boolean;
+	validation_method: GeoValidationMethod;
+}
+/**namespace:QueryDsl.Geo.HashCell */
+/**custom_serialization*/
+interface GeoHashCellQuery {
+	Location: GeoLocation;
+	precision: Union<integer, Distance>;
+	neighbors: boolean;
+}
+/**namespace:QueryDsl.Specialized.Script */
+/**custom_serialization*/
+interface ScriptQuery {
+	inline: string;
+	id: Id;
+	file: string;
+	/**custom_serialization */
+	params: Map<string, any>;
+	lang: string;
+}
+/**namespace:QueryDsl.TermLevel.Exists */
+/**custom_serialization*/
+interface ExistsQuery {
+	field: Field;
+}
+/**namespace:QueryDsl.TermLevel.Missing */
+/**custom_serialization*/
+interface MissingQuery {
+	field: Field;
+	existence: boolean;
+	null_value: boolean;
+}
+/**namespace:QueryDsl.TermLevel.Type */
+/**custom_serialization*/
+interface TypeQuery {
+	value: TypeName;
+}
+/**namespace:QueryDsl.Compound.Filtered */
+/**custom_serialization*/
+interface FilteredQuery {
+	query: QueryContainer;
+	filter: QueryContainer;
+}
+/**namespace:QueryDsl.Compound.And */
+/**custom_serialization*/
+interface AndQuery {
+	filters: QueryContainer[];
+}
+/**namespace:QueryDsl.Compound.Or */
+/**custom_serialization*/
+interface OrQuery {
+	filters: QueryContainer[];
+}
+/**namespace:QueryDsl.Compound.Not */
+/**custom_serialization*/
+interface NotQuery {
+	filters: QueryContainer[];
+}
+/**namespace:Aggregations.Bucket.GeoDistance */
+interface GeoDistanceAggregation {
+	field: Field;
+	origin: GeoLocation;
+	unit: DistanceUnit;
+	distance_type: GeoDistanceType;
+	ranges: Range[];
+}
+/**namespace:CommonOptions.Range */
+/**custom_serialization*/
+interface Range {
+	from: double;
+	to: double;
+	key: string;
+}
+/**namespace:Aggregations.Bucket.GeoHashGrid */
+interface GeoHashGridAggregation {
+	field: Field;
+	size: integer;
+	shard_size: integer;
+	precision: GeoHashPrecision;
+}
+/**namespace:Aggregations.Metric.GeoBounds */
+interface GeoBoundsAggregation {
+	wrap_longitude: boolean;
+}
+/**namespace:Aggregations.Bucket.Histogram */
+interface HistogramAggregation {
+	field: Field;
+	script: Script;
+	interval: double;
+	min_doc_count: integer;
+	order: HistogramOrder;
+	extended_bounds: ExtendedBounds<double>;
+	pre_offset: long;
+	post_offset: long;
+	missing: double;
+}
+/**namespace:Aggregations.Bucket.Global */
+interface GlobalAggregation {
+}
+/**namespace:Aggregations.Bucket.IpRange */
+interface IpRangeAggregation {
+	field: Field;
+	ranges: IpRange[];
+}
+/**namespace:Aggregations.Bucket.IpRange */
+/**custom_serialization*/
+interface IpRange {
+	from: string;
+	to: string;
+	mask: string;
+}
+/**namespace:Aggregations.Metric.Max */
+interface MaxAggregation {
+}
+/**namespace:Aggregations.Metric.Min */
+interface MinAggregation {
+}
+/**namespace:Aggregations.Metric.Cardinality */
+interface CardinalityAggregation {
+	precision_threshold: integer;
+	rehash: boolean;
+}
+/**namespace:Aggregations.Bucket.Missing */
+interface MissingAggregation {
+	field: Field;
+}
+/**namespace:Aggregations.Bucket.Nested */
+interface NestedAggregation {
+	path: Field;
+}
+/**namespace:Aggregations.Bucket.ReverseNested */
+interface ReverseNestedAggregation {
+	path: Field;
+}
+/**namespace:Aggregations.Bucket.Range */
+interface RangeAggregation {
+	field: Field;
+	script: Script;
+	ranges: Range[];
+}
+/**namespace:Aggregations.Metric.Stats */
+interface StatsAggregator {
+}
+/**namespace:Aggregations.Metric.Sum */
+interface SumAggregation {
+}
+/**namespace:Aggregations.Bucket.Terms */
+interface TermsAggregation {
+	field: Field;
+	script: Script;
+	size: integer;
+	shard_size: integer;
+	min_doc_count: integer;
+	execution_hint: TermsAggregationExecutionHint;
+	order: TermsOrder[];
+	include: TermsIncludeExclude;
+	exclude: TermsIncludeExclude;
+	collect_mode: TermsAggregationCollectMode;
+	show_term_doc_error_count: boolean;
+	missing: string;
+}
+/**namespace:Aggregations.Bucket.SignificantTerms */
+interface SignificantTermsAggregation {
+	field: Field;
+	size: integer;
+	shard_size: integer;
+	min_doc_count: integer;
+	execution_hint: TermsAggregationExecutionHint;
+	include: Map<string, string>;
+	exclude: Map<string, string>;
+	mutual_information: MutualInformationHeuristic;
+	chi_square: ChiSquareHeuristic;
+	gnd: GoogleNormalizedDistanceHeuristic;
+	percentage: PercentageScoreHeuristic;
+	script_heuristic: ScriptedHeuristic;
+	background_filter: QueryContainer;
+}
+/**namespace:Aggregations.Bucket.SignificantTerms.Heuristics */
+/**custom_serialization*/
+interface MutualInformationHeuristic {
+	include_negatives: boolean;
+	background_is_superset: boolean;
+}
+/**namespace:Aggregations.Bucket.SignificantTerms.Heuristics */
+/**custom_serialization*/
+interface ChiSquareHeuristic {
+	include_negatives: boolean;
+	background_is_superset: boolean;
+}
+/**namespace:Aggregations.Bucket.SignificantTerms.Heuristics */
+/**custom_serialization*/
+interface GoogleNormalizedDistanceHeuristic {
+	background_is_superset: boolean;
+}
+/**namespace:Aggregations.Bucket.SignificantTerms.Heuristics */
+/**custom_serialization*/
+interface PercentageScoreHeuristic {
+}
+/**namespace:Aggregations.Bucket.SignificantTerms.Heuristics */
+/**custom_serialization*/
+interface ScriptedHeuristic {
+	script: Script;
+}
+/**namespace:Aggregations.Metric.ValueCount */
+interface ValueCountAggregation {
+}
+/**namespace:Aggregations.Metric.PercentileRanks */
+interface PercentileRanksAggregation {
+	Values: double[];
+	Method: PercentilesMethod;
+}
+/**namespace:Aggregations.Metric.TopHits */
+interface TopHitsAggregation {
+	from: integer;
+	size: integer;
+	sort: Sort[];
+	_source: SourceFilter;
+	highlight: Highlight;
+	explain: boolean;
+	/**custom_serialization */
+	script_fields: Map<string, ScriptField>;
+	fielddata_fields: Field[];
+	version: boolean;
+}
+/**namespace:Aggregations.Bucket.Children */
+interface ChildrenAggregation {
+	type: TypeName;
+}
+/**namespace:Aggregations.Metric.ScriptedMetric */
+interface ScriptedMetricAggregation {
+	init_script: Script;
+	map_script: Script;
+	combine_script: Script;
+	reduce_script: Script;
+	params: Map<string, any>;
+}
+/**namespace:Aggregations.Pipeline.AverageBucket */
+interface AverageBucketAggregation {
+}
+/**namespace:Aggregations.Pipeline.Derivative */
+interface DerivativeAggregation {
+}
+/**namespace:Aggregations.Pipeline.MaxBucket */
+interface MaxBucketAggregation {
+}
+/**namespace:Aggregations.Pipeline.MinBucket */
+interface MinBucketAggregation {
+}
+/**namespace:Aggregations.Pipeline.SumBucket */
+interface SumBucketAggregation {
+}
+/**namespace:Aggregations.Pipeline.MovingAverage */
+interface MovingAverageAggregation {
+	Model: MovingAverageModel;
+	window: integer;
+	minimize: boolean;
+	predict: integer;
+}
+/**namespace:Aggregations.Pipeline.MovingAverage.Models */
+interface MovingAverageModel {
+	Name: string;
+}
+/**namespace:Aggregations.Pipeline.CumulativeSum */
+interface CumulativeSumAggregation {
+}
+/**namespace:Aggregations.Pipeline.SerialDifferencing */
+interface SerialDifferencingAggregation {
+	lag: integer;
+}
+/**namespace:Aggregations.Pipeline.BucketScript */
+interface BucketScriptAggregation {
+	script: Script;
+}
+/**namespace:Aggregations.Pipeline.BucketSelector */
+interface BucketSelectorAggregation {
+	script: Script;
+}
+/**namespace:Aggregations.Bucket.Sampler */
+interface SamplerAggregation {
+	shard_size: integer;
+	field: Field;
+	max_docs_per_value: integer;
+	script: Script;
+	execution_hint: SamplerAggregationExecutionHint;
+}
+/**namespace:Search.Search.InnerHits */
+/**custom_serialization*/
+interface InnerHitsContainer {
+	type: Map<TypeName, GlobalInnerHit>;
+	path: Map<Field, GlobalInnerHit>;
+}
+/**namespace:Search.Search.InnerHits */
+/**custom_serialization*/
+interface GlobalInnerHit {
+	query: QueryContainer;
+	inner_hits: Map<string, InnerHitsContainer>;
+}
+/**namespace:Indices.AliasManagement */
+/**custom_serialization*/
+interface Alias {
+	filter: QueryContainer;
+	routing: string;
+	index_routing: string;
+	search_routing: string;
+}
+/**namespace:Document.Multiple.Bulk.BulkOperation */
+interface BulkOperation {
+	Operation: string;
+	_index: IndexName;
+	_type: TypeName;
+	_id: Id;
+	_version: long;
+	/**custom_serialization */
+	_version_type: VersionType;
+	_routing: string;
+	_parent: Id;
+	_timestamp: long;
+	_ttl: Time;
+	_retry_on_conflict: integer;
+}
+/**namespace:Document.Multiple.MultiGet.Request */
+/**custom_serialization*/
+interface MultiGetOperation {
+	_index: IndexName;
+	_type: TypeName;
+	_id: Id;
+	fields: Field[];
+	_routing: string;
+	_source: Union<boolean, SourceFilter>;
+	CanBeFlattened: boolean;
+}
+/**namespace:Document.Multiple.MultiGet.Response */
+interface MultiGetHit<T> {
+	Source: T;
+	Index: string;
+	Found: boolean;
+	Type: string;
+	Version: long;
+	Id: string;
+}
+/**namespace:Document.Multiple.MultiTermVectors */
+interface MultiTermVectorOperation {
+	_index: IndexName;
+	_type: TypeName;
+	_id: Id;
+	doc: any;
+	fields: Field[];
+	offsets: boolean;
+	payloads: boolean;
+	positions: boolean;
+	term_statistics: boolean;
+	field_statistics: boolean;
+}
+/**namespace:Indices.AliasManagement.Alias.Actions */
+interface AliasAction {
+}
+/**namespace:IndexModules.Similarity */
+interface Similarity {
+	type: string;
+}
+/**namespace:IndexModules.IndexSettings */
+/**custom_serialization*/
+interface IndexState {
+	settings: Map<string, any>;
+	aliases: Map<IndexName, Alias>;
+	warmers: Map<TypeName, Warmer>;
+	mappings: Map<TypeName, TypeMapping>;
+	similarity: Map<string, Similarity>;
+}
+/**namespace:Mapping.MetaFields */
+interface FieldMapping {
+}
+/**namespace:Modules.Indices.Fielddata.Numeric */
+interface NumericFielddata {
+	format: NumericFielddataFormat;
+}
+/**namespace:Mapping.Norms */
+/**custom_serialization*/
+interface Norms {
+	enabled: boolean;
+	/**custom_serialization */
+	loading: NormsLoading;
+}
+/**namespace:Modules.Indices.Fielddata.String */
+interface StringFielddata {
+	format: StringFielddataFormat;
+}
+/**namespace:Modules.Indices.Fielddata.GeoPoint */
+interface GeoPointFielddata {
+	precision: Distance;
+	format: GeoPointFielddataFormat;
+}
+/**namespace:Mapping.Types.Core.String */
+interface StringProperty {
+	index: FieldIndexOption;
+	term_vector: TermVectorOption;
+	boost: double;
+	null_value: string;
+	norms: Norms;
+	index_options: IndexOptions;
+	analyzer: string;
+	search_analyzer: string;
+	include_in_all: boolean;
+	ignore_above: integer;
+	position_offset_gap: integer;
+	fielddata: StringFielddata;
+}
+/**namespace:Mapping.Types.Core.Number */
+interface NumberProperty {
+	index: NonStringIndexOption;
+	boost: double;
+	null_value: double;
+	include_in_all: boolean;
+	precision_step: integer;
+	ignore_malformed: boolean;
+	coerce: boolean;
+	fielddata: NumericFielddata;
+}
+/**namespace:Mapping.Types.Core.Date */
+interface DateProperty {
+	index: NonStringIndexOption;
+	boost: double;
+	null_value: Date;
+	include_in_all: boolean;
+	precision_step: integer;
+	ignore_malformed: boolean;
+	format: string;
+	numeric_resolution: NumericResolutionUnit;
+	fielddata: NumericFielddata;
+}
+/**namespace:Search.Suggesters.ContextSuggester */
+/**custom_serialization*/
+interface SuggestContext {
+	type: string;
+	path: Field;
+}
+/**namespace:Modules.Indices.CircuitBreaker */
+interface CircuitBreakerSettings {
+	TotalLimit: string;
+	FielddataLimit: string;
+	FielddataOverhead: float;
+	RequestLimit: string;
+	RequestOverhead: float;
+}
+/**namespace:Modules.Indices.Recovery */
+interface IndicesRecoverySettings {
+	ConcurrentStreams: integer;
+	ConcurrentSmallFileStreams: integer;
+	FileChunkSize: string;
+	TranslogOperations: integer;
+	TranslogSize: string;
+	Compress: boolean;
+	MaxBytesPerSecond: string;
+}
+/**namespace:Modules.SnapshotAndRestore.Repositories */
+interface SnapshotRepository {
+	type: string;
+}
+/**namespace:Indices.IndexSettings.UpdateIndexSettings */
+/**custom_serialization*/
+interface UpdateIndexSettingsRequest {
+	IndexSettings: Map<string, any>;
+	Index: Indices;
+}
+/**namespace:Search.FieldStats */
+interface IndexConstraint {
+	min_value: IndexConstraintComparison;
+	max_value: IndexConstraintComparison;
+}
+/**namespace:Search.FieldStats */
+interface IndexConstraintComparison {
+	gte: string;
+	gt: string;
+	lte: string;
+	lt: string;
+	format: string;
+}
+/**namespace:CommonAbstractions.Response */
+interface Response {
+	ServerError: ServerError;
+}
+/**namespace:Search.Percolator.MultiPercolate */
+interface PercolateOperation {
+	MultiPercolateName: string;
+	size: integer;
+	track_scores: boolean;
+	sort: Sort[];
+	highlight: Highlight;
+	query: QueryContainer;
+	filter: QueryContainer;
+	aggs: Map<string, AggregationContainer>;
+}
+/**namespace:CommonAbstractions.LazyDocument */
+/**custom_serialization*/
+interface LazyDocument {
+}
+/**namespace:Search.Search.Hits */
+interface Hit<T> {
+	Fields: Map<string, any>;
+	Source: T;
+	Index: string;
+	Type: string;
+	Version: long;
+	Score: double;
+	Id: string;
+	Parent: string;
+	Routing: string;
+	Timestamp: long;
+	Ttl: long;
+	Sorts: any[];
+	Highlights: Map<string, HighlightHit>;
+	Explanation: Explanation;
+	MatchedQueries: string[];
+	InnerHits: Map<string, InnerHitsResult>;
+}
+/**namespace:Aggregations */
+interface Aggregate {
+	Meta: Map<string, any>;
+}
+/**namespace:Analysis.Analyzers */
+interface AnalyzerBase {
+	Version: string;
+	Type: string;
+}
+/**namespace:Analysis.Analyzers */
+interface CustomAnalyzer extends AnalyzerBase {
+	tokenizer: string;
+	filter: string[];
+	char_filter: string[];
+	position_offset_gap: integer;
+}
+/**namespace:Analysis.Analyzers */
+interface KeywordAnalyzer extends AnalyzerBase {
+}
+/**namespace:Analysis.Analyzers */
+interface LanguageAnalyzer extends AnalyzerBase {
+	Type: string;
+	stopwords: StopWords;
+	stem_exclusion: string[];
+	Language: Language;
+	stopwords_path: string;
+}
+/**namespace:Analysis */
+/**custom_serialization*/
+interface StopWords extends Union<string, string[]> {
+}
+/**namespace:CommonAbstractions.Union */
+/**custom_serialization*/
+interface Union<TFirst, TSecond> {
+}
+/**namespace:Analysis.Analyzers */
+interface PatternAnalyzer extends AnalyzerBase {
+	lowercase: boolean;
+	pattern: string;
+	flags: string;
+	stopwords: StopWords;
+}
+/**namespace:Analysis.Analyzers */
+interface SimpleAnalyzer extends AnalyzerBase {
+}
+/**namespace:Analysis.Analyzers */
+interface SnowballAnalyzer extends AnalyzerBase {
+	language: SnowballLanguage;
+	stopwords: StopWords;
+}
+/**namespace:Analysis.Analyzers */
+interface StandardAnalyzer extends AnalyzerBase {
+	stopwords: StopWords;
+	max_token_length: integer;
+}
+/**namespace:Analysis.Analyzers */
+interface StopAnalyzer extends AnalyzerBase {
+	stopwords: StopWords;
+	stopwords_path: string;
+}
+/**namespace:Analysis.Analyzers */
+interface WhitespaceAnalyzer extends AnalyzerBase {
+}
+/**namespace:Analysis.CharFilters */
+interface CharFilterBase {
+	Version: string;
+	Type: string;
+}
+/**namespace:Analysis.CharFilters */
+interface HtmlStripCharFilter extends CharFilterBase {
+}
+/**namespace:Analysis.CharFilters */
+interface MappingCharFilter extends CharFilterBase {
+	mappings: string[];
+	mappings_path: string;
+}
+/**namespace:Analysis.CharFilters */
+interface PatternReplaceCharFilter extends CharFilterBase {
+	pattern: string;
+	replacement: string;
+}
+/**namespace:Analysis.TokenFilters */
+interface AsciiFoldingTokenFilter extends TokenFilterBase {
+	PreserveOriginal: boolean;
+}
+/**namespace:Analysis.TokenFilters */
+interface TokenFilterBase {
+	version: string;
+	type: string;
+}
+/**namespace:Analysis.TokenFilters */
+interface CommonGramsTokenFilter extends TokenFilterBase {
+	common_words: string[];
+	common_words_path: string;
+	ignore_case: boolean;
+	query_mode: boolean;
+}
+/**namespace:Analysis.TokenFilters */
+interface ElisionTokenFilter extends TokenFilterBase {
+	articles: string[];
+}
+/**namespace:Analysis.TokenFilters */
+interface HunspellTokenFilter extends TokenFilterBase {
+	ignore_case: boolean;
+	locale: string;
+	dictionary: string;
+	dedup: boolean;
+	longest_only: boolean;
+}
+/**namespace:Analysis.TokenFilters */
+interface KeepTypesTokenFilter extends TokenFilterBase {
+	Types: string[];
+}
+/**namespace:Analysis.TokenFilters */
+interface KeepWordsTokenFilter extends TokenFilterBase {
+	keep_words: string[];
+	keep_words_path: string;
+	keep_words_case: boolean;
+}
+/**namespace:Analysis.TokenFilters */
+interface KeywordMarkerTokenFilter extends TokenFilterBase {
+	keywords: string[];
+	keywords_path: string;
+	ignore_case: boolean;
+}
+/**namespace:Analysis.TokenFilters */
+interface KStemTokenFilter extends TokenFilterBase {
+}
+/**namespace:Analysis.TokenFilters */
+interface LengthTokenFilter extends TokenFilterBase {
+	min: integer;
+	max: integer;
+}
+/**namespace:Analysis.TokenFilters */
+interface LimitTokenCountTokenFilter extends TokenFilterBase {
+	max_token_count: integer;
+	consume_all_tokens: boolean;
+}
+/**namespace:Analysis.TokenFilters */
+interface LowercaseTokenFilter extends TokenFilterBase {
+	language: string;
+}
+/**namespace:Analysis.TokenFilters */
+interface NGramTokenFilter extends TokenFilterBase {
+	min_gram: integer;
+	max_gram: integer;
+}
+/**namespace:Analysis.TokenFilters */
+interface PatternCaptureTokenFilter extends TokenFilterBase {
+	patterns: string[];
+	preserve_original: boolean;
+}
+/**namespace:Analysis.TokenFilters */
+interface PatternReplaceTokenFilter extends TokenFilterBase {
+	pattern: string;
+	replacement: string;
+}
+/**namespace:Analysis.TokenFilters */
+interface PorterStemTokenFilter extends TokenFilterBase {
+}
+/**namespace:Analysis.TokenFilters */
+interface ReverseTokenFilter extends TokenFilterBase {
+}
+/**namespace:Analysis.TokenFilters */
+interface SnowballTokenFilter extends TokenFilterBase {
+	language: SnowballLanguage;
+}
+/**namespace:Analysis.TokenFilters */
+interface StandardTokenFilter extends TokenFilterBase {
+}
+/**namespace:Analysis.TokenFilters */
+interface StemmerOverrideTokenFilter extends TokenFilterBase {
+	rules: string[];
+	rules_path: string;
+}
+/**namespace:Analysis.TokenFilters */
+interface StemmerTokenFilter extends TokenFilterBase {
+	language: string;
+}
+/**namespace:Analysis.TokenFilters */
+interface TrimTokenFilter extends TokenFilterBase {
+}
+/**namespace:Analysis.TokenFilters */
+interface TruncateTokenFilter extends TokenFilterBase {
+	length: integer;
+}
+/**namespace:Analysis.TokenFilters */
+interface UniqueTokenFilter extends TokenFilterBase {
+	only_on_same_position: boolean;
+}
+/**namespace:Analysis.TokenFilters */
+interface UppercaseTokenFilter extends TokenFilterBase {
+}
+/**namespace:Analysis.TokenFilters.CompoundWord */
+interface CompoundWordTokenFilterBase extends TokenFilterBase {
+	WordList: string[];
+	WordListPath: string;
+	MinWordSize: integer;
+	MinSubwordSize: integer;
+	MaxSubwordSize: integer;
+	OnlyLongestMatch: boolean;
+	HyphenationPatternsPath: string;
+}
+/**namespace:Analysis.TokenFilters.CompoundWord */
+interface DictionaryDecompounderTokenFilter extends CompoundWordTokenFilterBase {
+}
+/**namespace:Analysis.TokenFilters.CompoundWord */
+interface HyphenationDecompounderTokenFilter extends CompoundWordTokenFilterBase {
+}
+/**namespace:Analysis.TokenFilters.DelimitedPayload */
+interface DelimitedPayloadTokenFilter extends TokenFilterBase {
+	delimiter: string;
+	encoding: DelimitedPayloadEncoding;
+}
+/**namespace:Analysis.TokenFilters.EdgeNGram */
+interface EdgeNGramTokenFilter extends TokenFilterBase {
+	min_gram: integer;
+	max_gram: integer;
+	side: EdgeNGramSide;
+}
+/**namespace:Analysis.TokenFilters.Phonetic */
+interface PhoneticTokenFilter extends TokenFilterBase {
+	encoder: PhoneticEncoder;
+	replace: boolean;
+}
+/**namespace:Analysis.TokenFilters.Shingle */
+interface ShingleTokenFilter extends TokenFilterBase {
+	min_shingle_size: integer;
+	max_shingle_size: integer;
+	output_unigrams: boolean;
+	output_unigrams_if_no_shingles: boolean;
+	token_separator: string;
+	filler_token: string;
+}
+/**namespace:Analysis.TokenFilters.Stop */
+interface StopTokenFilter extends TokenFilterBase {
+	stopwords: StopWords;
+	ignore_case: boolean;
+	stopwords_path: string;
+	remove_trailing: boolean;
+}
+/**namespace:Analysis.TokenFilters.Synonym */
+interface SynonymTokenFilter extends TokenFilterBase {
+	synonyms_path: string;
+	format: SynonymFormat;
+	synonyms: string[];
+	ignore_case: boolean;
+	expand: boolean;
+	tokenizer: string;
+}
+/**namespace:Analysis.TokenFilters.WordDelimiter */
+interface WordDelimiterTokenFilter extends TokenFilterBase {
+	generate_word_parts: boolean;
+	generate_number_parts: boolean;
+	catenate_words: boolean;
+	catenate_numbers: boolean;
+	catenate_all: boolean;
+	split_on_case_change: boolean;
+	preserve_original: boolean;
+	split_on_numerics: boolean;
+	stem_english_possessive: boolean;
+	protected_words: string[];
+	protected_words_path : string;
+	type_table: string[];
+	type_table_path: string;
+}
+/**namespace:Analysis.Tokenizers */
+interface KeywordTokenizer extends TokenizerBase {
+	buffer_size: integer;
+}
+/**namespace:Analysis.Tokenizers */
+interface TokenizerBase {
+	Version: string;
+	Type: string;
+}
+/**namespace:Analysis.Tokenizers */
+interface LetterTokenizer extends TokenizerBase {
+}
+/**namespace:Analysis.Tokenizers */
+interface LowercaseTokenizer extends TokenizerBase {
+}
+/**namespace:Analysis.Tokenizers */
+interface PathHierarchyTokenizer extends TokenizerBase {
+	delimiter: string;
+	replacement: string;
+	buffer_size: integer;
+	reverse: boolean;
+	skip: integer;
+}
+/**namespace:Analysis.Tokenizers */
+interface PatternTokenizer extends TokenizerBase {
+	pattern: string;
+	flags: string;
+	group: integer;
+}
+/**namespace:Analysis.Tokenizers */
+interface StandardTokenizer extends TokenizerBase {
+	max_token_length: integer;
+}
+/**namespace:Analysis.Tokenizers */
+interface UaxEmailUrlTokenizer extends TokenizerBase {
+	max_token_length: integer;
+}
+/**namespace:Analysis.Tokenizers */
+interface WhitespaceTokenizer extends TokenizerBase {
+}
+/**namespace:Analysis.Tokenizers.NGram */
+interface EdgeNGramTokenizer extends TokenizerBase {
+	min_gram: integer;
+	max_gram: integer;
+	token_chars: TokenChar[];
+}
+/**namespace:Analysis.Tokenizers.NGram */
+interface NGramTokenizer extends TokenizerBase {
+	min_gram: integer;
+	max_gram: integer;
+	token_chars: TokenChar[];
 }
 /**namespace:Cat */
 interface CatResponse<TCatRecord> extends Response {
@@ -523,9 +2405,6 @@ interface ClusterHealthResponse extends Response {
 	/**custom_serialization */
 	indices: Map<string, IndexHealthStats>;
 }
-/**namespace:DefaultLanguageConstruct */
-interface Response {
-}
 /**namespace:Cluster.ClusterHealth */
 interface IndexHealthStats {
 	status: string;
@@ -589,10 +2468,6 @@ interface ClusterRerouteRequest extends Request {
 	Source: string;
 	/**ambiguous_origin*/
 	FilterPath: string;
-}
-/**namespace:Cluster.ClusterReroute.Commands */
-interface ClusterRerouteCommand {
-	Name: string;
 }
 /**namespace:Cluster.ClusterReroute */
 interface ClusterRerouteResponse extends Response {
@@ -764,406 +2639,18 @@ interface TemplateMapping {
 interface TypeName {
 	Name: string;
 }
-/**namespace:Mapping */
-/**custom_serialization*/
-interface TypeMapping {
-	dynamic_date_formats: string[];
-	date_detection: boolean;
-	numeric_detection: boolean;
-	/**custom_serialization */
-	transform: MappingTransform[];
-	analyzer: string;
-	search_analyzer: string;
-	_source: SourceField;
-	_all: AllField;
-	_parent: ParentField;
-	_routing: RoutingField;
-	_index: IndexField;
-	_size: SizeField;
-	_timestamp: TimestampField;
-	_field_names: FieldNamesField;
-	_ttl: TtlField;
-	/**custom_serialization */
-	_meta: Map<string, any>;
-	dynamic_templates: Map<string, DynamicTemplate>;
-	dynamic: DynamicMapping;
-	properties: Map<PropertyName, Property>;
-}
-/**namespace:Mapping.Transform */
-/**custom_serialization*/
-interface MappingTransform {
-	script: string;
-	script_file: string;
-	params: Map<string, string>;
-	lang: string;
-}
-/**namespace:Mapping.MetaFields.Source */
-/**custom_serialization*/
-interface SourceField {
-	enabled: boolean;
-	compress: boolean;
-	compress_threshold: string;
-	includes: string[];
-	excludes: string[];
-}
-/**namespace:Mapping.MetaFields.All */
-/**custom_serialization*/
-interface AllField {
-	enabled: boolean;
-	store: boolean;
-	store_term_vectors: boolean;
-	store_term_vector_offsets: boolean;
-	store_term_vector_positions: boolean;
-	store_term_vector_payloads: boolean;
-	omit_norms: boolean;
-	analyzer: string;
-	search_analyzer: string;
-	similarity: string;
-}
-/**namespace:Mapping.MetaFields.Parent */
-/**custom_serialization*/
-interface ParentField {
-	type: TypeName;
-}
-/**namespace:Mapping.MetaFields.Routing */
-/**custom_serialization*/
-interface RoutingField {
-	required: boolean;
-}
-/**namespace:Mapping.MetaFields.Index */
-/**custom_serialization*/
-interface IndexField {
-	enabled: boolean;
-}
-/**namespace:Mapping.MetaFields.Size */
-/**custom_serialization*/
-interface SizeField {
-	enabled: boolean;
-}
-/**namespace:Mapping.MetaFields.Timestamp */
-/**custom_serialization*/
-interface TimestampField {
-	enabled: boolean;
-	path: Field;
-	format: string;
-	default: string;
-	ignore_missing: boolean;
-}
 /**namespace:CommonAbstractions.Infer.Field */
 interface Field {
 	Name: string;
 	Boost: double;
 }
-/**namespace:Mapping.MetaFields.FieldNames */
-/**custom_serialization*/
-interface FieldNamesField {
-	enabled: boolean;
-}
-/**namespace:Mapping.MetaFields.Ttl */
-/**custom_serialization*/
-interface TtlField {
-	enabled: boolean;
-	default: Time;
-}
-/**namespace:Mapping.DynamicTemplate */
-/**custom_serialization*/
-interface DynamicTemplate {
-	match: string;
-	unmatch: string;
-	match_mapping_type: string;
-	path_match: string;
-	path_unmatch: string;
-	mapping: Property;
-}
-/**namespace:Mapping.Types */
-interface Property {
-	Name: PropertyName;
-	type: TypeName;
-	index_name: string;
-	store: boolean;
-	doc_values: boolean;
-	fields: Map<PropertyName, Property>;
-	similarity: SimilarityOption;
-	copy_to: Field[];
-}
 /**namespace:CommonAbstractions.Infer.PropertyName */
 interface PropertyName {
 	Name: string;
 }
-/**namespace:Indices.Warmers */
-interface Warmer {
-	types: TypeName[];
-	source: SearchRequest;
-}
-/**namespace:Search.Search */
-/**custom_serialization*/
-interface SearchRequest {
-	timeout: string;
-	from: integer;
-	size: integer;
-	explain: boolean;
-	version: boolean;
-	track_scores: boolean;
-	min_score: double;
-	terminate_after: long;
-	/**custom_serialization */
-	indices_boost: Map<IndexName, double>;
-	sort: Sort[];
-	suggest: Map<string, SuggestBucket>;
-	highlight: Highlight;
-	rescore: Rescore;
-	fields: Field[];
-	fielddata_fields: Field[];
-	script_fields: Map<string, ScriptField>;
-	/**custom_serialization */
-	_source: SourceFilter;
-	aggs: Map<string, AggregationContainer>;
-	query: QueryContainer;
-	post_filter: QueryContainer;
-	inner_hits: Map<string, InnerHitsContainer>;
-	Preference: string;
-	Routing: string;
-	SearchType: SearchType;
-	IgnoreUnavalable: boolean;
-	Index: Indices;
-	Type: Types;
-}
 /**namespace:CommonAbstractions.Infer.IndexName */
 interface IndexName {
 	Name: string;
-}
-/**namespace:Search.Search.Sort */
-interface Sort {
-	SortKey: Field;
-	missing: string;
-	order: SortOrder;
-	mode: SortMode;
-	nested_filter: QueryContainer;
-	nested_path: Field;
-}
-/**namespace:QueryDsl.Abstractions.Container */
-/**custom_serialization*/
-interface QueryContainer {
-}
-/**namespace:Search.Suggesters */
-/**custom_serialization*/
-interface SuggestBucket {
-	text: string;
-	term: TermSuggester;
-	phrase: PhraseSuggester;
-	completion: CompletionSuggester;
-}
-/**namespace:Search.Suggesters.TermSuggester */
-/**custom_serialization*/
-interface TermSuggester {
-	prefix_len: integer;
-	/**custom_serialization */
-	suggest_mode: SuggestMode;
-	min_word_len: integer;
-	max_edits: integer;
-	max_inspections: integer;
-	min_doc_freq: double;
-	max_term_freq: double;
-}
-/**namespace:Search.Suggesters.PhraseSuggester */
-/**custom_serialization*/
-interface PhraseSuggester {
-	gram_size: integer;
-	real_word_error_likelihood: double;
-	confidence: double;
-	max_errors: double;
-	separator: string;
-	direct_generator: DirectGenerator[];
-	highlight: PhraseSuggestHighlight;
-	collate: PhraseSuggestCollate;
-}
-/**namespace:Search.Suggesters.PhraseSuggester */
-/**custom_serialization*/
-interface DirectGenerator {
-	field: Field;
-	size: integer;
-	prefix_len: integer;
-	/**custom_serialization */
-	suggest_mode: SuggestMode;
-	min_word_len: integer;
-	max_edits: integer;
-	max_inspections: double;
-	min_doc_freq: double;
-	max_term_freq: double;
-	pre_filter: string;
-	post_filter: string;
-}
-/**namespace:Search.Suggesters.PhraseSuggester */
-interface PhraseSuggestHighlight {
-	pre_tag: string;
-	post_tag: string;
-}
-/**namespace:Search.Suggesters.PhraseSuggester */
-/**custom_serialization*/
-interface PhraseSuggestCollate {
-	query: Script;
-	prune: boolean;
-}
-/**namespace:CommonOptions.Scripting */
-/**custom_serialization*/
-interface Script {
-	/**custom_serialization */
-	params: Map<string, any>;
-	lang: string;
-}
-/**namespace:Search.Suggesters.CompletionSuggester */
-/**custom_serialization*/
-interface CompletionSuggester {
-	fuzzy: FuzzySuggester;
-	context: Map<string, any>;
-}
-/**namespace:Search.Suggesters.CompletionSuggester */
-/**custom_serialization*/
-interface FuzzySuggester {
-	transpositions: boolean;
-	min_length: integer;
-	prefix_length: integer;
-	fuzziness: Fuzziness;
-	unicode_aware: boolean;
-}
-/**namespace:CommonOptions.Fuzziness */
-/**custom_serialization*/
-interface Fuzziness {
-	Auto: boolean;
-	EditDistance: integer;
-	Ratio: double;
-}
-/**namespace:Search.Search.Highlighting */
-/**custom_serialization*/
-interface Highlight {
-	pre_tags: string[];
-	post_tags: string[];
-	fragment_size: integer;
-	tags_schema: string;
-	number_of_fragments: integer;
-	fragment_offset: integer;
-	boundary_max_size: integer;
-	encoder: string;
-	order: string;
-	/**custom_serialization */
-	fields: Map<Field, HighlightField>;
-	require_field_match: boolean;
-	boundary_chars: string;
-}
-/**namespace:Search.Search.Highlighting */
-/**custom_serialization*/
-interface HighlightField {
-	Field: Field;
-	pre_tags: string[];
-	post_tags: string[];
-	fragment_size: integer;
-	no_match_size: integer;
-	number_of_fragments: integer;
-	fragment_offset: integer;
-	boundary_max_size: integer;
-	encoder: string;
-	order: string;
-	tags_schema: string;
-	require_field_match: boolean;
-	boundary_chars: string;
-	type: HighlighterType;
-	force_source: boolean;
-	matched_fields: Field[];
-	highlight_query: QueryContainer;
-}
-/**namespace:Search.Search.Rescoring */
-/**custom_serialization*/
-interface Rescore {
-	window_size: integer;
-	query: RescoreQuery;
-}
-/**namespace:Search.Search.Rescoring */
-/**custom_serialization*/
-interface RescoreQuery {
-	rescore_query: QueryContainer;
-	query_weight: double;
-	rescore_query_weight: double;
-	score_mode: ScoreMode;
-}
-/**namespace:CommonOptions.Scripting */
-/**custom_serialization*/
-interface ScriptField {
-	script: Script;
-}
-/**namespace:Search.Search.SourceFiltering */
-/**custom_serialization*/
-interface SourceFilter {
-	include: Field[];
-	exclude: Field[];
-}
-/**namespace:Aggregations */
-/**custom_serialization*/
-interface AggregationContainer {
-	/**custom_serialization */
-	meta: Map<string, any>;
-	avg: AverageAggregation;
-	date_histogram: DateHistogramAggregation;
-	percentiles: PercentilesAggregation;
-	date_range: DateRangeAggregation;
-	extended_stats: ExtendedStatsAggregation;
-	filter: FilterAggregation;
-	filters: FiltersAggregation;
-	geo_distance: GeoDistanceAggregation;
-	geohash_grid: GeoHashGridAggregation;
-	geo_bounds: GeoBoundsAggregation;
-	histogram: HistogramAggregation;
-	global: GlobalAggregation;
-	ip_range: IpRangeAggregation;
-	max: MaxAggregation;
-	min: MinAggregation;
-	cardinality: CardinalityAggregation;
-	missing: MissingAggregation;
-	nested: NestedAggregation;
-	reverse_nested: ReverseNestedAggregation;
-	range: RangeAggregation;
-	stats: StatsAggregator;
-	sum: SumAggregation;
-	terms: TermsAggregation;
-	significant_terms: SignificantTermsAggregation;
-	value_count: ValueCountAggregation;
-	percentile_ranks: PercentileRanksAggregation;
-	top_hits: TopHitsAggregation;
-	children: ChildrenAggregation;
-	scripted_metric: ScriptedMetricAggregation;
-	avg_bucket: AverageBucketAggregation;
-	derivative: DerivativeAggregation;
-	max_bucket: MaxBucketAggregation;
-	min_bucket: MinBucketAggregation;
-	sum_bucket: SumBucketAggregation;
-	moving_avg: MovingAverageAggregation;
-	cumulative_sum: CumulativeSumAggregation;
-	serial_diff: SerialDifferencingAggregation;
-	bucket_script: BucketScriptAggregation;
-	bucket_selector: BucketSelectorAggregation;
-	sampler: SamplerAggregation;
-	aggs: Map<string, AggregationContainer>;
-}
-/**namespace:Aggregations.Metric.Average */
-interface AverageAggregation {
-}
-/**namespace:Aggregations.Bucket.DateHistogram */
-interface DateHistogramAggregation {
-	field: Field;
-	script: Script;
-	params: Map<string, any>;
-	interval: Union<DateInterval, Time>;
-	format: string;
-	min_doc_count: integer;
-	time_zone: string;
-	factor: integer;
-	offset: string;
-	order: HistogramOrder;
-	extended_bounds: ExtendedBounds<Date>;
-	missing: Date;
-}
-/**namespace:CommonAbstractions.Union */
-/**custom_serialization*/
-interface Union<TFirst, TSecond> {
 }
 /**namespace:Aggregations.Bucket.Histogram */
 /**custom_serialization*/
@@ -1180,27 +2667,6 @@ interface ExtendedBounds<T> {
 	min: T;
 	max: T;
 }
-/**namespace:Aggregations.Metric.Percentiles */
-interface PercentilesAggregation {
-	Percents: double[];
-	Method: PercentilesMethod;
-}
-/**namespace:Aggregations.Metric.Percentiles.Methods */
-interface PercentilesMethod {
-}
-/**namespace:Aggregations.Bucket.DateRange */
-interface DateRangeAggregation {
-	field: Field;
-	format: string;
-	ranges: DateRangeExpression[];
-}
-/**namespace:Aggregations.Bucket.DateRange */
-/**custom_serialization*/
-interface DateRangeExpression {
-	from: DateMath;
-	to: DateMath;
-	key: string;
-}
 /**namespace:CommonOptions.DateMath */
 /**custom_serialization*/
 interface DateMath {
@@ -1210,128 +2676,9 @@ interface DateMath {
 /**custom_serialization*/
 interface DateMathExpression extends DateMath {
 }
-/**namespace:Aggregations.Metric.ExtendedStats */
-interface ExtendedStatsAggregation {
-}
-/**namespace:Aggregations.Bucket.Filter */
-interface FilterAggregation {
-	filter: QueryContainer;
-}
-/**namespace:Aggregations.Bucket.Filters */
-interface FiltersAggregation {
-	filters: Union<Map<string, QueryContainer>, QueryContainer[]>;
-	other_bucket: boolean;
-	other_bucket_key: string;
-}
-/**namespace:QueryDsl.Abstractions.Container */
-/**custom_serialization*/
-interface QueryContainer {
-	IsConditionless: boolean;
-	IsStrict: boolean;
-	IsVerbatim: boolean;
-	RawQuery: RawQuery;
-	bool: BoolQuery;
-	match_all: MatchAllQuery;
-	term: TermQuery;
-	wildcard: WildcardQuery;
-	prefix: PrefixQuery;
-	boosting: BoostingQuery;
-	ids: IdsQuery;
-	limit: LimitQuery;
-	constant_score: ConstantScoreQuery;
-	dis_max: DisMaxQuery;
-	multi_match: MultiMatchQuery;
-	match: MatchQuery;
-	fuzzy: FuzzyQuery;
-	geo_shape: GeoShapeQuery;
-	common: CommonTermsQuery;
-	terms: TermsQuery;
-	range: RangeQuery;
-	regexp: RegexpQuery;
-	has_child: HasChildQuery;
-	has_parent: HasParentQuery;
-	span_term: SpanTermQuery;
-	simple_query_string: SimpleQueryStringQuery;
-	query_string: QueryStringQuery;
-	mlt: MoreLikeThisQuery;
-	span_first: SpanFirstQuery;
-	span_or: SpanOrQuery;
-	span_near: SpanNearQuery;
-	span_not: SpanNotQuery;
-	span_containing: SpanContainingQuery;
-	span_within: SpanWithinQuery;
-	span_multi: SpanMultiTermQuery;
-	nested: NestedQuery;
-	indices: IndicesQuery;
-	function_score: FunctionScoreQuery;
-	template: TemplateQuery;
-	geo_bounding_box: GeoBoundingBoxQuery;
-	geo_distance: GeoDistanceQuery;
-	geo_polygon: GeoPolygonQuery;
-	geo_distance_range: GeoDistanceRangeQuery;
-	geohash_cell: GeoHashCellQuery;
-	script: ScriptQuery;
-	exists: ExistsQuery;
-	missing: MissingQuery;
-	type: TypeQuery;
-	filtered: FilteredQuery;
-	and: AndQuery;
-	or: OrQuery;
-	not: NotQuery;
-}
-/**namespace:QueryDsl.NestSpecific */
-interface RawQuery {
-	Raw: string;
-}
-/**namespace:QueryDsl.Compound.Bool */
-/**custom_serialization*/
-interface BoolQuery {
-	must: QueryContainer[];
-	must_not: QueryContainer[];
-	should: QueryContainer[];
-	filter: QueryContainer[];
-	minimum_should_match: MinimumShouldMatch;
-	disable_coord: boolean;
-	Locked: boolean;
-}
 /**namespace:CommonOptions.MinimumShouldMatch */
 /**custom_serialization*/
 interface MinimumShouldMatch extends Union<integer, string> {
-}
-/**namespace:QueryDsl */
-/**custom_serialization*/
-interface MatchAllQuery {
-	norm_field: string;
-}
-/**namespace:QueryDsl.TermLevel.Term */
-/**custom_serialization*/
-interface TermQuery {
-	value: any;
-}
-/**namespace:QueryDsl.TermLevel.Wildcard */
-/**custom_serialization*/
-interface WildcardQuery {
-	/**custom_serialization */
-	rewrite: RewriteMultiTerm;
-}
-/**namespace:QueryDsl.TermLevel.Prefix */
-/**custom_serialization*/
-interface PrefixQuery {
-	/**custom_serialization */
-	rewrite: RewriteMultiTerm;
-}
-/**namespace:QueryDsl.Compound.Boosting */
-/**custom_serialization*/
-interface BoostingQuery {
-	positive: QueryContainer;
-	negative: QueryContainer;
-	negative_boost: double;
-}
-/**namespace:QueryDsl.TermLevel.Ids */
-/**custom_serialization*/
-interface IdsQuery {
-	types: Types;
-	values: Id[];
 }
 /**namespace:CommonAbstractions.Infer.Types */
 /**custom_serialization*/
@@ -1343,311 +2690,9 @@ interface Types extends Union<AllTypesMarker, ManyTypes> {
 /**custom_serialization*/
 interface Id {
 }
-/**namespace:QueryDsl.Compound.Limit */
-/**custom_serialization*/
-interface LimitQuery {
-	limit: integer;
-}
-/**namespace:QueryDsl.Compound.ConstantScore */
-/**custom_serialization*/
-interface ConstantScoreQuery {
-	filter: QueryContainer;
-}
-/**namespace:QueryDsl.Compound.Dismax */
-/**custom_serialization*/
-interface DisMaxQuery {
-	tie_breaker: double;
-	queries: QueryContainer[];
-}
-/**namespace:QueryDsl.FullText.MultiMatch */
-/**custom_serialization*/
-interface MultiMatchQuery {
-	/**custom_serialization */
-	type: TextQueryType;
-	query: string;
-	analyzer: string;
-	/**custom_serialization */
-	fuzzy_rewrite: RewriteMultiTerm;
-	fuzziness: Fuzziness;
-	cutoff_frequency: double;
-	prefix_length: integer;
-	max_expansions: integer;
-	slop: integer;
-	lenient: boolean;
-	use_dis_max: boolean;
-	tie_breaker: double;
-	minimum_should_match: MinimumShouldMatch;
-	operator: Operator;
-	fields: Field[];
-	zero_terms_query: ZeroTermsQuery;
-}
-/**namespace:CommonOptions.Fuzziness */
-/**custom_serialization*/
-interface Fuzziness {
-	Auto: Fuzziness;
-}
-/**namespace:QueryDsl.FullText.Match */
-/**custom_serialization*/
-interface MatchQuery {
-	type: string;
-	query: string;
-	analyzer: string;
-	/**custom_serialization */
-	fuzzy_rewrite: RewriteMultiTerm;
-	fuzziness: Fuzziness;
-	fuzzy_transpositions: boolean;
-	cutoff_frequency: double;
-	prefix_length: integer;
-	max_expansions: integer;
-	slop: integer;
-	lenient: boolean;
-	minimum_should_match: MinimumShouldMatch;
-	operator: Operator;
-	zero_terms_query: ZeroTermsQuery;
-}
-/**namespace:QueryDsl.TermLevel.Fuzzy */
-/**custom_serialization*/
-interface FuzzyQuery {
-	prefix_length: integer;
-	rewrite: RewriteMultiTerm;
-	max_expansions: integer;
-	transpositions: boolean;
-}
-/**namespace:QueryDsl.Geo.Shape */
-/**custom_serialization*/
-interface GeoShapeQuery {
-}
-/**namespace:QueryDsl.FullText.CommonTerms */
-/**custom_serialization*/
-interface CommonTermsQuery {
-	query: string;
-	cutoff_frequency: double;
-	/**custom_serialization */
-	low_freq_operator: Operator;
-	/**custom_serialization */
-	high_freq_operator: Operator;
-	minimum_should_match: MinimumShouldMatch;
-	analyzer: string;
-	disable_coord: boolean;
-}
-/**namespace:QueryDsl.TermLevel.Terms */
-/**custom_serialization*/
-interface TermsQuery {
-	MinimumShouldMatch: MinimumShouldMatch;
-	DisableCoord: boolean;
-	Terms: any[];
-	TermsLookup: FieldLookup;
-}
-/**namespace:QueryDsl.Abstractions.FieldLookup */
-/**custom_serialization*/
-interface FieldLookup {
-	index: IndexName;
-	type: TypeName;
-	id: Id;
-	path: Field;
-}
-/**namespace:QueryDsl.TermLevel.Range */
-/**custom_serialization*/
-interface RangeQuery {
-}
-/**namespace:QueryDsl.TermLevel.Regexp */
-/**custom_serialization*/
-interface RegexpQuery {
-	value: string;
-	flags: string;
-	max_determinized_states: integer;
-}
-/**namespace:QueryDsl.Joining.HasChild */
-/**custom_serialization*/
-interface HasChildQuery {
-	type: TypeName;
-	score_mode: ChildScoreMode;
-	min_children: integer;
-	max_children: integer;
-	query: QueryContainer;
-	inner_hits: InnerHits;
-}
-/**namespace:Search.Search.InnerHits */
-/**custom_serialization*/
-interface InnerHits {
-	name: string;
-	from: integer;
-	size: integer;
-	sort: Sort[];
-	highlight: Highlight;
-	explain: boolean;
-	_source: SourceFilter;
-	version: boolean;
-	fielddata_fields: Field[];
-	script_fields: Map<string, ScriptField>;
-}
-/**namespace:QueryDsl.Joining.HasParent */
-/**custom_serialization*/
-interface HasParentQuery {
-	type: TypeName;
-	score_mode: ParentScoreMode;
-	query: QueryContainer;
-	inner_hits: InnerHits;
-}
-/**namespace:QueryDsl.Span.Term */
-/**custom_serialization*/
-interface SpanTermQuery {
-}
-/**namespace:QueryDsl.FullText.SimpleQueryString */
-/**custom_serialization*/
-interface SimpleQueryStringQuery {
-	fields: Field[];
-	query: string;
-	analyzer: string;
-	default_operator: Operator;
-	flags: SimpleQueryStringFlags;
-	locale: string;
-	lowercase_expanded_terms: boolean;
-	lenient: boolean;
-	analyze_wildcard: boolean;
-	minimum_should_match: MinimumShouldMatch;
-}
-/**namespace:QueryDsl.FullText.QueryString */
-/**custom_serialization*/
-interface QueryStringQuery {
-	query: string;
-	default_field: Field;
-	default_operator: Operator;
-	analyzer: string;
-	quote_analyzer: string;
-	allow_leading_wildcard: boolean;
-	lowercase_expanded_terms: boolean;
-	enable_position_increments: boolean;
-	fuzzy_max_expansions: integer;
-	fuziness: Fuzziness;
-	fuzzy_prefix_length: integer;
-	phrase_slop: double;
-	analyze_wildcard: boolean;
-	auto_generate_phrase_queries: boolean;
-	max_determinized_states: integer;
-	minimum_should_match: MinimumShouldMatch;
-	lenient: boolean;
-	locale: string;
-	time_zone: string;
-	fields: Field[];
-	use_dis_max: boolean;
-	tie_breaker: double;
-	rewrite: RewriteMultiTerm;
-	fuzzy_rewrite: RewriteMultiTerm;
-	quote_field_suffix: string;
-	escape: boolean;
-}
-/**namespace:QueryDsl.Specialized.MoreLikeThis */
-/**custom_serialization*/
-interface MoreLikeThisQuery {
-	fields: Field[];
-	like: Like[];
-	unlike: Like[];
-	max_query_terms: integer;
-	min_term_freq: integer;
-	min_doc_freq: integer;
-	max_doc_freq: integer;
-	min_word_len: integer;
-	max_word_len: integer;
-	stop_words: StopWords;
-	analyzer: string;
-	minimum_should_match: MinimumShouldMatch;
-	boost_terms: double;
-	include: boolean;
-}
 /**namespace:QueryDsl.Specialized.MoreLikeThis.Like */
 /**custom_serialization*/
 interface Like extends Union<string, LikeDocument> {
-}
-/**namespace:QueryDsl.Specialized.MoreLikeThis.Like */
-/**custom_serialization*/
-interface LikeDocument {
-	_index: IndexName;
-	_type: TypeName;
-	_id: Id;
-	fields: Field[];
-	_routing: string;
-	doc: any;
-	per_field_analyzer: Map<Field, string>;
-	CanBeFlattened: boolean;
-}
-/**namespace:Analysis */
-/**custom_serialization*/
-interface StopWords extends Union<string, string[]> {
-}
-/**namespace:QueryDsl.Span.First */
-/**custom_serialization*/
-interface SpanFirstQuery {
-	match: SpanQuery;
-	end: integer;
-}
-/**namespace:QueryDsl.Span */
-/**custom_serialization*/
-interface SpanQuery {
-	span_term: SpanTermQuery;
-	span_first: SpanFirstQuery;
-	span_near: SpanNearQuery;
-	span_or: SpanOrQuery;
-	span_not: SpanNotQuery;
-	span_containing: SpanContainingQuery;
-	span_within: SpanWithinQuery;
-	span_multi: SpanMultiTermQuery;
-}
-/**namespace:QueryDsl.Span.Near */
-/**custom_serialization*/
-interface SpanNearQuery {
-	clauses: SpanQuery[];
-	slop: integer;
-	in_order: boolean;
-	collect_payloads: boolean;
-}
-/**namespace:QueryDsl.Span.Or */
-/**custom_serialization*/
-interface SpanOrQuery {
-	clauses: SpanQuery[];
-}
-/**namespace:QueryDsl.Span.Not */
-/**custom_serialization*/
-interface SpanNotQuery {
-	include: SpanQuery;
-	exclude: SpanQuery;
-	pre: integer;
-	post: integer;
-	dist: integer;
-}
-/**namespace:QueryDsl.Span.Containing */
-/**custom_serialization*/
-interface SpanContainingQuery {
-	little: SpanQuery;
-	big: SpanQuery;
-}
-/**namespace:QueryDsl.Span.Within */
-/**custom_serialization*/
-interface SpanWithinQuery {
-	little: SpanQuery;
-	big: SpanQuery;
-}
-/**namespace:QueryDsl.Span.MultiTerm */
-/**custom_serialization*/
-interface SpanMultiTermQuery {
-	match: QueryContainer;
-}
-/**namespace:QueryDsl.Joining.Nested */
-/**custom_serialization*/
-interface NestedQuery {
-	score_mode: NestedScoreMode;
-	query: QueryContainer;
-	path: Field;
-	inner_hits: InnerHits;
-}
-/**namespace:QueryDsl.Compound.Indices */
-/**custom_serialization*/
-interface IndicesQuery {
-	/**custom_serialization */
-	indices: Indices;
-	query: QueryContainer;
-	/**custom_serialization */
-	no_match_query: QueryContainer;
 }
 /**namespace:CommonAbstractions.Infer.Indices */
 /**custom_serialization*/
@@ -1655,245 +2700,16 @@ interface Indices extends Union<AllIndicesMarker, ManyIndices> {
 	All: Indices;
 	AllIndices: Indices;
 }
-/**namespace:QueryDsl.Compound.FunctionScore */
-/**custom_serialization*/
-interface FunctionScoreQuery {
-	query: QueryContainer;
-	functions: ScoreFunction[];
-	max_boost: double;
-	score_mode: FunctionScoreMode;
-	boost_mode: FunctionBoostMode;
-	min_score: double;
-}
-/**namespace:QueryDsl.Compound.FunctionScore.Functions */
-interface ScoreFunction {
-	filter: QueryContainer;
-	weight: double;
-}
-/**namespace:QueryDsl.Specialized.Template */
-/**custom_serialization*/
-interface TemplateQuery {
-	file: string;
-	inline: string;
-	id: Id;
-	params: Map<string, any>;
-}
-/**namespace:QueryDsl.Geo.BoundingBox */
-/**custom_serialization*/
-interface GeoBoundingBoxQuery {
-	BoundingBox: BoundingBox;
-	type: GeoExecution;
-	coerce: boolean;
-	ignore_malformed: boolean;
-	validation_method: GeoValidationMethod;
-}
-/**namespace:QueryDsl.Geo.BoundingBox */
-/**custom_serialization*/
-interface BoundingBox {
-	top_left: GeoLocation;
-	bottom_right: GeoLocation;
-}
 /**namespace:QueryDsl.Geo */
 interface GeoLocation {
 	lat: double;
 	lon: double;
-}
-/**namespace:QueryDsl.Geo.Distance */
-/**custom_serialization*/
-interface GeoDistanceQuery {
-	Location: GeoLocation;
-	distance: Distance;
-	optimize_bbox: GeoOptimizeBBox;
-	distance_type: GeoDistanceType;
-	coerce: boolean;
-	ignore_malformed: boolean;
-	validation_method: GeoValidationMethod;
 }
 /**namespace:CommonOptions.Geo */
 /**custom_serialization*/
 interface Distance {
 	Precision: double;
 	Unit: DistanceUnit;
-}
-/**namespace:QueryDsl.Geo.Polygon */
-/**custom_serialization*/
-interface GeoPolygonQuery {
-	Points: GeoLocation[];
-	coerce: boolean;
-	ignore_malformed: boolean;
-	validation_method: GeoValidationMethod;
-}
-/**namespace:QueryDsl.Geo.DistanceRange */
-/**custom_serialization*/
-interface GeoDistanceRangeQuery {
-	Location: GeoLocation;
-	gte: Distance;
-	lte: Distance;
-	gt: Distance;
-	lt: Distance;
-	distance_type: GeoDistanceType;
-	optimize_bbox: GeoOptimizeBBox;
-	coerce: boolean;
-	ignore_malformed: boolean;
-	validation_method: GeoValidationMethod;
-}
-/**namespace:QueryDsl.Geo.HashCell */
-/**custom_serialization*/
-interface GeoHashCellQuery {
-	Location: GeoLocation;
-	precision: Union<integer, Distance>;
-	neighbors: boolean;
-}
-/**namespace:QueryDsl.Specialized.Script */
-/**custom_serialization*/
-interface ScriptQuery {
-	inline: string;
-	id: Id;
-	file: string;
-	/**custom_serialization */
-	params: Map<string, any>;
-	lang: string;
-}
-/**namespace:QueryDsl.TermLevel.Exists */
-/**custom_serialization*/
-interface ExistsQuery {
-	field: Field;
-}
-/**namespace:QueryDsl.TermLevel.Missing */
-/**custom_serialization*/
-interface MissingQuery {
-	field: Field;
-	existence: boolean;
-	null_value: boolean;
-}
-/**namespace:QueryDsl.TermLevel.Type */
-/**custom_serialization*/
-interface TypeQuery {
-	value: TypeName;
-}
-/**namespace:QueryDsl.Compound.Filtered */
-/**custom_serialization*/
-interface FilteredQuery {
-	query: QueryContainer;
-	filter: QueryContainer;
-}
-/**namespace:QueryDsl.Compound.And */
-/**custom_serialization*/
-interface AndQuery {
-	filters: QueryContainer[];
-}
-/**namespace:QueryDsl.Compound.Or */
-/**custom_serialization*/
-interface OrQuery {
-	filters: QueryContainer[];
-}
-/**namespace:QueryDsl.Compound.Not */
-/**custom_serialization*/
-interface NotQuery {
-	filters: QueryContainer[];
-}
-/**namespace:Aggregations.Bucket.GeoDistance */
-interface GeoDistanceAggregation {
-	field: Field;
-	origin: GeoLocation;
-	unit: DistanceUnit;
-	distance_type: GeoDistanceType;
-	ranges: Range[];
-}
-/**namespace:CommonOptions.Range */
-/**custom_serialization*/
-interface Range {
-	from: double;
-	to: double;
-	key: string;
-}
-/**namespace:Aggregations.Bucket.GeoHashGrid */
-interface GeoHashGridAggregation {
-	field: Field;
-	size: integer;
-	shard_size: integer;
-	precision: GeoHashPrecision;
-}
-/**namespace:Aggregations.Metric.GeoBounds */
-interface GeoBoundsAggregation {
-	wrap_longitude: boolean;
-}
-/**namespace:Aggregations.Bucket.Histogram */
-interface HistogramAggregation {
-	field: Field;
-	script: Script;
-	interval: double;
-	min_doc_count: integer;
-	order: HistogramOrder;
-	extended_bounds: ExtendedBounds<double>;
-	pre_offset: long;
-	post_offset: long;
-	missing: double;
-}
-/**namespace:Aggregations.Bucket.Global */
-interface GlobalAggregation {
-}
-/**namespace:Aggregations.Bucket.IpRange */
-interface IpRangeAggregation {
-	field: Field;
-	ranges: IpRange[];
-}
-/**namespace:Aggregations.Bucket.IpRange */
-/**custom_serialization*/
-interface IpRange {
-	from: string;
-	to: string;
-	mask: string;
-}
-/**namespace:Aggregations.Metric.Max */
-interface MaxAggregation {
-}
-/**namespace:Aggregations.Metric.Min */
-interface MinAggregation {
-}
-/**namespace:Aggregations.Metric.Cardinality */
-interface CardinalityAggregation {
-	precision_threshold: integer;
-	rehash: boolean;
-}
-/**namespace:Aggregations.Bucket.Missing */
-interface MissingAggregation {
-	field: Field;
-}
-/**namespace:Aggregations.Bucket.Nested */
-interface NestedAggregation {
-	path: Field;
-}
-/**namespace:Aggregations.Bucket.ReverseNested */
-interface ReverseNestedAggregation {
-	path: Field;
-}
-/**namespace:Aggregations.Bucket.Range */
-interface RangeAggregation {
-	field: Field;
-	script: Script;
-	ranges: Range[];
-}
-/**namespace:Aggregations.Metric.Stats */
-interface StatsAggregator {
-}
-/**namespace:Aggregations.Metric.Sum */
-interface SumAggregation {
-}
-/**namespace:Aggregations.Bucket.Terms */
-interface TermsAggregation {
-	field: Field;
-	script: Script;
-	size: integer;
-	shard_size: integer;
-	min_doc_count: integer;
-	execution_hint: TermsAggregationExecutionHint;
-	order: TermsOrder[];
-	include: TermsIncludeExclude;
-	exclude: TermsIncludeExclude;
-	collect_mode: TermsAggregationCollectMode;
-	show_term_doc_error_count: boolean;
-	missing: string;
 }
 /**namespace:Aggregations.Bucket.Terms */
 /**custom_serialization*/
@@ -1911,150 +2727,6 @@ interface TermsIncludeExclude {
 	pattern: string;
 	flags: string;
 	Values: string[];
-}
-/**namespace:Aggregations.Bucket.SignificantTerms */
-interface SignificantTermsAggregation {
-	field: Field;
-	size: integer;
-	shard_size: integer;
-	min_doc_count: integer;
-	execution_hint: TermsAggregationExecutionHint;
-	include: Map<string, string>;
-	exclude: Map<string, string>;
-	mutual_information: MutualInformationHeuristic;
-	chi_square: ChiSquareHeuristic;
-	gnd: GoogleNormalizedDistanceHeuristic;
-	percentage: PercentageScoreHeuristic;
-	script_heuristic: ScriptedHeuristic;
-	background_filter: QueryContainer;
-}
-/**namespace:Aggregations.Bucket.SignificantTerms.Heuristics */
-/**custom_serialization*/
-interface MutualInformationHeuristic {
-	include_negatives: boolean;
-	background_is_superset: boolean;
-}
-/**namespace:Aggregations.Bucket.SignificantTerms.Heuristics */
-/**custom_serialization*/
-interface ChiSquareHeuristic {
-	include_negatives: boolean;
-	background_is_superset: boolean;
-}
-/**namespace:Aggregations.Bucket.SignificantTerms.Heuristics */
-/**custom_serialization*/
-interface GoogleNormalizedDistanceHeuristic {
-	background_is_superset: boolean;
-}
-/**namespace:Aggregations.Bucket.SignificantTerms.Heuristics */
-/**custom_serialization*/
-interface PercentageScoreHeuristic {
-}
-/**namespace:Aggregations.Bucket.SignificantTerms.Heuristics */
-/**custom_serialization*/
-interface ScriptedHeuristic {
-	script: Script;
-}
-/**namespace:Aggregations.Metric.ValueCount */
-interface ValueCountAggregation {
-}
-/**namespace:Aggregations.Metric.PercentileRanks */
-interface PercentileRanksAggregation {
-	Values: double[];
-	Method: PercentilesMethod;
-}
-/**namespace:Aggregations.Metric.TopHits */
-interface TopHitsAggregation {
-	from: integer;
-	size: integer;
-	sort: Sort[];
-	_source: SourceFilter;
-	highlight: Highlight;
-	explain: boolean;
-	/**custom_serialization */
-	script_fields: Map<string, ScriptField>;
-	fielddata_fields: Field[];
-	version: boolean;
-}
-/**namespace:Aggregations.Bucket.Children */
-interface ChildrenAggregation {
-	type: TypeName;
-}
-/**namespace:Aggregations.Metric.ScriptedMetric */
-interface ScriptedMetricAggregation {
-	init_script: Script;
-	map_script: Script;
-	combine_script: Script;
-	reduce_script: Script;
-	params: Map<string, any>;
-}
-/**namespace:Aggregations.Pipeline.AverageBucket */
-interface AverageBucketAggregation {
-}
-/**namespace:Aggregations.Pipeline.Derivative */
-interface DerivativeAggregation {
-}
-/**namespace:Aggregations.Pipeline.MaxBucket */
-interface MaxBucketAggregation {
-}
-/**namespace:Aggregations.Pipeline.MinBucket */
-interface MinBucketAggregation {
-}
-/**namespace:Aggregations.Pipeline.SumBucket */
-interface SumBucketAggregation {
-}
-/**namespace:Aggregations.Pipeline.MovingAverage */
-interface MovingAverageAggregation {
-	Model: MovingAverageModel;
-	window: integer;
-	minimize: boolean;
-	predict: integer;
-}
-/**namespace:Aggregations.Pipeline.MovingAverage.Models */
-interface MovingAverageModel {
-	Name: string;
-}
-/**namespace:Aggregations.Pipeline.CumulativeSum */
-interface CumulativeSumAggregation {
-}
-/**namespace:Aggregations.Pipeline.SerialDifferencing */
-interface SerialDifferencingAggregation {
-	lag: integer;
-}
-/**namespace:Aggregations.Pipeline.BucketScript */
-interface BucketScriptAggregation {
-	script: Script;
-}
-/**namespace:Aggregations.Pipeline.BucketSelector */
-interface BucketSelectorAggregation {
-	script: Script;
-}
-/**namespace:Aggregations.Bucket.Sampler */
-interface SamplerAggregation {
-	shard_size: integer;
-	field: Field;
-	max_docs_per_value: integer;
-	script: Script;
-	execution_hint: SamplerAggregationExecutionHint;
-}
-/**namespace:Search.Search.InnerHits */
-/**custom_serialization*/
-interface InnerHitsContainer {
-	type: Map<TypeName, GlobalInnerHit>;
-	path: Map<Field, GlobalInnerHit>;
-}
-/**namespace:Search.Search.InnerHits */
-/**custom_serialization*/
-interface GlobalInnerHit {
-	query: QueryContainer;
-	inner_hits: Map<string, InnerHitsContainer>;
-}
-/**namespace:Indices.AliasManagement */
-/**custom_serialization*/
-interface Alias {
-	filter: QueryContainer;
-	routing: string;
-	index_routing: string;
-	search_routing: string;
 }
 /**namespace:Cluster.ClusterState */
 interface MetadataIndexState {
@@ -2714,9 +3386,6 @@ interface ElasticsearchVersionInfo {
 	snapshot_build: boolean;
 	lucene_version: string;
 }
-/**namespace:CommonAbstractions.Request */
-interface RequestDescriptorBase<TDescriptor, TParameters, TInterface> extends Request {
-}
 /**namespace:CommonAbstractions.Response */
 interface AcknowledgedResponseBase extends Response {
 	acknowledged: boolean;
@@ -2776,21 +3445,6 @@ interface BulkRequest extends Request {
 	Source: string;
 	/**ambiguous_origin*/
 	FilterPath: string;
-}
-/**namespace:Document.Multiple.Bulk.BulkOperation */
-interface BulkOperation {
-	Operation: string;
-	_index: IndexName;
-	_type: TypeName;
-	_id: Id;
-	_version: long;
-	/**custom_serialization */
-	_version_type: VersionType;
-	_routing: string;
-	_parent: Id;
-	_timestamp: long;
-	_ttl: Time;
-	_retry_on_conflict: integer;
 }
 /**namespace:Document.Multiple.Bulk */
 interface BulkResponse extends Response {
@@ -2883,29 +3537,9 @@ interface MultiGetRequest extends Request {
 	/**ambiguous_origin*/
 	FilterPath: string;
 }
-/**namespace:Document.Multiple.MultiGet.Request */
-/**custom_serialization*/
-interface MultiGetOperation {
-	_index: IndexName;
-	_type: TypeName;
-	_id: Id;
-	fields: Field[];
-	_routing: string;
-	_source: Union<boolean, SourceFilter>;
-	CanBeFlattened: boolean;
-}
 /**namespace:Document.Multiple.MultiGet.Response */
 interface MultiGetResponse extends Response {
 	Documents: MultiGetHit<any>[];
-}
-/**namespace:Document.Multiple.MultiGet.Response */
-interface MultiGetHit<T> {
-	Source: T;
-	Index: string;
-	Found: boolean;
-	Type: string;
-	Version: long;
-	Id: string;
 }
 /**namespace:Document.Multiple.MultiTermVectors */
 interface MultiTermVectorsRequest extends Request {
@@ -2938,19 +3572,6 @@ interface MultiTermVectorsRequest extends Request {
 	Source: string;
 	/**ambiguous_origin*/
 	FilterPath: string;
-}
-/**namespace:Document.Multiple.MultiTermVectors */
-interface MultiTermVectorOperation {
-	_index: IndexName;
-	_type: TypeName;
-	_id: Id;
-	doc: any;
-	fields: Field[];
-	offsets: boolean;
-	payloads: boolean;
-	positions: boolean;
-	term_statistics: boolean;
-	field_statistics: boolean;
 }
 /**namespace:Document.Multiple.MultiTermVectors */
 interface MultiTermVectorsResponse extends Response {
@@ -3241,9 +3862,6 @@ interface BulkAliasRequest extends Request {
 	/**ambiguous_origin*/
 	FilterPath: string;
 }
-/**namespace:Indices.AliasManagement.Alias.Actions */
-interface AliasAction {
-}
 /**namespace:Indices.AliasManagement.Alias */
 interface BulkAliasResponse extends Response {
 }
@@ -3386,10 +4004,6 @@ interface CreateIndexRequest extends Request {
 	/**ambiguous_origin*/
 	FilterPath: string;
 }
-/**namespace:IndexModules.Similarity */
-interface Similarity {
-	type: string;
-}
 /**namespace:Indices.IndexManagement.CreateIndex */
 interface CreateIndexResponse extends Response {
 }
@@ -3429,15 +4043,6 @@ interface GetIndexRequest extends Request {
 /**namespace:Indices.IndexManagement.GetIndex */
 interface GetIndexResponse extends Response {
 	Indices: Map<string, IndexState>;
-}
-/**namespace:IndexModules.IndexSettings */
-/**custom_serialization*/
-interface IndexState {
-	settings: Map<string, any>;
-	mappings: Map<TypeName, TypeMapping>;
-	aliases: Map<IndexName, Alias>;
-	warmers: Map<TypeName, Warmer>;
-	similarity: Map<string, Similarity>;
 }
 /**namespace:Indices.IndexManagement.IndicesExists */
 interface IndexExistsRequest extends Request {
@@ -3537,15 +4142,6 @@ interface GetIndexSettingsRequest extends Request {
 interface GetIndexSettingsResponse extends Response {
 	Indices: Map<string, IndexState>;
 }
-/**namespace:IndexModules.IndexSettings */
-/**custom_serialization*/
-interface IndexState {
-	settings: Map<string, any>;
-	aliases: Map<IndexName, Alias>;
-	warmers: Map<TypeName, Warmer>;
-	mappings: Map<TypeName, TypeMapping>;
-	similarity: Map<string, Similarity>;
-}
 /**namespace:Indices.IndexSettings.IndexTemplates.DeleteIndexTemplate */
 interface DeleteIndexTemplateRequest extends Request {
 	/**ambiguous_origin*/
@@ -3614,25 +4210,6 @@ interface PutIndexTemplateRequest extends Request {
 interface PutIndexTemplateResponse extends Response {
 }
 /**namespace:Indices.IndexSettings.UpdateIndexSettings */
-/**custom_serialization*/
-interface UpdateIndexSettingsRequest extends Request {
-	IndexSettings: Map<string, any>;
-	/**ambiguous_origin*/
-	MasterTimeout: Time;
-	/**ambiguous_origin*/
-	IgnoreUnavailable: boolean;
-	/**ambiguous_origin*/
-	AllowNoIndices: boolean;
-	/**ambiguous_origin*/
-	ExpandWildcards: ExpandWildcards;
-	/**ambiguous_origin*/
-	FlatSettings: boolean;
-	/**ambiguous_origin*/
-	Source: string;
-	/**ambiguous_origin*/
-	FilterPath: string;
-}
-/**namespace:Indices.IndexSettings.UpdateIndexSettings */
 interface UpdateIndexSettingsResponse extends Response {
 }
 /**namespace:Indices.MappingManagement.GetFieldMapping */
@@ -3660,15 +4237,6 @@ interface GetFieldMappingResponse extends Response {
 interface TypeFieldMappings {
 	mappings: Map<string, Map<string, FieldMapping>>;
 }
-/**namespace:Indices.MappingManagement.GetFieldMapping */
-interface FieldMapping {
-	full_name: string;
-	/**custom_serialization */
-	mapping: Map<string, FieldMapping>;
-}
-/**namespace:Mapping.MetaFields */
-interface FieldMapping {
-}
 /**namespace:Indices.MappingManagement.GetMapping */
 interface GetMappingRequest extends Request {
 	/**ambiguous_origin*/
@@ -3689,31 +4257,6 @@ interface GetMappingResponse extends Response {
 	IsValid: boolean;
 	Mappings: Map<string, TypeMapping[]>;
 	Mapping: TypeMapping;
-}
-/**namespace:Mapping */
-/**custom_serialization*/
-interface TypeMapping {
-	_all: AllField;
-	analyzer: string;
-	date_detection: boolean;
-	dynamic: DynamicMapping;
-	dynamic_date_formats: string[];
-	dynamic_templates: Map<string, DynamicTemplate>;
-	_field_names: FieldNamesField;
-	_index: IndexField;
-	/**custom_serialization */
-	_meta: Map<string, any>;
-	numeric_detection: boolean;
-	_parent: ParentField;
-	properties: Map<PropertyName, Property>;
-	_routing: RoutingField;
-	search_analyzer: string;
-	_size: SizeField;
-	_source: SourceField;
-	_timestamp: TimestampField;
-	/**custom_serialization */
-	transform: MappingTransform[];
-	_ttl: TtlField;
 }
 /**namespace:Indices.MappingManagement.PutMapping */
 /**custom_serialization*/
@@ -4145,6 +4688,113 @@ interface PutWarmerRequest extends Request {
 /**namespace:Indices.Warmers.PutWarmer */
 interface PutWarmerResponse extends Response {
 }
+/**namespace:Mapping.Types */
+interface PropertyBase {
+	Name: PropertyName;
+	Type: TypeName;
+	CopyTo: Field[];
+	DocValues: boolean;
+	Fields: Map<PropertyName, Property>;
+	IndexName: string;
+	Similarity: SimilarityOption;
+	Store: boolean;
+}
+/**namespace:Mapping.Types.Complex.Nested */
+interface NestedProperty extends ObjectProperty {
+	include_in_parent: boolean;
+	include_in_root: boolean;
+}
+/**namespace:Mapping.Types.Complex.Object */
+interface ObjectProperty extends PropertyBase {
+	dynamic: DynamicMapping;
+	enabled: boolean;
+	include_in_all: boolean;
+	path: string;
+	properties: Map<PropertyName, Property>;
+}
+/**namespace:Mapping.Types.Core.Binary */
+interface BinaryProperty extends PropertyBase {
+}
+/**namespace:Mapping.Types.Core.Boolean */
+interface BooleanProperty extends PropertyBase {
+	index: NonStringIndexOption;
+	boost: double;
+	null_value: boolean;
+	fielddata: NumericFielddata;
+}
+/**namespace:Mapping.Types.Geo.GeoPoint */
+interface GeoPointProperty extends PropertyBase {
+	lat_lon: boolean;
+	geohash: boolean;
+	geohash_prefix: boolean;
+	geohash_precision: integer;
+	validate: boolean;
+	validate_lat: boolean;
+	validate_lon: boolean;
+	normalize: boolean;
+	normalize_lat: boolean;
+	normalize_lon: boolean;
+	precision_step: integer;
+	fielddata: GeoPointFielddata;
+}
+/**namespace:Mapping.Types.Geo.GeoShape */
+interface GeoShapeProperty extends PropertyBase {
+	tree: GeoTree;
+	precision: Distance;
+	orientation: GeoOrientation;
+	tree_levels: integer;
+	distance_error_pct: double;
+	points_only: boolean;
+}
+/**namespace:Mapping.Types.Specialized.Attachment */
+interface AttachmentProperty extends PropertyBase {
+	AuthorField: StringProperty;
+	ContentLengthField: NumberProperty;
+	ContentTypeField: StringProperty;
+	DateField: DateProperty;
+	FileField: StringProperty;
+	KeywordsField: StringProperty;
+	LanguageField: StringProperty;
+	NameField: StringProperty;
+	TitleField: StringProperty;
+}
+/**namespace:Mapping.Types.Specialized.Completion */
+interface CompletionProperty extends PropertyBase {
+	search_analyzer: string;
+	analyzer: string;
+	payloads: boolean;
+	preserve_separators: boolean;
+	preserve_position_increments: boolean;
+	max_input_length: integer;
+	context: Map<string, SuggestContext>;
+}
+/**namespace:Mapping.Types.Specialized.Ip */
+interface IpProperty extends PropertyBase {
+	boost: double;
+	include_in_all: boolean;
+	index: NonStringIndexOption;
+	null_value: string;
+	precision_step: integer;
+}
+/**namespace:Mapping.Types.Specialized.Murmur3Hash */
+interface Murmur3HashProperty extends PropertyBase {
+}
+/**namespace:Mapping.Types.Specialized.TokenCount */
+interface TokenCountProperty extends NumberProperty {
+	analyzer: string;
+}
+/**namespace:Modules.Indices */
+interface IndicesModuleSettings {
+	QeueriesCacheSize: string;
+	CircuitBreakerSettings: CircuitBreakerSettings;
+	FielddataSettings: FielddataSettings;
+	RecoverySettings: IndicesRecoverySettings;
+}
+/**namespace:Modules.Indices.Fielddata */
+interface FielddataSettings {
+	CacheSize: string;
+	CacheExpire: Time;
+}
 /**namespace:Modules.Scripting.DeleteScript */
 interface DeleteScriptRequest extends Request {
 	/**ambiguous_origin*/
@@ -4205,10 +4855,6 @@ interface CreateRepositoryRequest extends Request {
 	Source: string;
 	/**ambiguous_origin*/
 	FilterPath: string;
-}
-/**namespace:Modules.SnapshotAndRestore.Repositories */
-interface SnapshotRepository {
-	type: string;
 }
 /**namespace:Modules.SnapshotAndRestore.Repositories.CreateRepository */
 interface CreateRepositoryResponse extends Response {
@@ -4280,12 +4926,6 @@ interface RestoreRequest extends Request {
 	Source: string;
 	/**ambiguous_origin*/
 	FilterPath: string;
-}
-/**namespace:Indices.IndexSettings.UpdateIndexSettings */
-/**custom_serialization*/
-interface UpdateIndexSettingsRequest {
-	IndexSettings: Map<string, any>;
-	Index: Indices;
 }
 /**namespace:Modules.SnapshotAndRestore.Restore */
 interface RestoreResponse extends Response {
@@ -4517,19 +5157,6 @@ interface FieldStatsRequest extends Request {
 	FilterPath: string;
 }
 /**namespace:Search.FieldStats */
-interface IndexConstraint {
-	min_value: IndexConstraintComparison;
-	max_value: IndexConstraintComparison;
-}
-/**namespace:Search.FieldStats */
-interface IndexConstraintComparison {
-	gte: string;
-	gt: string;
-	lte: string;
-	lt: string;
-	format: string;
-}
-/**namespace:Search.FieldStats */
 interface FieldStatsResponse extends Response {
 	_shards: ShardsMetaData;
 	indices: Map<string, FieldStats>;
@@ -4565,10 +5192,6 @@ interface MultiSearchResponse extends Response {
 	TotalResponses: integer;
 	AllResponses: Response[];
 }
-/**namespace:CommonAbstractions.Response */
-interface Response {
-	ServerError: ServerError;
-}
 /**namespace:Search.Percolator.MultiPercolate */
 /**custom_serialization*/
 interface MultiPercolateRequest extends Request {
@@ -4583,17 +5206,6 @@ interface MultiPercolateRequest extends Request {
 	Source: string;
 	/**ambiguous_origin*/
 	FilterPath: string;
-}
-/**namespace:Search.Percolator.MultiPercolate */
-interface PercolateOperation {
-	MultiPercolateName: string;
-	size: integer;
-	track_scores: boolean;
-	sort: Sort[];
-	highlight: Highlight;
-	query: QueryContainer;
-	filter: QueryContainer;
-	aggs: Map<string, AggregationContainer>;
 }
 /**namespace:Search.Percolator.MultiPercolate */
 interface MultiPercolateResponse extends Response {
@@ -4739,26 +5351,6 @@ interface ScrollRequest extends Request {
 	FilterPath: string;
 }
 /**namespace:Search.Search.Hits */
-interface Hit<T> {
-	fields: Map<string, any>;
-	_source: T;
-	_index: string;
-	/**custom_serialization */
-	inner_hits: Map<string, InnerHitsResult>;
-	_score: double;
-	_type: string;
-	_version: long;
-	_id: string;
-	_parent: string;
-	_routing: string;
-	_timestamp: long;
-	_ttl: long;
-	sort: any[];
-	Highlights: Map<string, HighlightHit>;
-	_explanation: Explanation;
-	matched_queries: string[];
-}
-/**namespace:Search.Search.Hits */
 interface InnerHitsResult {
 	hits: InnerHitsMetaData;
 }
@@ -4779,77 +5371,6 @@ interface Explanation {
 	value: float;
 	description: string;
 	details: ExplanationDetail[];
-}
-/**namespace:CommonAbstractions.LazyDocument */
-/**custom_serialization*/
-interface LazyDocument {
-}
-/**namespace:Search.Search */
-/**custom_serialization*/
-interface SearchRequest extends Request {
-	timeout: string;
-	from: integer;
-	size: integer;
-	explain: boolean;
-	version: boolean;
-	track_scores: boolean;
-	min_score: double;
-	terminate_after: long;
-	fields: Field[];
-	fielddata_fields: Field[];
-	script_fields: Map<string, ScriptField>;
-	/**custom_serialization */
-	_source: SourceFilter;
-	sort: Sort[];
-	/**custom_serialization */
-	indices_boost: Map<IndexName, double>;
-	post_filter: QueryContainer;
-	inner_hits: Map<string, InnerHitsContainer>;
-	query: QueryContainer;
-	rescore: Rescore;
-	suggest: Map<string, SuggestBucket>;
-	highlight: Highlight;
-	aggs: Map<string, AggregationContainer>;
-	/**ambiguous_origin*/
-	Analyzer: string;
-	/**ambiguous_origin*/
-	AnalyzeWildcard: boolean;
-	/**ambiguous_origin*/
-	DefaultOperator: DefaultOperator;
-	/**ambiguous_origin*/
-	Df: string;
-	/**ambiguous_origin*/
-	IgnoreUnavailable: boolean;
-	/**ambiguous_origin*/
-	AllowNoIndices: boolean;
-	/**ambiguous_origin*/
-	ExpandWildcards: ExpandWildcards;
-	/**ambiguous_origin*/
-	Lenient: boolean;
-	/**ambiguous_origin*/
-	LowercaseExpandedTerms: boolean;
-	/**ambiguous_origin*/
-	Preference: string;
-	/**ambiguous_origin*/
-	Routing: string[];
-	/**ambiguous_origin*/
-	Scroll: Time;
-	/**ambiguous_origin*/
-	SearchType: SearchType;
-	/**ambiguous_origin*/
-	Stats: string[];
-	/**ambiguous_origin*/
-	SuggestField: Field;
-	/**ambiguous_origin*/
-	SuggestMode: SuggestMode;
-	/**ambiguous_origin*/
-	SuggestSize: long;
-	/**ambiguous_origin*/
-	SuggestText: string;
-	/**ambiguous_origin*/
-	RequestCache: boolean;
-	/**ambiguous_origin*/
-	FilterPath: string;
 }
 /**namespace:Search.Search */
 interface SearchResponse<T> extends Response {
@@ -4875,29 +5396,6 @@ interface HitsMetaData<T> {
 	total: long;
 	max_score: double;
 	hits: Hit<T>[];
-}
-/**namespace:Search.Search.Hits */
-interface Hit<T> {
-	Fields: Map<string, any>;
-	Source: T;
-	Index: string;
-	Type: string;
-	Version: long;
-	Score: double;
-	Id: string;
-	Parent: string;
-	Routing: string;
-	Timestamp: long;
-	Ttl: long;
-	Sorts: any[];
-	Highlights: Map<string, HighlightHit>;
-	Explanation: Explanation;
-	MatchedQueries: string[];
-	InnerHits: Map<string, InnerHitsResult>;
-}
-/**namespace:Aggregations */
-interface Aggregate {
-	Meta: Map<string, any>;
 }
 /**namespace:Aggregations */
 interface AggregationsHelper {

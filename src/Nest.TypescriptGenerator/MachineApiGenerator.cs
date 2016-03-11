@@ -217,11 +217,12 @@ namespace Nest.TypescriptGenerator
 			if (((generatorOutput & TsGeneratorOutput.Properties) == TsGeneratorOutput.Properties)
 				|| (generatorOutput & TsGeneratorOutput.Fields) == TsGeneratorOutput.Fields)
 			{
-				foreach (var classModel in classes)
+				foreach (var classModel in classes.OrderBy(c => c.Type?.IsInterface ?? false ? 0 : 1))
 				{
 					var c = ReMapClass(classModel);
 					if (Ignore(c)) continue;
 					if (this.Appended.Contains(c.Name)) continue;
+					if (this.Appended.Contains("I" + c.Name)) continue;
 					this.AppendClassDefinition(c, sb, generatorOutput);
 					this.Appended.Add(c.Name);
 				}

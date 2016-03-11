@@ -54,15 +54,21 @@ namespace Nest.TypescriptGenerator
 				}
 			}
 
-			var isDescriptorRe = new Regex(@"Descriptor(?:\`.+$|$)");
+			var isBadClassRe = new Regex(@"(Descriptor|Attribute)(?:Base)?(?:\`.+$|$)");
 
 			var nestAssembly = typeof(IRequest<>).Assembly;
 			var lowLevelAssembly = typeof(IElasticLowLevelClient).Assembly;
 
+			var exposeInterfaces = new[] 
+			{
+				typeof(IRequest), typeof(IResponse), typeof(ICharFilter), typeof(ITokenFilter), typeof(IAnalyzer), typeof(ITokenizer),
+				typeof(IIndicesModuleSettings), typeof(IProperty)
+			};
+
 			var nestInterfaces = nestAssembly
 				.GetTypes()
-				.Where(t => typeof(IRequest).IsAssignableFrom(t) || typeof(IResponse).IsAssignableFrom(t))
-				.Where(t => t.IsClass && !isDescriptorRe.IsMatch(t.Name))
+				.Where(t => exposeInterfaces.Any(i=>i.IsAssignableFrom(t)))
+				.Where(t => t.IsClass && !isBadClassRe.IsMatch(t.Name))
 				.ToArray();
 
 			RequestParameters = lowLevelAssembly
