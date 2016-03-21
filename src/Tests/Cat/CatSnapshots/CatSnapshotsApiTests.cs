@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Tests.Cat.CatSnapshots
 {
-	[Collection(TypeOfCluster.Indexing)]
+	[Collection(IntegrationContext.Indexing)]
 	public class CatSnapshotsApiTests : ApiIntegrationTestBase<ICatResponse<CatSnapshotsRecord>, ICatSnapshotsRequest, CatSnapshotsDescriptor, CatSnapshotsRequest>
 	{
 		private static readonly string SnapshotName = RandomString();
@@ -19,10 +19,10 @@ namespace Tests.Cat.CatSnapshots
 
 		public CatSnapshotsApiTests(IndexingCluster cluster, EndpointUsage usage) : base(cluster, usage) { }
 
-		protected override void IntegrationSetup(IElasticClient client, CallUniqueValues values)
+		protected override void BeforeAllCalls(IElasticClient client, IDictionary<ClientMethod, string> values)
 		{
 			if (!TestClient.Configuration.RunIntegrationTests) return;
-			var repositoryLocation = Path.Combine(this.Cluster.Node.FileSystem.RepositoryPath, RandomString());
+			var repositoryLocation = Path.Combine(this._cluster.Node.RepositoryPath, RandomString());
 
 			var create = this.Client.CreateRepository(RepositoryName, cr => cr
 				.FileSystem(fs => fs
@@ -34,8 +34,7 @@ namespace Tests.Cat.CatSnapshots
 				throw new Exception("Setup: failed to create snapshot repository");
 
 			var createIndex = this.Client.CreateIndex(SnapshotIndexName);
-			this.Client.ClusterHealth(g => g.WaitForStatus(WaitForStatus.Yellow));
-			client.Snapshot(RepositoryName, SnapshotName, s=>s.WaitForCompletion().Index(SnapshotIndexName));
+			client.Snapshot(RepositoryName, SnapshotName, s=>s.WaitForCompletion());
 		}
 
 		protected override LazyResponses ClientUsage() => Calls(
