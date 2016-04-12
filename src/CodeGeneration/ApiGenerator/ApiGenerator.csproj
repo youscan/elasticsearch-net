@@ -115,7 +115,6 @@
     <None Include="RestSpecification\Core\count.json" />
     <None Include="RestSpecification\Core\count_percolate.json" />
     <None Include="RestSpecification\Core\delete.json" />
-    <None Include="RestSpecification\Core\delete_by_query.json" />
     <None Include="RestSpecification\Core\delete_script.json" />
     <None Include="RestSpecification\Core\delete_template.json" />
     <None Include="RestSpecification\Core\exists.json" />
