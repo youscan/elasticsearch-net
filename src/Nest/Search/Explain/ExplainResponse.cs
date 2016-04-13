@@ -8,14 +8,11 @@ namespace Nest
 	{
 		bool Matched { get; }
 		ExplanationDetail Explanation { get; }
-		ExplainGet<T> Get { get; }
-
-		T Source { get; }
-		FieldValues Fields { get; }
+		InstantGet<T> Get { get; }
 	}
 
 	[JsonObject]
-	public class ExplainResponse<T> : BaseResponse, IExplainResponse<T>
+	public class ExplainResponse<T> : ResponseBase, IExplainResponse<T>
 		where T : class
 	{
 		[JsonProperty(PropertyName = "matched")]
@@ -25,11 +22,6 @@ namespace Nest
 		public ExplanationDetail Explanation { get; internal set; }
 
 		[JsonProperty(PropertyName = "get")]
-		public ExplainGet<T> Get { get; internal set; }
-
-		public T Source => this.Get?.Source;
-
-		[JsonProperty(PropertyName = "fields")]
-		public FieldValues Fields { get; set; }
+		public InstantGet<T> Get { get; internal set; }
 	}
 }

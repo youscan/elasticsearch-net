@@ -17,10 +17,10 @@ namespace Nest
 		private ITransport<IConnectionSettingsValues> Transport { get; }
 
 		public IElasticsearchSerializer Serializer => this.Transport.Settings.Serializer;
-		public ElasticInferrer Infer => this.Transport.Settings.Inferrer;
+		public Inferrer Infer => this.Transport.Settings.Inferrer;
 		public IConnectionSettingsValues ConnectionSettings => this.Transport.Settings;
 
-		public IElasticsearchClient Raw { get; }
+		public IElasticLowLevelClient LowLevel { get; }
 
 		public ElasticClient() : this(new ConnectionSettings(new Uri("http://localhost:9200"))) { }
 		public ElasticClient(Uri uri) : this(new ConnectionSettings(uri)) { }
@@ -35,8 +35,8 @@ namespace Nest
 			transport.Settings.Inferrer.ThrowIfNull(nameof(transport.Settings.Inferrer));
 
 			this.Transport = transport;
-			this.Raw = new ElasticsearchClient(this.Transport);
-			this.LowLevelDispatch = new LowLevelDispatch(this.Raw);
+			this.LowLevel = new ElasticLowLevelClient(this.Transport);
+			this.LowLevelDispatch = new LowLevelDispatch(this.LowLevel);
 		}
 
 		TResponse IHighLevelToLowLevelDispatcher.Dispatch<TRequest, TQueryString, TResponse>(
@@ -72,16 +72,16 @@ namespace Nest
 			request.RequestParameters.DeserializationOverride(responseGenerator);
 
 			request.RequestParameters.DeserializationOverride(responseGenerator);
-			var response = await dispatch(request, request);
+			var response = await dispatch(request, request).ConfigureAwait(false);
 			return ResultsSelector(response);
 		}
 
 		private static TResponse ResultsSelector<TResponse>(ElasticsearchResponse<TResponse> c)
-			where TResponse : BaseResponse =>
+			where TResponse : ResponseBase =>
 			c.Body ?? CreateInvalidInstance<TResponse>(c);
 
 		private static TResponse CreateInvalidInstance<TResponse>(IApiCallDetails response) 
-			where TResponse : BaseResponse
+			where TResponse : ResponseBase
 		{
 			var r = typeof(TResponse).CreateInstance<TResponse>();
 			((IBodyWithApiCallDetails)r).CallDetails = response;
@@ -97,5 +97,6 @@ namespace Nest
 			request.RequestParameters.RequestConfiguration = configuration;
 			return request;
 		}
+
 	}
 }

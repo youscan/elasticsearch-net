@@ -24,7 +24,8 @@ Repository for both **NEST** and **Elasticsearch.Net**, the two official [elasti
     	<td>:white_check_mark:</td>
     	<td><a href="http://elasticdotnettemp.westeurope.cloudapp.azure.com/project.html?projectId=Nest1x_BuildAndUnitTest&tab=projectOverview"><img src="http://elasticdotnettemp.westeurope.cloudapp.azure.com/app/rest/builds/buildType:(Nest_BuildAndUnitTest_RunBuildBat)/statusIcon.svg"></a></td>
     	<td><a href="https://www.myget.org/gallery/elasticsearch-net-legacy"><img src="https://www.myget.org/BuildSource/Badge/elasticsearch-net-legacy?identifier=46420967-3fd2-4104-b600-fab20d2b0d62"></a></td>
-    	<td><a href="https://www.nuget.org/packages/NEST"><img src="https://img.shields.io/nuget/v/NEST.svg?style=flat-square"><img src="https://img.shields.io/nuget/dt/NEST.svg?style=flat-square"></a>   
+    	<td>
+    	<a href="https://www.nuget.org/packages/NEST/2.0.0-rc1"><img src="https://img.shields.io/badge/nuget-1.7.1-blue.svg?style=flat-square"><img src="https://img.shields.io/nuget/dt/NEST.svg?style=flat-square"></a></td>
     </tr>
     <tr>
     	<td><code>2.x</code></td>
@@ -32,9 +33,13 @@ Repository for both **NEST** and **Elasticsearch.Net**, the two official [elasti
     	<td>:white_check_mark:</td>
     	<td><a href="http://elasticdotnettemp.westeurope.cloudapp.azure.com/project.html?projectId=Nest2x_BuildTestAndIntegrate&tab=projectOverview"><img src="http://elasticdotnettemp.westeurope.cloudapp.azure.com/app/rest/builds/buildType:Nest2x_BuildTestAndIntegrate_Fake/statusIcon.svg"></a></td>
     	<td><a href="https://www.myget.org/gallery/elasticsearch-net"><img src="https://www.myget.org/BuildSource/Badge/elasticsearch-net?identifier=624cebb3-a461-466f-9bac-7026c8ba615a"></a></td>
-    	<td>:heavy_minus_sign:</td>
+    	<td><a href="https://www.nuget.org/packages/NEST"><img src="https://img.shields.io/nuget/v/NEST.svg?style=flat-square"><img src="https://img.shields.io/nuget/dt/NEST.svg?style=flat-square"></a> </td>  
     </tr>
 </table>
+
+## Upgrading from 1.x to 2.x
+
+Take a look at the [blog post for details around the evolution of NEST 2.x](https://www.elastic.co/blog/ga-release-of-nest-2-0-our-dot-net-client-for-elasticsearch), in addition to the list of breaking changes for [NEST](https://github.com/elastic/elasticsearch-net/blob/master/docs/2.0-breaking-changes/nest-breaking-changes.md) and [Elasticsearch.Net](https://github.com/elastic/elasticsearch-net/blob/master/docs/2.0-breaking-changes/elasticsearch-net-breaking-changes.md).
 
 #[NEST](https://github.com/elasticsearch/elasticsearch-net/tree/master/src/Nest#nest-)
 
@@ -96,25 +101,25 @@ var tweet = new Tweet
     Message = "Trying out NEST, so far so good?"
 };
 
-var response = client.Index(tweet);
+var response = client.Index(tweet, idx => idx.Index("mytweetindex")); //or specify index via settings.DefaultIndex("mytweetindex");
 ```
 
 All the calls have async variants:
 
 ```csharp
-var response = client.IndexAsync(tweet); // returns a Task<IndexResponse>
+var response = client.IndexAsync(tweet, idx => idx.Index("mytweetindex")); // returns a Task<IndexResponse>
 ```
 
 ### Getting a document
 
 ```csharp
-var response = client.Get<Tweet>(1); // returns an IGetResponse mapped 1-to-1 with the Elasticsearch JSON response
+var response = client.Get<Tweet>(1, idx => idx.Index("mytweetindex")); // returns an IGetResponse mapped 1-to-1 with the Elasticsearch JSON response
 var tweet = response.Source; // the original document
 ```
 
 ### Searching for documents
 
-NEST exposes a fluent interface and a [powerful query DSL](http://nest.azurewebsites.net/concepts/writing-queries.html)
+NEST exposes a fluent interface and a [powerful query DSL](http://nest.azurewebsites.net/concepts/writing-queries.html) (NOTE: this documentation is for NEST 1.x - [documentation for 2.x is in progress](https://github.com/elastic/elasticsearch-net/tree/feature/documentation/docs/asciidoc))
 
 ```csharp
 var response = client.Search<Tweet>(s => s
@@ -127,7 +132,7 @@ var response = client.Search<Tweet>(s => s
 	);
 ```
 
-As well as an object initializer syntax if lamdas aren't your thing:
+As well as an object initializer syntax if lambdas aren't your thing:
 
 ```csharp
 var request = new SearchRequest
@@ -146,8 +151,8 @@ var response = client.Search<Tweet>(request);
 NEST also includes and exposes the low-level [Elasticsearch.Net](https://github.com/elasticsearch/elasticsearch-net/tree/develop/src/Elasticsearch.Net) client that you can fall back to incase anything is missing:
 
 ```csharp
-//.Raw is of type IRawElasticClient
-var response = client.Raw.SearchPost("myindex","elasticsearchprojects", new
+//.LowLevel is of type IElasticLowLevelClient
+var response = client.LowLevel.SearchPost("myindex","elasticsearchprojects", new
 {
 	from = 0,
 	size = 10,
@@ -163,12 +168,12 @@ var response = client.Raw.SearchPost("myindex","elasticsearchprojects", new
 });
 ```
 
-#### [Read the full documentation here](http://nest.azurewebsites.net/)
-(The documentation is terribly out of date at the moment, but we're in the process of [completely revamping them](https://github.com/elastic/elasticsearch-net/tree/master/docs/contents/new).  Please bare with us during the transition.)
+#### [Read the full documentation here](http://nest.azurewebsites.net/) 
+**(The documentation is terribly out of date at the moment, but we're in the process of [completely revamping them](https://github.com/elastic/elasticsearch-net/tree/feature/documentation/docs/asciidoc).  Please bare with us during the transition.)**
 
 #[Elasticsearch.Net](src/Elasticsearch.Net)
 
-A low level, dependency free, client that has no opinions how you build and represent your requests and responses.
+A low-level, dependency free, client that has no opinions how you build and represent your requests and responses.
 
 * Low-level client that provides a one-to-one mapping with the Elasticsearch REST API
 * No dependencies
@@ -177,8 +182,6 @@ A low level, dependency free, client that has no opinions how you build and repr
 * Has no opinions on how you create or consume requests and responses
 * Load balancing and cluster failover support
 * All calls have async variants
-
-## Getting Started
 
 ### Installing
 
@@ -195,10 +198,10 @@ Connecting using the low-level client is very similar to how you would connect u
 ```csharp
 var node = new Uri("http://myserver:9200");
 var config = new ConnectionConfiguration(node);
-var client = new ElasticsearchClient(config);
+var client = new ElasticLowLevelClient(config);
 ```
 
-Note the main difference here is that we are instantiating an `ElasticsearchClient` rather than `ElasticClient`, and `ConnectionConfiguration` instead of `ConnectionSettings`.
+Note the main difference here is that we are instantiating an `ElasticLowLevelClient` rather than `ElasticClient`, and `ConnectionConfiguration` instead of `ConnectionSettings`.
 
 ### Calling an API endpoint
 

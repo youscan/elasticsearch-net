@@ -20,7 +20,7 @@ namespace Tests.Aggregations.Bucket.IpRange
 				{
 					ip_range = new
 					{
-						field = Field<Project>(p => p.LeadDeveloper.IPAddress),
+						field = "leadDeveloper.iPAddress",
 						ranges = new object[]
 						{
 							new { to = "10.0.0.5" },
@@ -61,9 +61,9 @@ namespace Tests.Aggregations.Bucket.IpRange
 			response.IsValid.Should().BeTrue();
 			var ipRanges = response.Aggs.IpRange("ip_ranges");
 			ipRanges.Should().NotBeNull();
-			ipRanges.Items.Should().NotBeNull();
-			ipRanges.Items.Count.Should().BeGreaterThan(0);
-			foreach (var range in ipRanges.Items)
+			ipRanges.Buckets.Should().NotBeNull();
+			ipRanges.Buckets.Count.Should().BeGreaterThan(0);
+			foreach (var range in ipRanges.Buckets)
 				range.DocCount.Should().BeGreaterThan(0);
 		}
 	}

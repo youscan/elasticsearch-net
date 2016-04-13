@@ -17,7 +17,7 @@ namespace Tests.Document.Multiple.DeleteByQuery
 	{
 		public DeleteByQueryApiTests(OwnIndexCluster cluster, EndpointUsage usage) : base(cluster, usage) { }
 
-		protected override void BeforeAllCalls(IElasticClient client, IDictionary<ClientMethod, string> values)
+		protected override void IntegrationSetup(IElasticClient client, CallUniqueValues values)
 		{
 			foreach (var index in values.Values)
 			{
@@ -26,8 +26,8 @@ namespace Tests.Document.Multiple.DeleteByQuery
 			}
 		}
 		protected override LazyResponses ClientUsage() => Calls(
-			fluent: (client, f) => client.DeleteByQuery(this.Indices, f),
-			fluentAsync: (client, f) => client.DeleteByQueryAsync(this.Indices, f),
+			fluent: (client, f) => client.DeleteByQuery(this.Indices, Types.All, f),
+			fluentAsync: (client, f) => client.DeleteByQueryAsync(this.Indices, Types.All, f),
 			request: (client, r) => client.DeleteByQuery(r),
 			requestAsync: (client, r) => client.DeleteByQueryAsync(r)
 		);
@@ -39,11 +39,12 @@ namespace Tests.Document.Multiple.DeleteByQuery
 		protected override bool ExpectIsValid => true;
 		protected override int ExpectStatusCode => 200;
 		protected override HttpMethod HttpMethod => HttpMethod.DELETE;
-		protected override string UrlPath => $"/{CallIsolatedValue},{SecondIndex}/_query?ignore_unavailable=true";
+
+		protected override string UrlPath => $"/{CallIsolatedValue}%2C{SecondIndex}/_query?ignore_unavailable=true";
 
 		protected override bool SupportsDeserialization => false;
 
-		protected override object ExpectJson { get; } = new 
+		protected override object ExpectJson { get; } = new
 		{
 			query = new
 			{
@@ -55,13 +56,6 @@ namespace Tests.Document.Multiple.DeleteByQuery
 			}
 		};
 
-		protected override void ExpectResponse(IDeleteByQueryResponse response)
-		{
-			response.Indices.Should().NotBeEmpty().And.HaveCount(2).And.ContainKey(CallIsolatedValue);
-			response.Indices[CallIsolatedValue].Deleted.Should().Be(1);
-			response.Indices[CallIsolatedValue].Found.Should().Be(1);
-		}
-
 		protected override DeleteByQueryDescriptor<Project> NewDescriptor() => new DeleteByQueryDescriptor<Project>(this.Indices);
 
 		protected override Func<DeleteByQueryDescriptor<Project>, IDeleteByQueryRequest> Fluent => d => d
@@ -72,7 +66,7 @@ namespace Tests.Document.Multiple.DeleteByQuery
 					.Values(Project.Projects.First().Name, "x")
 				)
 			);
-			
+
 		protected override DeleteByQueryRequest Initializer => new DeleteByQueryRequest(this.Indices)
 		{
 			IgnoreUnavailable = true,
@@ -82,5 +76,12 @@ namespace Tests.Document.Multiple.DeleteByQuery
 				Values = new Id[] { Project.Projects.First().Name, "x" }
 			}
 		};
+
+		protected override void ExpectResponse(IDeleteByQueryResponse response)
+		{
+			response.Indices.Should().NotBeEmpty().And.HaveCount(2).And.ContainKey(CallIsolatedValue);
+			response.Indices[CallIsolatedValue].Deleted.Should().Be(1);
+			response.Indices[CallIsolatedValue].Found.Should().Be(1);
+		}
 	}
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Nest;
 using Tests.Framework.Integration;
@@ -5,8 +6,15 @@ using Tests.Framework.MockData;
 
 namespace Tests.QueryDsl.TermLevel.Terms
 {
+	/** 
+	* Filters documents that have fields that match any of the provided terms (not analyzed).
+	*
+	* Be sure to read the Elasticsearch documentation on {ref_current}/query-dsl-terms-query.html[Terms query] for more information.
+	*/
 	public class TermsQueryUsageTests : QueryDslUsageTestsBase
 	{
+		protected virtual string[] ExpectedTerms => new [] { "term1", "term2" };
+
 		public TermsQueryUsageTests(ReadOnlyCluster cluster, EndpointUsage usage) : base(cluster, usage) {}
 
 		protected override object QueryJson => new
@@ -15,7 +23,7 @@ namespace Tests.QueryDsl.TermLevel.Terms
 			{
 				_name = "named_query",
 				boost = 1.1,
-				description = new[] { "term1", "term2" },
+				description = ExpectedTerms,
 				disable_coord = true,
 				minimum_should_match = 2
 			}
@@ -26,7 +34,7 @@ namespace Tests.QueryDsl.TermLevel.Terms
 			Name = "named_query",
 			Boost = 1.1,
 			Field = "description",
-			Terms = new [] { "term1", "term2" },
+			Terms = ExpectedTerms,
 			DisableCoord = true,
 			MinimumShouldMatch = 2
 		};
@@ -49,4 +57,26 @@ namespace Tests.QueryDsl.TermLevel.Terms
 			q => q.Terms = new [] { "" }
 		};
 	}
+
+	/**[float]
+	*== Single term Terms Query 
+	*/
+	public class SingleTermTermsQueryUsageTests : TermsQueryUsageTests
+	{
+		protected override string[] ExpectedTerms => new [] { "term1"  };
+
+		public SingleTermTermsQueryUsageTests(ReadOnlyCluster cluster, EndpointUsage usage) : base(cluster, usage) { }
+
+		protected override QueryContainer QueryFluent(QueryContainerDescriptor<Project> q) => q
+			.Terms(c => c
+				.Name("named_query")
+				.Boost(1.1)
+				.Field(p => p.Description)
+				.DisableCoord()
+				.MinimumShouldMatch(MinimumShouldMatch.Fixed(2))
+				.Terms("term1")
+			);
+	}
+
+
 }

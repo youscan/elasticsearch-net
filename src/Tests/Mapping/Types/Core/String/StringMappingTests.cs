@@ -14,6 +14,7 @@ namespace Tests.Mapping.Types.Core.String
 			Index = FieldIndexOption.NotAnalyzed,
 			IndexOptions = IndexOptions.Offsets,
 			NullValue = "na",
+			// Purposely setting this obsolete property to ensure it serializes as position_increment_gap
 			PositionOffsetGap = 5,
 			SearchAnalyzer = "mysearchanalyzer",
 			Similarity = SimilarityOption.BM25,
@@ -48,7 +49,7 @@ namespace Tests.Mapping.Types.Core.String
 					index = "not_analyzed",
 					index_options = "offsets",
 					null_value = "na",
-					position_offset_gap = 5,
+					position_increment_gap = 5,
 					search_analyzer = "mysearchanalyzer",
 					similarity = "BM25",
 					store = true,
@@ -57,11 +58,11 @@ namespace Tests.Mapping.Types.Core.String
 				minimal = new
 				{
 					type = "string"
-				},			
+				},
                 inferred = new
 				{
 					type = "string"
-				},			
+				},
                 @char = new
 				{
 					type = "string"
@@ -84,7 +85,7 @@ namespace Tests.Mapping.Types.Core.String
 				.Index(FieldIndexOption.NotAnalyzed)
 				.IndexOptions(IndexOptions.Offsets)
 				.NullValue("na")
-				.PositionOffsetGap(5)
+				.PositionIncrementGap(5)
 				.SearchAnalyzer("mysearchanalyzer")
 				.Similarity(SimilarityOption.BM25)
 				.Store(true)
@@ -101,6 +102,30 @@ namespace Tests.Mapping.Types.Core.String
 			)
             .String(s => s
 				.Name(o => o.Guid)
+			);
+
+		protected override object ExpectJsonFluentOnly => new
+		{
+			properties = new
+			{
+				full = new
+				{
+					type = "string",
+					norms = new
+					{
+						enabled = true,
+						loading = "lazy"
+					}
+				}
+			}
+		};
+		protected override Func<PropertiesDescriptor<StringTest>, IPromise<IProperties>> FluentOnlyProperties => p => p
+			.String(s => s
+				.Name(o => o.Full)
+				.Norms(n => n
+					.Enabled()
+					.Loading(NormsLoading.Lazy)
+				)
 			);
 	}
 }

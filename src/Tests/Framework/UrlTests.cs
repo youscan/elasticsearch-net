@@ -47,12 +47,17 @@ namespace Tests.Framework
 		public Task<UrlTester> RequestAsync<TResponse>(Func<IElasticClient, Task<TResponse>> call) 
 			where TResponse : IResponse => WhenCallingAsync(call, "request async");
 
+		public UrlTester LowLevel(Func<IElasticLowLevelClient, IApiCallDetails> call)
+		{
+			var callDetails = call(this.GetClient().LowLevel);
+			return Assert("lowleve", callDetails);
+		}
 
 		internal UrlTester WhenCalling<TResponse>(Func<IElasticClient, TResponse> call, string typeOfCall)
 			where TResponse : IResponse
 		{
-			var callDetails = call(this.GetClient()).CallDetails;
-			return Assert(typeOfCall, callDetails);
+			var callDetails = call(this.GetClient());
+			return Assert(typeOfCall, callDetails.CallDetails);
 		}
 
 		internal async Task<UrlTester> WhenCallingAsync<TResponse>(Func<IElasticClient, Task<TResponse>> call, string typeOfCall)
@@ -82,7 +87,7 @@ namespace Tests.Framework
 
 	public class IntermediateUrlTester
 	{
-		private Func<ConnectionSettings, ConnectionSettings> _connectionSettingsModifier;
+		private readonly Func<ConnectionSettings, ConnectionSettings> _connectionSettingsModifier;
 
 		internal IntermediateUrlTester(Func<ConnectionSettings, ConnectionSettings> settings)
 		{

@@ -21,7 +21,7 @@ namespace Elasticsearch.Net
 				throw new ArgumentNullException();
 			if (format == "r")
 				return arg.ToString();
-			return this.GetStringValue(arg);
+			return Uri.EscapeDataString(this.GetStringValue(arg));
 		}
 
 		public string GetStringValue(object valueType)
@@ -46,12 +46,12 @@ namespace Elasticsearch.Net
 
 			return AttemptTheRightToString(valueType);
 		}
-		
+
 		public string AttemptTheRightToString(object value)
 		{
 			var explicitImplementation = this.QueryStringValueType(value as IUrlParameter);
 			if (explicitImplementation != null) return explicitImplementation;
-			
+
 
 			return value.ToString();
 		}

@@ -5,6 +5,7 @@ namespace Nest
 	[JsonObject(MemberSerialization.OptIn)]
 	public interface ITokenCountProperty : INumberProperty
 	{
+        [JsonProperty("analyzer")]
 		string Analyzer { get; set; }
 	}
 
@@ -15,7 +16,7 @@ namespace Nest
 		public string Analyzer { get; set; }
 	}
 
-	public class TokenCountPropertyDescriptor<T> 
+	public class TokenCountPropertyDescriptor<T>
 		: NumberPropertyDescriptorBase<TokenCountPropertyDescriptor<T>, ITokenCountProperty, T>, ITokenCountProperty
 		where T : class
 	{

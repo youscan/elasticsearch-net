@@ -29,7 +29,6 @@ namespace Nest
 				observer.OnError(e);
 			}
 			return this;
-
 		}
 
 		private void Reindex(IObserver<IReindexResponse<T>> observer)
@@ -44,7 +43,7 @@ namespace Nest
 			var resolvedTo = toIndex.Resolve(this._connectionSettings);
 			resolvedTo.ThrowIfNullOrEmpty(nameof(toIndex));
 
-			var indexSettings = this._client.GetIndexSettings(i=>i.Index(fromIndex));
+			var indexSettings = this._client.GetIndex(fromIndex);
 			Func<CreateIndexDescriptor, ICreateIndexRequest> settings =  (ci) => this._reindexRequest.CreateIndexRequest ?? ci;
 			var createIndexResponse = this._client.CreateIndex(
 				toIndex, (c) => settings(c.InitializeUsing(indexSettings.Indices[resolvedFrom])));
@@ -55,12 +54,12 @@ namespace Nest
 			var searchResult = this._client.Search<T>(
 				s => s
 					.Index(fromIndex)
-					.Type(Types.All)
+					.Type(this._reindexRequest.Type)
 					.From(0)
 					.Size(size)
 					.Query(q=>this._reindexRequest.Query)
 					.SearchType(SearchType.Scan)
-					.Scroll(scroll.ToTimeSpan())
+					.Scroll(scroll)
 				);
 			if (searchResult.Total <= 0)
 				throw new ElasticsearchClientException(PipelineFailure.BadResponse, $"Source index {fromIndex} doesn't contain any documents.", searchResult.ApiCall);
@@ -88,10 +87,10 @@ namespace Nest
 			foreach (var d in searchResult.Hits)
 			{
 				IHit<T> d1 = d;
-				bb.Index<T>(bi => bi.Document(d1.Source).Type(d1.Type).Index(toIndex).Id(d.Id));
+				bb.Index<T>(bi => Index(bi, d1, toIndex));
 			}
 
-			var indexResult = this._client.Bulk(b=>bb);
+			var indexResult = this._client.Bulk(bb);
 			if (!indexResult.IsValid)
 				throw new ElasticsearchClientException(PipelineFailure.BadResponse, $"Failed indexing page {page}.", indexResult.ApiCall);
 
@@ -104,10 +103,27 @@ namespace Nest
 			return indexResult;
 		}
 
+		private static BulkIndexDescriptor<T> Index(BulkIndexDescriptor<T> descriptor, IHit<T> hit, IndexName toIndex)
+		{
+			descriptor
+				.Document(hit.Source)
+				.Type(hit.Type)
+				.Index(toIndex)
+				.Id(hit.Id)
+				.Routing(hit.Routing)
+				.Timestamp(hit.Timestamp);
 
+			if (hit.Parent != null)
+				descriptor.Parent(hit.Parent);
+
+			if (hit.Ttl.HasValue)
+				descriptor.Ttl(hit.Ttl.Value);
+
+			return descriptor;
+		}
+	
 		public void Dispose()
 		{
-
 		}
 	}
 }

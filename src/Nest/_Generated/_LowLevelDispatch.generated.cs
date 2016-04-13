@@ -15,17 +15,6 @@ namespace Nest
 	///<summary>This dispatches highlevel requests into the proper lowlevel client overload method</summary>
 	internal partial class LowLevelDispatch
 	{
-		internal static ElasticsearchClientException InvalidDispatch(string apiCall, IRequest provided, HttpMethod[] methods, params string[] endpoints)
-		{
-			var sb = new StringBuilder();
-			sb.AppendLine($"Dispatching {apiCall}() from NEST into to Elasticsearch.NET failed");
-			sb.AppendLine($"Recieved a request marked as {provided.HttpMethod.GetStringValue()}");
-			sb.AppendLine($"This endpoint accepts {string.Join(",", methods.Select(p=>p.GetStringValue()))}");
-			sb.AppendLine($"The request might not have enough information provided to make any of these endpoints:");
-			foreach (var endpoint in endpoints)
-				sb.AppendLine($"  - {endpoint}");
-			return new ElasticsearchClientException(sb.ToString());
-		}
 
 		internal ElasticsearchResponse<T> BulkDispatch<T>(IRequest<BulkRequestParameters> p , PostData<object> body) where T : class
 		{
@@ -361,6 +350,28 @@ namespace Nest
 			throw InvalidDispatch("CatRecovery", p, new [] { GET }, "/_cat/recovery", "/_cat/recovery/{index}");
 		}
 		
+		internal ElasticsearchResponse<T> CatRepositoriesDispatch<T>(IRequest<CatRepositoriesRequestParameters> p ) where T : class
+		{
+			switch(p.HttpMethod)
+			{
+				case GET:
+					return _lowLevel.CatRepositories<T>(u => p.RequestParameters);
+
+			}
+			throw InvalidDispatch("CatRepositories", p, new [] { GET }, "/_cat/repositories");
+		}
+		
+		internal Task<ElasticsearchResponse<T>> CatRepositoriesDispatchAsync<T>(IRequest<CatRepositoriesRequestParameters> p ) where T : class
+		{
+			switch(p.HttpMethod)
+			{
+				case GET:
+					return _lowLevel.CatRepositoriesAsync<T>(u => p.RequestParameters);
+
+			}
+			throw InvalidDispatch("CatRepositories", p, new [] { GET }, "/_cat/repositories");
+		}
+		
 		internal ElasticsearchResponse<T> CatSegmentsDispatch<T>(IRequest<CatSegmentsRequestParameters> p ) where T : class
 		{
 			switch(p.HttpMethod)
@@ -407,6 +418,30 @@ namespace Nest
 
 			}
 			throw InvalidDispatch("CatShards", p, new [] { GET }, "/_cat/shards", "/_cat/shards/{index}");
+		}
+		
+		internal ElasticsearchResponse<T> CatSnapshotsDispatch<T>(IRequest<CatSnapshotsRequestParameters> p ) where T : class
+		{
+			switch(p.HttpMethod)
+			{
+				case GET:
+					if (AllSetNoFallback(p.RouteValues.Repository)) return _lowLevel.CatSnapshots<T>(p.RouteValues.Repository,u => p.RequestParameters);
+					break;
+
+			}
+			throw InvalidDispatch("CatSnapshots", p, new [] { GET }, "/_cat/snapshots/{repository}");
+		}
+		
+		internal Task<ElasticsearchResponse<T>> CatSnapshotsDispatchAsync<T>(IRequest<CatSnapshotsRequestParameters> p ) where T : class
+		{
+			switch(p.HttpMethod)
+			{
+				case GET:
+					if (AllSetNoFallback(p.RouteValues.Repository)) return _lowLevel.CatSnapshotsAsync<T>(p.RouteValues.Repository,u => p.RequestParameters);
+					break;
+
+			}
+			throw InvalidDispatch("CatSnapshots", p, new [] { GET }, "/_cat/snapshots/{repository}");
 		}
 		
 		internal ElasticsearchResponse<T> CatThreadPoolDispatch<T>(IRequest<CatThreadPoolRequestParameters> p ) where T : class
@@ -657,12 +692,12 @@ namespace Nest
 			{
 				case GET:
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.CountPercolateGet<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.CountPercolateGet<T>(p.RouteValues.Index,p.RouteValues.Type,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.CountPercolateGet<T>(p.RouteValues.Index,p.RouteValues.Type,u => p.RequestParameters);
 					break;
 
 				case POST:
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.CountPercolate<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,body,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.CountPercolate<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.CountPercolate<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -675,12 +710,12 @@ namespace Nest
 			{
 				case GET:
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.CountPercolateGetAsync<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.CountPercolateGetAsync<T>(p.RouteValues.Index,p.RouteValues.Type,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.CountPercolateGetAsync<T>(p.RouteValues.Index,p.RouteValues.Type,u => p.RequestParameters);
 					break;
 
 				case POST:
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.CountPercolateAsync<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,body,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.CountPercolateAsync<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.CountPercolateAsync<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -692,7 +727,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case DELETE:
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.Delete<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.Delete<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,u => p.RequestParameters);
 					break;
 
 			}
@@ -704,37 +739,11 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case DELETE:
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.DeleteAsync<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.DeleteAsync<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,u => p.RequestParameters);
 					break;
 
 			}
 			throw InvalidDispatch("Delete", p, new [] { DELETE }, "/{index}/{type}/{id}");
-		}
-		
-		internal ElasticsearchResponse<T> DeleteByQueryDispatch<T>(IRequest<DeleteByQueryRequestParameters> p , PostData<object> body) where T : class
-		{
-			switch(p.HttpMethod)
-			{
-				case DELETE:
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.DeleteByQuery<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Index)) return _lowLevel.DeleteByQuery<T>(p.RouteValues.Index,body,u => p.RequestParameters);
-					break;
-
-			}
-			throw InvalidDispatch("DeleteByQuery", p, new [] { DELETE }, "/{index}/_query", "/{index}/{type}/_query");
-		}
-		
-		internal Task<ElasticsearchResponse<T>> DeleteByQueryDispatchAsync<T>(IRequest<DeleteByQueryRequestParameters> p , PostData<object> body) where T : class
-		{
-			switch(p.HttpMethod)
-			{
-				case DELETE:
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.DeleteByQueryAsync<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Index)) return _lowLevel.DeleteByQueryAsync<T>(p.RouteValues.Index,body,u => p.RequestParameters);
-					break;
-
-			}
-			throw InvalidDispatch("DeleteByQuery", p, new [] { DELETE }, "/{index}/_query", "/{index}/{type}/_query");
 		}
 		
 		internal ElasticsearchResponse<T> DeleteScriptDispatch<T>(IRequest<DeleteScriptRequestParameters> p ) where T : class
@@ -742,7 +751,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case DELETE:
-					if (AllSet(p.RouteValues.Lang, p.RouteValues.Id)) return _lowLevel.DeleteScript<T>(p.RouteValues.Lang,p.RouteValues.Id,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Lang, p.RouteValues.Id)) return _lowLevel.DeleteScript<T>(p.RouteValues.Lang,p.RouteValues.Id,u => p.RequestParameters);
 					break;
 
 			}
@@ -754,7 +763,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case DELETE:
-					if (AllSet(p.RouteValues.Lang, p.RouteValues.Id)) return _lowLevel.DeleteScriptAsync<T>(p.RouteValues.Lang,p.RouteValues.Id,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Lang, p.RouteValues.Id)) return _lowLevel.DeleteScriptAsync<T>(p.RouteValues.Lang,p.RouteValues.Id,u => p.RequestParameters);
 					break;
 
 			}
@@ -766,7 +775,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case DELETE:
-					if (AllSet(p.RouteValues.Id)) return _lowLevel.DeleteTemplate<T>(p.RouteValues.Id,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Id)) return _lowLevel.DeleteTemplate<T>(p.RouteValues.Id,u => p.RequestParameters);
 					break;
 
 			}
@@ -778,7 +787,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case DELETE:
-					if (AllSet(p.RouteValues.Id)) return _lowLevel.DeleteTemplateAsync<T>(p.RouteValues.Id,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Id)) return _lowLevel.DeleteTemplateAsync<T>(p.RouteValues.Id,u => p.RequestParameters);
 					break;
 
 			}
@@ -790,7 +799,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case HEAD:
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.Exists<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.Exists<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,u => p.RequestParameters);
 					break;
 
 			}
@@ -802,7 +811,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case HEAD:
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.ExistsAsync<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.ExistsAsync<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,u => p.RequestParameters);
 					break;
 
 			}
@@ -814,11 +823,11 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case GET:
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.ExplainGet<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.ExplainGet<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,u => p.RequestParameters);
 					break;
 
 				case POST:
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.Explain<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.Explain<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -830,11 +839,11 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case GET:
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.ExplainGetAsync<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.ExplainGetAsync<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,u => p.RequestParameters);
 					break;
 
 				case POST:
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.ExplainAsync<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.ExplainAsync<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -878,7 +887,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case GET:
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.Get<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.Get<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,u => p.RequestParameters);
 					break;
 
 			}
@@ -890,7 +899,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case GET:
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.GetAsync<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.GetAsync<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,u => p.RequestParameters);
 					break;
 
 			}
@@ -902,7 +911,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case GET:
-					if (AllSet(p.RouteValues.Lang, p.RouteValues.Id)) return _lowLevel.GetScript<T>(p.RouteValues.Lang,p.RouteValues.Id,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Lang, p.RouteValues.Id)) return _lowLevel.GetScript<T>(p.RouteValues.Lang,p.RouteValues.Id,u => p.RequestParameters);
 					break;
 
 			}
@@ -914,7 +923,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case GET:
-					if (AllSet(p.RouteValues.Lang, p.RouteValues.Id)) return _lowLevel.GetScriptAsync<T>(p.RouteValues.Lang,p.RouteValues.Id,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Lang, p.RouteValues.Id)) return _lowLevel.GetScriptAsync<T>(p.RouteValues.Lang,p.RouteValues.Id,u => p.RequestParameters);
 					break;
 
 			}
@@ -926,7 +935,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case GET:
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.GetSource<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.GetSource<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,u => p.RequestParameters);
 					break;
 
 			}
@@ -938,7 +947,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case GET:
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.GetSourceAsync<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.GetSourceAsync<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,u => p.RequestParameters);
 					break;
 
 			}
@@ -950,7 +959,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case GET:
-					if (AllSet(p.RouteValues.Id)) return _lowLevel.GetTemplate<T>(p.RouteValues.Id,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Id)) return _lowLevel.GetTemplate<T>(p.RouteValues.Id,u => p.RequestParameters);
 					break;
 
 			}
@@ -962,7 +971,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case GET:
-					if (AllSet(p.RouteValues.Id)) return _lowLevel.GetTemplateAsync<T>(p.RouteValues.Id,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Id)) return _lowLevel.GetTemplateAsync<T>(p.RouteValues.Id,u => p.RequestParameters);
 					break;
 
 			}
@@ -975,12 +984,12 @@ namespace Nest
 			{
 				case POST:
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.Index<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,body,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.Index<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.Index<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
 					break;
 
 				case PUT:
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.IndexPut<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,body,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.IndexPut<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.IndexPut<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -993,12 +1002,12 @@ namespace Nest
 			{
 				case POST:
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.IndexAsync<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,body,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.IndexAsync<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.IndexAsync<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
 					break;
 
 				case PUT:
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.IndexPutAsync<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,body,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.IndexPutAsync<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.IndexPutAsync<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -1074,7 +1083,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case POST:
-					if (AllSet(p.RouteValues.Index)) return _lowLevel.IndicesClose<T>(p.RouteValues.Index,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index)) return _lowLevel.IndicesClose<T>(p.RouteValues.Index,u => p.RequestParameters);
 					break;
 
 			}
@@ -1086,7 +1095,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case POST:
-					if (AllSet(p.RouteValues.Index)) return _lowLevel.IndicesCloseAsync<T>(p.RouteValues.Index,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index)) return _lowLevel.IndicesCloseAsync<T>(p.RouteValues.Index,u => p.RequestParameters);
 					break;
 
 			}
@@ -1098,11 +1107,11 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case PUT:
-					if (AllSet(p.RouteValues.Index)) return _lowLevel.IndicesCreate<T>(p.RouteValues.Index,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index)) return _lowLevel.IndicesCreate<T>(p.RouteValues.Index,body,u => p.RequestParameters);
 					break;
 
 				case POST:
-					if (AllSet(p.RouteValues.Index)) return _lowLevel.IndicesCreatePost<T>(p.RouteValues.Index,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index)) return _lowLevel.IndicesCreatePost<T>(p.RouteValues.Index,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -1114,11 +1123,11 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case PUT:
-					if (AllSet(p.RouteValues.Index)) return _lowLevel.IndicesCreateAsync<T>(p.RouteValues.Index,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index)) return _lowLevel.IndicesCreateAsync<T>(p.RouteValues.Index,body,u => p.RequestParameters);
 					break;
 
 				case POST:
-					if (AllSet(p.RouteValues.Index)) return _lowLevel.IndicesCreatePostAsync<T>(p.RouteValues.Index,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index)) return _lowLevel.IndicesCreatePostAsync<T>(p.RouteValues.Index,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -1130,7 +1139,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case DELETE:
-					if (AllSet(p.RouteValues.Index)) return _lowLevel.IndicesDelete<T>(p.RouteValues.Index,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index)) return _lowLevel.IndicesDelete<T>(p.RouteValues.Index,u => p.RequestParameters);
 					break;
 
 			}
@@ -1142,7 +1151,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case DELETE:
-					if (AllSet(p.RouteValues.Index)) return _lowLevel.IndicesDeleteAsync<T>(p.RouteValues.Index,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index)) return _lowLevel.IndicesDeleteAsync<T>(p.RouteValues.Index,u => p.RequestParameters);
 					break;
 
 			}
@@ -1154,7 +1163,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case DELETE:
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Name)) return _lowLevel.IndicesDeleteAlias<T>(p.RouteValues.Index,p.RouteValues.Name,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Name)) return _lowLevel.IndicesDeleteAlias<T>(p.RouteValues.Index,p.RouteValues.Name,u => p.RequestParameters);
 					break;
 
 			}
@@ -1166,7 +1175,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case DELETE:
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Name)) return _lowLevel.IndicesDeleteAliasAsync<T>(p.RouteValues.Index,p.RouteValues.Name,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Name)) return _lowLevel.IndicesDeleteAliasAsync<T>(p.RouteValues.Index,p.RouteValues.Name,u => p.RequestParameters);
 					break;
 
 			}
@@ -1178,7 +1187,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case DELETE:
-					if (AllSet(p.RouteValues.Name)) return _lowLevel.IndicesDeleteTemplateForAll<T>(p.RouteValues.Name,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Name)) return _lowLevel.IndicesDeleteTemplateForAll<T>(p.RouteValues.Name,u => p.RequestParameters);
 					break;
 
 			}
@@ -1190,7 +1199,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case DELETE:
-					if (AllSet(p.RouteValues.Name)) return _lowLevel.IndicesDeleteTemplateForAllAsync<T>(p.RouteValues.Name,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Name)) return _lowLevel.IndicesDeleteTemplateForAllAsync<T>(p.RouteValues.Name,u => p.RequestParameters);
 					break;
 
 			}
@@ -1202,7 +1211,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case DELETE:
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Name)) return _lowLevel.IndicesDeleteWarmer<T>(p.RouteValues.Index,p.RouteValues.Name,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Name)) return _lowLevel.IndicesDeleteWarmer<T>(p.RouteValues.Index,p.RouteValues.Name,u => p.RequestParameters);
 					break;
 
 			}
@@ -1214,7 +1223,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case DELETE:
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Name)) return _lowLevel.IndicesDeleteWarmerAsync<T>(p.RouteValues.Index,p.RouteValues.Name,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Name)) return _lowLevel.IndicesDeleteWarmerAsync<T>(p.RouteValues.Index,p.RouteValues.Name,u => p.RequestParameters);
 					break;
 
 			}
@@ -1226,7 +1235,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case HEAD:
-					if (AllSet(p.RouteValues.Index)) return _lowLevel.IndicesExists<T>(p.RouteValues.Index,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index)) return _lowLevel.IndicesExists<T>(p.RouteValues.Index,u => p.RequestParameters);
 					break;
 
 			}
@@ -1238,7 +1247,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case HEAD:
-					if (AllSet(p.RouteValues.Index)) return _lowLevel.IndicesExistsAsync<T>(p.RouteValues.Index,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index)) return _lowLevel.IndicesExistsAsync<T>(p.RouteValues.Index,u => p.RequestParameters);
 					break;
 
 			}
@@ -1278,7 +1287,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case HEAD:
-					if (AllSet(p.RouteValues.Name)) return _lowLevel.IndicesExistsTemplateForAll<T>(p.RouteValues.Name,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Name)) return _lowLevel.IndicesExistsTemplateForAll<T>(p.RouteValues.Name,u => p.RequestParameters);
 					break;
 
 			}
@@ -1290,7 +1299,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case HEAD:
-					if (AllSet(p.RouteValues.Name)) return _lowLevel.IndicesExistsTemplateForAllAsync<T>(p.RouteValues.Name,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Name)) return _lowLevel.IndicesExistsTemplateForAllAsync<T>(p.RouteValues.Name,u => p.RequestParameters);
 					break;
 
 			}
@@ -1302,7 +1311,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case HEAD:
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.IndicesExistsType<T>(p.RouteValues.Index,p.RouteValues.Type,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.IndicesExistsType<T>(p.RouteValues.Index,p.RouteValues.Type,u => p.RequestParameters);
 					break;
 
 			}
@@ -1314,7 +1323,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case HEAD:
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.IndicesExistsTypeAsync<T>(p.RouteValues.Index,p.RouteValues.Type,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.IndicesExistsTypeAsync<T>(p.RouteValues.Index,p.RouteValues.Type,u => p.RequestParameters);
 					break;
 
 			}
@@ -1385,13 +1394,45 @@ namespace Nest
 			throw InvalidDispatch("IndicesFlushSynced", p, new [] { POST, GET }, "/_flush/synced", "/{index}/_flush/synced");
 		}
 		
+		internal ElasticsearchResponse<T> IndicesForcemergeDispatch<T>(IRequest<ForceMergeRequestParameters> p ) where T : class
+		{
+			switch(p.HttpMethod)
+			{
+				case POST:
+					if (AllSet(p.RouteValues.Index)) return _lowLevel.IndicesForcemerge<T>(p.RouteValues.Index,u => p.RequestParameters);
+					return _lowLevel.IndicesForcemergeForAll<T>(u => p.RequestParameters);
+
+				case GET:
+					if (AllSet(p.RouteValues.Index)) return _lowLevel.IndicesForcemergeGet<T>(p.RouteValues.Index,u => p.RequestParameters);
+					return _lowLevel.IndicesForcemergeGetForAll<T>(u => p.RequestParameters);
+
+			}
+			throw InvalidDispatch("IndicesForcemerge", p, new [] { POST, GET }, "/_forcemerge", "/{index}/_forcemerge");
+		}
+		
+		internal Task<ElasticsearchResponse<T>> IndicesForcemergeDispatchAsync<T>(IRequest<ForceMergeRequestParameters> p ) where T : class
+		{
+			switch(p.HttpMethod)
+			{
+				case POST:
+					if (AllSet(p.RouteValues.Index)) return _lowLevel.IndicesForcemergeAsync<T>(p.RouteValues.Index,u => p.RequestParameters);
+					return _lowLevel.IndicesForcemergeForAllAsync<T>(u => p.RequestParameters);
+
+				case GET:
+					if (AllSet(p.RouteValues.Index)) return _lowLevel.IndicesForcemergeGetAsync<T>(p.RouteValues.Index,u => p.RequestParameters);
+					return _lowLevel.IndicesForcemergeGetForAllAsync<T>(u => p.RequestParameters);
+
+			}
+			throw InvalidDispatch("IndicesForcemerge", p, new [] { POST, GET }, "/_forcemerge", "/{index}/_forcemerge");
+		}
+		
 		internal ElasticsearchResponse<T> IndicesGetDispatch<T>(IRequest<GetIndexRequestParameters> p ) where T : class
 		{
 			switch(p.HttpMethod)
 			{
 				case GET:
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Feature)) return _lowLevel.IndicesGet<T>(p.RouteValues.Index,p.RouteValues.Feature,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Index)) return _lowLevel.IndicesGet<T>(p.RouteValues.Index,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index)) return _lowLevel.IndicesGet<T>(p.RouteValues.Index,u => p.RequestParameters);
 					break;
 
 			}
@@ -1404,7 +1445,7 @@ namespace Nest
 			{
 				case GET:
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Feature)) return _lowLevel.IndicesGetAsync<T>(p.RouteValues.Index,p.RouteValues.Feature,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Index)) return _lowLevel.IndicesGetAsync<T>(p.RouteValues.Index,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index)) return _lowLevel.IndicesGetAsync<T>(p.RouteValues.Index,u => p.RequestParameters);
 					break;
 
 			}
@@ -1475,7 +1516,7 @@ namespace Nest
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Fields)) return _lowLevel.IndicesGetFieldMapping<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Fields,u => p.RequestParameters);
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Fields)) return _lowLevel.IndicesGetFieldMapping<T>(p.RouteValues.Index,p.RouteValues.Fields,u => p.RequestParameters);
 					if (AllSet(p.RouteValues.Type, p.RouteValues.Fields)) return _lowLevel.IndicesGetFieldMappingForAll<T>(p.RouteValues.Type,p.RouteValues.Fields,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Fields)) return _lowLevel.IndicesGetFieldMappingForAll<T>(p.RouteValues.Fields,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Fields)) return _lowLevel.IndicesGetFieldMappingForAll<T>(p.RouteValues.Fields,u => p.RequestParameters);
 					break;
 
 			}
@@ -1490,7 +1531,7 @@ namespace Nest
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Fields)) return _lowLevel.IndicesGetFieldMappingAsync<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Fields,u => p.RequestParameters);
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Fields)) return _lowLevel.IndicesGetFieldMappingAsync<T>(p.RouteValues.Index,p.RouteValues.Fields,u => p.RequestParameters);
 					if (AllSet(p.RouteValues.Type, p.RouteValues.Fields)) return _lowLevel.IndicesGetFieldMappingForAllAsync<T>(p.RouteValues.Type,p.RouteValues.Fields,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Fields)) return _lowLevel.IndicesGetFieldMappingForAllAsync<T>(p.RouteValues.Fields,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Fields)) return _lowLevel.IndicesGetFieldMappingForAllAsync<T>(p.RouteValues.Fields,u => p.RequestParameters);
 					break;
 
 			}
@@ -1636,7 +1677,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case POST:
-					if (AllSet(p.RouteValues.Index)) return _lowLevel.IndicesOpen<T>(p.RouteValues.Index,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index)) return _lowLevel.IndicesOpen<T>(p.RouteValues.Index,u => p.RequestParameters);
 					break;
 
 			}
@@ -1648,7 +1689,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case POST:
-					if (AllSet(p.RouteValues.Index)) return _lowLevel.IndicesOpenAsync<T>(p.RouteValues.Index,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index)) return _lowLevel.IndicesOpenAsync<T>(p.RouteValues.Index,u => p.RequestParameters);
 					break;
 
 			}
@@ -1692,11 +1733,11 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case PUT:
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Name)) return _lowLevel.IndicesPutAlias<T>(p.RouteValues.Index,p.RouteValues.Name,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Name)) return _lowLevel.IndicesPutAlias<T>(p.RouteValues.Index,p.RouteValues.Name,body,u => p.RequestParameters);
 					break;
 
 				case POST:
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Name)) return _lowLevel.IndicesPutAliasPost<T>(p.RouteValues.Index,p.RouteValues.Name,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Name)) return _lowLevel.IndicesPutAliasPost<T>(p.RouteValues.Index,p.RouteValues.Name,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -1708,11 +1749,11 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case PUT:
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Name)) return _lowLevel.IndicesPutAliasAsync<T>(p.RouteValues.Index,p.RouteValues.Name,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Name)) return _lowLevel.IndicesPutAliasAsync<T>(p.RouteValues.Index,p.RouteValues.Name,body,u => p.RequestParameters);
 					break;
 
 				case POST:
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Name)) return _lowLevel.IndicesPutAliasPostAsync<T>(p.RouteValues.Index,p.RouteValues.Name,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Name)) return _lowLevel.IndicesPutAliasPostAsync<T>(p.RouteValues.Index,p.RouteValues.Name,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -1725,12 +1766,12 @@ namespace Nest
 			{
 				case PUT:
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.IndicesPutMapping<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Type)) return _lowLevel.IndicesPutMappingForAll<T>(p.RouteValues.Type,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Type)) return _lowLevel.IndicesPutMappingForAll<T>(p.RouteValues.Type,body,u => p.RequestParameters);
 					break;
 
 				case POST:
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.IndicesPutMappingPost<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Type)) return _lowLevel.IndicesPutMappingPostForAll<T>(p.RouteValues.Type,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Type)) return _lowLevel.IndicesPutMappingPostForAll<T>(p.RouteValues.Type,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -1743,12 +1784,12 @@ namespace Nest
 			{
 				case PUT:
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.IndicesPutMappingAsync<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Type)) return _lowLevel.IndicesPutMappingForAllAsync<T>(p.RouteValues.Type,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Type)) return _lowLevel.IndicesPutMappingForAllAsync<T>(p.RouteValues.Type,body,u => p.RequestParameters);
 					break;
 
 				case POST:
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.IndicesPutMappingPostAsync<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Type)) return _lowLevel.IndicesPutMappingPostForAllAsync<T>(p.RouteValues.Type,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Type)) return _lowLevel.IndicesPutMappingPostForAllAsync<T>(p.RouteValues.Type,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -1784,11 +1825,11 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case PUT:
-					if (AllSet(p.RouteValues.Name)) return _lowLevel.IndicesPutTemplateForAll<T>(p.RouteValues.Name,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Name)) return _lowLevel.IndicesPutTemplateForAll<T>(p.RouteValues.Name,body,u => p.RequestParameters);
 					break;
 
 				case POST:
-					if (AllSet(p.RouteValues.Name)) return _lowLevel.IndicesPutTemplatePostForAll<T>(p.RouteValues.Name,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Name)) return _lowLevel.IndicesPutTemplatePostForAll<T>(p.RouteValues.Name,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -1800,11 +1841,11 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case PUT:
-					if (AllSet(p.RouteValues.Name)) return _lowLevel.IndicesPutTemplateForAllAsync<T>(p.RouteValues.Name,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Name)) return _lowLevel.IndicesPutTemplateForAllAsync<T>(p.RouteValues.Name,body,u => p.RequestParameters);
 					break;
 
 				case POST:
-					if (AllSet(p.RouteValues.Name)) return _lowLevel.IndicesPutTemplatePostForAllAsync<T>(p.RouteValues.Name,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Name)) return _lowLevel.IndicesPutTemplatePostForAllAsync<T>(p.RouteValues.Name,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -1818,13 +1859,13 @@ namespace Nest
 				case PUT:
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Name)) return _lowLevel.IndicesPutWarmer<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Name,body,u => p.RequestParameters);
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Name)) return _lowLevel.IndicesPutWarmer<T>(p.RouteValues.Index,p.RouteValues.Name,body,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Name)) return _lowLevel.IndicesPutWarmerForAll<T>(p.RouteValues.Name,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Name)) return _lowLevel.IndicesPutWarmerForAll<T>(p.RouteValues.Name,body,u => p.RequestParameters);
 					break;
 
 				case POST:
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Name)) return _lowLevel.IndicesPutWarmerPost<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Name,body,u => p.RequestParameters);
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Name)) return _lowLevel.IndicesPutWarmerPost<T>(p.RouteValues.Index,p.RouteValues.Name,body,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Name)) return _lowLevel.IndicesPutWarmerPostForAll<T>(p.RouteValues.Name,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Name)) return _lowLevel.IndicesPutWarmerPostForAll<T>(p.RouteValues.Name,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -1838,13 +1879,13 @@ namespace Nest
 				case PUT:
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Name)) return _lowLevel.IndicesPutWarmerAsync<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Name,body,u => p.RequestParameters);
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Name)) return _lowLevel.IndicesPutWarmerAsync<T>(p.RouteValues.Index,p.RouteValues.Name,body,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Name)) return _lowLevel.IndicesPutWarmerForAllAsync<T>(p.RouteValues.Name,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Name)) return _lowLevel.IndicesPutWarmerForAllAsync<T>(p.RouteValues.Name,body,u => p.RequestParameters);
 					break;
 
 				case POST:
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Name)) return _lowLevel.IndicesPutWarmerPostAsync<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Name,body,u => p.RequestParameters);
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Name)) return _lowLevel.IndicesPutWarmerPostAsync<T>(p.RouteValues.Index,p.RouteValues.Name,body,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Name)) return _lowLevel.IndicesPutWarmerPostForAllAsync<T>(p.RouteValues.Name,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Name)) return _lowLevel.IndicesPutWarmerPostForAllAsync<T>(p.RouteValues.Name,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -2321,12 +2362,12 @@ namespace Nest
 			{
 				case GET:
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.PercolateGet<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.PercolateGet<T>(p.RouteValues.Index,p.RouteValues.Type,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.PercolateGet<T>(p.RouteValues.Index,p.RouteValues.Type,u => p.RequestParameters);
 					break;
 
 				case POST:
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.Percolate<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,body,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.Percolate<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.Percolate<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -2339,12 +2380,12 @@ namespace Nest
 			{
 				case GET:
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.PercolateGetAsync<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.PercolateGetAsync<T>(p.RouteValues.Index,p.RouteValues.Type,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.PercolateGetAsync<T>(p.RouteValues.Index,p.RouteValues.Type,u => p.RequestParameters);
 					break;
 
 				case POST:
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.PercolateAsync<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,body,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.PercolateAsync<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.PercolateAsync<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -2378,11 +2419,11 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case PUT:
-					if (AllSet(p.RouteValues.Lang, p.RouteValues.Id)) return _lowLevel.PutScript<T>(p.RouteValues.Lang,p.RouteValues.Id,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Lang, p.RouteValues.Id)) return _lowLevel.PutScript<T>(p.RouteValues.Lang,p.RouteValues.Id,body,u => p.RequestParameters);
 					break;
 
 				case POST:
-					if (AllSet(p.RouteValues.Lang, p.RouteValues.Id)) return _lowLevel.PutScriptPost<T>(p.RouteValues.Lang,p.RouteValues.Id,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Lang, p.RouteValues.Id)) return _lowLevel.PutScriptPost<T>(p.RouteValues.Lang,p.RouteValues.Id,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -2394,11 +2435,11 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case PUT:
-					if (AllSet(p.RouteValues.Lang, p.RouteValues.Id)) return _lowLevel.PutScriptAsync<T>(p.RouteValues.Lang,p.RouteValues.Id,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Lang, p.RouteValues.Id)) return _lowLevel.PutScriptAsync<T>(p.RouteValues.Lang,p.RouteValues.Id,body,u => p.RequestParameters);
 					break;
 
 				case POST:
-					if (AllSet(p.RouteValues.Lang, p.RouteValues.Id)) return _lowLevel.PutScriptPostAsync<T>(p.RouteValues.Lang,p.RouteValues.Id,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Lang, p.RouteValues.Id)) return _lowLevel.PutScriptPostAsync<T>(p.RouteValues.Lang,p.RouteValues.Id,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -2410,11 +2451,11 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case PUT:
-					if (AllSet(p.RouteValues.Id)) return _lowLevel.PutTemplate<T>(p.RouteValues.Id,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Id)) return _lowLevel.PutTemplate<T>(p.RouteValues.Id,body,u => p.RequestParameters);
 					break;
 
 				case POST:
-					if (AllSet(p.RouteValues.Id)) return _lowLevel.PutTemplatePost<T>(p.RouteValues.Id,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Id)) return _lowLevel.PutTemplatePost<T>(p.RouteValues.Id,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -2426,15 +2467,37 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case PUT:
-					if (AllSet(p.RouteValues.Id)) return _lowLevel.PutTemplateAsync<T>(p.RouteValues.Id,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Id)) return _lowLevel.PutTemplateAsync<T>(p.RouteValues.Id,body,u => p.RequestParameters);
 					break;
 
 				case POST:
-					if (AllSet(p.RouteValues.Id)) return _lowLevel.PutTemplatePostAsync<T>(p.RouteValues.Id,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Id)) return _lowLevel.PutTemplatePostAsync<T>(p.RouteValues.Id,body,u => p.RequestParameters);
 					break;
 
 			}
 			throw InvalidDispatch("PutTemplate", p, new [] { PUT, POST }, "/_search/template/{id}");
+		}
+		
+		internal ElasticsearchResponse<T> ReindexDispatch<T>(IRequest<ReindexOnServerRequestParameters> p , PostData<object> body) where T : class
+		{
+			switch(p.HttpMethod)
+			{
+				case POST:
+					return _lowLevel.Reindex<T>(body,u => p.RequestParameters);
+
+			}
+			throw InvalidDispatch("Reindex", p, new [] { POST }, "/_reindex");
+		}
+		
+		internal Task<ElasticsearchResponse<T>> ReindexDispatchAsync<T>(IRequest<ReindexOnServerRequestParameters> p , PostData<object> body) where T : class
+		{
+			switch(p.HttpMethod)
+			{
+				case POST:
+					return _lowLevel.ReindexAsync<T>(body,u => p.RequestParameters);
+
+			}
+			throw InvalidDispatch("Reindex", p, new [] { POST }, "/_reindex");
 		}
 		
 		internal ElasticsearchResponse<T> RenderSearchTemplateDispatch<T>(IRequest<RenderSearchTemplateRequestParameters> p , PostData<object> body) where T : class
@@ -2646,11 +2709,11 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case PUT:
-					if (AllSet(p.RouteValues.Repository, p.RouteValues.Snapshot)) return _lowLevel.SnapshotCreate<T>(p.RouteValues.Repository,p.RouteValues.Snapshot,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Repository, p.RouteValues.Snapshot)) return _lowLevel.SnapshotCreate<T>(p.RouteValues.Repository,p.RouteValues.Snapshot,body,u => p.RequestParameters);
 					break;
 
 				case POST:
-					if (AllSet(p.RouteValues.Repository, p.RouteValues.Snapshot)) return _lowLevel.SnapshotCreatePost<T>(p.RouteValues.Repository,p.RouteValues.Snapshot,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Repository, p.RouteValues.Snapshot)) return _lowLevel.SnapshotCreatePost<T>(p.RouteValues.Repository,p.RouteValues.Snapshot,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -2662,11 +2725,11 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case PUT:
-					if (AllSet(p.RouteValues.Repository, p.RouteValues.Snapshot)) return _lowLevel.SnapshotCreateAsync<T>(p.RouteValues.Repository,p.RouteValues.Snapshot,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Repository, p.RouteValues.Snapshot)) return _lowLevel.SnapshotCreateAsync<T>(p.RouteValues.Repository,p.RouteValues.Snapshot,body,u => p.RequestParameters);
 					break;
 
 				case POST:
-					if (AllSet(p.RouteValues.Repository, p.RouteValues.Snapshot)) return _lowLevel.SnapshotCreatePostAsync<T>(p.RouteValues.Repository,p.RouteValues.Snapshot,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Repository, p.RouteValues.Snapshot)) return _lowLevel.SnapshotCreatePostAsync<T>(p.RouteValues.Repository,p.RouteValues.Snapshot,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -2678,11 +2741,11 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case PUT:
-					if (AllSet(p.RouteValues.Repository)) return _lowLevel.SnapshotCreateRepository<T>(p.RouteValues.Repository,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Repository)) return _lowLevel.SnapshotCreateRepository<T>(p.RouteValues.Repository,body,u => p.RequestParameters);
 					break;
 
 				case POST:
-					if (AllSet(p.RouteValues.Repository)) return _lowLevel.SnapshotCreateRepositoryPost<T>(p.RouteValues.Repository,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Repository)) return _lowLevel.SnapshotCreateRepositoryPost<T>(p.RouteValues.Repository,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -2694,11 +2757,11 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case PUT:
-					if (AllSet(p.RouteValues.Repository)) return _lowLevel.SnapshotCreateRepositoryAsync<T>(p.RouteValues.Repository,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Repository)) return _lowLevel.SnapshotCreateRepositoryAsync<T>(p.RouteValues.Repository,body,u => p.RequestParameters);
 					break;
 
 				case POST:
-					if (AllSet(p.RouteValues.Repository)) return _lowLevel.SnapshotCreateRepositoryPostAsync<T>(p.RouteValues.Repository,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Repository)) return _lowLevel.SnapshotCreateRepositoryPostAsync<T>(p.RouteValues.Repository,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -2710,7 +2773,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case DELETE:
-					if (AllSet(p.RouteValues.Repository, p.RouteValues.Snapshot)) return _lowLevel.SnapshotDelete<T>(p.RouteValues.Repository,p.RouteValues.Snapshot,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Repository, p.RouteValues.Snapshot)) return _lowLevel.SnapshotDelete<T>(p.RouteValues.Repository,p.RouteValues.Snapshot,u => p.RequestParameters);
 					break;
 
 			}
@@ -2722,7 +2785,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case DELETE:
-					if (AllSet(p.RouteValues.Repository, p.RouteValues.Snapshot)) return _lowLevel.SnapshotDeleteAsync<T>(p.RouteValues.Repository,p.RouteValues.Snapshot,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Repository, p.RouteValues.Snapshot)) return _lowLevel.SnapshotDeleteAsync<T>(p.RouteValues.Repository,p.RouteValues.Snapshot,u => p.RequestParameters);
 					break;
 
 			}
@@ -2734,7 +2797,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case DELETE:
-					if (AllSet(p.RouteValues.Repository)) return _lowLevel.SnapshotDeleteRepository<T>(p.RouteValues.Repository,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Repository)) return _lowLevel.SnapshotDeleteRepository<T>(p.RouteValues.Repository,u => p.RequestParameters);
 					break;
 
 			}
@@ -2746,7 +2809,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case DELETE:
-					if (AllSet(p.RouteValues.Repository)) return _lowLevel.SnapshotDeleteRepositoryAsync<T>(p.RouteValues.Repository,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Repository)) return _lowLevel.SnapshotDeleteRepositoryAsync<T>(p.RouteValues.Repository,u => p.RequestParameters);
 					break;
 
 			}
@@ -2758,7 +2821,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case GET:
-					if (AllSet(p.RouteValues.Repository, p.RouteValues.Snapshot)) return _lowLevel.SnapshotGet<T>(p.RouteValues.Repository,p.RouteValues.Snapshot,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Repository, p.RouteValues.Snapshot)) return _lowLevel.SnapshotGet<T>(p.RouteValues.Repository,p.RouteValues.Snapshot,u => p.RequestParameters);
 					break;
 
 			}
@@ -2770,7 +2833,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case GET:
-					if (AllSet(p.RouteValues.Repository, p.RouteValues.Snapshot)) return _lowLevel.SnapshotGetAsync<T>(p.RouteValues.Repository,p.RouteValues.Snapshot,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Repository, p.RouteValues.Snapshot)) return _lowLevel.SnapshotGetAsync<T>(p.RouteValues.Repository,p.RouteValues.Snapshot,u => p.RequestParameters);
 					break;
 
 			}
@@ -2806,7 +2869,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case POST:
-					if (AllSet(p.RouteValues.Repository, p.RouteValues.Snapshot)) return _lowLevel.SnapshotRestore<T>(p.RouteValues.Repository,p.RouteValues.Snapshot,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Repository, p.RouteValues.Snapshot)) return _lowLevel.SnapshotRestore<T>(p.RouteValues.Repository,p.RouteValues.Snapshot,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -2818,7 +2881,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case POST:
-					if (AllSet(p.RouteValues.Repository, p.RouteValues.Snapshot)) return _lowLevel.SnapshotRestoreAsync<T>(p.RouteValues.Repository,p.RouteValues.Snapshot,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Repository, p.RouteValues.Snapshot)) return _lowLevel.SnapshotRestoreAsync<T>(p.RouteValues.Repository,p.RouteValues.Snapshot,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -2856,7 +2919,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case POST:
-					if (AllSet(p.RouteValues.Repository)) return _lowLevel.SnapshotVerifyRepository<T>(p.RouteValues.Repository,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Repository)) return _lowLevel.SnapshotVerifyRepository<T>(p.RouteValues.Repository,u => p.RequestParameters);
 					break;
 
 			}
@@ -2868,7 +2931,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case POST:
-					if (AllSet(p.RouteValues.Repository)) return _lowLevel.SnapshotVerifyRepositoryAsync<T>(p.RouteValues.Repository,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Repository)) return _lowLevel.SnapshotVerifyRepositoryAsync<T>(p.RouteValues.Repository,u => p.RequestParameters);
 					break;
 
 			}
@@ -2907,18 +2970,66 @@ namespace Nest
 			throw InvalidDispatch("Suggest", p, new [] { POST, GET }, "/_suggest", "/{index}/_suggest");
 		}
 		
+		internal ElasticsearchResponse<T> TasksCancelDispatch<T>(IRequest<TasksCancelRequestParameters> p ) where T : class
+		{
+			switch(p.HttpMethod)
+			{
+				case POST:
+					if (AllSet(p.RouteValues.TaskId)) return _lowLevel.TasksCancel<T>(p.RouteValues.TaskId,u => p.RequestParameters);
+					return _lowLevel.TasksCancel<T>(u => p.RequestParameters);
+
+			}
+			throw InvalidDispatch("TasksCancel", p, new [] { POST }, "/_tasks/_cancel", "/_tasks/{task_id}/_cancel");
+		}
+		
+		internal Task<ElasticsearchResponse<T>> TasksCancelDispatchAsync<T>(IRequest<TasksCancelRequestParameters> p ) where T : class
+		{
+			switch(p.HttpMethod)
+			{
+				case POST:
+					if (AllSet(p.RouteValues.TaskId)) return _lowLevel.TasksCancelAsync<T>(p.RouteValues.TaskId,u => p.RequestParameters);
+					return _lowLevel.TasksCancelAsync<T>(u => p.RequestParameters);
+
+			}
+			throw InvalidDispatch("TasksCancel", p, new [] { POST }, "/_tasks/_cancel", "/_tasks/{task_id}/_cancel");
+		}
+		
+		internal ElasticsearchResponse<T> TasksListDispatch<T>(IRequest<TasksListRequestParameters> p ) where T : class
+		{
+			switch(p.HttpMethod)
+			{
+				case GET:
+					if (AllSet(p.RouteValues.TaskId)) return _lowLevel.TasksList<T>(p.RouteValues.TaskId,u => p.RequestParameters);
+					return _lowLevel.TasksList<T>(u => p.RequestParameters);
+
+			}
+			throw InvalidDispatch("TasksList", p, new [] { GET }, "/_tasks", "/_tasks/{task_id}");
+		}
+		
+		internal Task<ElasticsearchResponse<T>> TasksListDispatchAsync<T>(IRequest<TasksListRequestParameters> p ) where T : class
+		{
+			switch(p.HttpMethod)
+			{
+				case GET:
+					if (AllSet(p.RouteValues.TaskId)) return _lowLevel.TasksListAsync<T>(p.RouteValues.TaskId,u => p.RequestParameters);
+					return _lowLevel.TasksListAsync<T>(u => p.RequestParameters);
+
+			}
+			throw InvalidDispatch("TasksList", p, new [] { GET }, "/_tasks", "/_tasks/{task_id}");
+		}
+		
 		internal ElasticsearchResponse<T> TermvectorsDispatch<T>(IRequest<TermVectorsRequestParameters> p , PostData<object> body) where T : class
 		{
 			switch(p.HttpMethod)
 			{
 				case GET:
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.TermvectorsGet<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.TermvectorsGet<T>(p.RouteValues.Index,p.RouteValues.Type,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.TermvectorsGet<T>(p.RouteValues.Index,p.RouteValues.Type,u => p.RequestParameters);
 					break;
 
 				case POST:
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.Termvectors<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,body,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.Termvectors<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.Termvectors<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -2931,12 +3042,12 @@ namespace Nest
 			{
 				case GET:
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.TermvectorsGetAsync<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.TermvectorsGetAsync<T>(p.RouteValues.Index,p.RouteValues.Type,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.TermvectorsGetAsync<T>(p.RouteValues.Index,p.RouteValues.Type,u => p.RequestParameters);
 					break;
 
 				case POST:
 					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.TermvectorsAsync<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,body,u => p.RequestParameters);
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.TermvectorsAsync<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.TermvectorsAsync<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -2948,7 +3059,7 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case POST:
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.Update<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.Update<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,body,u => p.RequestParameters);
 					break;
 
 			}
@@ -2960,11 +3071,63 @@ namespace Nest
 			switch(p.HttpMethod)
 			{
 				case POST:
-					if (AllSet(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.UpdateAsync<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index, p.RouteValues.Type, p.RouteValues.Id)) return _lowLevel.UpdateAsync<T>(p.RouteValues.Index,p.RouteValues.Type,p.RouteValues.Id,body,u => p.RequestParameters);
 					break;
 
 			}
 			throw InvalidDispatch("Update", p, new [] { POST }, "/{index}/{type}/{id}/_update");
+		}
+		
+		internal ElasticsearchResponse<T> UpdateByQueryDispatch<T>(IRequest<UpdateByQueryRequestParameters> p , PostData<object> body) where T : class
+		{
+			switch(p.HttpMethod)
+			{
+				case POST:
+					if (AllSet(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.UpdateByQuery<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index)) return _lowLevel.UpdateByQuery<T>(p.RouteValues.Index,body,u => p.RequestParameters);
+					break;
+
+			}
+			throw InvalidDispatch("UpdateByQuery", p, new [] { POST }, "/{index}/_update_by_query", "/{index}/{type}/_update_by_query");
+		}
+		
+		internal Task<ElasticsearchResponse<T>> UpdateByQueryDispatchAsync<T>(IRequest<UpdateByQueryRequestParameters> p , PostData<object> body) where T : class
+		{
+			switch(p.HttpMethod)
+			{
+				case POST:
+					if (AllSet(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.UpdateByQueryAsync<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index)) return _lowLevel.UpdateByQueryAsync<T>(p.RouteValues.Index,body,u => p.RequestParameters);
+					break;
+
+			}
+			throw InvalidDispatch("UpdateByQuery", p, new [] { POST }, "/{index}/_update_by_query", "/{index}/{type}/_update_by_query");
+		}
+		
+		internal ElasticsearchResponse<T> DeleteByQueryDispatch<T>(IRequest<DeleteByQueryRequestParameters> p , PostData<object> body) where T : class
+		{
+			switch(p.HttpMethod)
+			{
+				case DELETE:
+					if (AllSet(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.DeleteByQuery<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index)) return _lowLevel.DeleteByQuery<T>(p.RouteValues.Index,body,u => p.RequestParameters);
+					break;
+
+			}
+			throw InvalidDispatch("DeleteByQuery", p, new [] { DELETE }, "/{index}/_query", "/{index}/{type}/_query");
+		}
+		
+		internal Task<ElasticsearchResponse<T>> DeleteByQueryDispatchAsync<T>(IRequest<DeleteByQueryRequestParameters> p , PostData<object> body) where T : class
+		{
+			switch(p.HttpMethod)
+			{
+				case DELETE:
+					if (AllSet(p.RouteValues.Index, p.RouteValues.Type)) return _lowLevel.DeleteByQueryAsync<T>(p.RouteValues.Index,p.RouteValues.Type,body,u => p.RequestParameters);
+					if (AllSetNoFallback(p.RouteValues.Index)) return _lowLevel.DeleteByQueryAsync<T>(p.RouteValues.Index,body,u => p.RequestParameters);
+					break;
+
+			}
+			throw InvalidDispatch("DeleteByQuery", p, new [] { DELETE }, "/{index}/_query", "/{index}/{type}/_query");
 		}
 		
 	}	

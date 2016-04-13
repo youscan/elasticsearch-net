@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Elasticsearch.Net;
+using System;
 
 namespace Nest
 {
@@ -11,34 +12,26 @@ namespace Nest
 			connectionSettings.ThrowIfNull(nameof(connectionSettings));
 			this._connectionSettings = connectionSettings;
 		}
+		public string Resolve<T>() where T : class => this.Resolve(typeof(T));
 
-		public string GetIndexForType<T>()
+		public string Resolve(IndexName i)
 		{
-			return this.GetIndexForType(typeof(T));
+			if (i == null || string.IsNullOrEmpty(i.Name))
+				return this.Resolve(i.Type);
+			return i.Name;
 		}
 
-		public string GetIndexForType(Type type)
+		public string Resolve(Type type)
 		{
+			var indexName = this._connectionSettings.DefaultIndex;
 			var defaultIndices = this._connectionSettings.DefaultIndices;
-
-			if (defaultIndices == null)
-				return this._connectionSettings.DefaultIndex;
-
-			if (type == null)
-				return this._connectionSettings.DefaultIndex;
-
-			string value;
-			if (defaultIndices.TryGetValue(type, out value) && !string.IsNullOrWhiteSpace(value))
-				return value;
-			return this._connectionSettings.DefaultIndex;
-		}
-
-
-		internal string GetIndexForType(IndexName i)
-		{
-			if (i == null) return this.GetIndexForType((Type)null);
-
-			return i.Name ?? this.GetIndexForType(i.Type);
+			if (defaultIndices != null && type != null)
+			{
+				string value;
+				if (defaultIndices.TryGetValue(type, out value) && !string.IsNullOrEmpty(value))
+					indexName = value;
+			}
+			return indexName;
 		}
 	}
 }

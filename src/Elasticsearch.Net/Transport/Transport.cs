@@ -8,8 +8,6 @@ namespace Elasticsearch.Net
 	public class Transport<TConnectionSettings> : ITransport<TConnectionSettings>
 		where TConnectionSettings : IConnectionConfigurationValues
 	{
-		private readonly SemaphoreSlim _semaphore;
-
 		//TODO should all of these be public?
 		public TConnectionSettings Settings { get; }
 		public IDateTimeProvider DateTimeProvider { get; }
@@ -17,7 +15,7 @@ namespace Elasticsearch.Net
 		public IRequestPipelineFactory PipelineProvider { get; }
 
 		/// <summary>
-		/// Transport coordinates the client requests over the connection pool nodes and is in charge of falling over on different nodes 
+		/// Transport coordinates the client requests over the connection pool nodes and is in charge of falling over on different nodes
 		/// </summary>
 		/// <param name="configurationValues">The connectionsettings to use for this transport</param>
 		public Transport(TConnectionSettings configurationValues)
@@ -25,7 +23,7 @@ namespace Elasticsearch.Net
 		{ }
 
 		/// <summary>
-		/// Transport coordinates the client requests over the connection pool nodes and is in charge of falling over on different nodes 
+		/// Transport coordinates the client requests over the connection pool nodes and is in charge of falling over on different nodes
 		/// </summary>
 		/// <param name="configurationValues">The connectionsettings to use for this transport</param>
 		/// <param name="pipelineProvider">In charge of create a new pipeline, safe to pass null to use the default</param>
@@ -47,7 +45,6 @@ namespace Elasticsearch.Net
 			this.PipelineProvider = pipelineProvider ?? new RequestPipelineFactory();
 			this.DateTimeProvider = dateTimeProvider ?? Net.DateTimeProvider.Default;
 			this.MemoryStreamFactory = memoryStreamFactory ?? new MemoryStreamFactory();
-			this._semaphore = new SemaphoreSlim(1, 1);
 		}
 
 		public ElasticsearchResponse<TReturn> Request<TReturn>(HttpMethod method, string path, PostData<object> data = null, IRequestParameters requestParameters = null)
@@ -55,7 +52,7 @@ namespace Elasticsearch.Net
 		{
 			using (var pipeline = this.PipelineProvider.Create(this.Settings, this.DateTimeProvider, this.MemoryStreamFactory, requestParameters))
 			{
-				pipeline.FirstPoolUsage(this._semaphore);
+				pipeline.FirstPoolUsage(this.Settings.BootstrapLock);
 
 				var requestData = new RequestData(method, path, data, this.Settings, requestParameters, this.MemoryStreamFactory);
 				ElasticsearchResponse<TReturn> response = null;
@@ -67,7 +64,7 @@ namespace Elasticsearch.Net
 					try
 					{
 						pipeline.SniffOnStaleCluster();
-						Ping(pipeline, node, seenExceptions);
+						Ping(pipeline, node);
 						response = pipeline.CallElasticsearch<TReturn>(requestData);
 						if (!response.SuccessOrKnownError)
 						{
@@ -103,6 +100,9 @@ namespace Elasticsearch.Net
 				}
 				if (response == null || !response.Success)
 					pipeline.BadResponse(ref response, requestData, seenExceptions);
+
+				this.Settings.OnRequestCompleted?.Invoke(response);
+
 				return response;
 			}
 		}
@@ -112,7 +112,7 @@ namespace Elasticsearch.Net
 		{
 			using (var pipeline = this.PipelineProvider.Create(this.Settings, this.DateTimeProvider, this.MemoryStreamFactory, requestParameters))
 			{
-				await pipeline.FirstPoolUsageAsync(this._semaphore);
+				await pipeline.FirstPoolUsageAsync(this.Settings.BootstrapLock).ConfigureAwait(false);
 
 				var requestData = new RequestData(method, path, data, this.Settings, requestParameters, this.MemoryStreamFactory);
 				ElasticsearchResponse<TReturn> response = null;
@@ -123,13 +123,13 @@ namespace Elasticsearch.Net
 					requestData.Node = node;
 					try
 					{
-						await pipeline.SniffOnStaleClusterAsync();
-						await PingAsync(pipeline, node, seenExceptions);
-						response = await pipeline.CallElasticsearchAsync<TReturn>(requestData);
+						await pipeline.SniffOnStaleClusterAsync().ConfigureAwait(false);
+						await PingAsync(pipeline, node).ConfigureAwait(false);
+						response = await pipeline.CallElasticsearchAsync<TReturn>(requestData).ConfigureAwait(false);
 						if (!response.SuccessOrKnownError)
 						{
 							pipeline.MarkDead(node);
-							await pipeline.SniffOnConnectionFailureAsync();
+							await pipeline.SniffOnConnectionFailureAsync().ConfigureAwait(false);
 						}
 					}
 					catch (PipelineException pipelineException) when (!pipelineException.Recoverable)
@@ -160,11 +160,14 @@ namespace Elasticsearch.Net
 				}
 				if (response == null || !response.Success)
 					pipeline.BadResponse(ref response, requestData, seenExceptions);
+
+				this.Settings.OnRequestCompleted?.Invoke(response);
+
 				return response;
 			}
 		}
 
-		private static void Ping(IRequestPipeline pipeline, Node node, List<PipelineException> seenExceptions)
+		private static void Ping(IRequestPipeline pipeline, Node node)
 		{
 			try
 			{
@@ -173,20 +176,20 @@ namespace Elasticsearch.Net
 			catch (PipelineException e) when (e.Recoverable)
 			{
 				pipeline.SniffOnConnectionFailure();
-				e.RethrowKeepingStackTrace();
+				throw;
 			}
 		}
 
-		private static async Task PingAsync(IRequestPipeline pipeline, Node node, List<PipelineException> seenExceptions)
+		private static async Task PingAsync(IRequestPipeline pipeline, Node node)
 		{
 			try
 			{
-				await pipeline.PingAsync(node);
+				await pipeline.PingAsync(node).ConfigureAwait(false);
 			}
 			catch (PipelineException e) when (e.Recoverable)
 			{
-				await pipeline.SniffOnConnectionFailureAsync();
-				e.RethrowKeepingStackTrace();
+				await pipeline.SniffOnConnectionFailureAsync().ConfigureAwait(false);
+				throw;
 			}
 		}
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Elasticsearch.Net;
 
 namespace Nest
@@ -23,6 +24,7 @@ namespace Nest
 		public string Metric => GetResolved("metric");
 		public string IndexMetric => GetResolved("index_metric");
 		public string Lang => GetResolved("lang");
+		public string TaskId => GetResolved("task_id");
 
 		private string GetResolved(string route)
 		{
@@ -33,12 +35,13 @@ namespace Nest
 
 		private RouteValues Route(string name, IUrlParameter routeValue, bool required = true)
 		{
-			if (routeValue == null)
+			if (routeValue == null && !required)
 			{
 				if (this._routeValues.ContainsKey(name))
 					this._routeValues.Remove(name);
 				return this;
 			}
+			else if (routeValue == null) return this;
 
 			this._routeValues[name] = routeValue;
 			return this;
@@ -47,7 +50,8 @@ namespace Nest
 		{
 			foreach (var kv in _routeValues)
 			{
-				this._resolved[kv.Key] = kv.Value.GetString(settings);
+				var key = kv.Value.GetString(settings);
+				this._resolved[kv.Key] = key.IsNullOrEmpty() ? key : key;
 			}
 		}
 
@@ -66,6 +70,6 @@ namespace Nest
 		{
 			this._resolved.Remove(route);
 			this._routeValues.Remove(route);
-		}	
+		}
 	}
 }

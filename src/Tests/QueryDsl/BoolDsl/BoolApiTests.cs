@@ -18,12 +18,12 @@ using static Nest.Infer;
 
 namespace Tests.QueryDsl.BoolDsl
 {
-
 	internal static class BoolDslTestExtensions
 	{
 		public static QueryContainer Id(this QueryContainerDescriptor<A> q, int id) => q.Term(p => p.Id, id);
 		public static QueryContainer O(this QueryContainerDescriptor<A> q, E option) => q.Term(p => p.Option, option);
 	}
+
 	[CollectionDefinition(IntegrationContext.Bool)]
 	public class BoolCluster : ClusterBase, ICollectionFixture<BoolCluster>
 	{
@@ -54,7 +54,7 @@ namespace Tests.QueryDsl.BoolDsl
 				)
 			);
 			var bulkResponse = client.Bulk(b => b.IndexMany(A.Documents));
-			if (!bulkResponse.IsValid) throw new ApplicationException("Could not bootstrap bool cluster, bulk was invalid");
+			if (!bulkResponse.IsValid) throw new Exception("Could not bootstrap bool cluster, bulk was invalid");
 			client.Refresh(Indices<A>());
 		}
 	}
@@ -64,7 +64,6 @@ namespace Tests.QueryDsl.BoolDsl
 	{
 
 		private readonly BoolCluster _cluster;
-		private IConnectionSettingsValues _settings;
 
 		public BoolsInPractice(BoolCluster cluster)
 		{

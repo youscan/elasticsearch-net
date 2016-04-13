@@ -16,35 +16,22 @@ type ProjectName(msbuild: string) =
             Some "NEST - official high level elasticsearch client"
         | _ -> None
 
-type DotNetFramework = 
-    | NET40 
-    | NET45 
-    static member All = [NET45] 
-    member this.Identifier = 
-        match this with
-        | NET40 -> { MSBuild = "v4.0"; Nuget = "net40"; }
-        | NET45 -> { MSBuild = "v4.5"; Nuget = "net45"; }
-    
-type DotNet45Project =
+type Project =
     | Nest
     | ElasticsearchNet
     static member All = [ElasticsearchNet;  Nest] 
 
-type DotNet40Project =
-    | None
-    static member All = [] 
-
 type DotNetProject = 
-    | DotNet45Project of DotNet45Project
+    | Project of Project
     static member All =
         Seq.concat [
-            DotNet45Project.All |> List.map(fun p -> DotNet45Project p);
+            Project.All |> List.map(fun p -> Project p);
         ]
 
     member this.ProjectName =
         match this with
-        | DotNet45Project net45 ->
-            match net45 with
+        | Project p ->
+            match p with
             | Nest -> ProjectName "Nest"
             | ElasticsearchNet -> ProjectName "Elasticsearch.Net"
    

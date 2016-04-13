@@ -14,9 +14,9 @@ namespace Tests.ClientConcepts.ConnectionPooling.Sniffing
 {
 	public class RoleDetection
 	{
-		/** == Sniffing role detection
+		/**== Sniffing role detection
 		* 
-		* When we sniff the custer state we detect the role of the node whether its master eligable and holds data
+		* When we sniff the cluster state, we detect the role of the node, whether it's master eligible and holds data.
 		* We use this information when selecting a node to perform an API call on.
 		*/
 		[U, SuppressMessage("AsyncUsage", "AsyncFixer001:Unnecessary async/await usage", Justification = "Its a test")]
@@ -26,7 +26,7 @@ namespace Tests.ClientConcepts.ConnectionPooling.Sniffing
 				.Nodes(10)
 				.Sniff(s => s.Fails(Always))
 				.Sniff(s => s.OnPort(9202)
-					.Succeeds(Always, Framework.Cluster.Nodes(8).MasterEligable(9200, 9201, 9202))
+					.Succeeds(Always, Framework.Cluster.Nodes(8).MasterEligible(9200, 9201, 9202))
 				)
 				.SniffingConnectionPool()
 				.AllDefaults()
@@ -36,13 +36,13 @@ namespace Tests.ClientConcepts.ConnectionPooling.Sniffing
 				{
 					pool.Should().NotBeNull();
 					pool.Nodes.Should().HaveCount(10);
-					pool.Nodes.Where(n => n.MasterEligable).Should().HaveCount(10);
+					pool.Nodes.Where(n => n.MasterEligible).Should().HaveCount(10);
 				},
 				AssertPoolAfterCall = (pool) =>
 				{
 					pool.Should().NotBeNull();
 					pool.Nodes.Should().HaveCount(8);
-					pool.Nodes.Where(n => n.MasterEligable).Should().HaveCount(3);
+					pool.Nodes.Where(n => n.MasterEligible).Should().HaveCount(3);
 				}
 			};
 			await audit.TraceStartup();
@@ -77,6 +77,36 @@ namespace Tests.ClientConcepts.ConnectionPooling.Sniffing
 			};
 			await audit.TraceStartup();
 		}
+		[U, SuppressMessage("AsyncUsage", "AsyncFixer001:Unnecessary async/await usage", Justification = "Its a test")]
+		public async Task DetectsFqdn()
+		{
+			var audit = new Auditor(() => Framework.Cluster
+				.Nodes(10)
+				.Sniff(s => s.SucceedAlways()
+					.Succeeds(Always, Framework.Cluster.Nodes(8).StoresNoData(9200, 9201, 9202).SniffShouldReturnFqdn())
+				)
+				.SniffingConnectionPool()
+				.AllDefaults()
+			)
+			{
+				AssertPoolBeforeCall = (pool) =>
+				{
+					pool.Should().NotBeNull();
+					pool.Nodes.Should().HaveCount(10);
+					pool.Nodes.Where(n => n.HoldsData).Should().HaveCount(10);
+					pool.Nodes.Should().OnlyContain(n => n.Uri.Host == "localhost");
+				},
+
+				AssertPoolAfterCall = (pool) =>
+				{
+					pool.Should().NotBeNull();
+					pool.Nodes.Should().HaveCount(8);
+					pool.Nodes.Where(n => n.HoldsData).Should().HaveCount(5);
+					pool.Nodes.Should().OnlyContain(n => n.Uri.Host.StartsWith("fqdn") && !n.Uri.Host.Contains("/"));
+				}
+			};
+			await audit.TraceStartup();
+		}
 	}
 
 	[CollectionDefinition(IntegrationContext.SniffRoleDetection)]
@@ -103,11 +133,11 @@ namespace Tests.ClientConcepts.ConnectionPooling.Sniffing
 		[I] public async Task SniffPicksUpRoles()
 		{
 			var node = SniffAndReturnNode();
-			node.MasterEligable.Should().BeTrue();
+			node.MasterEligible.Should().BeTrue();
 			node.HoldsData.Should().BeFalse();
 
 			node = await SniffAndReturnNodeAsync();
-			node.MasterEligable.Should().BeTrue();
+			node.MasterEligible.Should().BeTrue();
 			node.HoldsData.Should().BeFalse();
 		}
 

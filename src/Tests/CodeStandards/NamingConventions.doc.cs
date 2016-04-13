@@ -3,81 +3,138 @@ using System.Linq;
 using System.Reflection;
 using FluentAssertions;
 using Nest;
+using Tests.Framework;
 
 namespace Tests.CodeStandards
 {
+	/** == Naming Conventions
+	* 
+	* NEST uses the following naming conventions (with _some_ exceptions).
+	*/
 	public class NamingConventions
 	{
-		/**
+		/** === Class Names
+		*
 		* Abstract class names should end with a `Base` suffix
 		*/
-		//[U]
-		public void AbstractClassNamesEndWithBase()
+		[U] public void AbstractClassNamesEndWithBase()
 		{
-			var abstractClasses = Assembly.Load("Nest").GetTypes()
-				.Where(t => t.IsClass && t.IsAbstract && !t.IsSealed)
+			var exceptions = new[]
+			{
+				typeof(DateMath)
+			};
+
+			var abstractClassesNotEndingInBase = typeof(IRequest).Assembly().GetTypes()
+				.Where(t => t.IsClass() && t.IsAbstract() && !t.IsSealed() && !exceptions.Contains(t))
+				.Where(t => !t.Name.Split('`')[0].EndsWith("Base"))
 				.Select(t => t.Name.Split('`')[0])
 				.ToList();
 
-			foreach (var abstractClass in abstractClasses)
-				abstractClass.Should().EndWith("Base");
+			abstractClassesNotEndingInBase.Should().BeEmpty();
 		}
 
 		/**
-		* Request class names should end with "Request"
+		* Class names that end with `Base` suffix are abstract
 		*/
-		//[U]
+		[U] public void ClassNameContainsBaseShouldBeAbstract()
+		{
+			var exceptions = new[] { typeof(DateMath) };
+
+			var baseClassesNotAbstract = typeof(IRequest).Assembly().GetTypes()
+				.Where(t => t.IsClass() && !exceptions.Contains(t))
+				.Where(t => t.Name.Split('`')[0].EndsWith("Base"))
+				.Where(t => !t.IsAbstractClass())
+				.Select(t => t.Name.Split('`')[0])
+				.ToList();
+
+			baseClassesNotAbstract.Should().BeEmpty();
+		}
+
+		/** === Requests and Responses
+		*
+		* Request class names should end with `Request`
+		*/
+		[U]
 		public void RequestClassNamesEndWithRequest()
 		{
-			var types = Assembly.Load("Nest").GetTypes();
-			var requests = types
-				.Where(t => typeof(IRequest).IsAssignableFrom(t))
+			var types = typeof(IRequest).Assembly().GetTypes();
+			var requestsNotEndingInRequest = types
+				.Where(t => typeof(IRequest).IsAssignableFrom(t) && !t.IsAbstract())
+				.Where(t => !typeof(IDescriptor).IsAssignableFrom(t))
+				.Where(t => !t.Name.Split('`')[0].EndsWith("Request"))
 				.Select(t => t.Name.Split('`')[0])
 				.ToList();
-			foreach (var request in requests)
-				request.Should().EndWith("Request");
+
+			requestsNotEndingInRequest.Should().BeEmpty();
 		}
 
 		/**
-		* Response class names should end with "Response"
+		* Response class names should end with `Response`
 		**/
-		//[U]
+		[U]
 		public void ResponseClassNamesEndWithResponse()
 		{
-			var types = Assembly.Load("Nest").GetTypes();
-			var responses = types
-				.Where(t => typeof(IResponse).IsAssignableFrom(t))
+			var types = typeof(IRequest).Assembly().GetTypes();
+			var responsesNotEndingInResponse = types
+				.Where(t => typeof(IResponse).IsAssignableFrom(t) && !t.IsAbstract())
+				.Where(t => !t.Name.Split('`')[0].EndsWith("Response"))
 				.Select(t => t.Name.Split('`')[0])
 				.ToList();
-			foreach (var response in responses)
-				response.Should().EndWith("Response");
+
+			responsesNotEndingInResponse.Should().BeEmpty();
 		}
 
 		/**
 		* Request and Response class names should be one to one in *most* cases.
-		* e.g. ValidateRequest => ValidateResponse, and not ValidateQueryRequest => ValidateResponse
+		* e.g. `ValidateRequest` => `ValidateResponse`, and not `ValidateQueryRequest` => `ValidateResponse`
+		* There are a few exceptions to this rule, most notably the `Cat` prefixed requests and
+		* the `Exists` requests.
 		*/
-		//[U]
+		[U]
 		public void ParityBetweenRequestsAndResponses()
 		{
-			var types = Assembly.Load("Nest").GetTypes();
+			var exceptions = new[] // <1> _Exceptions to the rule_
+			{
+				typeof(DocumentExistsRequest),
+				typeof(DocumentExistsRequest<>),
+				typeof(AliasExistsRequest),
+				typeof(IndexExistsRequest),
+				typeof(TypeExistsRequest),
+				typeof(IndexTemplateExistsRequest),
+				typeof(SearchExistsRequest),
+				typeof(SearchExistsRequest<>),
+				typeof(SearchTemplateRequest),
+				typeof(SearchTemplateRequest<>),
+				typeof(ScrollRequest),
+				typeof(SourceRequest),
+				typeof(SourceRequest<>),
+				typeof(ValidateQueryRequest<>),
+				typeof(GetAliasRequest),
+#pragma warning disable 612, 618
+				typeof(CatNodeattrsRequest),
+#pragma warning restore 612, 618
+				typeof(IndicesShardStoresRequest),
+				typeof(RenderSearchTemplateRequest)
+			};
+
+			var types = typeof(IRequest).Assembly().GetTypes();
 
 			var requests = new HashSet<string>(types
-				.Where(t => t.IsClass && !t.IsAbstract && typeof(IRequest).IsAssignableFrom(t) && !(t.Name.EndsWith("Descriptor")))
+				.Where(t =>
+					t.IsClass() &&
+					!t.IsAbstract() &&
+					typeof(IRequest).IsAssignableFrom(t) &&
+					!typeof(IDescriptor).IsAssignableFrom(t)
+					&& !t.Name.StartsWith("Cat")
+					&& !exceptions.Contains(t))
 				.Select(t => t.Name.Split('`')[0].Replace("Request", ""))
 			);
 
 			var responses = types
-				.Where(t => t.IsClass && !t.IsAbstract && typeof(IResponse).IsAssignableFrom(t))
+				.Where(t => t.IsClass() && !t.IsAbstract() && typeof(IResponse).IsAssignableFrom(t))
 				.Select(t => t.Name.Split('`')[0].Replace("Response", ""));
 
-			// Add any exceptions to the rule here
-			var exceptions = new string[] { "Cat" };
-
-			responses = responses.Where(r => !exceptions.Contains(r)).ToList();
-
-			foreach (var response in responses)
-				requests.Should().Contain(response);
+			requests.Except(responses).Should().BeEmpty();
 		}
 	}
 }

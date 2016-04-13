@@ -10,7 +10,8 @@ namespace Nest
 	{
 		ShardsMetaData Shards { get; }
 		HitsMetaData<T> HitsMetaData { get; }
-		IDictionary<string, IAggregation> Aggregations { get; }
+		IDictionary<string, IAggregate> Aggregations { get; }
+		Profile Profile { get; }
 		AggregationsHelper Aggs { get; }
 		IDictionary<string, Suggest[]> Suggest { get; }
 		int Took { get; }
@@ -20,9 +21,9 @@ namespace Nest
 		long Total { get; }
 		double MaxScore { get; }
 		/// <summary>
-		/// Returns a view on the documents inside the hits that are returned. 
-		/// <para>NOTE: if you use Fields() on the search descriptor .Documents will be empty use 
-		/// .Fields instead or try the 'source filtering' feature introduced in Elasticsearch 1.0 
+		/// Returns a view on the documents inside the hits that are returned.
+		/// <para>NOTE: if you use Fields() on the search descriptor .Documents will be empty use
+		/// .Fields instead or try the 'source filtering' feature introduced in Elasticsearch 1.0
 		/// using .Source() on the search descriptor to get Documents of type T with only certain parts selected
 		/// </para>
 		/// </summary>
@@ -38,7 +39,7 @@ namespace Nest
 	}
 
 	[JsonObject]
-	public class SearchResponse<T> : BaseResponse, ISearchResponse<T> where T : class
+	public class SearchResponse<T> : ResponseBase, ISearchResponse<T> where T : class
 	{
 		internal ServerError MultiSearchError { get; set; }
 		public override IApiCallDetails ApiCall => MultiSearchError != null ? new ApiCallDetailsOverride(base.ApiCall, MultiSearchError) : base.ApiCall;
@@ -51,15 +52,15 @@ namespace Nest
 
 		[JsonProperty(PropertyName = "aggregations")]
 		[JsonConverter(typeof(VerbatimDictionaryKeysJsonConverter))]
-		public IDictionary<string, IAggregation> Aggregations { get; internal set; } = new Dictionary<string, IAggregation>();
-		
+		public IDictionary<string, IAggregate> Aggregations { get; internal set; } = new Dictionary<string, IAggregate>();
+
+		[JsonProperty(PropertyName = "profile")]
+		public Profile Profile { get; internal set; }
+
 		private AggregationsHelper _agg = null;
 		[JsonIgnore]
-		public AggregationsHelper Aggs
-		{
-			get { return _agg ?? (_agg = new AggregationsHelper(this.Aggregations)); }
-		}
-		
+		public AggregationsHelper Aggs => _agg ?? (_agg = new AggregationsHelper(this.Aggregations));
+
 		[JsonProperty(PropertyName = "suggest")]
 		public IDictionary<string, Suggest[]> Suggest { get; internal set; }
 
@@ -79,33 +80,28 @@ namespace Nest
 		public string ScrollId { get; internal set; }
 
 		[JsonIgnore]
-		public long Total { get { return this.HitsMetaData == null ? 0 : this.HitsMetaData.Total; } }
+		public long Total => this.HitsMetaData?.Total ?? 0;
 
 		[JsonIgnore]
-		public double MaxScore { get { return this.HitsMetaData == null ? 0 : this.HitsMetaData.MaxScore; } }
+		public double MaxScore => this.HitsMetaData?.MaxScore ?? 0;
 
-		private IList<T> _documents; 
+		private IList<T> _documents;
 		/// <inheritdoc/>
 		[JsonIgnore]
-		public IEnumerable<T> Documents
-		{
-			get
-			{
-				return this._documents ?? (this._documents = this.Hits
-					.Select(h => h.Source)
-					.Where(d => d != null)
+		public IEnumerable<T> Documents =>
+			this._documents ?? (this._documents = this.Hits
+				.Select(h => h.Source)
+				.ToList());
+
+		[JsonIgnore]
+		public IEnumerable<IHit<T>> Hits => this.HitsMetaData?.Hits ?? Enumerable.Empty<IHit<T>>();
+
+		private IList<FieldValues> _fields;
+		/// <inheritdoc/>
+		public IEnumerable<FieldValues> Fields =>
+				this._fields ?? (this._fields = this.Hits
+					.Select(h => h.Fields)
 					.ToList());
-			}
-		}
-		
-		[JsonIgnore]
-		public IEnumerable<IHit<T>> Hits
-		{
-			get { return this.HitsMetaData != null ? (IEnumerable<IHit<T>>) this.HitsMetaData.Hits : new List<Hit<T>>(); }
-		}
-
-		/// <inheritdoc/>
-		public IEnumerable<FieldValues> Fields { get; set; }
 
 
 		private HighlightDocumentDictionary _highlights = null;
@@ -116,12 +112,12 @@ namespace Nest
 		{
 			get
 			{
-				if (_highlights != null) return _highlights; 
-				
+				if (_highlights != null) return _highlights;
+
 				var dict = new HighlightDocumentDictionary();
 				if (this.HitsMetaData == null || !this.HitsMetaData.Hits.HasAny())
 					return dict;
-				
+
 
 				foreach (var hit in this.HitsMetaData.Hits)
 				{

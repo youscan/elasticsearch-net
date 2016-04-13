@@ -10,7 +10,7 @@ namespace Nest
 
 	public class SingleBucketsPath : IBucketsPath
 	{
-		internal string BucketsPath { get; private set; }
+		public string BucketsPath { get; private set; }
 
 		public SingleBucketsPath(string bucketsPath)
 		{
@@ -22,7 +22,7 @@ namespace Nest
 
 	public interface IMultiBucketsPath : IIsADictionary<string, string>, IBucketsPath { }
 
-	public class MultiBucketsPath : IsADictionary<string, string>, IMultiBucketsPath
+	public class MultiBucketsPath : IsADictionaryBase<string, string>, IMultiBucketsPath
 	{
 		public MultiBucketsPath() : base() { }
 		public MultiBucketsPath(IDictionary<string, string> container) : base(container) { }
@@ -36,7 +36,7 @@ namespace Nest
 	}
 
 	public class MultiBucketsPathDescriptor
-		: IsADictionaryDescriptor<MultiBucketsPathDescriptor, IMultiBucketsPath, string, string>
+		: IsADictionaryDescriptorBase<MultiBucketsPathDescriptor, IMultiBucketsPath, string, string>
 	{
 		public MultiBucketsPathDescriptor() : base(new MultiBucketsPath()) { }
 
@@ -45,7 +45,7 @@ namespace Nest
 
 	public class BucketsPathJsonConverter : JsonConverter
 	{
-		public override bool CanConvert(Type objectType) => 
+		public override bool CanConvert(Type objectType) =>
 			typeof(SingleBucketsPath) == objectType || typeof(MultiBucketsPath) == objectType;
 
 		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)

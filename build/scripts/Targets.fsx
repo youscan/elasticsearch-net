@@ -21,19 +21,27 @@ open Versioning
 open Documentation
 open Releasing
 open Profiling
+open System
+open System.IO
+
+let private buildFailed errors =
+    raise (BuildException("The project build failed.", errors |> List.ofSeq))
+    
+let private testsFailed errors =
+    raise (BuildException("The project tests failed.", errors |> List.ofSeq))
 
 // Default target
 Target "Build" <| fun _ -> traceHeader "STARTING BUILD"
 
 Target "Clean" <| fun _ -> CleanDir Paths.BuildOutput
 
-Target "BuildApp" <| fun _ -> Build.CompileAll()
+Target "BuildApp" <| fun _ -> Build.Compile()
 
-Target "Test"  <| fun _ -> Tests.RunAllUnitTests()
+Target "Test"  <| fun _ -> Tests.RunUnitTests()
+    
+Target "QuickTest"  <| fun _ -> Tests.RunUnitTests()
 
-Target "QuickTest"  <| fun _ -> Tests.RunAllUnitTests()
-
-Target "Integrate"  <| fun _ -> Tests.RunAllIntegrationTests(getBuildParamOrDefault "esversions" "")
+Target "Integrate"  <| fun _ -> Tests.RunIntegrationTests() (getBuildParamOrDefault "esversions" "")
 
 Target "WatchTests"  <| fun _ -> 
     traceFAKE "Starting quick test (incremental compile then test)"
@@ -53,24 +61,29 @@ Target "Benchmark" <| fun _ -> Benchmarker.Run()
 
 Target "QuickCompile"  <| fun _ -> Build.QuickCompile()
 
-Target "CreateKeysIfAbsent" <| fun _ -> Sign.CreateKeysIfAbsent()
-
-Target "Version" <| fun _ -> Versioning.PatchAssemblyInfos()
+Target "Version" <| fun _ -> 
+    Versioning.PatchAssemblyInfos()
+    Versioning.PatchProjectJsons()
 
 Target "Release" <| fun _ -> 
-    Release.PackAll()
+    Release.PatchReleaseNotes()
+    Release.PackAllDnx()   
     Sign.ValidateNugetDllAreSignedCorrectly()
+    Versioning.ValidateArtifacts()
 
-Target "Nightly" <| fun _ -> trace "build nightly" 
+Target "Canary" <| fun _ -> 
+    trace "Running canary build" 
+    let apiKey = (getBuildParam "apikey");
+    if (not (String.IsNullOrWhiteSpace apiKey) || apiKey = "ignore") then Release.PublishCanaryBuild apiKey
 
 BuildFailureTarget "NotifyTestFailures" <| fun _ -> Tests.Notify() |> ignore
 
+
 // Dependencies
 "Clean" 
-  ==> "CreateKeysIfAbsent"
   =?> ("Version", hasBuildParam "version")
   ==> "BuildApp"
-  =?> ("Test", (not (hasBuildParam "skiptests")))
+  =?> ("Test", (not ((getBuildParam "skiptests") = "1")))
   ==> "Build"
 
 "Clean" 
@@ -81,10 +94,9 @@ BuildFailureTarget "NotifyTestFailures" <| fun _ -> Tests.Notify() |> ignore
   ==> "BuildApp"
   ==> "Benchmark"
 
-"CreateKeysIfAbsent"
-  ==> "Version"
+"Version"
   ==> "Release"
-  ==> "Nightly"
+  ==> "Canary"
 
 "QuickCompile"
   ==> "QuickTest"

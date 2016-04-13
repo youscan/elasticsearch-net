@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -10,16 +11,16 @@ namespace Tests.ClientConcepts.ConnectionPooling.RoundRobin
 {
 	public class RoundRobin
 	{
-		/** Round Robin
-		 * Each connection pool round robins over the `live` nodes, to evenly distribute the load over all known nodes.
+		/** == Round Robin
+		 * <<sniffing-connection-pool, Sniffing>> and <<static-connection-pool, Static>> connection pools
+		 * round robin over the `live` nodes to evenly distribute request load over all known nodes.
 		 */
 
-		/** == GetNext
-		* GetNext is implemented in a lock free thread safe fashion, meaning each callee gets returned its own cursor to advance
+		/** === GetNext
+		* `GetNext` is implemented in a lock free thread safe fashion, meaning each callee gets returned its own cursor to advance
 		* over the internal list of nodes. This to guarantee each request that needs to fall over tries all the nodes without
 		* suffering from noisy neighboors advancing a global cursor.
 		*/
-
 		protected int NumberOfNodes = 10;
 
 		[U] public void EachViewStartsAtNexPositionAndWrapsOver()
@@ -33,10 +34,10 @@ namespace Tests.ClientConcepts.ConnectionPooling.RoundRobin
 		}
 
 		public void AssertCreateView(IConnectionPool pool)
-		{ 
+		{
 			/**
-			* Here we have setup a static connection pool seeded with 10 nodes. We force randomizationOnStartup to false
-			* so that we can test the nodes being returned are int the order we expect them to. 
+			* Here we have setup a static connection pool seeded with 10 nodes. We force randomization OnStartup to false
+			* so that we can test the nodes being returned are int the order we expect them to.
 			* So what order we expect? Imagine the following:
 			*
 			* Thread A calls GetNext first without a local cursor and takes the current from the internal global cursor which is 0.
@@ -52,18 +53,18 @@ namespace Tests.ClientConcepts.ConnectionPooling.RoundRobin
 			var expectedOrder = Enumerable.Range(9200, NumberOfNodes);
 			startingPositions.Should().ContainInOrder(expectedOrder);
 
-			/** 
+			/**
 			* What the above code just proved is that each call to GetNext(null) gets assigned the next available node.
-			* 
+			*
 			* Lets up the ante:
 			* - call get next over `NumberOfNodes * 2` threads
-			* - on each thread call getnext `NumberOfNodes * 10` times using a local cursor. 
-			* We'll validate that each thread sees all the nodes and they they wrap over e.g after node 9209 
+			* - on each thread call getnext `NumberOfNodes * 10` times using a local cursor.
+			* We'll validate that each thread sees all the nodes and they they wrap over e.g after node 9209
 			* comes 9200 again
 			*/
-			startingPositions = new List<int>();
+			var threadedStartPositions = new ConcurrentBag<int>();
 			var threads = Enumerable.Range(0, 20)
-				.Select(i => CreateThreadCallingGetNext(pool, startingPositions))
+				.Select(i => CreateThreadCallingGetNext(pool, threadedStartPositions))
 				.ToList();
 
 			foreach (var t in threads) t.Start();
@@ -73,12 +74,12 @@ namespace Tests.ClientConcepts.ConnectionPooling.RoundRobin
 			* Each thread reported the first node it started off lets make sure we see each node twice as the first node
 			* because we started `NumberOfNodes * 2` threads
 			*/
-			var grouped = startingPositions.GroupBy(p => p);
+			var grouped = threadedStartPositions.GroupBy(p => p).ToList();
 			grouped.Count().Should().Be(NumberOfNodes);
 			grouped.Select(p => p.Count()).Should().OnlyContain(p => p == 2);
 		}
 
-		public Thread CreateThreadCallingGetNext(IConnectionPool pool, List<int> startingPositions) => new Thread(() =>
+		public Thread CreateThreadCallingGetNext(IConnectionPool pool, ConcurrentBag<int> startingPositions) => new Thread(() =>
 		{
 			/** CallGetNext is a generator that calls GetNext() indefinitely using a local cursor */
 			var seenPorts = CallGetNext(pool).Take(NumberOfNodes * 10).ToList();
@@ -90,6 +91,7 @@ namespace Tests.ClientConcepts.ConnectionPooling.RoundRobin
 				port.Should().Be(9200 + (i++ % NumberOfNodes));
 		});
 
+		//hide
 		private IEnumerable<int> CallGetNext(IConnectionPool pool)
 		{
 			foreach(var n in pool.CreateView()) yield return n.Uri.Port;

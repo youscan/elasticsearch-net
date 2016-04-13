@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Elasticsearch.Net;
 using FluentAssertions;
@@ -179,10 +180,166 @@ namespace Tests.Search.Search
 			response.Hits.Count().Should().BeGreaterThan(0);
 			response.Hits.First().Should().NotBeNull();
 			response.Hits.First().Fields.ValueOf<Project, string>(p => p.Name).Should().NotBeNullOrEmpty();
-			response.Hits.First().Fields.ValueOf<Project, int>(p => p.NumberOfCommits).Should().BeGreaterThan(0);
+			response.Hits.First().Fields.ValueOf<Project, int?>(p => p.NumberOfCommits).Should().BeGreaterThan(0);
 			response.Aggregations.Count.Should().BeGreaterThan(0);
 			var startDates = response.Aggs.Terms("startDates");
 			startDates.Should().NotBeNull();
+		}
+	}
+
+	[Collection(IntegrationContext.ReadOnly)]
+	public class SearchApiContainingConditionlessQueryContainerTests : SearchApiTests
+	{
+		public SearchApiContainingConditionlessQueryContainerTests(ReadOnlyCluster cluster, EndpointUsage usage) : base(cluster, usage) { }
+
+		protected override object ExpectJson => new
+		{
+			query = new
+			{
+				@bool = new {
+					must = new object[] { new { query_string = new { query = "query" } } },
+					should = new object[] { new { query_string = new { query = "query" } } },
+					must_not = new object[] { new { query_string = new { query = "query" } } }
+				}
+			}
+		};
+
+		protected override Func<SearchDescriptor<Project>, ISearchRequest> Fluent => s => s
+			.Query(q => q
+				.Bool(b => b
+					.Must(
+						m => m.QueryString(qs => qs.Query("query")),
+						m => m.QueryString(qs => qs.Query(string.Empty)),
+						m => m.QueryString(qs => qs.Query(null)),
+						m => new QueryContainer(),
+						null
+					)
+					.Should(
+						m => m.QueryString(qs => qs.Query("query")),
+						m => m.QueryString(qs => qs.Query(string.Empty)),
+						m => m.QueryString(qs => qs.Query(null)),
+						m => new QueryContainer(),
+						null
+					)
+					.MustNot(
+						m => m.QueryString(qs => qs.Query("query")),
+						m => m.QueryString(qs => qs.Query(string.Empty)),
+						m => m.QueryString(qs => qs.Query(null)),
+						m => new QueryContainer(),
+						null
+					)
+				)
+			);
+
+		protected override SearchRequest<Project> Initializer => new SearchRequest<Project>()
+		{
+			Query = new BoolQuery
+			{
+				Must = new List<QueryContainer>
+				{
+					new QueryStringQuery{ Query = "query" },
+					new QueryStringQuery{ Query = string.Empty },
+					new QueryStringQuery{ Query =  null },
+					new QueryContainer(),
+					null
+				},
+				Should = new List<QueryContainer>
+				{
+					new QueryStringQuery{ Query = "query" },
+					new QueryStringQuery{ Query = string.Empty },
+					new QueryStringQuery{ Query =  null },
+					new QueryContainer(),
+					null
+				},
+				MustNot = new List<QueryContainer>
+				{
+					new QueryStringQuery{ Query = "query" },
+					new QueryStringQuery{ Query = string.Empty },
+					new QueryStringQuery{ Query =  null },
+					new QueryContainer(),
+					null
+				}
+			}
+		};
+
+		protected override void ExpectResponse(ISearchResponse<Project> response)
+		{
+			response.IsValid.Should().BeTrue();
+		}
+	}
+
+	[Collection(IntegrationContext.ReadOnly)]
+	public class SearchApiNullQueryContainerTests : SearchApiTests
+	{
+		public SearchApiNullQueryContainerTests(ReadOnlyCluster cluster, EndpointUsage usage) : base(cluster, usage) { }
+
+		protected override object ExpectJson => new {};
+
+		protected override Func<SearchDescriptor<Project>, ISearchRequest> Fluent => s => s
+			.Query(q => q
+				.Bool(b => b
+					.Must((Func<QueryContainerDescriptor<Project>,QueryContainer>)null)
+					.Should((Func<QueryContainerDescriptor<Project>, QueryContainer>)null)
+					.MustNot((Func<QueryContainerDescriptor<Project>, QueryContainer>)null)
+				)
+			);
+
+		protected override SearchRequest<Project> Initializer => new SearchRequest<Project>()
+		{
+			Query = new BoolQuery
+			{
+				Must = null,
+				Should = null,
+				MustNot = null
+			}
+		};
+
+		protected override void ExpectResponse(ISearchResponse<Project> response)
+		{
+			response.IsValid.Should().BeTrue();
+		}
+	}
+
+	[Collection(IntegrationContext.ReadOnly)]
+	public class SearchApiNullQueriesInQueryContainerTests : SearchApiTests
+	{
+		public SearchApiNullQueriesInQueryContainerTests(ReadOnlyCluster cluster, EndpointUsage usage) : base(cluster, usage) { }
+
+		protected override object ExpectJson => new
+		{
+			query = new
+			{
+				@bool = new { }
+			}
+		};
+
+		// There is no *direct equivalent* to a query container collection only with a null querycontainer
+		// since the fluent methods filter them out
+		protected override Func<SearchDescriptor<Project>, ISearchRequest> Fluent => s => s
+			.Query(q => q
+				.Bool(b =>
+				{
+					IBoolQuery bq = b;
+					bq.Must = new QueryContainer[] {null};
+					bq.Should = new QueryContainer[] {null};
+					bq.MustNot = new QueryContainer[] {null};
+					return bq;
+				})
+			);
+
+		protected override SearchRequest<Project> Initializer => new SearchRequest<Project>()
+		{
+			Query = new BoolQuery
+			{
+				Must = new QueryContainer[] { null },
+				Should = new QueryContainer[] { null },
+				MustNot = new QueryContainer[] { null }
+			}
+		};
+
+		protected override void ExpectResponse(ISearchResponse<Project> response)
+		{
+			response.IsValid.Should().BeTrue();
 		}
 	}
 }

@@ -113,6 +113,9 @@ namespace Tests.Framework.Integration
 					.Map<Project>(MapProject)
 					.Map<CommitActivity>(m => m
 						.Parent<Project>()
+						.TimestampField(t => t
+							.Enabled()
+						)
 						.Properties(props => props
 							.Object<Developer>(o => o
 								.Name(p => p.Committer)
@@ -127,15 +130,26 @@ namespace Tests.Framework.Integration
 		}
 
 		public static TypeMappingDescriptor<Project> MapProject(TypeMappingDescriptor<Project> m) => m
+			.TimestampField(t => t
+				.Enabled()
+			)
 			.Properties(props => props
 				.String(s => s
-					.Name(p => p.Name).NotAnalyzed()
+					.Name(p => p.Name)
+					.NotAnalyzed()
 					.Fields(fs => fs
+						.String(ss => ss.Name("standard").Analyzer("standard"))
 						.Completion(cm => cm.Name("suggest"))
 					)
 				)
 				.Date(d => d.Name(p => p.StartedOn))
-				.String(d => d.Name(p => p.State).NotAnalyzed())
+				.String(d => d
+					.Name(p => p.State)
+					.NotAnalyzed()
+					.Fields(fs => fs
+						.String(st => st.Name("offsets").IndexOptions(IndexOptions.Offsets))
+					)
+				)
 				.Nested<Tag>(mo => mo
 					.Name(p => p.Tags)
 					.Properties(TagProperties)

@@ -11,7 +11,7 @@ nuget RazorMachine 2.6.1
 //tests
 nuget xunit 
 nuget FluentAssertions 
-nuget Bogus 
+nuget Bogus prerelease
 nuget DiffPlex 
 
 // profiling / benchmarking
@@ -26,13 +26,17 @@ nuget Rx-Linq
 nuget Rx-Main
 nuget Rx-PlatformServices
 
-group build
-    
-	source https://www.nuget.org/api/v2
+source https://api.nuget.org/v3/index.json
 
-	nuget FAKE
+nuget AsciiDocNet
+
+group build
+
+    source https://www.nuget.org/api/v2
+
+    nuget FAKE
     nuget FSharp.Data
-    nuget GitLink
+    nuget GitLink prerelease
     nuget node.js
-	nuget npm
+    nuget npm
     nuget xunit.runner.console

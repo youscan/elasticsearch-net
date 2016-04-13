@@ -14,6 +14,10 @@ namespace Tests.Framework
 		public List<IClientCallRule> ClientCallRules { get; } = new List<IClientCallRule>();
 		public TestableDateTimeProvider DateTimeProvider { get; } = new TestableDateTimeProvider();
 
+		private bool _sniffReturnsFqdn = false;
+		public bool SniffShouldReturnFqnd => _sniffReturnsFqdn;
+			
+
 		public IReadOnlyList<Node> Nodes => _nodes;
 
 		public VirtualCluster(IEnumerable<Node> nodes)
@@ -21,10 +25,16 @@ namespace Tests.Framework
 			this._nodes = nodes.ToList();
 		}
 
-		public VirtualCluster MasterEligable(params int[] ports)
+		public VirtualCluster SniffShouldReturnFqdn()
+		{
+			_sniffReturnsFqdn = true;
+			return this;
+		}
+
+		public VirtualCluster MasterEligible(params int[] ports)
 		{
 			foreach (var node in this._nodes.Where(n => !ports.Contains(n.Uri.Port)))
-				node.MasterEligable = false;
+				node.MasterEligible = false;
 			return this;
 		}
 
@@ -68,6 +78,12 @@ namespace Tests.Framework
 			var nodes = seedNodesSelector?.Invoke(this._nodes) ?? this._nodes;
 			return new SealedVirtualCluster(this, new SniffingConnectionPool(nodes, randomize: false, dateTimeProvider: this.DateTimeProvider), this.DateTimeProvider);
 		}
-	}
+
+        public SealedVirtualCluster StickyConnectionPool(Func<IList<Node>, IEnumerable<Node>> seedNodesSelector = null)
+        {
+            var nodes = seedNodesSelector?.Invoke(this._nodes) ?? this._nodes;
+            return new SealedVirtualCluster(this, new StickyConnectionPool(nodes, dateTimeProvider: this.DateTimeProvider), this.DateTimeProvider);
+        }
+    }
 
 }

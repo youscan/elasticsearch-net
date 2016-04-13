@@ -16,6 +16,8 @@ namespace Nest
 		string Id { get; }
 		string Parent { get; }
 		string Routing { get; }
+		long? Timestamp { get; }
+		long? Ttl { get; }
 		IEnumerable<object> Sorts { get; }
 		HighlightFieldDictionary Highlights { get; }
 		Explanation Explanation { get; }
@@ -35,11 +37,12 @@ namespace Nest
 
 		[JsonProperty(PropertyName = "_index")]
 		public string Index { get; internal set; }
-		
+
 		[JsonProperty(PropertyName = "inner_hits")]
 		[JsonConverter(typeof(VerbatimDictionaryKeysJsonConverter))]
 		public IDictionary<string, InnerHitsResult> InnerHits { get; internal set; }
-		
+
+		// TODO make this nullable for 5.0
 		[JsonProperty(PropertyName = "_score")]
 		public double Score { get; set; }
 
@@ -57,6 +60,12 @@ namespace Nest
 
 		[JsonProperty(PropertyName = "_routing")]
 		public string Routing { get; internal set; }
+
+		[JsonProperty(PropertyName = "_timestamp")]
+		public long? Timestamp { get; internal set; }
+
+		[JsonProperty(PropertyName = "_ttl")]
+		public long? Ttl { get; internal set; }
 
 		[JsonProperty(PropertyName = "sort")]
 		public IEnumerable<object> Sorts { get; internal set; }

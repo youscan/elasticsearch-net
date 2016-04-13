@@ -34,23 +34,24 @@ namespace Tests.Framework
 				.Ignore(p => p.PrivateValue)
 				.Rename(p => p.OnlineHandle, "nickname")
 			)
-			//We try and fetch the test name during integration tests when running fiddler to send the name 
+			//We try and fetch the test name during integration tests when running fiddler to send the name
 			//as the TestMethod header, this allows us to quickly identify which test sent which request
 			.GlobalHeaders(new NameValueCollection
 			{
 				{ "TestMethod", ExpensiveTestNameForIntegrationTests() }
 			});
 
-			
+
 		public static ConnectionSettings CreateSettings(
-			Func<ConnectionSettings, ConnectionSettings> modifySettings = null, 
-			int port = 9200, 
+			Func<ConnectionSettings, ConnectionSettings> modifySettings = null,
+			int port = 9200,
 			bool forceInMemory = false,
-			Func<Uri, IConnectionPool> createPool = null
+			Func<Uri, IConnectionPool> createPool = null,
+			Func<ConnectionSettings, IElasticsearchSerializer> serializerFactory = null
 			)
 		{
 			createPool = createPool ?? (u => new SingleNodeConnectionPool(u));
-			var defaultSettings = DefaultSettings(new ConnectionSettings(createPool(CreateNode(port)), CreateConnection(forceInMemory: forceInMemory)));
+			var defaultSettings = DefaultSettings(new ConnectionSettings(createPool(CreateNode(port)), CreateConnection(forceInMemory: forceInMemory), serializerFactory));
 			var settings = modifySettings != null ? modifySettings(defaultSettings) : defaultSettings;
 			return settings;
 		}
@@ -58,28 +59,51 @@ namespace Tests.Framework
 		public static IElasticClient GetInMemoryClient(Func<ConnectionSettings, ConnectionSettings> modifySettings = null, int port = 9200) =>
 			new ElasticClient(CreateSettings(modifySettings, port, forceInMemory: true));
 
+		public static IElasticClient GetInMemoryClient(Func<ConnectionSettings, ConnectionSettings> modifySettings, Func<ConnectionSettings, IElasticsearchSerializer> serializerFactory) =>
+			new ElasticClient(CreateSettings(modifySettings, forceInMemory: true, serializerFactory: serializerFactory));
+
 		public static IElasticClient GetClient(
 			Func<ConnectionSettings, ConnectionSettings> modifySettings = null, int port = 9200, Func<Uri, IConnectionPool> createPool = null) =>
 			new ElasticClient(CreateSettings(modifySettings, port, forceInMemory: false, createPool: createPool));
 
 		public static Uri CreateNode(int? port = null) =>
-			new UriBuilder("http", (RunningFiddler) ? "ipv4.fiddler" : "localhost", port.GetValueOrDefault(9200)).Uri;
+			new UriBuilder("http", Host, port.GetValueOrDefault(9200)).Uri;
 
-		public static IConnection CreateConnection(bool forceInMemory = false) =>
-			Configuration.RunIntegrationTests && !forceInMemory ? new HttpConnection() : new InMemoryConnection();
+		public static string Host => (RunningFiddler) ? "ipv4.fiddler" : "localhost";
 
-		public static IElasticClient GetFixedReturnClient(object responseJson)
+		public static IConnection CreateConnection(ConnectionSettings settings = null, bool forceInMemory = false) =>
+			Configuration.RunIntegrationTests && !forceInMemory
+				? ((IConnection)new HttpConnection())
+				: new InMemoryConnection();
+
+		public static IElasticClient GetFixedReturnClient(
+			object response,
+			int statusCode = 200,
+			Func<ConnectionSettings, ConnectionSettings> modifySettings = null,
+			string contentType = "application/json",
+			Exception exception = null)
 		{
 			var serializer = new JsonNetSerializer(new ConnectionSettings());
 			byte[] fixedResult;
-			using (var ms = new MemoryStream())
+
+			if (contentType == "application/json")
 			{
-				serializer.Serialize(responseJson, ms);
-				fixedResult = ms.ToArray();
+				using (var ms = new MemoryStream())
+				{
+					serializer.Serialize(response, ms);
+					fixedResult = ms.ToArray();
+				}
 			}
-			var connection = new InMemoryConnection(fixedResult);
+			else
+			{
+				fixedResult = Encoding.UTF8.GetBytes(response.ToString());
+			}
+
+			var connection = new InMemoryConnection(fixedResult, statusCode, exception);
 			var connectionPool = new SingleNodeConnectionPool(new Uri("http://localhost:9200"));
-			var settings = new ConnectionSettings(connectionPool, connection);
+			var defaultSettings = new ConnectionSettings(connectionPool, connection)
+				.DefaultIndex("default-index");
+			var settings = (modifySettings != null) ? modifySettings(defaultSettings) : defaultSettings;
 			return new ElasticClient(settings);
 		}
 
@@ -87,21 +111,27 @@ namespace Tests.Framework
 		{
 			if (!(RunningFiddler && Configuration.RunIntegrationTests)) return "ignore";
 
+#if DOTNETCORE
+			return "TODO: Work out how to get test name. Maybe Environment.StackTrace?";
+#else
 			var st = new StackTrace();
 			var types = GetTypes(st);
 			return (types.Select(f => f.FullName).LastOrDefault() ?? "Seeder").Split('.').Last();
+#endif
 		}
 
+#if !DOTNETCORE
 		private static List<Type> GetTypes(StackTrace st)
 		{
 			var types = (from f in st.GetFrames()
 						 let method = f.GetMethod()
 						 where method != null
 						 let type = method.DeclaringType
-						 where type.FullName.StartsWith("Tests.") && !type.FullName.StartsWith("Tests.Framework.")
+						 where type != null && type.FullName.StartsWith("Tests.") && !type.FullName.StartsWith("Tests.Framework.")
 						 select type).ToList();
 			return types;
 		}
+#endif
 
 		private static ITestConfiguration LoadConfiguration()
 		{
@@ -110,7 +140,17 @@ namespace Tests.Framework
 			if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TARGET")))
 				return new EnvironmentConfiguration();
 
-			return new YamlConfiguration(@"..\..\tests.yaml");
+			var directoryInfo = new DirectoryInfo(Directory.GetCurrentDirectory());
+
+			// If running the classic .NET solution, tests run from bin/{config} directory,
+			// but when running DNX solution, tests run from the test project root
+			var yamlConfigurationPath = directoryInfo.Name == "Tests" &&
+										directoryInfo.Parent != null &&
+										directoryInfo.Parent.Name == "src"
+				? "tests.yaml"
+				: @"..\..\..\tests.yaml";
+
+			return new YamlConfiguration(yamlConfigurationPath);
 		}
 	}
 }

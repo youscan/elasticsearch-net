@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace CodeGeneration.LowLevelClient
@@ -8,30 +9,28 @@ namespace CodeGeneration.LowLevelClient
 	{
 		static void Main(string[] args)
 		{
-			var useCache = args.Length > 0 && args[0] == "cache";
+			bool redownloadCoreSpecification = false;
+			string downloadBranch = "master";
 
-			if (!useCache)
-				ApiGenerator.GenerateEndpointFiles();
+			var answer = "invalid";
+			while (answer != "y" && answer != "n" && answer != "")
+			{
+				Console.Write("Download online rest specifications? [Y/N] (default N): ");
+				answer = Console.ReadLine()?.Trim().ToLowerInvariant();
+				redownloadCoreSpecification = answer == "y";
+			}
+			if (redownloadCoreSpecification)
+			{
+				Console.Write("Branch to download specification from (default master): ");
+				downloadBranch = Console.ReadLine()?.Trim();
+			}
 
-			var spec = ApiGenerator.GetRestApiSpec();
+			if (redownloadCoreSpecification)
+				RestSpecDownloader.Download(downloadBranch);
 
-			ApiGenerator.GenerateClientInterface(spec);
-
-			ApiGenerator.GenerateRequestParameters(spec);
-
-			ApiGenerator.GenerateRequestParametersExtensions(spec);
-
-			ApiGenerator.GenerateDescriptors(spec);
-
-			ApiGenerator.GenerateRequests(spec);
-
-			ApiGenerator.GenerateEnums(spec);
-
-			ApiGenerator.GenerateRawClient(spec);
-
-			ApiGenerator.GenerateRawDispatch(spec);
-
-			Console.WriteLine("Found {0} api documentation endpoints", spec.Endpoints.Count);
+			ApiGenerator.Generate("Core", "DeleteByQuery");
+			//ApiGenerator.Generate("Core", "Graph", "License");
+			//ApiGenerator.Generate(); //generates everything under ApiSpecification
 		}
 
 	}

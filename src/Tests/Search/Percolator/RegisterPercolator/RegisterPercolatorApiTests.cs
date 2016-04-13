@@ -11,7 +11,7 @@ using Xunit;
 namespace Tests.Search.Percolator.RegisterPercolator
 {
 	[Collection(IntegrationContext.Indexing)]
-	public class RegisterPercolatorApiTests : ApiIntegrationTestBase<IRegisterPercolateResponse, IRegisterPercolatorRequest, RegisterPercolatorDescriptor<Project>, RegisterPercolatorRequest>
+	public class RegisterPercolatorApiTests : ApiIntegrationTestBase<IRegisterPercolatorResponse, IRegisterPercolatorRequest, RegisterPercolatorDescriptor<Project>, RegisterPercolatorRequest>
 	{
 		public RegisterPercolatorApiTests(IndexingCluster cluster, EndpointUsage usage) : base(cluster, usage) { }
 
@@ -47,10 +47,11 @@ namespace Tests.Search.Percolator.RegisterPercolator
 				match = new { name = new { query = "nest" } }
 			},
 			language = "c#",
-			commits = 5000
+			commits = 5000,
+			project = Project.Instance
 		};
 
-		protected override void ExpectResponse(IRegisterPercolateResponse response)
+		protected override void ExpectResponse(IRegisterPercolatorResponse response)
 		{
 			response.Created.Should().BeTrue();
 			response.Index.Should().NotBeNullOrEmpty();
@@ -70,6 +71,7 @@ namespace Tests.Search.Percolator.RegisterPercolator
 			.Metadata(md => md
 				.Add("language", "c#")
 				.Add("commits", 5000)
+				.Add("project", Project.Instance)
 			);
 
 		protected override RegisterPercolatorRequest Initializer => new RegisterPercolatorRequest(this.CallIsolatedValue + "-index", this.CallIsolatedValue)
@@ -82,7 +84,8 @@ namespace Tests.Search.Percolator.RegisterPercolator
 			Metadata = new Dictionary<string, object>
 			{
 				{ "language", "c#" },
-				{ "commits", 5000 }
+				{ "commits", 5000 },
+				{ "project", Project.Instance }
 			}
 		};
 	}

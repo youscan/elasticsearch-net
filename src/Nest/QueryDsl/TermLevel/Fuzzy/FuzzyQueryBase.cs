@@ -30,7 +30,7 @@ namespace Nest
 	internal static class FuzzyQueryBase
 	{
 		internal static bool IsConditionless<TValue, TFuzziness>(IFuzzyQuery<TValue, TFuzziness> fuzzy) => 
-			fuzzy == null || fuzzy.Value == null || fuzzy.Fuzziness == null || fuzzy.Field == null;
+			fuzzy == null || fuzzy.Value == null || fuzzy.Field == null;
 	}
 
 	public abstract class FuzzyQueryBase<TValue, TFuzziness> : FieldNameQueryBase, IFuzzyQuery<TValue, TFuzziness>
@@ -53,7 +53,7 @@ namespace Nest
 
 	}
 
-	public class FuzzyQueryDescriptorBase<TDescriptor, T, TValue, TFuzziness> 
+	public abstract class FuzzyQueryDescriptorBase<TDescriptor, T, TValue, TFuzziness> 
 		: FieldNameQueryDescriptorBase<TDescriptor, IFuzzyQuery<TValue, TFuzziness>, T> , IFuzzyQuery<TValue, TFuzziness>
 		where T : class
 		where TDescriptor : FieldNameQueryDescriptorBase<TDescriptor, IFuzzyQuery<TValue, TFuzziness>, T>, IFuzzyQuery<TValue, TFuzziness>

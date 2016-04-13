@@ -27,7 +27,7 @@ namespace Nest
 
 		[JsonProperty(PropertyName = "lowercase_expanded_terms")]
 		bool? LowercaseExpendedTerms { get; set; }
-		
+
 		[JsonProperty(PropertyName = "lenient")]
 		bool? Lenient { get; set; }
 
@@ -53,12 +53,11 @@ namespace Nest
 		public MinimumShouldMatch MinimumShouldMatch { get; set; }
 
 		internal override void WrapInContainer(IQueryContainer c) => c.SimpleQueryString = this;
-		internal static bool IsConditionless(ISimpleQueryStringQuery q) => 
-			q.Fields == null || q.Query.IsNullOrEmpty();
+		internal static bool IsConditionless(ISimpleQueryStringQuery q) => q.Query.IsNullOrEmpty();
 	}
 
-	public class SimpleQueryStringQueryDescriptor<T> 
-		: QueryDescriptorBase<SimpleQueryStringQueryDescriptor<T>, ISimpleQueryStringQuery> 
+	public class SimpleQueryStringQueryDescriptor<T>
+		: QueryDescriptorBase<SimpleQueryStringQueryDescriptor<T>, ISimpleQueryStringQuery>
 		, ISimpleQueryStringQuery where T : class
 	{
 		protected override bool Conditionless => SimpleQueryStringQuery.IsConditionless(this);
@@ -75,6 +74,8 @@ namespace Nest
 
 		public SimpleQueryStringQueryDescriptor<T> Fields(Func<FieldsDescriptor<T>, IPromise<Fields>> fields) =>
 			Assign(a => a.Fields = fields?.Invoke(new FieldsDescriptor<T>())?.Value);
+
+		public SimpleQueryStringQueryDescriptor<T> Fields(Fields fields) => Assign(a => a.Fields = fields);
 
 		public SimpleQueryStringQueryDescriptor<T> Query(string query) => Assign(a => a.Query = query);
 

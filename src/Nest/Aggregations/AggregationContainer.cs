@@ -7,7 +7,7 @@ using Nest.Aggregations.Visitor;
 namespace Nest
 {
 	[JsonConverter(typeof(VerbatimDictionaryKeysJsonConverter))]
-	public class AggregationDictionary : IsADictionary<string, IAggregationContainer>
+	public class AggregationDictionary : IsADictionaryBase<string, IAggregationContainer>
 	{
 		public AggregationDictionary() : base() { }
 		public AggregationDictionary(IDictionary<string, IAggregationContainer> container) : base(container) { }
@@ -23,7 +23,7 @@ namespace Nest
 
 		public static implicit operator AggregationDictionary(AggregationBase aggregator)
 		{
-			IAggregationBase b;
+			IAggregation b;
 			var combinator = aggregator as AggregationCombinator;
 			if (combinator != null)
 			{
@@ -50,6 +50,10 @@ namespace Nest
 	[JsonConverter(typeof(ReadAsTypeJsonConverter<AggregationContainer>))]
 	public interface IAggregationContainer
 	{
+		[JsonProperty("meta")]
+		[JsonConverter(typeof(VerbatimDictionaryKeysJsonConverter))]
+		IDictionary<string, object> Meta { get; set; }
+
 		[JsonProperty("avg")]
 		IAverageAggregation Average { get; set; }
 
@@ -152,6 +156,15 @@ namespace Nest
 		[JsonProperty("sum_bucket")]
 		ISumBucketAggregation SumBucket { get; set; }
 
+		[JsonProperty("stats_bucket")]
+		IStatsBucketAggregation StatsBucket { get; set; }
+
+		[JsonProperty("extended_stats_bucket")]
+		IExtendedStatsBucketAggregation ExtendedStatsBucket { get; set; }
+
+		[JsonProperty("percentiles_bucket")]
+		IPercentilesBucketAggregation PercentilesBucket { get; set; }
+
 		[JsonProperty("moving_avg")]
 		IMovingAverageAggregation MovingAverage { get; set; }
 
@@ -178,6 +191,7 @@ namespace Nest
 
 	public class AggregationContainer : IAggregationContainer
 	{
+		public IDictionary<string, object> Meta { get; set; }
 		public IAverageAggregation Average { get; set; }
 		public IValueCountAggregation ValueCount { get; set; }
 		public IMaxAggregation Max { get; set; }
@@ -239,6 +253,12 @@ namespace Nest
 
 		public ISumBucketAggregation SumBucket { get; set; }
 
+		public IStatsBucketAggregation StatsBucket { get; set; }
+
+		public IExtendedStatsBucketAggregation ExtendedStatsBucket { get; set; }
+
+		public IPercentilesBucketAggregation PercentilesBucket { get; set; }
+
 		public IMovingAverageAggregation MovingAverage { get; set; }
 
 		public ICumulativeSumAggregation CumulativeSum { get; set; }
@@ -260,6 +280,7 @@ namespace Nest
 			aggregator.WrapInContainer(container);
 			var bucket = aggregator as BucketAggregationBase;
 			container.Aggregations = bucket?.Aggregations;
+			container.Meta = aggregator.Meta;
 			return container;
 		}
 
@@ -273,6 +294,8 @@ namespace Nest
 	public class AggregationContainerDescriptor<T> : DescriptorBase<AggregationContainerDescriptor<T>, IAggregationContainer>, IAggregationContainer
 		where T : class
 	{
+		IDictionary<string, object> IAggregationContainer.Meta { get; set; }
+
 		AggregationDictionary IAggregationContainer.Aggregations { get; set; }
 
 		IAverageAggregation IAggregationContainer.Average { get; set; }
@@ -342,6 +365,12 @@ namespace Nest
 		IMinBucketAggregation IAggregationContainer.MinBucket { get; set; }
 
 		ISumBucketAggregation IAggregationContainer.SumBucket { get; set; }
+
+		IStatsBucketAggregation IAggregationContainer.StatsBucket { get; set; }
+
+		IExtendedStatsBucketAggregation IAggregationContainer.ExtendedStatsBucket { get; set; }
+
+		IPercentilesBucketAggregation IAggregationContainer.PercentilesBucket { get; set; }
 
 		IMovingAverageAggregation IAggregationContainer.MovingAverage { get; set; }
 
@@ -491,6 +520,18 @@ namespace Nest
 			Func<SumBucketAggregationDescriptor, ISumBucketAggregation> selector) =>
 			_SetInnerAggregation(name, selector, (a, d) => a.SumBucket = d);
 
+		public AggregationContainerDescriptor<T> StatsBucket(string name,
+			Func<StatsBucketAggregationDescriptor, IStatsBucketAggregation> selector) =>
+			_SetInnerAggregation(name, selector, (a, d) => a.StatsBucket = d);
+
+		public AggregationContainerDescriptor<T> ExtendedStatsBucket(string name,
+			Func<ExtendedStatsBucketAggregationDescriptor, IExtendedStatsBucketAggregation> selector) =>
+			_SetInnerAggregation(name, selector, (a, d) => a.ExtendedStatsBucket = d);
+
+		public AggregationContainerDescriptor<T> PercentilesBucket(string name,
+			Func<PercentilesBucketAggregationDescriptor, IPercentilesBucketAggregation> selector) =>
+			_SetInnerAggregation(name, selector, (a, d) => a.PercentilesBucket = d);
+
 		public AggregationContainerDescriptor<T> MovingAverage(string name,
 			Func<MovingAverageAggregationDescriptor, IMovingAverageAggregation> selector) =>
 			_SetInnerAggregation(name, selector, (a, d) => a.MovingAverage = d);
@@ -529,7 +570,8 @@ namespace Nest
 			var aggregator = selector(new TAggregator());
 
 			//create new isolated container for new aggregator and assign to the right property
-			var container = new AggregationContainer();
+			var container = new AggregationContainer() { Meta = aggregator.Meta };
+
 			assignToProperty(container, aggregator);
 
 			//create aggregations dictionary on `this` if it does not exist already

@@ -7,53 +7,52 @@ using static Tests.Framework.RoundTripper;
 
 namespace Tests.CommonOptions.TimeUnit
 {
-	public class TimeUnits 
+	public class TimeUnits
 	{
-		/** #  Time units
-		 * Whenever durations need to be specified, eg for a timeout parameter, the duration can be specified 
-		 * as a whole number representing time in milliseconds, or as a time value like `2d` for 2 days. 
-		 * 
-		 * ## Using Time units in NEST
+		/** == Time units
+		 * Whenever durations need to be specified, eg for a timeout parameter, the duration can be specified
+		 * as a whole number representing time in milliseconds, or as a time value like `2d` for 2 days.
+		 *
+		 * === Using Time units in NEST
 		 * NEST uses `Time` to strongly type this and there are several ways to construct one.
 		 *
-		 * ### Constructor
+		 * ==== Constructor
 		 * The most straight forward way to construct a `Time` is through its constructor
 		 */
-		
 		[U] public void Constructor()
 		{
 			var unitString = new Time("2d");
 			var unitComposed = new Time(2, Nest.TimeUnit.Day);
 			var unitTimeSpan = new Time(TimeSpan.FromDays(2));
 			var unitMilliseconds = new Time(1000 * 60 * 60 * 24 * 2);
-			
+
 			/**
-			* When serializing Time constructed from a string, composition of factor and interval, or a `TimeSpan`
-			* the expression will be serialized as time unit string
+			* When serializing Time constructed from
+			* - a string
+			* - milliseconds (as a double)
+			* - composition of factor and interval
+			* - a `TimeSpan`
+			*
+			* the expression will be serialized to a time unit string composed of the factor and interval e.g. `2d`
 			*/
 			Expect("2d")
 				.WhenSerializing(unitString)
 				.WhenSerializing(unitComposed)
-				.WhenSerializing(unitTimeSpan);
-			/**
-			* When constructed from a long representing milliseconds, a long will be serialized
-			*/
-			Expect(172800000).WhenSerializing(unitMilliseconds);
+				.WhenSerializing(unitTimeSpan)
+				.WhenSerializing(unitMilliseconds);
 
 			/**
-			* Milliseconds are always calculated even when not using the constructor that takes a long
+			* The `Milliseconds` property on `Time` is calculated even when not using the constructor that takes a double
 			*/
-
 			unitMilliseconds.Milliseconds.Should().Be(1000*60*60*24*2);
 			unitComposed.Milliseconds.Should().Be(1000*60*60*24*2);
 			unitTimeSpan.Milliseconds.Should().Be(1000*60*60*24*2);
 			unitString.Milliseconds.Should().Be(1000*60*60*24*2);
 		}
 		/**
-		* ### Implicit conversion
-		* Alternatively `string`, `TimeSpan` and `long` can be implicitly assigned to `Time` properties and variables 
+		* ==== Implicit conversion
+		* Alternatively to using the constructor, `string`, `TimeSpan` and `double` can be implicitly converted to `Time`
 		*/
-
 		[U] [SuppressMessage("ReSharper", "SuggestVarOrType_SimpleTypes")]
 		public void ImplicitConversion()
 		{
@@ -63,9 +62,8 @@ namespace Tests.CommonOptions.TimeUnit
 
 			Expect("1.5y").WhenSerializing(oneAndHalfYear);
 			Expect("2w").WhenSerializing(twoWeeks);
-			Expect(172800000).WhenSerializing(twoDays);
+			Expect("2d").WhenSerializing(twoDays);
 		}
-
 
 		[U] [SuppressMessage("ReSharper", "SuggestVarOrType_SimpleTypes")]
 		public void EqualityAndComparable()
@@ -75,10 +73,17 @@ namespace Tests.CommonOptions.TimeUnit
 			Time twoDays = 1000*60*60*24*2;
 
 			/**
-			* Milliseconds are calculated even when values are not passed as long
+			* Milliseconds are calculated even when values are not passed as long...
 			*/
-			oneAndHalfYear.Milliseconds.Should().BeGreaterThan(1);
 			twoWeeks.Milliseconds.Should().BeGreaterThan(1);
+
+			/**
+			* ...**except** when dealing with years or months, whose millsecond value cannot
+			* be calculated *accurately*, since they are not fixed durations. For instance,
+			* 30 vs 31 vs 28 days in a month, or 366 vs 365 days in a year.
+			* In this instance, Milliseconds will be -1.
+			*/
+			oneAndHalfYear.Milliseconds.Should().Be(-1);
 
 			/**
 			* This allows you to do comparisons on the expressions
@@ -87,12 +92,12 @@ namespace Tests.CommonOptions.TimeUnit
 			(oneAndHalfYear > twoWeeks).Should().BeTrue();
 			(oneAndHalfYear >= twoWeeks).Should().BeTrue();
 			(twoDays >= new Time("2d")).Should().BeTrue();
-			
+
 			twoDays.Should().BeLessThan(twoWeeks);
 			(twoDays < twoWeeks).Should().BeTrue();
 			(twoDays <= twoWeeks).Should().BeTrue();
 			(twoDays <= new Time("2d")).Should().BeTrue();
-			
+
 			/**
 			* And assert equality
 			*/
@@ -100,13 +105,15 @@ namespace Tests.CommonOptions.TimeUnit
 			(twoDays == new Time("2d")).Should().BeTrue();
 			(twoDays != new Time("2.1d")).Should().BeTrue();
 			(new Time("2.1d") == new Time(TimeSpan.FromDays(2.1))).Should().BeTrue();
+			(new Time("1") == new Time(1)).Should().BeTrue();
+			(new Time("-1") == new Time(-1)).Should().BeTrue();
 		}
 
 		[U]
 		public void UsingInterval()
 		{
-			/**
-			* Time units are specified as a union of either a `DateInterval` or `Time`
+			/** === Units of Time
+			* Units of `Time` are specified as a union of either a `DateInterval` or `Time`,
 			* both of which implicitly convert to the `Union` of these two.
 			*/
 			Expect("month").WhenSerializing<Union<DateInterval, Time>>(DateInterval.Month);
@@ -120,6 +127,84 @@ namespace Tests.CommonOptions.TimeUnit
 
 			Expect("2d").WhenSerializing<Union<DateInterval, Time>>((Time)"2d");
 			Expect("1.16w").WhenSerializing<Union<DateInterval, Time>>((Time)TimeSpan.FromDays(8.1));
+		}
+
+		//hide
+		[U]
+		public void MillisecondsNeverSerializeToMonthsOrYears()
+		{
+			double millisecondsInAMonth = 2592000000;
+			Expect("4.29w").WhenSerializing(new Time(millisecondsInAMonth));
+			Expect("8.57w").WhenSerializing(new Time(millisecondsInAMonth * 2));
+			Expect("51.43w").WhenSerializing(new Time(millisecondsInAMonth * 12));
+			Expect("102.86w").WhenSerializing(new Time(millisecondsInAMonth * 24));
+		}
+
+		//hide
+		[U]
+		public void ExpectedValues()
+		{
+			Expect("-1").WhenSerializing(new Time(-1));
+			Expect("-1").WhenSerializing(new Time("-1"));
+
+			Assert(
+				1, Nest.TimeUnit.Year, -1, "1y",
+				new Time(1, Nest.TimeUnit.Year),
+				new Time("1y")
+			);
+
+			Assert(
+				1, Nest.TimeUnit.Month, -1, "1M",
+				new Time(1, Nest.TimeUnit.Month),
+				new Time("1M")
+			);
+
+			Assert(
+				1, Nest.TimeUnit.Week, TimeSpan.FromDays(7).TotalMilliseconds, "1w",
+				new Time(1, Nest.TimeUnit.Week),
+				new Time("1w"),
+				new Time(TimeSpan.FromDays(7).TotalMilliseconds)
+			);
+
+			Assert(
+				1, Nest.TimeUnit.Day, TimeSpan.FromDays(1).TotalMilliseconds, "1d",
+				new Time(1, Nest.TimeUnit.Day),
+				new Time("1d"),
+				new Time(TimeSpan.FromDays(1).TotalMilliseconds)
+			);
+
+			Assert(
+				1, Nest.TimeUnit.Hour, TimeSpan.FromHours(1).TotalMilliseconds, "1h",
+				new Time(1, Nest.TimeUnit.Hour),
+				new Time("1h"),
+				new Time(TimeSpan.FromHours(1).TotalMilliseconds)
+			);
+
+			Assert(
+				1, Nest.TimeUnit.Minute, TimeSpan.FromMinutes(1).TotalMilliseconds, "1m",
+				new Time(1, Nest.TimeUnit.Minute),
+				new Time("1m"),
+				new Time(TimeSpan.FromMinutes(1).TotalMilliseconds)
+			);
+
+			Assert(
+				1, Nest.TimeUnit.Second, TimeSpan.FromSeconds(1).TotalMilliseconds, "1s",
+				new Time(1, Nest.TimeUnit.Second),
+				new Time("1s"),
+				new Time(TimeSpan.FromSeconds(1).TotalMilliseconds)
+			);
+		}
+
+		//hide
+		private void Assert(double expectedFactor, Nest.TimeUnit expectedInterval, double expectedMilliseconds, string expectedSerialized, params Time[] times)
+		{
+			foreach (var time in times)
+			{
+				time.Factor.Should().Be(expectedFactor);
+				time.Interval.Should().Be(expectedInterval);
+				time.Milliseconds.Should().Be(expectedMilliseconds);
+				Expect(expectedSerialized).WhenSerializing(time);
+			}
 		}
 	}
 }

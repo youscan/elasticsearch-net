@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using DiffPlex;
 using DiffPlex.DiffBuilder;
 using DiffPlex.DiffBuilder.Model;
+using Nest;
 
 namespace Tests.Framework
 {
@@ -45,6 +46,7 @@ namespace Tests.Framework
 				;
 			approx = Regex.Replace(approx, @"^\s*\],?.*$", s => s.Value.Replace("]", "}"), RegexOptions.Multiline);
 			diff += approx + ";";
+
 
 			throw new Exception(diff);
 		}

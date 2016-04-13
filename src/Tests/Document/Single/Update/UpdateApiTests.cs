@@ -10,11 +10,11 @@ using Xunit;
 namespace Tests.Document.Single.Update
 {
 	[Collection(IntegrationContext.Indexing)]
-	public class UpdateApiTests : ApiIntegrationTestBase<IUpdateResponse, IUpdateRequest<Project, Project>, UpdateDescriptor<Project, Project>, UpdateRequest<Project, Project>>
+	public class UpdateApiTests : ApiIntegrationTestBase<IUpdateResponse<Project>, IUpdateRequest<Project, Project>, UpdateDescriptor<Project, Project>, UpdateRequest<Project, Project>>
 	{
 		public UpdateApiTests(IndexingCluster cluster, EndpointUsage usage) : base(cluster, usage) { }
 
-		protected override void BeforeAllCalls(IElasticClient client, IDictionary<ClientMethod, string> values)
+		protected override void IntegrationSetup(IElasticClient client, CallUniqueValues values)
 		{
 			foreach (var id in values.Values)
 				this.Client.Index(Project.Instance, i=>i.Id(id));
@@ -37,19 +37,22 @@ namespace Tests.Document.Single.Update
 		protected override object ExpectJson { get; } = new
 		{
 			doc = Project.InstanceAnonymous,
-			doc_as_upsert = true
+			doc_as_upsert = true,
+			detect_noop = true
 		};
 
 		protected override UpdateDescriptor<Project, Project> NewDescriptor() => new UpdateDescriptor<Project, Project>(DocumentPath<Project>.Id(CallIsolatedValue));
 
-		protected override Func<UpdateDescriptor<Project,Project>, IUpdateRequest<Project, Project>> Fluent => d=>d
-			.Doc(Project.Instance)
-			.DocAsUpsert();
+		protected override Func<UpdateDescriptor<Project, Project>, IUpdateRequest<Project, Project>> Fluent => u => u
+			 .Doc(Project.Instance)
+			 .DocAsUpsert()
+			 .DetectNoop();
 
 		protected override UpdateRequest<Project, Project> Initializer => new UpdateRequest<Project, Project>(CallIsolatedValue)
 		{
 			Doc = Project.Instance,
-			DocAsUpsert = true
+			DocAsUpsert = true,
+			DetectNoop = true
 		};
 	}
 }

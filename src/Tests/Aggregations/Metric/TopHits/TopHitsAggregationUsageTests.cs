@@ -21,7 +21,7 @@ namespace Tests.Aggregations.Metric.TopHits
 				{
 					terms = new
 					{
-						field = Field<Project>(p => p.State),
+						field = "state",
 					},
 					aggs = new
 					{
@@ -41,12 +41,12 @@ namespace Tests.Aggregations.Metric.TopHits
 								},
 								_source = new
 								{
-									include = new string[] { "name", "startedOn" }
+									include = new [] { "name", "startedOn" }
 								},
 								size = 1,
 								version = true,
 								explain = true,
-								fielddata_fields = new string[] { "state", "numberOfCommits" },
+								fielddata_fields = new [] { "state", "numberOfCommits" },
 								highlight = new
 								{
 									fields = new
@@ -154,8 +154,8 @@ namespace Tests.Aggregations.Metric.TopHits
 			response.IsValid.Should().BeTrue();
 			var states = response.Aggs.Terms("states");
 			states.Should().NotBeNull();
-			states.Items.Should().NotBeNullOrEmpty();
-			foreach(var state in states.Items)
+			states.Buckets.Should().NotBeNullOrEmpty();
+			foreach(var state in states.Buckets)
 			{
 				state.Key.Should().NotBeNullOrEmpty();
 				state.DocCount.Should().BeGreaterThan(0);

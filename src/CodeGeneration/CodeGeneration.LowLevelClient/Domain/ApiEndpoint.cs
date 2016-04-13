@@ -1,5 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using CodeGeneration.LowLevelClient.Overrides.Allow404;
+using CodeGeneration.LowLevelClient.Overrides.Descriptors;
+using CodeGeneration.LowLevelClient.Overrides.Global;
+using CsQuery.ExtensionMethods.Internal;
 
 namespace CodeGeneration.LowLevelClient.Domain
 {
@@ -22,10 +29,15 @@ namespace CodeGeneration.LowLevelClient.Domain
 		{
 			get
 			{
-				var parts = this.CsharpMethod.Parts.Where(p => p.Name != "body")
-					.Select(p => $"p.RouteValues.{p.Name.ToPascalCase()}").ToList();
+				var parts = this.CsharpMethod.Parts.Where(p => p.Name != "body").ToList();
 				if (!parts.Any()) return string.Empty;
-				return $"AllSet({string.Join(", ", parts)})";
+
+				var allPartsAreRequired = parts.Any() && parts.All(p => p.Required);
+				var call = allPartsAreRequired ? "AllSetNoFallback" : "AllSet";
+				var assignments = parts
+					.Select(p => $"p.RouteValues.{p.Name.ToPascalCase()}").ToList();
+
+				return $"{call}({string.Join(", ", assignments)})";
 			}
 		}
 	}
@@ -80,7 +92,7 @@ namespace CodeGeneration.LowLevelClient.Domain
 				//if on operation has two endpoints and one of them is GET always favor the other as default
 				return currentHttpMethod == "GET" ? "Get" : string.Empty;
 			}
-			
+
 			return availableMethods.First() == currentHttpMethod ? string.Empty : this.PascalCase(currentHttpMethod);
 		}
 
@@ -122,6 +134,7 @@ namespace CodeGeneration.LowLevelClient.Domain
 
 							}
 						});
+
 						//.NET does not allow get requests to have a body payload.
 						if (method != "GET" && this.Body != null)
 						{
@@ -140,11 +153,11 @@ namespace CodeGeneration.LowLevelClient.Domain
 						queryStringParamName = this.CsharpMethodName + "RequestParameters";
 						var paraIndent = "\r\n\t\t///";
 						var explanationOfT =
-							paraIndent + "<para> - T, an object you own that the elasticsearch response will be deserialized to /para>"
-							+ paraIndent + "<para> - byte[], no deserialization, but the response stream will be closed</para>"
-							+ paraIndent + "<para> - Stream, no deserialization, response stream is your responsibility</para>"
-							+ paraIndent + "<para> - VoidResponse, no deserialization, response stream never read and closed</para>"
-							+ paraIndent + "<para> - DynamicDictionary, a dynamic aware dictionary that can be safely traversed to any depth"
+							paraIndent + "<para> - T, an object you own that the elasticsearch response will be deserialized to </para>"
+							+ paraIndent + "<para> - byte[], no deserialization, but the response stream will be closed </para>"
+							+ paraIndent + "<para> - Stream, no deserialization, response stream is your responsibility </para>"
+							+ paraIndent + "<para> - VoidResponse, no deserialization, response stream never read and closed </para>"
+							+ paraIndent + "<para> - DynamicDictionary, a dynamic aware dictionary that can be safely traversed to any depth </para>"
 							;
 						var apiMethod = new CsharpMethod
 						{
@@ -152,7 +165,7 @@ namespace CodeGeneration.LowLevelClient.Domain
 							ReturnType = "ElasticsearchResponse<T>",
 							ReturnTypeGeneric = "<T>",
 							CallTypeGeneric = "T",
-							ReturnDescription = 
+							ReturnDescription =
 								"ElasticsearchResponse&lt;T&gt; where the behavior depends on the type of T:"
 								+ explanationOfT,
 							FullName = methodName,
@@ -162,10 +175,10 @@ namespace CodeGeneration.LowLevelClient.Domain
 							Parts = parts,
 							Url = this.Url
 						};
-						ApiGenerator.PatchMethod(apiMethod);
+						PatchMethod(apiMethod);
 
-						args = args.Concat(new[] 
-						{ 
+						args = args.Concat(new[]
+						{
 							"Func<"+apiMethod.QueryStringParamName+", " + apiMethod.QueryStringParamName + "> requestParameters = null"
 						}).ToList();
 						apiMethod.Arguments = string.Join(", ", args);
@@ -177,7 +190,7 @@ namespace CodeGeneration.LowLevelClient.Domain
 							ReturnType = "Task<ElasticsearchResponse<T>>",
 							ReturnTypeGeneric = "<T>",
 							CallTypeGeneric = "T",
-							ReturnDescription = 
+							ReturnDescription =
 								"A task of ElasticsearchResponse&lt;T&gt; where the behaviour depends on the type of T:"
 								+ explanationOfT,
 							FullName = methodName + "Async",
@@ -188,18 +201,18 @@ namespace CodeGeneration.LowLevelClient.Domain
 							Parts = parts,
 							Url = this.Url
 						};
-						ApiGenerator.PatchMethod(apiMethod);
+						PatchMethod(apiMethod);
 						yield return apiMethod;
-						
+
 						//No need for deserialization state when returning dynamicdictionary
 
 						var explanationOfDynamic =
-							paraIndent + 
-								"<para> - Dynamic dictionary is a special dynamic type that allows json to be traversed safely</para>"
-							+ paraIndent + 
-								"<para> - i.e result.Response.hits.hits[0].property.nested[\"nested_deeper\"]</para>"
-							+ paraIndent + 
-								"<para> - can be safely dispatched to a nullable type even if intermediate properties do not exist</para>";
+							paraIndent +
+								"<para> - Dynamic dictionary is a special dynamic type that allows json to be traversed safely </para>"
+							+ paraIndent +
+								"<para> - i.e result.Response.hits.hits[0].property.nested[\"nested_deeper\"] </para>"
+							+ paraIndent +
+								"<para> - can be safely dispatched to a nullable type even if intermediate properties do not exist </para>";
 
 						var defaultBoundGeneric = Url.Path.Contains("_cat") ? "string" : "DynamicDictionary";
 
@@ -210,7 +223,7 @@ namespace CodeGeneration.LowLevelClient.Domain
 							ReturnTypeGeneric = null,
 							//CallTypeGeneric = defaultBoundGeneric == "DynamicDictionary" ? "Dictionary<string, object>" : defaultBoundGeneric,
 							CallTypeGeneric = defaultBoundGeneric,
-							ReturnDescription = 
+							ReturnDescription =
 								"ElasticsearchResponse&lt;DynamicDictionary&gt;"
 								+ explanationOfDynamic,
 							FullName = methodName,
@@ -221,9 +234,9 @@ namespace CodeGeneration.LowLevelClient.Domain
 							Parts = parts,
 							Url = this.Url
 						};
-						ApiGenerator.PatchMethod(apiMethod);
+						PatchMethod(apiMethod);
 						yield return apiMethod;
-						
+
 						apiMethod = new CsharpMethod
 						{
 							QueryStringParamName = queryStringParamName,
@@ -231,7 +244,7 @@ namespace CodeGeneration.LowLevelClient.Domain
 							ReturnTypeGeneric = null,
 							//CallTypeGeneric = defaultBoundGeneric == "DynamicDictionary" ? "Dictionary<string, object>" : defaultBoundGeneric,
 							CallTypeGeneric = defaultBoundGeneric,
-							ReturnDescription =  
+							ReturnDescription =
 								"A task of ElasticsearchResponse&lt;DynamicDictionary$gt;"
 								+ explanationOfDynamic,
 							FullName = methodName + "Async",
@@ -242,11 +255,112 @@ namespace CodeGeneration.LowLevelClient.Domain
 							Parts = parts,
 							Url = this.Url
 						};
-						ApiGenerator.PatchMethod(apiMethod);
+						PatchMethod(apiMethod);
 						yield return apiMethod;
 					}
 				}
 			}
 		}
+
+
+		//Patches a method name for the exceptions (IndicesStats needs better unique names for all the url endpoints)
+		//or to get rid of double verbs in an method name i,e ClusterGetSettingsGet > ClusterGetSettings
+		public static void PatchMethod(CsharpMethod method)
+		{
+			Func<string, bool> ms = s => method.FullName.StartsWith(s);
+			Func<string, bool> pc = s => method.Path.Contains(s);
+
+			if (ms("Indices") && !pc("{index}"))
+				method.FullName = (method.FullName + "ForAll").Replace("AsyncForAll", "ForAllAsync");
+
+			if (ms("Nodes") && !pc("{node_id}"))
+				method.FullName = (method.FullName + "ForAll").Replace("AsyncForAll", "ForAllAsync");
+
+			//remove duplicate occurance of the HTTP method name
+			var m = method.HttpMethod.ToPascalCase();
+			method.FullName =
+				Regex.Replace(method.FullName, m, a => a.Index != method.FullName.IndexOf(m, StringComparison.Ordinal) ? "" : m);
+
+			foreach (var param in GlobalQueryParameters.Parameters)
+			{
+				if (!method.Url.Params.ContainsKey(param.Key))
+					method.Url.Params.Add(param.Key, param.Value);
+			}
+
+			string manualOverride;
+			var key = method.QueryStringParamName.Replace("RequestParameters", "");
+			if (CodeConfiguration.MethodNameOverrides.TryGetValue(key, out manualOverride))
+				method.QueryStringParamName = manualOverride + "RequestParameters";
+
+			method.DescriptorType = method.QueryStringParamName.Replace("RequestParameters", "Descriptor");
+			method.RequestType = method.QueryStringParamName.Replace("RequestParameters", "Request");
+			string requestGeneric;
+			if (CodeConfiguration.KnownRequests.TryGetValue("I" + method.RequestType, out requestGeneric))
+				method.RequestTypeGeneric = requestGeneric;
+			else method.RequestTypeUnmapped = true;
+
+			method.Allow404 = ApiEndpointsThatAllow404.Endpoints.Contains(method.DescriptorType.Replace("Descriptor", ""));
+
+			string generic;
+			if (CodeConfiguration.KnownDescriptors.TryGetValue(method.DescriptorType, out generic))
+				method.DescriptorTypeGeneric = generic;
+			else method.Unmapped = true;
+
+			try
+			{
+				IEnumerable<string> skipList = new List<string>();
+				IDictionary<string, string> renameList = new Dictionary<string, string>();
+
+				var typeName = "CodeGeneration.LowLevelClient.Overrides.Descriptors." + method.DescriptorType + "Overrides";
+				var type = CodeConfiguration.Assembly.GetType(typeName);
+				if (type != null)
+				{
+					var overrides = Activator.CreateInstance(type) as IDescriptorOverrides;
+					if (overrides != null)
+					{
+						skipList = overrides.SkipQueryStringParams ?? skipList;
+						renameList = overrides.RenameQueryStringParams ?? renameList;
+					}
+				}
+
+				var globalQueryStringRenames = new Dictionary<string, string>
+				{
+					{"_source", "source_enabled"},
+					{"_source_include", "source_include"},
+					{"_source_exclude", "source_exclude"},
+					{"q", "query_on_query_string"},
+				};
+
+				foreach (var kv in globalQueryStringRenames)
+					if (!renameList.ContainsKey(kv.Key))
+						renameList[kv.Key] = kv.Value;
+
+				var patchedParams = new Dictionary<string, ApiQueryParameters>();
+				foreach (var kv in method.Url.Params)
+				{
+					if (kv.Value.OriginalQueryStringParamName.IsNullOrEmpty())
+						kv.Value.OriginalQueryStringParamName = kv.Key;
+					if (skipList.Contains(kv.Key))
+						continue;
+
+					string newName;
+					if (!renameList.TryGetValue(kv.Key, out newName))
+					{
+						patchedParams.Add(kv.Key, kv.Value);
+						continue;
+					}
+
+					patchedParams.Add(newName, kv.Value);
+				}
+
+				method.Url.Params = patchedParams;
+			}
+			// ReSharper disable once EmptyGeneralCatchClause
+			catch
+			{
+			}
+
+		}
+
 	}
 }

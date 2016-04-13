@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Newtonsoft.Json;
 
 namespace Nest
@@ -8,14 +9,20 @@ namespace Nest
 	{
 		int Took { get; }
 		bool Errors { get; }
-		IEnumerable<BulkResponseItem> Items { get; }
-		IEnumerable<BulkResponseItem> ItemsWithErrors { get; }
+		IEnumerable<BulkResponseItemBase> Items { get; }
+		IEnumerable<BulkResponseItemBase> ItemsWithErrors { get; }
 	}
 
 	[JsonObject]
-	public class BulkResponse : BaseResponse, IBulkResponse
+	public class BulkResponse : ResponseBase, IBulkResponse
 	{
 		public override bool IsValid => base.IsValid && !this.Errors && !this.ItemsWithErrors.HasAny();
+		protected override void DebugIsValid(StringBuilder sb)
+		{
+			sb.AppendLine($"# Invalid Bulk items:");
+			foreach(var i in Items.Select((item, i) => new { item, i}).Where(i=>!i.item.IsValid))
+				sb.AppendLine($"  operation[{i.i}]: {i.item}");
+		}
 
 		[JsonProperty("took")]
 		public int Took { get; internal set; }
@@ -24,14 +31,14 @@ namespace Nest
 		public bool Errors { get; internal set; }
 
 		[JsonProperty("items")]
-		public IEnumerable<BulkResponseItem> Items { get; internal set; }
+		public IEnumerable<BulkResponseItemBase> Items { get; internal set; }
 
 		[JsonIgnore]
-		public IEnumerable<BulkResponseItem> ItemsWithErrors
+		public IEnumerable<BulkResponseItemBase> ItemsWithErrors
 		{
 			get
 			{
-				return !this.Items.HasAny() ? Enumerable.Empty<BulkResponseItem>() : this.Items.Where(i => !i.IsValid);
+				return !this.Items.HasAny() ? Enumerable.Empty<BulkResponseItemBase>() : this.Items.Where(i => !i.IsValid);
 			}
 		}
 	}

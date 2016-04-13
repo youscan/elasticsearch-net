@@ -9,7 +9,7 @@ namespace Nest
 	[JsonConverter(typeof(PropertiesJsonConverter))]
 	public interface IProperties : IIsADictionary<PropertyName, IProperty> { }
 
-	public class Properties : IsADictionary<PropertyName, IProperty>, IProperties
+	public class Properties : IsADictionaryBase<PropertyName, IProperty>, IProperties
 	{
 		public Properties() : base() { }
 		public Properties(IDictionary<PropertyName, IProperty> container) : base(container) { }
@@ -20,7 +20,7 @@ namespace Nest
 		public void Add(PropertyName name, IProperty property) => this.BackingDictionary.Add(name, property);
 	}
 
-	public class Properties<T> : IsADictionary<PropertyName, IProperty>, IProperties
+	public class Properties<T> : IsADictionaryBase<PropertyName, IProperty>, IProperties
 	{
 		public Properties() : base() { }
 		public Properties(IDictionary<PropertyName, IProperty> container) : base(container) { }
@@ -55,7 +55,7 @@ namespace Nest
 		TReturnType Murmur3Hash(Func<Murmur3HashPropertyDescriptor<T>, IMurmur3HashProperty> selector);
 	}
 
-	public class PropertiesDescriptor<T> : IsADictionaryDescriptor<PropertiesDescriptor<T>, IProperties, PropertyName, IProperty>, IPropertiesDescriptor<T, PropertiesDescriptor<T>>
+	public class PropertiesDescriptor<T> : IsADictionaryDescriptorBase<PropertiesDescriptor<T>, IProperties, PropertyName, IProperty>, IPropertiesDescriptor<T, PropertiesDescriptor<T>>
 		where T : class
 	{
 		public PropertiesDescriptor() : base(new Properties<T>()) { }
@@ -111,6 +111,27 @@ namespace Nest
 				throw new ArgumentException($"Could not get field name for {typeName} mapping");
 
 			return this.Assign(a => a[type.Name] = type);
+		}
+	}
+
+	internal static class PropertiesExtensions
+	{
+		internal static IProperties AutoMap<T>(this IProperties existingProperties, IPropertyVisitor visitor = null, int maxRecursion = 0)
+			where T : class
+		{
+			var properties = new Properties();
+			var autoProperties = new PropertyWalker(typeof(T), visitor, maxRecursion).GetProperties();
+			foreach (var autoProperty in (IEnumerable<KeyValuePair<PropertyName, IProperty>>)autoProperties)
+				properties[autoProperty.Key] = autoProperty.Value;
+
+			// Existing/manually mapped properties always take precedence
+			if (existingProperties != null)
+			{
+				foreach (var existing in (IEnumerable<KeyValuePair<PropertyName, IProperty>>)existingProperties)
+					properties[existing.Key] = existing.Value;
+			}
+
+			return properties;
 		}
 	}
 }

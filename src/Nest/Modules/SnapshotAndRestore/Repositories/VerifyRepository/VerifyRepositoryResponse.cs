@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 namespace Nest
 {
 	[JsonObject(MemberSerialization.OptIn)]
-	//[JsonConverter(typeof(GetRepositoryResponseConverter))]
 	public interface IVerifyRepositoryResponse : IResponse
 	{
 		/// <summary>
@@ -16,7 +15,7 @@ namespace Nest
 	}
 
 	[JsonObject]
-	public class VerifyRepositoryResponse : BaseResponse, IVerifyRepositoryResponse
+	public class VerifyRepositoryResponse : ResponseBase, IVerifyRepositoryResponse
 	{
 
 		/// <summary>

@@ -21,7 +21,7 @@ namespace Nest
 		bool? IncludeInAll { get; set; }
 	}
 
-	public class IpProperty : Property, IIpProperty
+	public class IpProperty : PropertyBase, IIpProperty
 	{
 		public IpProperty() : base("ip") { }
 
@@ -44,7 +44,7 @@ namespace Nest
 
 		public IpPropertyDescriptor() : base("ip") { }
 
-		public IpPropertyDescriptor<T> Index(NonStringIndexOption? index) => Assign(a => a.Index = index);
+		public IpPropertyDescriptor<T> Index(NonStringIndexOption? index = NonStringIndexOption.NotAnalyzed) => Assign(a => a.Index = index);
 
 		public IpPropertyDescriptor<T> Boost(double boost) => Assign(a => a.Boost = boost);
 
