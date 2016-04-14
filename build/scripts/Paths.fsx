@@ -221,12 +221,13 @@ module Tooling =
         member this.OperatingSystem = parts.[4] 
         member this.Alias = parts.[5]
 
-        member this.Location = Path.Combine(userProfileDir,
-            sprintf ".dnx/runtimes/dnx-%s-%s-%s.%s"
-                this.Runtime
-                this.OperatingSystem 
-                this.Architecture 
-                this.Version)
+        member this.Location = 
+            Path.Combine(userProfileDir,
+                sprintf ".dnx/runtimes/dnx-%s-%s-%s.%s"
+                    this.Runtime
+                    this.OperatingSystem 
+                    this.Architecture 
+                    this.Version)
 
         member this.Process proc =
             sprintf "%s/bin/%s" this.Location proc

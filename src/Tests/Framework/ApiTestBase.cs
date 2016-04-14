@@ -45,8 +45,11 @@ namespace Tests.Framework
 		protected abstract string UrlPath { get; }
 		protected abstract HttpMethod HttpMethod { get; }
 
-		protected ApiTestBase(IIntegrationCluster cluster, EndpointUsage usage) : base(cluster)
+		protected ApiTestBase(IIntegrationCluster cluster, EndpointUsage usage)
 		{
+			if (cluster == null) throw new ArgumentNullException(nameof(cluster));
+			if (usage == null) throw new ArgumentNullException(nameof(usage));
+
 			this._usage = usage;
 			this.Cluster = cluster;
 
