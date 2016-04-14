@@ -25,14 +25,13 @@ module Profiler =
         Tooling.execProcessWithTimeout profiledApp [] (TimeSpan.FromMinutes 10.) |> ignore
     
 module Benchmarker =
-   let private benchmarkingApp = sprintf "%s/%s" (Paths.BinFolder("Benchmarking")) "Benchmarking.exe" 
-
-   let private failure errors =
-        raise (BuildException("The project benchmarking failed.", errors |> List.ofSeq))
+   let private benchmarkingApp = Paths.Tool("NBench.Runner/lib/net45/NBench.Runner.exe")
+   
+   // run against the net45 assembly as the dnx build does not output references in the
+   // same location
+   let private testAssembly = Paths.Source("Tests/bin/Net45/Release/Tests.dll")
 
    let Run() =
-        !! Paths.Source("Benchmarking/project.json") 
-        |> Seq.map DirectoryName
-        |> Seq.map Paths.Quote
-        |> Seq.iter(fun project -> 
-                Tooling.Dnx.Exec Tooling.DotNetRuntime.Both failure "." ["--project"; project; "run"; "-i false"; "-t 5"])
+        Tooling.execProcess 
+            benchmarkingApp 
+            [testAssembly; sprintf "output-directory=%s" (Paths.Output("Benchmarking"))] |> ignore

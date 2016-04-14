@@ -40,6 +40,7 @@ NUGET
       System.Reflection.Metadata (>= 1.1)
     Microsoft.CodeAnalysis.CSharp (1.1.1)
       Microsoft.CodeAnalysis.Common (1.1.1)
+    NBench (0.2.1)
     NDesk.Options (0.2.1)
     Newtonsoft.Json (8.0.2)
     RazorMachine (2.6.1)
@@ -360,6 +361,7 @@ NUGET
     FSharp.Data (2.2.5)
       Zlib.Portable (>= 1.10) - framework: portable-net40+sl50+wp80+win80
     gitlink (2.3.0-unstable0022)
+    NBench.Runner (0.2.1)
     Node.js (5.3)
     NoGit (0.1)
       Node.js (>= 0.12)

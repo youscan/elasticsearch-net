@@ -57,7 +57,9 @@ Target "WatchTests"  <| fun _ ->
 
 Target "Profile" <| fun _ -> Profiler.Run()
 
-Target "Benchmark" <| fun _ -> Benchmarker.Run()
+Target "Benchmark" <| fun _ -> 
+    MsBuild.QuickCompile()
+    Benchmarker.Run()
 
 Target "QuickCompile"  <| fun _ -> Build.QuickCompile()
 
@@ -91,7 +93,6 @@ BuildFailureTarget "NotifyTestFailures" <| fun _ -> Tests.Notify() |> ignore
   ==> "Profile"
 
 "Clean" 
-  ==> "BuildApp"
   ==> "Benchmark"
 
 "Version"

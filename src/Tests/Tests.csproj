@@ -525,6 +525,7 @@
     <Compile Include="Aggregations\Pipeline\ExtendedStatsBucket\ExtendedStatsBucketAggregationUsageTests.cs" />
     <Compile Include="Aggregations\Pipeline\PercentilesBucket\PercentilesBucketAggregationUsageTests.cs" />
     <Compile Include="Aggregations\Pipeline\StatsBucket\StatsBucketAggregationUsageTests.cs" />
+    <Compile Include="Benchmarking\Benchmarking.cs" />
     <Compile Include="Cat\CatHelp\CatHelpApiTests.cs" />
     <Compile Include="Cat\CatHelp\CatHelpUrlTests.cs" />
     <Compile Include="Cat\CatNodeAttributes\CatNodeAttributesApiTests.cs" />
@@ -570,6 +571,7 @@
     <Compile Include="Search\SearchTemplate\RenderSearchTemplate\RenderSearchTemplateUrlTests.cs" />
     <Compile Include="Indices\Monitoring\IndicesShardStores\IndicesShardStoresApiTests.cs" />
     <Compile Include="Indices\Monitoring\IndicesShardStores\IndicesShardStoresUrlTests.cs" />
+    <Compile Include="Search\Search\SearchBenchmarkingTests.cs" />
     <Compile Include="Search\Search\SearchProfileTests.cs" />
     <Compile Include="Search\Suggesters\SuggestApiTests.cs" />
     <None Include="aggregations-usage.asciidoc" />
@@ -793,6 +795,17 @@
         </Reference>
         <Reference Include="FluentAssertions">
           <HintPath>..\..\packages\FluentAssertions\lib\portable-net40+sl5+win8+wp8+wpa81\FluentAssertions.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1')">
+      <ItemGroup>
+        <Reference Include="NBench">
+          <HintPath>..\..\packages\NBench\lib\net45\NBench.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
