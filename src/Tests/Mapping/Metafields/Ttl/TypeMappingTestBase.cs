@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using Elasticsearch.Net;
 using static Nest.Infer;
 
+#pragma warning disable 618
+
 namespace Tests.Mapping.Metafields.Ttl
 {
 	public class TtlMetafieldApiTest : MetafieldsMappingApiTestsBase
