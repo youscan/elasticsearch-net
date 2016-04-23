@@ -16,7 +16,7 @@ namespace Profiling
                 Directory.CreateDirectory(resultsDirectory);
 
             ListFile = Path.Combine(resultsDirectory, "snapshot_list.xml");
-            File.Create(ListFile);
+			using (File.Create(ListFile)) { }
 
             if (ProfileProcesses.Any())
             {

@@ -35,11 +35,11 @@
   <ItemGroup>
     <Reference Include="JetBrains.Profiler.Windows.Api, Version=102.0.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\build\tools\ProfilerSelfSdk02\JetBrains.Profiler.Windows.Api.dll</HintPath>
+      <HintPath>..\..\build\profiling\JetBrains.Profiler.Windows.Api.dll</HintPath>
     </Reference>
     <Reference Include="JetBrains.Profiler.Windows.SelfApi, Version=102.0.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\build\tools\ProfilerSelfSdk02\JetBrains.Profiler.Windows.SelfApi.dll</HintPath>
+      <HintPath>..\..\build\profiling\JetBrains.Profiler.Windows.SelfApi.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

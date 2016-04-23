@@ -66,14 +66,14 @@ namespace Profiling
             {
                 var profilingFactories = new List<IProfileFactory>
                 {
-                    //new TimelineProfileFactory(SdkPath, Output, cluster, assembly),
+                    new TimelineProfileFactory(SdkPath, Output, cluster, assembly),
                     new PerformanceProfileFactory(SdkPath, Output, cluster, assembly)
                 };
 
                 foreach (var profilingFactory in profilingFactories)
                 {
                     profilingFactory.Run();
-                    profilingFactory.RunAsync().Wait();
+                    profilingFactory.RunAsync().ConfigureAwait(false).GetAwaiter().GetResult();
                 }
             }
         }

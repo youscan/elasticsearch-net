@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Security.AccessControl;
 using System.Threading;
 using JetBrains.Profiler.Windows.Api;
 using JetBrains.Profiler.Windows.SelfApi;
@@ -21,6 +20,11 @@ namespace Profiling.Performance
                 ProfilingType = ProfilingType.Performance,
                 ListFile = ListFile
             };
+
+	        while (SelfAttach.State != SelfApiState.None)
+	        {
+		        Thread.Sleep(250);
+	        }
 
             SelfAttach.Attach(saveSnapshotProfilingConfig);
             WaitForProfilerToAttachToProcess();
