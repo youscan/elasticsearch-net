@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{37164C11-88EF-4428-803A-9AA24FB8B44D}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Tests</RootNamespace>
     <AssemblyName>Tests</AssemblyName>
@@ -30,6 +30,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -549,6 +552,7 @@
     <Compile Include="Cluster\TaskManagement\TasksList\TasksListApiTests.cs" />
     <Compile Include="Cluster\TaskManagement\TasksList\TasksListUrlTests.cs" />
     <Compile Include="CommonOptions\DistanceUnit\DistanceUnits.doc.cs" />
+    <Compile Include="Document\Multiple\Bulk\BulkBenchmarkTests.cs" />
     <Compile Include="Document\Multiple\Bulk\BulkProfileTests.cs" />
     <Compile Include="Document\Multiple\ReindexOnServer\ReindexOnServerUrlTests.cs" />
     <Compile Include="Document\Multiple\ReindexOnServer\ReindexOnServerApiTests.cs" />
@@ -560,6 +564,7 @@
     <Compile Include="Profiling\ProfileTests.cs" />
     <Compile Include="Profiling\ProfilingAttribute.cs" />
     <Compile Include="Profiling\TimelineAttribute.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="QueryDsl\BoolDsl\Operators\CombinatorialUsageTests.cs" />
     <Compile Include="QueryDsl\QueryDslIntegrationTestsBase.cs" />
     <Compile Include="QueryDsl\TermLevel\Terms\TermsListQueryUsageTests.cs" />
