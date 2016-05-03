@@ -17,43 +17,72 @@ namespace Tests.Document.Multiple.Bulk
 		private static Random Random = new Random(1337);
 		private static IElasticClient Client = TestClient.GetInMemoryClient();
 
-		[U] public void BulkResponseSerializationIsFastEnough()
+		[U]
+		public void BulkResponseSerializationIsFastEnough()
 		{
 			var serializer = Client.Serializer;
-			var tinyResponse = serializer.SerializeToBytes(this.ReturnBulkResponse(1));
-			var mediumResponse = serializer.SerializeToBytes(this.ReturnBulkResponse(100));
-			var largeResponse = serializer.SerializeToBytes(this.ReturnBulkResponse(1000));
-			var hugeResponse = serializer.SerializeToBytes(this.ReturnBulkResponse(100000));
+
+			var tiny = 1;
+			var tinyResponse = serializer.SerializeToBytes(this.ReturnBulkResponse(tiny));
+			var tinySize = PrettySize(tinyResponse.LongLength);
+
+			var medium = 100;
+			var mediumResponse = serializer.SerializeToBytes(this.ReturnBulkResponse(medium));
+			var mediumSize = PrettySize(mediumResponse.LongLength);
+
+			var large = 1000;
+			var largeResponse = serializer.SerializeToBytes(this.ReturnBulkResponse(large));
+			var largeSize = PrettySize(largeResponse.LongLength);
+
+			var huge = 100000;
+			var hugeResponse = serializer.SerializeToBytes(this.ReturnBulkResponse(huge));
+			var hugeSize = PrettySize(hugeResponse.LongLength);
+			File.WriteAllText("C:\\temp\\huge.json", Encoding.UTF8.GetString(hugeResponse));
 
 			var warmup = this.Deserialize(tinyResponse);
 
-			var timings = new List<TimeSpan>();
+			var timings = new Dictionary<string, TimeSpan>();
 			var sw = Stopwatch.StartNew();
+
 			var mediumBulkResponse = this.Deserialize(mediumResponse);
-			timings.Add(sw.Elapsed);
+			timings.Add($"medium: {medium} items ({mediumSize})", sw.Elapsed);
 			sw.Restart();
+
 			var largeBulkResponse = this.Deserialize(largeResponse);
-			timings.Add(sw.Elapsed);
+			timings.Add($"large: {large} items ({largeSize})", sw.Elapsed);
 			sw.Restart();
+
 			var hugeBulkResponse = this.Deserialize(hugeResponse);
-			timings.Add(sw.Elapsed);
+			timings.Add($"huge: {huge} items ({hugeSize})", sw.Elapsed);
 			sw.Restart();
 			hugeBulkResponse = this.Deserialize(hugeResponse);
-			timings.Add(sw.Elapsed);
+			timings.Add($"huge (2nd time): {huge} items ({hugeSize})", sw.Elapsed);
 			sw.Restart();
 
 			var tinyBulkResponse = this.Deserialize(tinyResponse);
-			timings.Add(sw.Elapsed);
-			sw.Restart();
+			timings.Add($"tiny: {tiny} items ({tinySize})", sw.Elapsed);
 			using (var r = new JsonTextReader(new StreamReader(new MemoryStream(hugeResponse))))
 			{
+				sw.Restart();
 				while (r.Read());
 			}
-			timings.Add(sw.Elapsed);
+			timings.Add($"raw read: {huge} items ({hugeSize})", sw.Elapsed);
 			sw.Stop();
-
+			throw new Exception(timings.Aggregate(new StringBuilder().AppendLine(), (sb, kv) => sb.AppendLine($"{kv.Key}: {kv.Value}"), sb =>sb.ToString()));
 		}
 
+		private string PrettySize(long len)
+		{
+
+			string[] sizes = { "B", "KB", "MB", "GB" };
+			int order = 0;
+			while (len >= 1024 && order + 1 < sizes.Length)
+			{
+				order++;
+				len = len / 1024;
+			}
+			return $"{len:0.##} {sizes[order]}";
+		}
 
 		private BulkResponse Deserialize(byte[] response)
 		{
@@ -83,7 +112,8 @@ namespace Tests.Document.Multiple.Bulk
 
 		private object ReturnBulkResponse(int numberOfItems)
 		{
-			return new {
+			return new
+			{
 				took = 276,
 				errors = false,
 				items = Enumerable.Range(0, numberOfItems)
