@@ -321,6 +321,7 @@
     <Compile Include=".\Mapping\Types\Core\Number\NumberMappingTests.cs" />
     <Compile Include="Aggregations\AggregationVisitorTests.cs" />
     <Compile Include="CodeStandards\Serialization\Converters.doc.cs" />
+    <Compile Include="Document\Multiple\Bulk\BulkResponsePerformance.doc.cs" />
     <Compile Include="Framework\MockData\PercolatedQuery.cs" />
     <Compile Include="Document\Single\Index\IndexIngestApiTests.cs" />
     <Compile Include="Framework\MockData\Tag.cs" />
@@ -614,7 +615,6 @@
     <Content Include="ClientConcepts\LowLevel\pipeline.xml" />
     <Content Include="QueryDsl\BoolDsl\hadouken-indentation.jpg" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETCore' And $(TargetFrameworkVersion) == 'v4.5.1'">

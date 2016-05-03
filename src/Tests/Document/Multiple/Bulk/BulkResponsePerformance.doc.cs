@@ -4,8 +4,10 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Text;
 using Elasticsearch.Net;
 using Nest;
+using Newtonsoft.Json;
 using Tests.Framework;
 
 namespace Tests.Document.Multiple.Bulk
@@ -27,9 +29,6 @@ namespace Tests.Document.Multiple.Bulk
 
 			var timings = new List<TimeSpan>();
 			var sw = Stopwatch.StartNew();
-			var tinyBulkResponse = this.Deserialize(tinyResponse);
-			timings.Add(sw.Elapsed);
-			sw.Restart();
 			var mediumBulkResponse = this.Deserialize(mediumResponse);
 			timings.Add(sw.Elapsed);
 			sw.Restart();
@@ -38,10 +37,23 @@ namespace Tests.Document.Multiple.Bulk
 			sw.Restart();
 			var hugeBulkResponse = this.Deserialize(hugeResponse);
 			timings.Add(sw.Elapsed);
+			sw.Restart();
 			hugeBulkResponse = this.Deserialize(hugeResponse);
 			timings.Add(sw.Elapsed);
 			sw.Restart();
+
+			var tinyBulkResponse = this.Deserialize(tinyResponse);
+			timings.Add(sw.Elapsed);
+			sw.Restart();
+			using (var r = new JsonTextReader(new StreamReader(new MemoryStream(hugeResponse))))
+			{
+				while (r.Read());
+			}
+			timings.Add(sw.Elapsed);
+			sw.Stop();
+
 		}
+
 
 		private BulkResponse Deserialize(byte[] response)
 		{

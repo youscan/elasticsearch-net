@@ -5,7 +5,7 @@ namespace Nest
 {
 	internal class BulkResponseItemJsonConverter : JsonConverter
 	{
-		
+
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
 		{
 			throw new NotSupportedException();
@@ -25,29 +25,25 @@ namespace Nest
 				case "delete":
 					var deleteItem = new BulkDeleteResponseItem();
 					serializer.Populate(reader, deleteItem);
-					if (deleteItem != null)
-						deleteItem.Operation = key;
+					deleteItem.Operation = key;
 					reader.Read();
 					return deleteItem;
 				case "update":
 					var updateItem = new BulkUpdateResponseItem();
 					serializer.Populate(reader, updateItem);
-					if (updateItem != null)
-						updateItem.Operation = key;
+					updateItem.Operation = key;
 					reader.Read();
 					return updateItem;
 				case "index":
 					var indexItem = new BulkIndexResponseItem();
 					serializer.Populate(reader, indexItem);
-					if (indexItem != null)
-						indexItem.Operation = key;
+					indexItem.Operation = key;
 					reader.Read();
 					return indexItem;
 				case "create":
 					var createItem = new BulkCreateResponseItem();
 					serializer.Populate(reader, createItem);
-					if (createItem != null)
-						createItem.Operation = key;
+					createItem.Operation = key;
 					reader.Read();
 					return createItem;
 			}
