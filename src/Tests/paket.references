@@ -9,3 +9,4 @@ Rx-PlatformServices
 Bogus
 DiffPlex
 BenchmarkDotNet
+System.Buffers
