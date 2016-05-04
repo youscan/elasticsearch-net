@@ -7,5 +7,7 @@ Rx-Linq
 Rx-Main
 Rx-PlatformServices
 Bogus
-DiffPlexSemanticVersioningBenchmarkDotNet
+DiffPlex
+SemanticVersioning
+BenchmarkDotNet
 System.Buffers
