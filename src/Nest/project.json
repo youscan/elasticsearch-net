@@ -24,8 +24,8 @@
     "url": "https://github.com/elastic/elasticsearch-net"
   },
   "copyright": "2014-2016 Elasticsearch BV",
-  "releaseNotes": "See https://github.com/elastic/elasticsearch-net/releases/tag/2.2.0",
-  "version": "2.2.0",
+  "releaseNotes": "See https://github.com/elastic/elasticsearch-net/releases/tag/2.3.0",
+  "version": "2.3.0",
   "compilationOptions": {
     "warningsAsErrors": false
   },
@@ -108,6 +108,7 @@
       },
       "dependencies": {
         "System.Collections": "4.0.11-beta-23225",
+        "System.IO.FileSystem": "4.0.1-beta-23225",
         "System.Diagnostics.Tools": "4.0.1-beta-23225",
         "System.Dynamic.Runtime": "4.0.11-beta-23516",
         "System.Linq": "4.0.0-beta-23109",
