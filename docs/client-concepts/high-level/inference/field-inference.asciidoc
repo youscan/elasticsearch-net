@@ -1,16 +1,8 @@
-:ref_current: https://www.elastic.co/guide/en/elasticsearch/reference/master
+:ref_current: https://www.elastic.co/guide/en/elasticsearch/reference/2.3
 
 :github: https://github.com/elastic/elasticsearch-net
 
 :nuget: https://www.nuget.org/packages
-
-////
-IMPORTANT NOTE
-==============
-This file has been generated from https://github.com/elastic/elasticsearch-net/tree/master/src/Tests/ClientConcepts/HighLevel/Inference/FieldInference.doc.cs. 
-If you wish to submit a PR for any spelling mistakes, typos or grammatical errors for this file,
-please modify the original csharp file found at the link and submit the PR with that change. Thanks!
-////
 
 [[field-inference]]
 == Field Inference
@@ -26,10 +18,10 @@ Using the constructor directly is possible _but_ rather involved
 
 [source,csharp]
 ----
-var fieldString = new Field("name");
-var fieldProperty = new Field(typeof(Project).GetProperty(nameof(Project.Name)));
+var fieldString = new Field { Name = "name" };
+var fieldProperty = new Field { Property = typeof(Project).GetProperty(nameof(Project.Name)) };
 Expression<Func<Project, object>> expression = p => p.Name;
-var fieldExpression = new Field(expression);
+var fieldExpression = new Field { Expression = expression };
 Expect("name")
     .WhenSerializing(fieldExpression)
     .WhenSerializing(fieldString)
@@ -44,15 +36,15 @@ When using the constructor and passing a value for `Name`, `Property` or `Expres
 
 [source,csharp]
 ----
-var fieldStringWithBoostTwo = new Field("name^2");
+var fieldStringWithBoostTwo = new Field { Name = "name^2" };
 
-var fieldStringWithBoostThree = new Field("name^3");
+var fieldStringWithBoostThree = new Field { Name = "name^3" };
 
 Expression<Func<Project, object>> expression = p => p.Name;
 
-var fieldExpression = new Field(expression);
+var fieldExpression = new Field { Expression = expression };
 
-var fieldProperty = new Field(typeof(Project).GetProperty(nameof(Project.Name)));
+var fieldProperty = new Field { Property = typeof(Project).GetProperty(nameof(Project.Name)) };
 
 fieldStringWithBoostTwo.GetHashCode().Should().NotBe(0);
 
@@ -65,6 +57,9 @@ fieldProperty.GetHashCode().Should().NotBe(0);
 fieldStringWithBoostTwo.Should().Be(fieldStringWithBoostThree); <1>
 ----
 <1> <<field-name-with-boost,Fields can constructed with a name that contains a boost>>
+
+No more than one of `Name`, `Expression` or `Property` should be set (with a non-null value) when using the constructor
+to prevent ambiguity over which property should be used when resolving the path to a field that will be sent to Elasticsearch
 
 === Implicit Conversion
 
@@ -99,9 +94,9 @@ value and set the `Boost` property
 ----
 Field fieldString = "name^2";
 
-Field fieldStringConstructor = new Field("name^2");
+Field fieldStringConstructor = new Field { Name = "name^2" };
 
-Field fieldStringCreate = new Field("name^2", 3); <1>
+Field fieldStringCreate = Field.Create("name^2", 3); <1>
 
 fieldString.Name.Should().Be("name");
 
@@ -135,7 +130,7 @@ var fieldExpression = Infer.Field<Project>(p => p.Name);
 ----
 
 this can be even shortened even further using a https://msdn.microsoft.com/en-us/library/sf0df423.aspx#Anchor_0[static import in C# 6] i.e.
-			 `using static Nest.Infer;`
+			`using static Nest.Infer;`
 
 [source,csharp]
 ----
@@ -252,7 +247,7 @@ Expect("metadata.var").WhenSerializing(Field<Project>(p => p.Metadata[variable])
 Expect("metadata.var.created").WhenSerializing(Field<Project>(p => p.Metadata[variable].Created));
 ----
 
-If you are using Elasticearch's {ref_current}/mapping-types.html#_multi_fields[multi_fields], which you really should as they allow
+If you are using Elasticearch's {ref_current}/_multi_fields.html[multi_fields], which you really should as they allow
 you to analyze a string in a number of different ways, these __"virtual"__ sub fields
 do not always map back on to your POCO. By calling `.Suffix()` on expressions, you describe the sub fields that
 should be mapped and <<auto-map, how they are mapped>>
@@ -339,7 +334,7 @@ Using NEST's property attributes you can specify a new name for the properties
 ----
 public class BuiltIn
 {
-    [Text(Name = "naam")]
+    [String(Name = "naam")]
     public string Name { get; set; }
 }
 ----
@@ -374,7 +369,7 @@ If both a NEST property attribute and a serializer specific attribute are presen
 ----
 public class Both
 {
-    [Text(Name = "naam")]
+    [String(Name = "naam")]
     [JsonProperty("nameInJson")]
     public string Name { get; set; }
 }
@@ -402,10 +397,7 @@ class A { public C C { get; set; } }
 
 class B { public C C { get; set; } }
 
-class C
-{
-    public string Name { get; set; }
-}
+class C { public string Name { get; set; } }
 ----
 
 [source,csharp]
@@ -484,11 +476,11 @@ The following example class will demonstrate this precedence
 ----
 class Precedence
 {
-    [Text(Name = "renamedIgnoresNest")]
+    [String(Name = "renamedIgnoresNest")]
     [JsonProperty("renamedIgnoresJsonProperty")]
     public string RenamedOnConnectionSettings { get; set; } <1>
 
-    [Text(Name = "nestAtt")]
+    [String(Name = "nestAtt")]
     [JsonProperty("jsonProp")]
     public string NestAttribute { get; set; } <2>
 

@@ -1,16 +1,8 @@
-:ref_current: https://www.elastic.co/guide/en/elasticsearch/reference/master
+:ref_current: https://www.elastic.co/guide/en/elasticsearch/reference/2.3
 
 :github: https://github.com/elastic/elasticsearch-net
 
 :nuget: https://www.nuget.org/packages
-
-////
-IMPORTANT NOTE
-==============
-This file has been generated from https://github.com/elastic/elasticsearch-net/tree/master/src/Tests/ClientConcepts/LowLevel/Connecting.doc.cs. 
-If you wish to submit a PR for any spelling mistakes, typos or grammatical errors for this file,
-please modify the original csharp file found at the link and submit the PR with that change. Thanks!
-////
 
 [[connecting]]
 == Connecting
@@ -156,36 +148,33 @@ var settings = new ConnectionConfiguration(uri);
 
 There are three categories of exceptions that may be thrown:
 
-`ElasticsearchClientException`::
-
+`ElasticsearchClientException`:: 
 These are known exceptions, either an exception that occurred in the request pipeline
 (such as max retries or timeout reached, bad authentication, etc...) or Elasticsearch itself returned an error (could
 not parse the request, bad query, missing field, etc...). If it is an Elasticsearch error, the `ServerError` property
 on the response will contain the the actual error that was returned.  The inner exception will always contain the
 root causing exception.
 
-`UnexpectedElasticsearchClientException`::
-
+`UnexpectedElasticsearchClientException`:: 
 These are unknown exceptions, for instance a response from Elasticsearch not
 properly deserialized.  These are usually bugs and {github}/issues[should be reported]. This exception also inherits from `ElasticsearchClientException`
 so an additional catch block isn't necessary, but can be helpful in distinguishing between the two.
 
-Development time exceptions::
-
+Development time exceptions:: 
 These are CLR exceptions like `ArgumentException`, `ArgumentOutOfRangeException`, etc.
 that are thrown when an API in the client is misused.
 These should not be handled as you want to know about them during development.
 
 === OnRequestCompleted
 
-You can pass a callback of type `Action<IApiCallDetails>` that can eavesdrop every time a response (good or bad) is created.
+You can pass a callback of type `Action<IApiCallDetails>` that can eaves drop every time a response (good or bad) is created.
 If you have complex logging needs this is a good place to add that in.
 
 [source,csharp]
 ----
 var counter = 0;
 
-var client = TestClient.GetClient(s => s.OnRequestCompleted(r => counter++));
+var client = TestClient.GetInMemoryClient(s => s.OnRequestCompleted(r => counter++));
 
 client.RootNodeInfo();
 
@@ -283,13 +272,13 @@ var asyncResponse = await client.SearchAsync<object>(s => s
 
 list.Count.Should().Be(4);
 
-list.ShouldAllBeEquivalentTo(new[]
-{
-    "POST http://localhost:9200/_search?scroll=2m \n{\"sort\":[{\"_doc\":{\"order\":\"asc\"}}]}",
-    "Status: 200\n------------------------------\n",
-    "POST http://localhost:9200/_search?scroll=2m \n{\"sort\":[{\"_doc\":{\"order\":\"asc\"}}]}",
-    "Status: 200\n------------------------------\n"
-});
+list.ShouldAllBeEquivalentTo(new []
+            {
+                "POST http://localhost:9200/_search?scroll=2m \n{\"sort\":[{\"_doc\":{\"order\":\"asc\"}}]}",
+                "Status: 200\n------------------------------\n",
+                "POST http://localhost:9200/_search?scroll=2m \n{\"sort\":[{\"_doc\":{\"order\":\"asc\"}}]}",
+                "Status: 200\n------------------------------\n"
+            });
 ----
 <1> Here we use `InMemoryConnection`; in reality you would use another type of `IConnection` that actually makes a request.
 
@@ -300,7 +289,7 @@ SSL must be configured outside of the client using .NET's http://msdn.microsoft
 class and setting the http://msdn.microsoft.com/en-us/library/system.net.servicepointmanager.servercertificatevalidationcallback.aspx[ServerCertificateValidationCallback]
 property.
 
-The bare minimum to make .NET accept self-signed SSL certs that are not in the Windows CA store would be to have the callback simply return `true`:
+The bare minimum to make .NET accept self-signed SSL certs that are not in the Window's CA store would be to have the callback simply return `true`:
 
 [source,csharp]
 ----

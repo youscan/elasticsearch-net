@@ -1,16 +1,8 @@
-:ref_current: https://www.elastic.co/guide/en/elasticsearch/reference/master
+:ref_current: https://www.elastic.co/guide/en/elasticsearch/reference/2.3
 
 :github: https://github.com/elastic/elasticsearch-net
 
 :nuget: https://www.nuget.org/packages
-
-////
-IMPORTANT NOTE
-==============
-This file has been generated from https://github.com/elastic/elasticsearch-net/tree/master/src/Tests/Search/Request/InnerHitsUsageTests.cs. 
-If you wish to submit a PR for any spelling mistakes, typos or grammatical errors for this file,
-please modify the original csharp file found at the link and submit the PR with that change. Thanks!
-////
 
 [[inner-hits-usage]]
 == Inner Hits Usage
@@ -30,13 +22,9 @@ Inner hits can be used by defining an `inner_hits` definition on a `nested`, `ha
 
 See the Elasticsearch documentation on {ref_current}/search-request-inner-hits.html[Inner hits] for more detail.
 
-[[inner-hits-in-descending-has-child-queries]]
+[[global-inner-hits]]
 [float]
-== Inner Hits in descending Has Child Queries
-
-Inner Hits can be defined on descending `has_child` queries to return details of descendent children e.g. children,
-grandchildren, great-grandchildren, etc. In previous versions of Elasticsearch, Top Level Inner Hits would have been
-used to achieve this.
+== Global Inner Hits
 
 === Fluent DSL Example
 
@@ -44,23 +32,13 @@ used to achieve this.
 ----
 s => s
 .Index(Index)
-.Query(q => q
-    .HasChild<Earl>(child => child
-        .InnerHits(i => i
-            .Name("earls")
-            .Size(5)
-            .FielddataFields(p => p.Name)
+.InnerHits(ih => ih
+    .Type<Earl>("earls", g => g
+        .Size(5)
+        .InnerHits(iih => iih
+            .Type<Baron>("barons")
         )
-        .Query(cq => cq
-            .HasChild<Baron>(grandchild => grandchild
-                .InnerHits(i => i
-                    .Name("barons")
-                )
-                .Query(gq => gq
-                    .MatchAll()
-                )
-            )
-        )
+        .FielddataFields(p => p.Name)
     )
 )
 ----
@@ -71,54 +49,50 @@ s => s
 ----
 new SearchRequest<Duke>(Index, typeof(Duke))
 {
-    Query = new HasChildQuery
+    InnerHits = new NamedInnerHits
     {
-        Type = typeof(Earl),
-        InnerHits = new InnerHits
+        { "earls", new InnerHitsContainer
         {
-            Name = "earls",
-            Size = 5,
-            FielddataFields = new List<Field> { Infer.Field<Earl>(p => p.Name) }
-        },
-        Query = new HasChildQuery
-        {
-            Type = typeof(Baron),
-            InnerHits = new InnerHits
+            Type = new TypeInnerHit<Earl>
             {
-                Name = "barons"
-            },
-            Query = new MatchAllQuery()
-        }
+                InnerHit = new GlobalInnerHit
+                {
+                    Size = 5,
+                    FielddataFields = new Field[]{ "name" },
+                    InnerHits = new NamedInnerHits
+                    {
+                        { "barons", new TypeInnerHit<Baron>() }
+                    }
+                }
+            }
+        } }
     }
 }
 ----
 
-=== Handling Responses
-
-[source,csharp]
+[source,javascript]
+.Example json output
 ----
-response.Hits.Should().NotBeEmpty();
-
-foreach (var hit in response.Hits)
 {
-    hit.InnerHits.Should().NotBeEmpty();
-    hit.InnerHits.Should().ContainKey("earls");
-    var earlHits = hit.InnerHits["earls"].Hits;
-    earlHits.Total.Should().BeGreaterThan(0);
-    earlHits.Hits.Should().NotBeEmpty().And.HaveCount(5);
-    foreach (var earlHit in earlHits.Hits)
-        earlHit.Fields.ValuesOf<string>("name").Should().NotBeEmpty();
-    var earls = earlHits.Documents<Earl>();
-    earls.Should().NotBeEmpty().And.OnlyContain(earl => !string.IsNullOrWhiteSpace(earl.Name));
-    foreach (var earlHit in earlHits.Hits)
-    {
-        var earl = earlHit.Source.As<Earl>().Name;
-        var baronHits = earlHit.InnerHits["barons"];
-        baronHits.Should().NotBeNull();
-        var baron = baronHits.Documents<Baron>().FirstOrDefault();
-        baron.Should().NotBeNull();
-        baron.Name.Should().NotBeNullOrWhiteSpace();
+  "inner_hits": {
+    "earls": {
+      "type": {
+        "earl": {
+          "fielddata_fields": [
+            "name"
+          ],
+          "inner_hits": {
+            "barons": {
+              "type": {
+                "baron": {}
+              }
+            }
+          },
+          "size": 5
+        }
+      }
     }
+  }
 }
 ----
 
@@ -164,19 +138,36 @@ new SearchRequest<King>(Index, typeof(King))
 }
 ----
 
-=== Handling Responses
-
-[source,csharp]
+[source,javascript]
+.Example json output
 ----
-response.Hits.Should().NotBeEmpty();
-
-foreach (var hit in response.Hits)
 {
-    var princes = hit.InnerHits["princes"].Documents<Prince>();
-    princes.Should().NotBeEmpty();
-
-    var foes = hit.InnerHits["foes"].Documents<King>();
-    foes.Should().NotBeEmpty();
+  "query": {
+    "bool": {
+      "should": [
+        {
+          "has_child": {
+            "type": "prince",
+            "query": {
+              "match_all": {}
+            },
+            "inner_hits": {
+              "name": "princes"
+            }
+          }
+        },
+        {
+          "nested": {
+            "query": {
+              "match_all": {}
+            },
+            "path": "foes",
+            "inner_hits": {}
+          }
+        }
+      ]
+    }
+  }
 }
 ----
 

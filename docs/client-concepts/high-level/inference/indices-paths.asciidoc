@@ -1,22 +1,14 @@
-:ref_current: https://www.elastic.co/guide/en/elasticsearch/reference/master
+:ref_current: https://www.elastic.co/guide/en/elasticsearch/reference/2.3
 
 :github: https://github.com/elastic/elasticsearch-net
 
 :nuget: https://www.nuget.org/packages
 
-////
-IMPORTANT NOTE
-==============
-This file has been generated from https://github.com/elastic/elasticsearch-net/tree/master/src/Tests/ClientConcepts/HighLevel/Inference/IndicesPaths.doc.cs. 
-If you wish to submit a PR for any spelling mistakes, typos or grammatical errors for this file,
-please modify the original csharp file found at the link and submit the PR with that change. Thanks!
-////
-
 [[indices-paths]]
 == Indices paths
 
 Some APIs in Elasticsearch take one or many index name or a special `_all` marker to send the request to all the indices
-In NEST, this is encoded using `Indices`.
+In nest this is encoded using `Indices`.
 
 === Implicit Conversion
 
@@ -57,19 +49,21 @@ A single index can be specified using a CLR type or a string
 
 [source,csharp]
 ----
-var singleString = Index("name1"); <1>
+var client = TestClient.GetInMemoryClient();
 
-var singleTyped = Index<Project>(); <2>
+var singleString = Nest.Indices.Index("name1"); <1>
+
+var singleTyped = Nest.Indices.Index<Project>(); <2>
 
 ISearchRequest singleStringRequest = new SearchDescriptor<Project>().Index(singleString);
 
 ISearchRequest singleTypedRequest = new SearchDescriptor<Project>().Index(singleTyped);
 
-((IUrlParameter)singleStringRequest.Index).GetString(this.Client.ConnectionSettings).Should().Be("name1");
+((IUrlParameter)singleStringRequest.Index).GetString(client.ConnectionSettings).Should().Be("name1");
 
-((IUrlParameter)singleTypedRequest.Index).GetString(this.Client.ConnectionSettings).Should().Be("project");
+((IUrlParameter)singleTypedRequest.Index).GetString(client.ConnectionSettings).Should().Be("project");
 
-var invalidSingleString = Index("name1, name2"); <3>
+var invalidSingleString = Nest.Indices.Index("name1, name2"); <3>
 ----
 <1> specifying a single index using a string
 
@@ -83,17 +77,19 @@ Similarly to a single index, multiple indices can be specified using multiple CL
 
 [source,csharp]
 ----
-var manyStrings = Index("name1", "name2"); <1>
+var client = TestClient.GetInMemoryClient();
 
-var manyTypes = Index<Project>().And<Developer>(); <2>
+var manyStrings = Nest.Indices.Index("name1", "name2"); <1>
+
+var manyTypes = Nest.Indices.Index<Project>().And<Developer>(); <2>
 
 ISearchRequest manyStringRequest = new SearchDescriptor<Project>().Index(manyStrings);
 
 ISearchRequest manyTypedRequest = new SearchDescriptor<Project>().Index(manyTypes);
 
-((IUrlParameter)manyStringRequest.Index).GetString(this.Client.ConnectionSettings).Should().Be("name1,name2");
+((IUrlParameter)manyStringRequest.Index).GetString(client.ConnectionSettings).Should().Be("name1,name2");
 
-((IUrlParameter)manyTypedRequest.Index).GetString(this.Client.ConnectionSettings).Should().Be("project,devs"); <3>
+((IUrlParameter)manyTypedRequest.Index).GetString(client.ConnectionSettings).Should().Be("project,devs"); <3>
 ----
 <1> specifying multiple indices using strings
 
@@ -111,16 +107,18 @@ static imports too; in this scenario, `All` becomes ambiguous between `Indices.A
 
 [source,csharp]
 ----
-var indicesAll = All;
+var client = TestClient.GetInMemoryClient();
 
-var allIndices = AllIndices;
+var indicesAll = Nest.Indices.All;
+
+var allIndices = Nest.Indices.AllIndices;
 
 ISearchRequest indicesAllRequest = new SearchDescriptor<Project>().Index(indicesAll);
 
 ISearchRequest allIndicesRequest = new SearchDescriptor<Project>().Index(allIndices);
 
-((IUrlParameter)indicesAllRequest.Index).GetString(this.Client.ConnectionSettings).Should().Be("_all");
+((IUrlParameter)indicesAllRequest.Index).GetString(client.ConnectionSettings).Should().Be("_all");
 
-((IUrlParameter)allIndicesRequest.Index).GetString(this.Client.ConnectionSettings).Should().Be("_all");
+((IUrlParameter)allIndicesRequest.Index).GetString(client.ConnectionSettings).Should().Be("_all");
 ----
 

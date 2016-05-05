@@ -1,16 +1,8 @@
-:ref_current: https://www.elastic.co/guide/en/elasticsearch/reference/master
+:ref_current: https://www.elastic.co/guide/en/elasticsearch/reference/2.3
 
 :github: https://github.com/elastic/elasticsearch-net
 
 :nuget: https://www.nuget.org/packages
-
-////
-IMPORTANT NOTE
-==============
-This file has been generated from https://github.com/elastic/elasticsearch-net/tree/master/src/Tests/ClientConcepts/ConnectionPooling/Sniffing/RoleDetection.doc.cs. 
-If you wish to submit a PR for any spelling mistakes, typos or grammatical errors for this file,
-please modify the original csharp file found at the link and submit the PR with that change. Thanks!
-////
 
 [[sniffing-role-detection]]
 == Sniffing role detection
@@ -53,38 +45,6 @@ await audit.TraceStartup();
 var audit = new Auditor(() => Framework.Cluster
     .Nodes(10)
     .Sniff(s => s.SucceedAlways()
-        .Succeeds(Always, Framework.Cluster.Nodes(8).StoresNoData(9200, 9201, 9202).HttpDisabled(9201))
-    )
-    .SniffingConnectionPool()
-    .AllDefaults()
-)
-{
-    AssertPoolBeforeCall = (pool) =>
-    {
-        pool.Should().NotBeNull();
-        pool.Nodes.Should().HaveCount(10);
-        pool.Nodes.Where(n => n.HoldsData).Should().HaveCount(10);
-        pool.Nodes.Where(n => n.HttpEnabled).Should().HaveCount(10);
-        pool.Nodes.Should().OnlyContain(n => n.Uri.Host == "localhost");
-    },
-
-    AssertPoolAfterCall = (pool) =>
-    {
-        pool.Should().NotBeNull();
-        pool.Nodes.Should().HaveCount(7, "we filtered the node that stores no data");
-        pool.Nodes.Should().NotContain(n=>n.Uri.Port == 9201);
-        pool.Nodes.Where(n => n.HoldsData).Should().HaveCount(5);
-    }
-};
-
-await audit.TraceStartup();
-----
-
-[source,csharp]
-----
-var audit = new Auditor(() => Framework.Cluster
-    .Nodes(10)
-    .Sniff(s => s.SucceedAlways()
         .Succeeds(Always, Framework.Cluster.Nodes(8).StoresNoData(9200, 9201, 9202).SniffShouldReturnFqdn())
     )
     .SniffingConnectionPool()
@@ -113,6 +73,21 @@ await audit.TraceStartup();
 
 [source,csharp]
 ----
+var node = SniffAndReturnNode();
+
+node.MasterEligible.Should().BeTrue();
+
+node.HoldsData.Should().BeFalse();
+
+node = await SniffAndReturnNodeAsync();
+
+node.MasterEligible.Should().BeTrue();
+
+node.HoldsData.Should().BeFalse();
+----
+
+[source,csharp]
+----
 var pipeline = CreatePipeline();
 
 pipeline.Sniff();
@@ -127,7 +102,8 @@ await pipeline.SniffAsync();
 
 [source,csharp]
 ----
-this._settings = TestClient.GetClient(c => c.PrettyJson(), this._cluster.Node.Port, createPool: u => new SniffingConnectionPool(new[] { u })).ConnectionSettings;
+this._settings =
+    this._cluster.Node.Client(u => new SniffingConnectionPool(new[] {u}), c => c.PrettyJson()).ConnectionSettings;
 
 var pipeline = new RequestPipeline(this._settings, DateTimeProvider.Default, new MemoryStreamFactory(),
     new SearchRequestParameters());

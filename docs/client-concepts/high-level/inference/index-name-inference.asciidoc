@@ -1,16 +1,8 @@
-:ref_current: https://www.elastic.co/guide/en/elasticsearch/reference/master
+:ref_current: https://www.elastic.co/guide/en/elasticsearch/reference/2.3
 
 :github: https://github.com/elastic/elasticsearch-net
 
 :nuget: https://www.nuget.org/packages
-
-////
-IMPORTANT NOTE
-==============
-This file has been generated from https://github.com/elastic/elasticsearch-net/tree/master/src/Tests/ClientConcepts/HighLevel/Inference/IndexNameInference.doc.cs. 
-If you wish to submit a PR for any spelling mistakes, typos or grammatical errors for this file,
-please modify the original csharp file found at the link and submit the PR with that change. Thanks!
-////
 
 [[index-name-inference]]
 == Index Name Inference
@@ -20,7 +12,7 @@ as part of the request in order to know what index/indices a request should oper
 
 NEST has a number of ways in which an index name can be specified
 
-=== Default Index name on Connection Settings
+=== Default Index name on ConnectionSettings
 
 A default index name can be specified on `ConnectionSettings` using `.DefaultIndex()`.
 This is the default index name to use when no other index name can be resolved for a request
@@ -81,7 +73,7 @@ on the request
 ----
 Uri requestUri = null;
 
-var client = TestClient.GetClient(s => s
+var client = TestClient.GetInMemoryClient(s => s
     .OnRequestCompleted(r => { requestUri = r.Uri; }));
 
 var response = client.Search<Project>(s => s.Index("some-other-index")); <1>
@@ -97,7 +89,7 @@ index name and any index name specified for the POCO type using `.MapDefaultType
 
 [source,csharp]
 ----
-var client = TestClient.GetClient(s =>
+var client = TestClient.GetInMemoryClient(s =>
     new ConnectionSettings()
         .DefaultIndex("defaultindex")
         .MapDefaultTypeIndices(m => m
