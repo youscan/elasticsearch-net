@@ -558,12 +558,15 @@
     <Compile Include="Cluster\TaskManagement\TasksList\TasksListApiTests.cs" />
     <Compile Include="Cluster\TaskManagement\TasksList\TasksListUrlTests.cs" />
     <Compile Include="CommonOptions\DistanceUnit\DistanceUnits.doc.cs" />
-    <Compile Include="Document\Multiple\Bulk\BulkBenchmarkTests.cs" />
+    <Compile Include="Document\Multiple\Bulk\BulkDeserializationBenchmarkTests.cs" />
     <Compile Include="Document\Multiple\Bulk\BulkProfileTests.cs" />
     <Compile Include="Document\Multiple\ReindexOnServer\ReindexOnServerUrlTests.cs" />
     <Compile Include="Document\Multiple\ReindexOnServer\ReindexOnServerApiTests.cs" />
     <Compile Include="Document\Multiple\UpdateByQuery\UpdateByQueryApiTests.cs" />
     <Compile Include="Document\Multiple\UpdateByQuery\UpdateByQueryUrlTests.cs" />
+    <Compile Include="Framework\Benchmarks\AsciiDocExporter.cs" />
+    <Compile Include="Framework\Benchmarks\BenchmarkTest.cs" />
+    <Compile Include="Framework\Benchmarks\BenchmarkConfig.cs" />
     <Compile Include="Framework\Integration\CallUniqueValues.cs" />
     <Compile Include="Framework\Integration\ClientMethod.cs" />
     <Compile Include="Framework\Integration\Process\ElasticsearchMessage.cs" />
