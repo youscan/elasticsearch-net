@@ -10,6 +10,7 @@ namespace Tests.Framework.Integration
 		public const string Reindex = "Reindex Cluster";
 		public const string SniffRoleDetection = "SniffRoleDetection";
 		public const string Bool = "Bool Cluster";
+		public const string Benchmark = "Benchmark Cluster";
 
 		public const string Shield = "Shield Cluster";
 	}

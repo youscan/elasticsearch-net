@@ -12,6 +12,7 @@ open Fake
 #load @"Documentation.fsx"
 #load @"Releasing.fsx"
 #load @"Profiling.fsx"
+#load @"Benchmarking.fsx"
 
 open Paths
 open Building
@@ -21,6 +22,7 @@ open Versioning
 open Documentation
 open Releasing
 open Profiling
+open Benchmarking
 open System
 open System.IO
 
