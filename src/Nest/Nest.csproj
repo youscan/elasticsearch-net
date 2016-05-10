@@ -33,7 +33,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>True</Optimize>
     <OutputPath>..\Nest\bin\Net45\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
@@ -827,6 +827,7 @@
     <Compile Include="Mapping\Types\Specialized\Attachment\AttachmentProperty.cs" />
     <Compile Include="Mapping\Types\Specialized\Completion\CompletionAttribute.cs" />
     <Compile Include="Mapping\Types\Specialized\Completion\CompletionProperty.cs" />
+    <Compile Include="Mapping\Types\Specialized\Generic\GenericProperty.cs" />
     <Compile Include="Mapping\Types\Specialized\Ip\IpAttribute.cs" />
     <Compile Include="Mapping\Types\Specialized\Ip\IpProperty.cs" />
     <Compile Include="Mapping\Types\Specialized\Murmur3Hash\Murmur3HashAttribute.cs" />
@@ -1185,6 +1186,59 @@
     <Compile Include="Search\Validate\ValidateQueryRequest.cs" />
     <Compile Include="Search\Validate\ValidateQueryResponse.cs" />
     <Compile Include="Search\Validate\ValidationExplanation.cs" />
+    <Compile Include="XPack\Graph\Explore\ElasticClient-GraphExplore.cs" />
+    <Compile Include="XPack\Graph\Explore\Response\GraphConnection.cs" />
+    <Compile Include="XPack\Graph\Explore\Response\GraphVertex.cs" />
+    <Compile Include="XPack\Graph\Explore\Request\GraphExploreControls.cs" />
+    <Compile Include="XPack\Graph\Explore\GraphExploreRequest.cs" />
+    <Compile Include="XPack\Graph\Explore\GraphExploreResponse.cs" />
+    <Compile Include="XPack\Graph\Explore\Request\GraphVertexDefinition.cs" />
+    <Compile Include="XPack\Graph\Explore\Request\GraphVertexInclude.cs" />
+    <Compile Include="XPack\Graph\Explore\Request\Hop.cs" />
+    <Compile Include="XPack\Graph\Explore\Request\SampleDiversity.cs" />
+    <Compile Include="XPack\License\DeleteLicense\ElasticClient-DeleteLicense.cs" />
+    <Compile Include="XPack\License\GetLicense\ElasticClient-GetLicense.cs" />
+    <Compile Include="XPack\License\GetLicense\GetLicenseRequest.cs" />
+    <Compile Include="XPack\License\GetLicense\GetLicenseResponse.cs" />
+    <Compile Include="XPack\License\GetLicense\LicenseStatus.cs" />
+    <Compile Include="XPack\License\GetLicense\LicenseType.cs" />
+    <Compile Include="XPack\License\DeleteLicense\DeleteLicenseRequest.cs" />
+    <Compile Include="XPack\License\DeleteLicense\DeleteLicenseResponse.cs" />
+    <Compile Include="XPack\License\PostLicense\ElasticClient-PostLicense.cs" />
+    <Compile Include="XPack\License\PostLicense\LicenseAcknowledgement.cs" />
+    <Compile Include="XPack\License\PostLicense\PostLicenseRequest.cs" />
+    <Compile Include="XPack\License\PostLicense\PostLicenseResponse.cs" />
+    <Compile Include="XPack\Security\Authenticate\ElasticClient-Authenticate.cs" />
+    <Compile Include="XPack\Security\Authenticate\AuthenticateRequest.cs" />
+    <Compile Include="XPack\Security\Authenticate\AuthenticateResponse.cs" />
+    <Compile Include="XPack\Security\ClearCachedRealms\ClearCachedRealmsRequest.cs" />
+    <Compile Include="XPack\Security\ClearCachedRealms\ClearCachedRealmsResponse.cs" />
+    <Compile Include="XPack\Security\ClearCachedRealms\ElasticClient-ClearCachedRealms.cs" />
+    <Compile Include="XPack\Security\Role\ClearCachedRoles\ClearCachedRolesRequest.cs" />
+    <Compile Include="XPack\Security\Role\ClearCachedRoles\ClearCachedRolesResponse.cs" />
+    <Compile Include="XPack\Security\Role\ClearCachedRoles\ElasticClient-ClearCachedRoles.cs" />
+    <Compile Include="XPack\Security\ShieldNode.cs" />
+    <Compile Include="XPack\Security\ShieldNodeStatus.cs" />
+    <Compile Include="XPack\Security\Role\DeleteRole\DeleteRoleRequest.cs" />
+    <Compile Include="XPack\Security\Role\DeleteRole\DeleteRoleResponse.cs" />
+    <Compile Include="XPack\Security\Role\DeleteRole\ElasticClient-DeleteRole.cs" />
+    <Compile Include="XPack\Security\Role\GetRole\ElasticClient-GetRole.cs" />
+    <Compile Include="XPack\Security\Role\GetRole\GetRoleRequest.cs" />
+    <Compile Include="XPack\Security\Role\GetRole\GetRoleResponse.cs" />
+    <Compile Include="XPack\Security\Role\GetRole\Role.cs" />
+    <Compile Include="XPack\Security\Role\PutRole\ElasticClient-PutRole.cs" />
+    <Compile Include="XPack\Security\Role\PutRole\IndicesPrivileges.cs" />
+    <Compile Include="XPack\Security\Role\PutRole\PutRoleRequest.cs" />
+    <Compile Include="XPack\Security\Role\PutRole\PutRoleResponse.cs" />
+    <Compile Include="XPack\Security\User\DeleteUser\ElasticClient-DeleteUser.cs" />
+    <Compile Include="XPack\Security\User\DeleteUser\DeleteUserRequest.cs" />
+    <Compile Include="XPack\Security\User\DeleteUser\DeleteUserResponse.cs" />
+    <Compile Include="XPack\Security\User\GetUser\ElasticClient-GetUser.cs" />
+    <Compile Include="XPack\Security\User\GetUser\GetUserResponse.cs" />
+    <Compile Include="XPack\Security\User\GetUser\GetUserRequest.cs" />
+    <Compile Include="XPack\Security\User\PutUser\PutUserRequest.cs" />
+    <Compile Include="XPack\Security\User\PutUser\PutUserResponse.cs" />
+    <Compile Include="XPack\Security\User\PutUser\ElasticClient-PutUser.cs" />
     <Compile Include="_Generated\_Descriptors.generated.cs" />
     <Compile Include="_Generated\_LowLevelDispatch.generated.cs" />
     <Compile Include="_Generated\_RequestParametersExtensions.Generated.cs" />
@@ -1253,7 +1307,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2')">
       <ItemGroup>
         <Reference Include="Newtonsoft.Json">
           <HintPath>..\..\packages\Newtonsoft.Json\lib\net45\Newtonsoft.Json.dll</HintPath>

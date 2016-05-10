@@ -7,6 +7,10 @@
 [[script-query-usage]]
 == Script Query Usage
 
+A query allowing to define {ref_current}/modules-scripting.html[scripts] as queries.
+
+See the Elasticsearch documentation on {ref_current}/query-dsl-script-query.html[script query] for more details.
+
 === Fluent DSL Example
 
 [source,csharp]
@@ -14,9 +18,8 @@
 q
 .Script(sn => sn
     .Name("named_query")
-    .Boost(1.1)
     .Inline(_templateString)
-    .Params(p=>p.Add("param1", 1))
+    .Params(p => p.Add("param1", 50))
 )
 ----
 
@@ -27,11 +30,10 @@ q
 new ScriptQuery
 {
     Name = "named_query",
-    Boost = 1.1,
     Inline = _templateString,
     Params = new Dictionary<string, object>
     {
-        { "param1", 1 }
+        { "param1", 50 }
     }
 }
 ----
@@ -42,14 +44,21 @@ new ScriptQuery
 {
   "script": {
     "_name": "named_query",
-    "boost": 1.1,
     "script": {
-      "inline": "doc['num1'].value > param1",
+      "inline": "doc['numberOfCommits'].value > param1",
       "params": {
-        "param1": 1
+        "param1": 50
       }
     }
   }
 }
+----
+
+=== Handling Responses
+
+[source,csharp]
+----
+response.IsValid.Should().BeTrue();
+response.Documents.Count().Should().BeGreaterThan(0);
 ----
 

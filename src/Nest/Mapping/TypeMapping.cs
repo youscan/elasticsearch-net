@@ -19,6 +19,7 @@ namespace Nest
 
 		[JsonProperty("transform")]
 		[JsonConverter(typeof(MappingTransformCollectionJsonConverter))]
+		[Obsolete("Deprecated in 2.0. Will be removed in the next major version release.")]
 		IList<IMappingTransform> Transform { get; set; }
 
 		[JsonProperty("analyzer")]
@@ -46,12 +47,14 @@ namespace Nest
 		ISizeField SizeField { get; set; }
 
 		[JsonProperty("_timestamp")]
+		[Obsolete("use a normal date field and set its value explicitly")]
 		ITimestampField TimestampField { get; set; }
 
 		[JsonProperty("_field_names")]
 		IFieldNamesField FieldNamesField { get; set; }
 
 		[JsonProperty("_ttl")]
+		[Obsolete("will be replaced with a different implementation in a future version of Elasticsearch")]
 		ITtlField TtlField { get; set; }
 
 		[JsonProperty("_meta")]
@@ -103,10 +106,13 @@ namespace Nest
 		/// <inheritdoc/>
 		public ISourceField SourceField { get; set; }
 		/// <inheritdoc/>
+		[Obsolete("use a normal date field and set its value explicitly")]
 		public ITimestampField TimestampField { get; set; }
 		/// <inheritdoc/>
+		[Obsolete("Deprecated in 2.0. Will be removed in the next major version release.")]
 		public IList<IMappingTransform> Transform { get; set; }
 		/// <inheritdoc/>
+		[Obsolete("will be replaced with a different implementation in a future version of Elasticsearch")]
 		public ITtlField TtlField { get; set; }
 	}
 
@@ -130,8 +136,11 @@ namespace Nest
 		string ITypeMapping.SearchAnalyzer { get; set; }
 		ISizeField ITypeMapping.SizeField { get; set; }
 		ISourceField ITypeMapping.SourceField { get; set; }
+		[Obsolete("use a normal date field and set its value explicitly")]
 		ITimestampField ITypeMapping.TimestampField { get; set; }
+		[Obsolete("Deprecated in 2.0. Will be removed in the next major version release.")]
 		IList<IMappingTransform> ITypeMapping.Transform { get; set; }
+		[Obsolete("will be replaced with a different implementation in a future version of Elasticsearch")]
 		ITtlField ITypeMapping.TtlField { get; set; }
 
 		/// <summary>
@@ -192,28 +201,34 @@ namespace Nest
 		public TypeMappingDescriptor<T> NumericDetection(bool detect = true) => Assign(a => a.NumericDetection = detect);
 
 		/// <inheritdoc/>
-		public TypeMappingDescriptor<T> Transform(IEnumerable<IMappingTransform> transforms) => Assign(a => a.Transform = transforms.ToListOrNullIfEmpty());
-
-		/// <inheritdoc/>
-		public TypeMappingDescriptor<T> Transform(Func<MappingTransformsDescriptor, IPromise<IList<IMappingTransform>>> selector) =>
-			Assign(a => a.Transform = selector?.Invoke(new MappingTransformsDescriptor())?.Value);
-
-		/// <inheritdoc/>
 		public TypeMappingDescriptor<T> RoutingField(Func<RoutingFieldDescriptor<T>, IRoutingField> routingFieldSelector) => Assign(a => a.RoutingField = routingFieldSelector?.Invoke(new RoutingFieldDescriptor<T>()));
-
-		/// <inheritdoc/>
-		public TypeMappingDescriptor<T> TimestampField(Func<TimestampFieldDescriptor<T>, ITimestampField> timestampFieldSelector) => Assign(a => a.TimestampField = timestampFieldSelector?.Invoke(new TimestampFieldDescriptor<T>()));
 
 		/// <inheritdoc/>
 		public TypeMappingDescriptor<T> FieldNamesField(Func<FieldNamesFieldDescriptor<T>, IFieldNamesField> fieldNamesFieldSelector) => Assign(a => a.FieldNamesField = fieldNamesFieldSelector.Invoke(new FieldNamesFieldDescriptor<T>()));
 
+#pragma warning disable 618
 		/// <inheritdoc/>
+		[Obsolete("use a normal date field and set its value explicitly")]
+		public TypeMappingDescriptor<T> TimestampField(Func<TimestampFieldDescriptor<T>, ITimestampField> timestampFieldSelector) => Assign(a => a.TimestampField = timestampFieldSelector?.Invoke(new TimestampFieldDescriptor<T>()));
+
+		/// <inheritdoc/>
+		[Obsolete("Deprecated in 2.0. Will be removed in the next major version release.")]
+		public TypeMappingDescriptor<T> Transform(IEnumerable<IMappingTransform> transforms) => Assign(a => a.Transform = transforms.ToListOrNullIfEmpty());
+
+		/// <inheritdoc/>
+		[Obsolete("Deprecated in 2.0. Will be removed in the next major version release.")]
+		public TypeMappingDescriptor<T> Transform(Func<MappingTransformsDescriptor, IPromise<IList<IMappingTransform>>> selector) =>
+			Assign(a => a.Transform = selector?.Invoke(new MappingTransformsDescriptor())?.Value);
+
+		/// <inheritdoc/>
+		[Obsolete("will be replaced with a different implementation in a future version of Elasticsearch")]
 		public TypeMappingDescriptor<T> TtlField(Func<TtlFieldDescriptor, ITtlField> ttlFieldSelector) => Assign(a => a.TtlField = ttlFieldSelector?.Invoke(new TtlFieldDescriptor()));
+#pragma warning restore 618
 
 		/// <inheritdoc/>
 		public TypeMappingDescriptor<T> Meta(Func<FluentDictionary<string, object>, FluentDictionary<string, object>> metaSelector) => Assign(a => a.Meta = metaSelector(new FluentDictionary<string, object>()));
 
-		public TypeMappingDescriptor<T> Properties(Func<PropertiesDescriptor<T>, IPromise<IProperties>> propertiesSelector) => 
+		public TypeMappingDescriptor<T> Properties(Func<PropertiesDescriptor<T>, IPromise<IProperties>> propertiesSelector) =>
 			Assign(a => a.Properties = propertiesSelector?.Invoke(new PropertiesDescriptor<T>(Self.Properties))?.Value);
 
 		/// <inheritdoc/>

@@ -12,6 +12,7 @@ open Fake
 #load @"Documentation.fsx"
 #load @"Releasing.fsx"
 #load @"Profiling.fsx"
+#load @"Benchmarking.fsx"
 
 open Paths
 open Building
@@ -21,6 +22,7 @@ open Versioning
 open Documentation
 open Releasing
 open Profiling
+open Benchmarking
 open System
 open System.IO
 
@@ -74,7 +76,8 @@ Target "Release" <| fun _ ->
 Target "Canary" <| fun _ -> 
     trace "Running canary build" 
     let apiKey = (getBuildParam "apikey");
-    if (not (String.IsNullOrWhiteSpace apiKey) || apiKey = "ignore") then Release.PublishCanaryBuild apiKey
+    let feed = (getBuildParamOrDefault "feed" "elasticsearch-net");
+    if (not (String.IsNullOrWhiteSpace apiKey) || apiKey = "ignore") then Release.PublishCanaryBuild apiKey feed
 
 BuildFailureTarget "NotifyTestFailures" <| fun _ -> Tests.Notify() |> ignore
 

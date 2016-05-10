@@ -92,13 +92,16 @@ module Tooling =
 
     let private exec = execAt Environment.CurrentDirectory
 
-    let execProcessWithTimeout proc arguments timeout = 
+    let execProcessWithWorkingDirectoryTimeout proc workingDirectory arguments timeout = 
         let args = arguments |> String.concat " "
         ExecProcess (fun info ->
             info.FileName <- proc
-            info.WorkingDirectory <- "."
+            info.WorkingDirectory <- workingDirectory
             info.Arguments <- args
         ) timeout
+
+    let execProcessWithTimeout proc arguments timeout = 
+        execProcessWithWorkingDirectoryTimeout proc "." arguments timeout
 
     let execProcessWithTimeoutAndReturnMessages proc arguments timeout = 
         let args = arguments |> String.concat " "
@@ -301,16 +304,16 @@ module Tooling =
             match (runtime, hasClr, hasCoreClr) with
             | (Core, _, Some c) ->
                 let proc = c.Process exe
-                execProcess proc arguments
+                execProcessWithWorkingDirectoryTimeout proc workingDirectory arguments (TimeSpan.FromMinutes 30.)
             | (Desktop, Some d, _) ->
                 let proc = d.Process exe
-                execProcess proc arguments
+                execProcessWithWorkingDirectoryTimeout proc workingDirectory arguments (TimeSpan.FromMinutes 30.)
             | (Both, Some d, Some c) ->
                 let proc = d.Process exe
-                let result = execProcess proc arguments 
+                let result = execProcessWithWorkingDirectoryTimeout proc workingDirectory arguments (TimeSpan.FromMinutes 30.)
                 if result <> 0 then failwith (sprintf "Failed to run dnx tooling for %s args: %A" proc arguments)
                 let proc = c.Process exe
-                execProcess proc arguments 
+                execProcessWithWorkingDirectoryTimeout proc workingDirectory arguments (TimeSpan.FromMinutes 30.)
             | _ -> failwith "Tried to run dnx tooling in unknown state"
             |> ignore
 

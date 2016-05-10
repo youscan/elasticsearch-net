@@ -8,3 +8,6 @@ Rx-Main
 Rx-PlatformServices
 Bogus
 DiffPlex
+SemanticVersioning
+BenchmarkDotNet
+System.Buffers

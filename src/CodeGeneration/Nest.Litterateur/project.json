@@ -1,11 +1,11 @@
 {
-  "version": "2.2.0",
+  "version": "2.3.0",
   "compilationOptions": {
     "warningsAsErrors": false,
     "emitEntryPoint": true
   },
   "dependencies": {
-    "Newtonsoft.Json": "8.0.2",
+    "Newtonsoft.Json": "8.0.2"
   },
   "commands": {
     "Nest.Litterateur": "Nest.Litterateur"

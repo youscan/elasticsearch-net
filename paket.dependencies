@@ -16,8 +16,7 @@ nuget DiffPlex
 
 // profiling / benchmarking
 nuget JetBrains.Profiler.Kernel.Windows.Api
-nuget Humanizer
-nuget NDesk.Options
+nuget BenchmarkDotNet 0.9.5
 
 //Rx-Main on its does not seem to work
 nuget Rx-Core
@@ -25,10 +24,15 @@ nuget Rx-Interfaces
 nuget Rx-Linq 
 nuget Rx-Main
 nuget Rx-PlatformServices
+nuget SemanticVersioning
 
 source https://api.nuget.org/v3/index.json
 
 nuget AsciiDocNet
+
+source https://www.myget.org/F/aspnetvnext/api/v3/index.json
+
+nuget System.Buffers 4.0.0-rc2-24027
 
 group build
 

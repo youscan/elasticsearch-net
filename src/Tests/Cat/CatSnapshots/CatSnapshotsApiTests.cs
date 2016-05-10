@@ -11,6 +11,7 @@ using Xunit;
 namespace Tests.Cat.CatSnapshots
 {
 	[Collection(IntegrationContext.Indexing)]
+	[SkipVersion("<2.1.0", "")]
 	public class CatSnapshotsApiTests : ApiIntegrationTestBase<ICatResponse<CatSnapshotsRecord>, ICatSnapshotsRequest, CatSnapshotsDescriptor, CatSnapshotsRequest>
 	{
 		private static readonly string SnapshotName = RandomString();
@@ -34,7 +35,8 @@ namespace Tests.Cat.CatSnapshots
 				throw new Exception("Setup: failed to create snapshot repository");
 
 			var createIndex = this.Client.CreateIndex(SnapshotIndexName);
-			client.Snapshot(RepositoryName, SnapshotName, s=>s.WaitForCompletion());
+			this.Client.ClusterHealth(g => g.WaitForStatus(WaitForStatus.Yellow));
+			client.Snapshot(RepositoryName, SnapshotName, s=>s.WaitForCompletion().Index(SnapshotIndexName));
 		}
 
 		protected override LazyResponses ClientUsage() => Calls(
