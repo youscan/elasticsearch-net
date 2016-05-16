@@ -18,7 +18,8 @@ namespace Profiling.Timeline
                 SaveDir = resultsDirectory,
                 RedistDir = sdkPath,
                 ProfilingType = ProfilingType.Timeline,
-                ListFile = ListFile
+                ListFile = ListFile,
+				SnapshotFormat = SnapshotFormat.Uncompressed
             };
 
             SelfAttach.Attach(saveSnapshotProfilingConfig);

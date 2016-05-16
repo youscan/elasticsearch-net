@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Tests.Framework.Integration;
-using Tests.Profiling;
+using Tests.Framework.Profiling;
 
 namespace Profiling
 {
@@ -17,7 +17,7 @@ namespace Profiling
             string outputPath,
             ClusterBase cluster,
             Assembly assembly,
-            TextWriter output = null)
+            IColoredWriter output)
         {
             SdkPath = sdkPath;
             OutputPath = Path.Combine(
@@ -25,14 +25,14 @@ namespace Profiling
                 this.GetType().Name.Replace("ProfileFactory", string.Empty).ToLowerInvariant());
             Cluster = cluster;
             Assembly = assembly;
-            Output = output ?? Console.Out;
+            Output = output;
         }
 
         protected Assembly Assembly { get; }
 
         protected ClusterBase Cluster { get; }
 
-        protected TextWriter Output { get; }
+        protected IColoredWriter Output { get; }
 
         protected string OutputPath { get; }
 
@@ -74,7 +74,7 @@ namespace Profiling
                     var resultsDirectory = Path.Combine(OutputPath, profiledClass.Type.Name, profiledMethod.MethodInfo.Name);
                     var action = profiledMethod.Compile(instance);
 
-                    Output.WriteLine($"profiling {profiledClass.Type.Name}.{profiledMethod.MethodInfo.Name}");
+                    Output.WriteLine(ConsoleColor.Green, $"Profiling {profiledClass.Type.Name}.{profiledMethod.MethodInfo.Name}");
 
                     using (BeginProfiling(resultsDirectory))
                     {
@@ -98,7 +98,7 @@ namespace Profiling
                     var resultsDirectory = Path.Combine(OutputPath, profiledClass.Type.Name, profiledMethod.MethodInfo.Name);
                     var thunk = profiledMethod.CompileAsync(instance);
 
-                    Output.WriteLine($"profiling {profiledClass.Type.Name}.{profiledMethod.MethodInfo.Name}");
+                    Output.WriteLine(ConsoleColor.Green, $"profiling {profiledClass.Type.Name}.{profiledMethod.MethodInfo.Name}");
 
                     using (BeginProfiling(resultsDirectory))
                     {

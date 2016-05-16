@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
-using Tests.Profiling;
+using Tests.Framework.Profiling;
 using Tests.Search.Search;
 
 namespace Profiling

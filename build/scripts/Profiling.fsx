@@ -23,7 +23,14 @@ module Profiler =
         // Tooling.DotTraceSnapshotStats.Exec [snapShotOutput; snapShotStatsOutput; @"/full"]
         // Tooling.DotTraceReporter.Exec [@"/reporting"; snapShotOutput; patternInput; profileOutput]
 
-        Tooling.execProcessWithTimeout profiledApp [] (TimeSpan.FromMinutes 10.) |> ignore
+        Tooling.execProcessWithTimeout profiledApp [] (TimeSpan.FromMinutes 30.) |> ignore
+        let performanceOutput = Paths.Output("profiling/performance") |> directoryInfo
+
+        for snapshot in Directory.EnumerateFiles(performanceOutput.FullName, "*.dtp", SearchOption.AllDirectories) do
+            let snapshotPath = snapshot |> fileInfo
+            let snapShotName = snapshotPath.FullName.Replace(performanceOutput.FullName, "").Replace("/", ".")
+            let snapshotReport = combinePaths snapshotPath.Directory.FullName snapShotName
+            Tooling.DotTraceReporter.Exec [@"/reporting"; snapshotPath.FullName; patternInput; snapshotReport]
     
 
 

@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using Tests.Framework.Integration;
-using Tests.Profiling;
+using Tests.Framework.Profiling;
 
 namespace Profiling.Timeline
 {
@@ -13,7 +13,7 @@ namespace Profiling.Timeline
             string outputPath,
             ClusterBase cluster,
             Assembly assembly,
-            TextWriter output = null) : base(sdkPath, outputPath, cluster, assembly, output)
+            IColoredWriter output) : base(sdkPath, outputPath, cluster, assembly, output)
         { }
 
         protected override IDisposable BeginProfiling(string resultsDirectory)
