@@ -15,12 +15,6 @@ let gitLink pdbDir projectName =
     ) (TimeSpan.FromMinutes 5.0) |> ignore
 
 type Build() = 
-    //Override the prebuild event because it just calls a fake task BuildApp depends on anyways
-    static let msbuildProperties = [
-      ("Configuration","Release"); 
-      ("PreBuildEvent","echo");
-    ]
-
     static member QuickCompile() = 
         let projects = !! Paths.Source("*/project.json") 
                        |> Seq.map DirectoryName
@@ -64,5 +58,41 @@ type Build() =
             CopyDir outputFolder binFolder allFiles
         )
 
+type MsBuild() = 
+    //Override the prebuild event because it just calls a fake task BuildApp depends on anyways
+    static let msbuildProperties = [
+      ("Configuration","Release"); 
+      ("PreBuildEvent","echo");
+    ]
 
+    static let moveToBuildOutput () =
+        for p in DotNetProject.All do
+            let outputFolder = Paths.Output(p.ProjectName.Nuget)
+            let srcFolder = Paths.BinFolder(p.ProjectName.Location)
+            let net45dir = sprintf "%s/net45" outputFolder
+            CopyDir net45dir srcFolder allFiles
+
+    static let toTarget () =
+        "Rebuild"
+
+    static member Compile() =
+        let properties = msbuildProperties |> List.append [("TargetFrameworkVersion", "v4.5.1")] 
+        let target = toTarget()
+
+        CleanDirs <| Paths.MsBuildOutput
+        MSBuild null target properties (seq { yield "src/Elasticsearch.sln" }) |> ignore
+        moveToBuildOutput()
+
+    static member QuickCompile() = 
+        let setParams defaults =
+            { defaults with
+                Verbosity = Some(Quiet)
+                Targets = ["Build"]
+                Properties =
+                    [
+                        "Configuration", "Release"
+                        "TargetFrameworkVersion", "v4.5.1"
+                    ]
+         }
+        build setParams "src/Elasticsearch.sln" |> ignore
 
