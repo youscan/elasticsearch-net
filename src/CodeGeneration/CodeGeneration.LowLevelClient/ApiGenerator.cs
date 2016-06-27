@@ -76,7 +76,9 @@ namespace CodeGeneration.LowLevelClient
 		public static string PascalCase(string s)
 		{
 			var textInfo = new CultureInfo("en-US").TextInfo;
-			return textInfo.ToTitleCase(s.ToLowerInvariant()).Replace("_", string.Empty).Replace(".", string.Empty);
+			var titleCase = textInfo.ToTitleCase(s.ToLowerInvariant());
+			var result = titleCase.Replace("_", string.Empty).Replace(".", string.Empty);
+			return result;
 		}
 
 		private static KeyValuePair<string, ApiEndpoint> CreateApiEndpoint(string jsonFile)

@@ -13,6 +13,8 @@ namespace Nest
 		public string Index => GetResolved("index");
 		public string Type => GetResolved("type");
 		public string Id => GetResolved("id");
+		public string ActionId => GetResolved("id");
+		public string WatchId => GetResolved("id");
 		public string Name => GetResolved("name");
 		public string Field => GetResolved("field");
 		public string ScrollId => GetResolved("scroll_id");

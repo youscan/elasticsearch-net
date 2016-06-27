@@ -125,9 +125,9 @@ namespace CodeGeneration.LowLevelClient.Domain
 								case "string":
 									return p.Type + " " + p.Name;
 								case "list":
-									return "string " + p.Name;
+									//return "string " + p.Name;
 								case "enum":
-									return this.PascalCase(p.Name) + p.Name;
+									//return this.PascalCase(p.Name) + " " + p.Name;
 								case "number":
 									return "string " + p.Name;
 								default:
