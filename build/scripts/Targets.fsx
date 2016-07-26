@@ -54,8 +54,8 @@ Target "WatchTests" <| fun _ ->
     watcher.Dispose() 
 
 Target "Profile" <| fun _ -> 
-    MsBuild.QuickCompile()
-    Profiler.Run()
+    Build.QuickCompile()
+    Profiler.Run() |> ignore
 
 Target "Benchmark" <| fun _ -> Benchmarker.Run()
 
