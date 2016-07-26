@@ -221,17 +221,25 @@ module Tooling =
             | Net46 -> { MSBuild = "v4.6"; Nuget = "net46"; DefineConstants = "TRACE;NET46"; }
 
     type MsBuildTooling() =
-       let msbuildProperties = [
-            ("Configuration","Release"); 
-            ("PreBuildEvent","echo");
-       ]
-        
-       member this.Exec output target framework projects =
-            let properties = msbuildProperties 
-                             |> List.append [
-                                ("TargetFrameworkVersion", framework.MSBuild); 
-                                ("DefineConstants", framework.DefineConstants)
-                             ]
-            MSBuild output target properties projects |> ignore
+       member this.Exec target framework projects =
+            projects 
+            |> Seq.iter(fun project ->          
+                let configuration = "Release"  
+                let setParams defaults =
+                    { defaults with
+                        Verbosity = Some(Quiet)
+                        Targets = [target]
+                        Properties =
+                            [
+                                "OutputPath", (sprintf "bin/%s/%s" configuration framework.Nuget)
+                                "Optimize", "True"
+                                "Configuration", configuration
+                                "TargetFrameworkVersion", framework.MSBuild
+                                "DefineConstants", framework.DefineConstants
+                            ]
+                     }
+            
+                build setParams project
+            )
 
     let MsBuild = new MsBuildTooling()

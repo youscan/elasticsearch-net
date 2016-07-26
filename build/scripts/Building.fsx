@@ -32,8 +32,8 @@ type Build() =
     static let compileDesktop projects =
         projects
         |> Seq.iter(fun project ->
-            Tooling.MsBuild.Exec (Paths.Net45BinFolder project) "Rebuild" Tooling.DotNetFramework.Net45.Identifier [Paths.CsProj(project)]
-            Tooling.MsBuild.Exec (Paths.Net46BinFolder project) "Rebuild" Tooling.DotNetFramework.Net46.Identifier [Paths.CsProj(project)]
+            Tooling.MsBuild.Exec "Rebuild" Tooling.DotNetFramework.Net45.Identifier [Paths.CsProj(project)]
+            Tooling.MsBuild.Exec "Rebuild" Tooling.DotNetFramework.Net46.Identifier [Paths.CsProj(project)]
            )
 
     static let copyToOutput projects =
