@@ -7,7 +7,7 @@ namespace Profiling
 {
 	public class ProfilingCluster : ClusterBase
 	{
-		protected override void Boostrap()
+		public override void Boostrap()
 		{
 			var seeder = new Seeder(this.Node);
 			seeder.DeleteIndicesAndTemplates();
