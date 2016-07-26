@@ -230,13 +230,7 @@
     <Compile Include="Framework\EndpointTests\ApiTestBase.cs" />
     <Compile Include="Framework\EndpointTests\TestState\AsyncLazy.cs" />
     <Compile Include="Framework\Extensions\EnumerableExtensions.cs" />
-    <Compile Include="Framework\Integration\CallUniqueValues.cs" />
-    <Compile Include="Framework\Integration\ClientMethod.cs" />
     <Compile Include="Framework\Integration\Clusters\BenchmarkCluster.cs" />
-    <Compile Include="Framework\Integration\Process\ElasticsearchMessage.cs" />
-    <Compile Include="Framework\Integration\Process\ElasticsearchNode.cs" />
-    <Compile Include="Framework\Integration\Process\ElasticsearchNodeInfo.cs" />
-    <Compile Include="Framework\Integration\Process\ElasticsearchVersionInfo.cs" />
     <Compile Include="Framework\ManagedElasticsearch\FileSystem\INodeFileSystem.cs" />
     <Compile Include="Framework\MockData\GeoIp.cs" />
     <Compile Include="Framework\MockData\Message.cs" />
@@ -579,10 +573,8 @@
     <Compile Include="ClientConcepts\Connection\HttpConnectionTests.cs" />
     <Compile Include="ClientConcepts\HighLevel\Inference\DocumentPaths.doc.cs" />
     <Compile Include="ClientConcepts\HighLevel\Inference\FeaturesInference.doc.cs" />
-    <Compile Include="ClientConcepts\HighLevel\Inference\FieldInference.doc.cs" />
     <Compile Include="ClientConcepts\HighLevel\Inference\IdsInference.doc.cs" />
     <Compile Include="ClientConcepts\HighLevel\Inference\IndexNameInference.doc.cs" />
-    <Compile Include="ClientConcepts\HighLevel\Inference\IndicesPaths.doc.cs" />
     <Compile Include="ClientConcepts\HighLevel\Inference\PropertyInference.doc.cs" />
     <Compile Include="Cluster\TaskManagement\TasksCancel\TasksCancelApiTests.cs" />
     <Compile Include="Cluster\TaskManagement\TasksCancel\TasksCancelUrlTests.cs" />

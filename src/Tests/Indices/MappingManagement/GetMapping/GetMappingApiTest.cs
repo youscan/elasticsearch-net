@@ -38,6 +38,8 @@ namespace Tests.Indices.MappingManagement.GetMapping
 
 		protected override void ExpectResponse(IGetMappingResponse response)
 		{
+			response.IsValid.Should().BeTrue();
+
 			var visitor = new TestVisitor();
 			response.Accept(visitor);
 
@@ -54,7 +56,7 @@ namespace Tests.Indices.MappingManagement.GetMapping
 		}
 	}
 
-	[Collection(IntegrationContext.ReadOnly)]
+	[Collection(TypeOfCluster.ReadOnly)]
 	public class GetMappingNonExistentIndexApiTests : ApiIntegrationTestBase<IGetMappingResponse, IGetMappingRequest, GetMappingDescriptor<Project>, GetMappingRequest>
 	{
 		private string _nonExistentIndex = "non-existent-index";
@@ -86,7 +88,7 @@ namespace Tests.Indices.MappingManagement.GetMapping
 		protected override void ExpectResponse(IGetMappingResponse response)
 		{
 			response.Mappings.Should().BeEmpty();
-			response.IndexTypeMappings.Should().BeEmpty();
+			response.Mappings.Should().BeEmpty();
 			response.Mapping.Should().BeNull();
 		}
 	}

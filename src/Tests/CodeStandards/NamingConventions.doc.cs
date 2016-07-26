@@ -1,5 +1,4 @@
 ﻿using System;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -7,7 +6,6 @@ using System.Reflection;
 using Elasticsearch.Net;
 using FluentAssertions;
 using Nest;
-using Nest.Aggregations.Visitor;
 using Tests.Framework;
 
 namespace Tests.CodeStandards
@@ -48,7 +46,7 @@ namespace Tests.CodeStandards
 			var baseClassesNotAbstract = typeof(IRequest).Assembly().GetTypes()
 				.Where(t => t.IsClass() && !exceptions.Contains(t))
 				.Where(t => t.Name.Split('`')[0].EndsWith("Base"))
-				.Where(t => !t.IsAbstractClass())
+				.Where(t => !t.IsAbstract())
 				.Select(t => t.Name.Split('`')[0])
 				.ToList();
 
@@ -106,8 +104,6 @@ namespace Tests.CodeStandards
 				typeof(IndexExistsRequest),
 				typeof(TypeExistsRequest),
 				typeof(IndexTemplateExistsRequest),
-				typeof(SearchExistsRequest),
-				typeof(SearchExistsRequest<>),
 				typeof(SearchTemplateRequest),
 				typeof(SearchTemplateRequest<>),
 				typeof(ScrollRequest),
@@ -115,11 +111,13 @@ namespace Tests.CodeStandards
 				typeof(SourceRequest<>),
 				typeof(ValidateQueryRequest<>),
 				typeof(GetAliasRequest),
-#pragma warning disable 612, 618
-				typeof(CatNodeattrsRequest),
-#pragma warning restore 612, 618
 				typeof(IndicesShardStoresRequest),
-				typeof(RenderSearchTemplateRequest)
+				typeof(RenderSearchTemplateRequest),
+				//UNMAPPED
+				typeof(ClusterAllocationExplainRequest),
+				typeof(ReindexRethrottleRequest),
+				//typeof(ReindexRequest),
+				typeof(UpdateByQueryRequest)
 			};
 
 			var types = typeof(IRequest).Assembly().GetTypes();
@@ -149,10 +147,6 @@ namespace Tests.CodeStandards
 
 			var exceptions = new List<Type>
 			{
-				nestAssembly.GetType("Elasticsearch.Net.DotNetCoreTypeExtensions"),
-				typeof(AggregationWalker),
-				typeof(AggregationVisitor),
-				typeof(IAggregationVisitor),
 				nestAssembly.GetType("System.AssemblyVersionInformation"),
 #if DOTNETCORE
 				typeof(SynchronizedCollection<>),
@@ -278,5 +272,3 @@ namespace Tests.CodeStandards
 		}
 	}
 }
-
-
