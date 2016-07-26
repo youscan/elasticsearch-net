@@ -213,6 +213,9 @@
     <Compile Include="Cat\CatTasks\CatTasksUrlTests.cs" />
     <Compile Include="Cat\CatThreadPool\CatThreadpoolApiTests.cs" />
     <Compile Include="Cat\CatThreadPool\CatThreadPoolUrlTests.cs" />
+    <Compile Include="ClientConcepts\HighLevel\Caching\FieldResolverBenchmarkTests.cs" />
+    <Compile Include="ClientConcepts\HighLevel\Inference\FieldInference.doc.cs" />
+    <Compile Include="ClientConcepts\HighLevel\Inference\IndicesPaths.doc.cs" />
     <Compile Include="Document\Multiple\Bulk\BulkDeserializationBenchmarkTests.cs" />
     <Compile Include="Document\Multiple\Bulk\BulkIndexingBenchmarkTests.cs" />
     <Compile Include="Document\Multiple\Bulk\BulkProfileTests.cs" />
