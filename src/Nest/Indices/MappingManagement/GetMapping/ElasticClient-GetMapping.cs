@@ -63,7 +63,7 @@ namespace Nest
 			var dict = response.Success
 				? Serializer.Deserialize<GetRootObjectMappingWrapping>(stream)
 				: null;
-			return new GetMappingResponse(response, dict);
+			return new GetMappingResponse(dict);
 		}
 
 	}

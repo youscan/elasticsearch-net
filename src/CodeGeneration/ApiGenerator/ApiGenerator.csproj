@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\CodeGeneration.LowLevelClient\bin\Net45\Debug\</OutputPath>
+    <OutputPath>bin\Net45\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -28,7 +28,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\CodeGeneration.LowLevelClient\bin\Net45\Release\</OutputPath>
+    <OutputPath>bin\Net45\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -115,6 +115,7 @@
     <None Include="RestSpecification\Core\count.json" />
     <None Include="RestSpecification\Core\count_percolate.json" />
     <None Include="RestSpecification\Core\delete.json" />
+    <None Include="RestSpecification\Core\delete_by_query.json" />
     <None Include="RestSpecification\Core\delete_script.json" />
     <None Include="RestSpecification\Core\delete_template.json" />
     <None Include="RestSpecification\Core\exists.json" />
@@ -153,8 +154,10 @@
     <None Include="RestSpecification\Core\indices.put_template.json" />
     <None Include="RestSpecification\Core\indices.recovery.json" />
     <None Include="RestSpecification\Core\indices.refresh.json" />
+    <None Include="RestSpecification\Core\indices.rollover.json" />
     <None Include="RestSpecification\Core\indices.segments.json" />
     <None Include="RestSpecification\Core\indices.shard_stores.json" />
+    <None Include="RestSpecification\Core\indices.shrink.json" />
     <None Include="RestSpecification\Core\indices.stats.json" />
     <None Include="RestSpecification\Core\indices.update_aliases.json" />
     <None Include="RestSpecification\Core\indices.upgrade.json" />
@@ -167,6 +170,7 @@
     <None Include="RestSpecification\Core\mget.json" />
     <None Include="RestSpecification\Core\mpercolate.json" />
     <None Include="RestSpecification\Core\msearch.json" />
+    <None Include="RestSpecification\Core\msearch_template.json" />
     <None Include="RestSpecification\Core\mtermvectors.json" />
     <None Include="RestSpecification\Core\nodes.hot_threads.json" />
     <None Include="RestSpecification\Core\nodes.info.json" />
@@ -193,6 +197,7 @@
     <None Include="RestSpecification\Core\snapshot.verify_repository.json" />
     <None Include="RestSpecification\Core\suggest.json" />
     <None Include="RestSpecification\Core\tasks.cancel.json" />
+    <None Include="RestSpecification\Core\tasks.get.json" />
     <None Include="RestSpecification\Core\tasks.list.json" />
     <None Include="RestSpecification\Core\termvectors.json" />
     <None Include="RestSpecification\Core\update.json" />
@@ -212,15 +217,6 @@
     <None Include="RestSpecification\XPack\Security\security.get_user.json" />
     <None Include="RestSpecification\XPack\Security\security.put_role.json" />
     <None Include="RestSpecification\XPack\Security\security.put_user.json" />
-    <None Include="RestSpecification\XPack\Shield\shield.authenticate.json" />
-    <None Include="RestSpecification\XPack\Shield\shield.clear_cached_realms.json" />
-    <None Include="RestSpecification\XPack\Shield\shield.clear_cached_roles.json" />
-    <None Include="RestSpecification\XPack\Shield\shield.delete_role.json" />
-    <None Include="RestSpecification\XPack\Shield\shield.delete_user.json" />
-    <None Include="RestSpecification\XPack\Shield\shield.get_role.json" />
-    <None Include="RestSpecification\XPack\Shield\shield.get_user.json" />
-    <None Include="RestSpecification\XPack\Shield\shield.put_role.json" />
-    <None Include="RestSpecification\XPack\Shield\shield.put_user.json" />
     <None Include="RestSpecification\XPack\Watcher\watcher.ack_watch.json" />
     <None Include="RestSpecification\XPack\Watcher\watcher.activate_watch.json" />
     <None Include="RestSpecification\XPack\Watcher\watcher.deactivate_watch.json" />

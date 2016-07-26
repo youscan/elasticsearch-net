@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 #if !DOTNETCORE
 using AsciiDocNet;
-using Nest.Litterateur.AsciiDoc;
 #endif
+using DocGenerator.Documentation.Files;
 
 namespace Nest.Litterateur.Documentation.Files
 {

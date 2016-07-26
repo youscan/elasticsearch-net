@@ -19,6 +19,8 @@ namespace ApiGenerator.Domain
 
 				switch(this.Name)
 				{
+					case "target":
+					case "new_index":
 					case "index": return this.Type == "string" ? "IndexName" : "Indices";
 					case "type": return this.Type == "string" ? "TypeName" : "Types";
 					case "id": return this.Type == "string" ? "Id" : "Ids";
@@ -37,6 +39,7 @@ namespace ApiGenerator.Domain
 					case "realm":
 					case "realms":
 					case "name":
+					case "alias":
 						return this.Type == "string" ? "Name" : "Names";
 					case "task_id": return "TaskId";
 					default: return this.Type + "_";
