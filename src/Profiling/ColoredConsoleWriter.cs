@@ -2,7 +2,7 @@ using System;
 
 namespace Profiling
 {
-    public class ColoredConsoleWriter : IColoredWriter
+	public class ColoredConsoleWriter : IColoredWriter
 	{
 		public void WriteLine(ConsoleColor color, string value)
 		{
@@ -16,14 +16,14 @@ namespace Profiling
 		}
 
 		public void Write(ConsoleColor consoleColor, string value)
-        {
-            lock (Console.Out)
-            {
-                var foregroundColor = Console.ForegroundColor;
-                Console.ForegroundColor = consoleColor;
-                Console.Write(value);
-                Console.ForegroundColor = foregroundColor;
-            }
-        }
-    }
+		{
+			lock (Console.Out)
+			{
+				var foregroundColor = Console.ForegroundColor;
+				Console.ForegroundColor = consoleColor;
+				Console.Write(value);
+				Console.ForegroundColor = foregroundColor;
+			}
+		}
+	}
 }
