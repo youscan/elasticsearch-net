@@ -102,13 +102,16 @@ module Tooling =
 
     let private exec = execAt Environment.CurrentDirectory
 
-    let execProcessWithTimeout proc arguments timeout = 
+    let execProcessWithTimeoutAndWorkingDirectory proc workingDir arguments timeout =
         let args = arguments |> String.concat " "
         ExecProcess (fun info ->
             info.FileName <- proc
-            info.WorkingDirectory <- "."
+            info.WorkingDirectory <- workingDir
             info.Arguments <- args
         ) timeout
+
+    let execProcessWithTimeout proc arguments timeout = 
+        execProcessWithTimeoutAndWorkingDirectory proc "." arguments timeout
 
     let execProcessWithTimeoutAndReturnMessages proc arguments timeout = 
         let args = arguments |> String.concat " "
@@ -200,11 +203,11 @@ module Tooling =
     type DotNetRuntime = | Desktop | Core | Both
 
     type DotNetTooling(exe) =
-       member this.Exec runtime failedF workingDirectory arguments =
-            this.ExecWithTimeout runtime failedF workingDirectory arguments (TimeSpan.FromMinutes 30.)
+        member this.Exec failedF workingDirectory arguments =
+            this.ExecWithTimeout failedF workingDirectory arguments (TimeSpan.FromMinutes 30.)
 
-        member this.ExecWithTimeout runtime failedF workingDirectory arguments timeout =
-            let result = execProcessWithTimeout exe arguments timeout
+        member this.ExecWithTimeout failedF workingDirectory arguments timeout =           
+            let result = execProcessWithTimeoutAndWorkingDirectory exe workingDirectory arguments timeout
             if result <> 0 then failwith (sprintf "Failed to run dotnet tooling for %s args: %A" exe arguments)
 
     let DotNet = new DotNetTooling("dotnet.exe")

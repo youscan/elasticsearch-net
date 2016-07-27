@@ -61,16 +61,3 @@ module Profiler =
                 let reportsElem = reports.Element(XName.Get "Reports")
                 reportsElem.Add reportElem
                 reports.Save profileOutput
-    
-module Benchmarker =
-   let private benchmarkingApp = sprintf "%s/%s" (Paths.BinFolder("Benchmarking")) "Benchmarking.exe" 
-
-   let private failure errors =
-        raise (BuildException("The project benchmarking failed.", errors |> List.ofSeq))
-
-   let Run() =
-        !! Paths.Source("Benchmarking/project.json") 
-        |> Seq.map DirectoryName
-        |> Seq.map Paths.Quote
-        |> Seq.iter(fun project -> 
-                Tooling.DotNet.Exec Tooling.DotNetRuntime.Both failure "." ["--project"; project; "run"; "-i false"; "-t 5"])

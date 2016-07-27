@@ -9,6 +9,7 @@ open Fake
 
 open Paths
 open Projects
+open System.IO
 
 let gitLink pdbDir projectName =
     let exe = Paths.Tool("gitlink/lib/net45/GitLink.exe")
@@ -25,8 +26,9 @@ type Build() =
         projects
         |> Seq.iter(fun p -> 
             let path = (Paths.Quote (Paths.ProjectJson p))
-            Tooling.DotNet.Exec Tooling.DotNetRuntime.Core Build.BuildFailure p ["restore"; path; "--verbosity Warning"]
-            Tooling.DotNet.Exec Tooling.DotNetRuntime.Core Build.BuildFailure p ["build"; path; "--configuration Release"]
+            let workingDir = directory (Paths.ProjectJson p)
+            Tooling.DotNet.Exec Build.BuildFailure workingDir ["restore"; "--verbosity Warning"]
+            Tooling.DotNet.Exec Build.BuildFailure workingDir ["build"; "--configuration Release"]
            )
 
     static let compileDesktop projects =

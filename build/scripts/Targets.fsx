@@ -6,6 +6,7 @@
 #load @"Building.fsx"
 #load @"Documentation.fsx"
 #load @"Releasing.fsx"
+#load @"Benchmarking.fsx"
 #load @"Profiling.fsx"
 
 open System
@@ -21,6 +22,7 @@ open Versioning
 open Documentation
 open Releasing
 open Profiling
+open Benchmarking
 
 let private buildFailed errors =
     raise (BuildException("The project build failed.", errors |> List.ofSeq))

@@ -67,13 +67,13 @@ module Tests =
     let private TestFailure errors =
         raise (BuildException("The project tests failed.", errors |> List.ofSeq))
 
-    let Test runtime parallelization =
+    let Test (runtime:Tooling.DotNetRuntime) parallelization =
        !! Paths.Source("Tests/project.json") 
             |> Seq.map DirectoryName
             |> Seq.map Paths.Quote
             |> Seq.iter(fun project -> 
-                Tooling.DotNet.Exec runtime TestFailure "." ["restore"; project;]
-                Tooling.DotNet.Exec runtime TestFailure "." ["test"; project;]) 
+                Tooling.DotNet.Exec TestFailure "." ["restore"; project;]
+                Tooling.DotNet.Exec TestFailure "." ["test"; project; "--configuration Release";]) 
 
     let RunUnitTests() =
         !! Paths.Source("Tests/project.json") 
