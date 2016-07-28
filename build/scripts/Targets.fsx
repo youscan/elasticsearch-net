@@ -55,9 +55,7 @@ Target "WatchTests" <| fun _ ->
     System.Console.ReadLine() |> ignore 
     watcher.Dispose() 
 
-Target "Profile" <| fun _ -> 
-    Build.QuickCompile()
-    Profiler.Run() |> ignore
+Target "Profile" <| fun _ -> Profiler.Run()
 
 Target "Benchmark" <| fun _ -> Benchmarker.Run()
 
@@ -88,7 +86,8 @@ BuildFailureTarget "NotifyTestFailures" <| fun _ -> Tests.Notify() |> ignore
   =?> ("Test", (not ((getBuildParam "skiptests") = "1")))
   ==> "Build"
 
-"Clean" 
+"Clean"
+  ==> "QuickCompile" 
   ==> "Profile"
 
 "Clean" 

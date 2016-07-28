@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Net;
+using Profiling.Memory;
 using Profiling.Performance;
 using Profiling.Timeline;
 using Tests.Framework;
@@ -65,7 +66,8 @@ namespace Profiling
 				var profilingFactories = new List<IProfileFactory>
 				{
 					new TimelineProfileFactory(SdkPath, OutputPath, cluster, assembly, output),
-					new PerformanceProfileFactory(SdkPath, OutputPath, cluster, assembly, output)
+					new PerformanceProfileFactory(SdkPath, OutputPath, cluster, assembly, output),
+					new MemoryProfileFactory(SdkPath, OutputPath, cluster, assembly, output),
 				};
 
 				foreach (var profilingFactory in profilingFactories)
