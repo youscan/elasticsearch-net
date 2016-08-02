@@ -24,6 +24,7 @@ SET DNXVERSION="default"
 SET SKIPTESTS=0
 SET APIKEY=
 SET FEED="elasticsearch-net"
+SET ELASTICSEARCH=
 
 IF /I "%1"=="skiptests" (
 	set SKIPTESTS="1"
@@ -54,4 +55,8 @@ IF /I "%1%"=="canary" (
 	IF NOT [%3]==[] (set FEED="%3")
 )
 
-"packages\build\FAKE\tools\Fake.exe" "build\\scripts\\Targets.fsx" "target=%TARGET%" "version=%VERSION%" "esversions=%ESVERSIONS%" "skiptests=%SKIPTESTS%" "apiKey=%APIKEY%" "feed=%FEED%" 
+IF /I "%1%"=="profile" (
+	IF NOT [%2]==[] (set ELASTICSEARCH="%2")
+)
+
+"packages\build\FAKE\tools\Fake.exe" "build\\scripts\\Targets.fsx" "target=%TARGET%" "version=%VERSION%" "esversions=%ESVERSIONS%" "skiptests=%SKIPTESTS%" "apiKey=%APIKEY%" "feed=%FEED%" "elasticsearch=%ELASTICSEARCH%"

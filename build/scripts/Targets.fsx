@@ -55,7 +55,10 @@ Target "WatchTests" <| fun _ ->
     System.Console.ReadLine() |> ignore 
     watcher.Dispose() 
 
-Target "Profile" <| fun _ -> Profiler.Run()
+Target "Profile" <| fun _ -> 
+    Profiler.Run()
+    let url = getBuildParam "elasticsearch"
+    Profiler.IndexResults url
 
 Target "Benchmark" <| fun _ -> Benchmarker.Run()
 

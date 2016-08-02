@@ -40,3 +40,4 @@ group build
     nuget node.js
     nuget npm
     nuget xunit.runner.console
+	nuget NEST
