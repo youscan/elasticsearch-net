@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace Nest
+namespace Nest500
 {
 	internal static class DotNetCoreTypeExtensions
 	{

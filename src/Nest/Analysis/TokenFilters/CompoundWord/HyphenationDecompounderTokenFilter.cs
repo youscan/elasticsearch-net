@@ -1,4 +1,4 @@
-namespace Nest
+namespace Nest500
 {
 	/// <summary>
 	/// Token filters that allow to decompose compound words.

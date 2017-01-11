@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Elasticsearch.Net
+namespace Elasticsearch500.Net
 {
 	public interface IMemoryStreamFactory
 	{

@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	[Obsolete("Deprecated. Will be removed in the next major release. Index a document containing a field mapped with percolator type")]
 	public interface IRegisterPercolatorResponse : IResponse

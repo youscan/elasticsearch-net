@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	using System.Threading;
 	using MultiSearchTemplateCreator = Func<IApiCallDetails, Stream, MultiSearchResponse>;

@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Nest
+namespace Nest500
 {
 	[JsonObject(MemberSerialization.OptIn)]
 	[JsonConverter(typeof(ProcessorJsonConverter<RenameProcessor>))]

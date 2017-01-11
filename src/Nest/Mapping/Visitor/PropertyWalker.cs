@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Reflection;
 using System.Collections;
 
-namespace Nest
+namespace Nest500
 {
 	public class PropertyWalker
 	{

@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Nest
+namespace Nest500
 {
 	[JsonConverter(typeof(EnumMemberValueCasingJsonConverter<TimeUnit>))]
 	public enum TimeUnit

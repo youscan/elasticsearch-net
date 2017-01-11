@@ -1,8 +1,8 @@
 ﻿using System;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	[Obsolete("Deprecated. Will be removed in the next major release. Use a percolate query with multi search api")]
 	internal class MultiPercolateJsonConverter : JsonConverter

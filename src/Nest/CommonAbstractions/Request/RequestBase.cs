@@ -1,9 +1,9 @@
 using System;
 using System.ComponentModel;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	[JsonObject(MemberSerialization = MemberSerialization.OptIn)]
 	public interface IRequest

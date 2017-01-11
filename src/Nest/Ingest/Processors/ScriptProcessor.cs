@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	/// <summary>
 	/// Allows inline, stored, and file scripts to be executed within ingest pipelines.

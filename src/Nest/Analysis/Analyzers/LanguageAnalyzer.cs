@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	/// <summary>
 	/// A set of analyzers aimed at analyzing specific language text.

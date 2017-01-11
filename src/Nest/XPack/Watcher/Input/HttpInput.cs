@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	/// <summary>
 	/// input to submit a request to an HTTP endpoint and load the response

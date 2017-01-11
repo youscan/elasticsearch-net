@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	[Obsolete("Deprecated. Will be removed in the next major release. Use a percolate query with search api")]
 	public interface IPercolateCountResponse : IResponse

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	[JsonConverter(typeof(VerbatimDictionaryKeysJsonConverter<SuggestContainer, string, ISuggestBucket>))]
 	public interface ISuggestContainer : IIsADictionary<string, ISuggestBucket> { }

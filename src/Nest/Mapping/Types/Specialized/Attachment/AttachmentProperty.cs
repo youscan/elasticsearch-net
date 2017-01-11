@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	[JsonObject(MemberSerialization.OptIn)]
 	public interface IAttachmentProperty : IDocValuesProperty

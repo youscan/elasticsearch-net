@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 
-namespace Nest
+namespace Nest500
 {
 	public class NodeIds : IUrlParameter
 	{

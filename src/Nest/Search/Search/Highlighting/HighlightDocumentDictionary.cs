@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	[JsonConverter(typeof(VerbatimDictionaryKeysJsonConverter<string, HighlightHit>))]
 	public class HighlightFieldDictionary : Dictionary<string, HighlightHit>

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nest
+namespace Nest500
 {
 	public abstract class CorePropertyDescriptorBase<TDescriptor, TInterface, T>
 		: PropertyDescriptorBase<TDescriptor, TInterface, T>, ICoreProperty

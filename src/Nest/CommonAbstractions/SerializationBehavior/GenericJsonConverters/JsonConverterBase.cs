@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	internal abstract class JsonConverterBase<T> : JsonConverter where T : class
 	{

@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	/// <summary>
 	/// Notification for each bulk response, indicates the page its currently processing and how many retries it took to index this buffer

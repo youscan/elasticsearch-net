@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	[JsonConverter(typeof(UnionJsonConverter))]
 	public class Union<TFirst, TSecond>

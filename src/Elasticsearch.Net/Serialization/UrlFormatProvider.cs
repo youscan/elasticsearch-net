@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Elasticsearch.Net
+namespace Elasticsearch500.Net
 {
 	class UrlFormatProvider : IFormatProvider, ICustomFormatter
 	{

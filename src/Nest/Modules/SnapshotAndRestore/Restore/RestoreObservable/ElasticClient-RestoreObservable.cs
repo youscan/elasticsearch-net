@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nest
+namespace Nest500
 {
 	public partial interface IElasticClient
 	{

@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace Nest
+namespace Nest500
 {
 	[JsonObject]
 	public class SuggestOption<T> where T : class

@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using Purify;
 
-namespace Elasticsearch.Net
+namespace Elasticsearch500.Net
 {
 	public class RequestData
 	{

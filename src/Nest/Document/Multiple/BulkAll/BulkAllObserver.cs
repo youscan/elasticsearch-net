@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace Nest
+namespace Nest500
 {
 	public class BulkAllObserver : CoordinatedRequestObserverBase<IBulkAllResponse>
 	{

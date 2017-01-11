@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Nest
+namespace Nest500
 {
 	public partial interface IElasticClient
 	{

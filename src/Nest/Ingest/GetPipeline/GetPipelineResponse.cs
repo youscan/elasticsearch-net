@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 
-namespace Nest
+namespace Nest500
 {
 	[JsonObject(MemberSerialization.OptIn)]
 	public interface IGetPipelineResponse : IResponse

@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	[AttributeUsage(AttributeTargets.Property)]
 	[JsonObject(MemberSerialization = MemberSerialization.OptIn)]

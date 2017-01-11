@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	[JsonConverter(typeof(ReadAsTypeJsonConverter<FieldNamesField>))]
 	public interface IFieldNamesField : IFieldMapping

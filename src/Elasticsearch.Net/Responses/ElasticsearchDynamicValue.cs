@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 using Microsoft.CSharp.RuntimeBinder;
 using Binder = Microsoft.CSharp.RuntimeBinder.Binder;
 
-namespace Elasticsearch.Net
+namespace Elasticsearch500.Net
 {
 	public class ElasticsearchDynamicValue : DynamicObject, IEquatable<ElasticsearchDynamicValue>, IConvertible
 	{

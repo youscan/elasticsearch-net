@@ -1,4 +1,4 @@
-﻿namespace Nest
+﻿namespace Nest500
 {
 	/// <summary>
 	/// A token filter of type standard that normalizes tokens extracted with the Standard Tokenizer.

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 
-namespace Nest
+namespace Nest500
 {
 	public static class AliasPointingToIndexExtensions
 	{

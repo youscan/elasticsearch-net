@@ -4,10 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 using System.Threading;
 
-namespace Nest
+namespace Nest500
 {
 	public partial interface IElasticClient
 	{

@@ -1,4 +1,4 @@
-﻿namespace Nest
+﻿namespace Nest500
 {
 	/// <summary>
 	///The kstem token filter is a high performance filter for english. 

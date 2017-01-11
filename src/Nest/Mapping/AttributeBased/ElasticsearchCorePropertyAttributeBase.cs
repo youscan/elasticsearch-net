@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Reflection;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	[AttributeUsage(AttributeTargets.Property)]
 	[JsonObject(MemberSerialization = MemberSerialization.OptIn)]

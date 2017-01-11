@@ -1,10 +1,10 @@
 ﻿using System;
 using System.CodeDom;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Nest
+namespace Nest500
 {
 	public partial interface IReindexOnServerRequest
 	{

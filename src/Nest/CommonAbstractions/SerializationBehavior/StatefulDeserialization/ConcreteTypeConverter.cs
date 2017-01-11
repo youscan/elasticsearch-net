@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Nest
+namespace Nest500
 {
 	//TODO rethink IHIT<T> deserialization where T is covariant
 	internal class DefaultHitJsonConverter : JsonConverter

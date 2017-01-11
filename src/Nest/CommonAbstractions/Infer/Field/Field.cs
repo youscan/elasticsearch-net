@@ -3,9 +3,9 @@ using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 
-namespace Nest
+namespace Nest500
 {
 	[ContractJsonConverter(typeof(FieldJsonConverter))]
 	public class Field : IEquatable<Field>, IUrlParameter

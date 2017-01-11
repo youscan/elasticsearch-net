@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	/// <summary>
 	/// Expands a field with dots into an object field.

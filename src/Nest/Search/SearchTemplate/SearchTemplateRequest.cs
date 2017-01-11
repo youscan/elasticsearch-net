@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 
-namespace Nest
+namespace Nest500
 {
 	public partial interface ISearchTemplateRequest : ICovariantSearchRequest
 	{

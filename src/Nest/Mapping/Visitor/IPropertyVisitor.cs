@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Nest
+namespace Nest500
 {
 	public interface IPropertyVisitor
 	{

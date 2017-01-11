@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace Nest
+namespace Nest500
 {
 	public partial interface IClearScrollRequest
 	{

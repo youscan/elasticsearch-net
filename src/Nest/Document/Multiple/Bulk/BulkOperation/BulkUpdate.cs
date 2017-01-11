@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Nest
+namespace Nest500
 {
 	public interface IBulkUpdateOperation<TDocument, TPartialDocument> : IBulkOperation
 		where TDocument : class

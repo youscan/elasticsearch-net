@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Elasticsearch.Net
+namespace Elasticsearch500.Net
 {
 	public static class EnumExtensions
 	{

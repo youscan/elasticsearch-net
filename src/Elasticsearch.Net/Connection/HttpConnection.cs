@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 // ReSharper disable VirtualMemberNeverOverriden.Global
 #if !DOTNETCORE
-namespace Elasticsearch.Net
+namespace Elasticsearch500.Net
 {
 	public class HttpConnection : IConnection
 	{

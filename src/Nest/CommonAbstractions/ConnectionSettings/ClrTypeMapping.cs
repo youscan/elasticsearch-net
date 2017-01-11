@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 
-namespace Nest
+namespace Nest500
 {
 	public interface IClrTypeMapping<T> where T : class
 	{

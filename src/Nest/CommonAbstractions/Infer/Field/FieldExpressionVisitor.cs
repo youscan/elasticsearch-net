@@ -1,4 +1,4 @@
-﻿using Elasticsearch.Net;
+﻿using Elasticsearch500.Net;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Nest
+namespace Nest500
 {
 	internal class HasVariableExpressionVisitor : ExpressionVisitor
 	{

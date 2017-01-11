@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	[JsonObject(MemberSerialization.OptIn)]
 	[JsonConverter(typeof(ReadAsTypeJsonConverter<NumericFielddata>))]

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	/// <summary>
 	/// Limits the number of tokens that are indexed per document and field.

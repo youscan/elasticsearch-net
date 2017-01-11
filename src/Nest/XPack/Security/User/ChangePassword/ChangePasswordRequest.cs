@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	public partial interface IChangePasswordRequest
 	{

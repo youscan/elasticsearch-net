@@ -1,7 +1,7 @@
-﻿using Elasticsearch.Net;
+﻿using Elasticsearch500.Net;
 using System;
 
-namespace Nest
+namespace Nest500
 {
 	public class IndexNameResolver
 	{

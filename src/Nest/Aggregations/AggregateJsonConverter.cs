@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Nest
+namespace Nest500
 {
 	internal class AggregateJsonConverter : JsonConverter
 	{

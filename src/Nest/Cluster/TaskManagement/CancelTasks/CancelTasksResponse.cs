@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using Newtonsoft.Json;
 using System.Linq;
 
-namespace Nest
+namespace Nest500
 {
 	[JsonObject(MemberSerialization.OptIn)]
 	public interface ICancelTasksResponse: IResponse

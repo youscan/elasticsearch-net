@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace Nest
+namespace Nest500
 {
 	public class ScrollAllObservable<T> : IDisposable, IObservable<IScrollAllResponse<T>> where T : class
 	{

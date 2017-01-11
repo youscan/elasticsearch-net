@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-namespace Nest
+namespace Nest500
 {
 	public class AggregationsHelper
 	{

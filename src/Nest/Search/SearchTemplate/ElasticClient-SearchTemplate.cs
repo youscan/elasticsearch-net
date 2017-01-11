@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 using Newtonsoft.Json;
 using System.Threading;
 
-namespace Nest
+namespace Nest500
 {
 	public partial interface IElasticClient
 	{

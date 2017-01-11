@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Nest
+namespace Nest500
 {
 	[JsonConverter(typeof(StringEnumConverter))]
 	public enum NodeRole

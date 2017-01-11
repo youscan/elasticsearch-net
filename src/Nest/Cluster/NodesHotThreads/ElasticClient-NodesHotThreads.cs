@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 
-namespace Nest
+namespace Nest500
 {
 	using System.Threading;
 	using NodesHotThreadConverter = Func<IApiCallDetails, Stream, NodesHotThreadsResponse>;

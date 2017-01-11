@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	internal class QueryContainerJsonConverter: ReserializeJsonConverter<QueryContainer, IQueryContainer>
 	{

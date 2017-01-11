@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Nest
+namespace Nest500
 {
 	using Containers = System.Collections.Generic.List<QueryContainer>;
 	internal static class BoolQueryOrExtensions

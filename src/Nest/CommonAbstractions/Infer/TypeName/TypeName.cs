@@ -1,7 +1,7 @@
 ﻿using System;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 
-namespace Nest
+namespace Nest500
 {
 	[ContractJsonConverter(typeof(TypeNameJsonConverter))]
 	public class TypeName : IEquatable<TypeName> , IUrlParameter

@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	/// <summary>
 	/// Sorts the elements of an array ascending or descending. Homogeneous arrays of numbers

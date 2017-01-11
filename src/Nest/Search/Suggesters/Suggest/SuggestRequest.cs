@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	[JsonConverter(typeof(SuggestRequestJsonConverter))]
 	public partial interface ISuggestRequest

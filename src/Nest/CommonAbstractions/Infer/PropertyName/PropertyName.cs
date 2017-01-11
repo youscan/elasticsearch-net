@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Reflection;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 
-namespace Nest
+namespace Nest500
 {
 	[ContractJsonConverter(typeof(PropertyNameJsonConverter))]
 	public class PropertyName : IEquatable<PropertyName>, IUrlParameter

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Nest
+namespace Nest500
 {
 	[ContractJsonConverter(typeof(IndexSettingsConverter))]
 	public interface IIndexSettings : IDynamicIndexSettings

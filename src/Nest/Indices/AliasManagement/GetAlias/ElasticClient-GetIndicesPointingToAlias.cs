@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Elasticsearch.Net;
-using Nest;
+using Elasticsearch500.Net;
+using Nest500;
 
-namespace Nest
+namespace Nest500
 {
 	/// <summary>
 	/// Implements several handy alias extensions.

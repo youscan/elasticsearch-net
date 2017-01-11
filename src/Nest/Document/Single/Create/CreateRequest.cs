@@ -1,7 +1,7 @@
-﻿using Elasticsearch.Net;
+﻿using Elasticsearch500.Net;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	[JsonConverter(typeof(CreateJsonConverter))]
 	public interface ICreateRequest : IRequest<CreateRequestParameters>, IUntypedDocumentRequest {}

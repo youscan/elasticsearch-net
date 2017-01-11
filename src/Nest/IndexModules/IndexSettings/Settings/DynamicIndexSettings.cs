@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	[ContractJsonConverter(typeof(IndexSettingsConverter))]
 	public interface IDynamicIndexSettings : IIsADictionary<string, object>

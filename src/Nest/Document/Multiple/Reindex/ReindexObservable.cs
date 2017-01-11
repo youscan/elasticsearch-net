@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Elasticsearch.Net;
-using static Nest.Infer;
+using Elasticsearch500.Net;
+using static Nest500.Infer;
 
-namespace Nest
+namespace Nest500
 {
 	public class ReindexObservable<TSource> : ReindexObservable<TSource, TSource>
 		where TSource : class

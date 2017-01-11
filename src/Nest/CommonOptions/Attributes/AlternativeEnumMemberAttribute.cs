@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nest
+namespace Nest500
 {
 	[AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
 	public class AlternativeEnumMemberAttribute : Attribute

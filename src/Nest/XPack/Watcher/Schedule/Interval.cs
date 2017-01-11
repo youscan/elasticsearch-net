@@ -2,11 +2,11 @@
 using System.Globalization;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Nest
+namespace Nest500
 {
 	[JsonConverter(typeof(StringEnumConverter))]
 	public enum IntervalUnit

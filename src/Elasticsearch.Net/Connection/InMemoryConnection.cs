@@ -4,7 +4,7 @@ using System.IO.Compression;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Elasticsearch.Net
+namespace Elasticsearch500.Net
 {
 	public class InMemoryConnection : IConnection
 	{

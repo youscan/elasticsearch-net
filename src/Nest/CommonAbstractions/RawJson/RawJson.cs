@@ -1,4 +1,4 @@
-﻿namespace Nest
+﻿namespace Nest500
 {
 	/// <summary>
 	/// Marker class that signals to the CustomJsonConverter to write the string verbatim

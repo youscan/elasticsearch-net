@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 using System.Reflection;
 using System.Collections.Generic;
 
-namespace Nest
+namespace Nest500
 {
 	internal class SimilarityJsonConverter : JsonConverter
 	{

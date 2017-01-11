@@ -1,7 +1,7 @@
 ﻿using System;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 
-namespace Nest
+namespace Nest500
 {
 	[Obsolete("Deprecated. Will be removed in the next major release. Index a document containing a field mapped with percolator type")]
 	public interface IUnregisterPercolatorRequest : IRequest<DeleteRequestParameters> { }

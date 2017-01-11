@@ -10,7 +10,7 @@ using System.Net.Http;
 #endif
 
 
-namespace Elasticsearch.Net
+namespace Elasticsearch500.Net
 {
 	/// <summary>
 	/// ConnectionConfiguration allows you to control how ElasticLowLevelClient behaves and where/how it connects

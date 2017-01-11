@@ -3,7 +3,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Nest
+namespace Nest500
 {
 	internal class RangeQueryJsonConverter: FieldNameQueryJsonConverter<NumericRangeQuery>
 	{

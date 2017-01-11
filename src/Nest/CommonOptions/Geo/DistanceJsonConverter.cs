@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	internal class DistanceJsonConverter : JsonConverter
 	{

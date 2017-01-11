@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 
-namespace Elasticsearch.Net
+namespace Elasticsearch500.Net
 {
 	internal static class Extensions
 	{

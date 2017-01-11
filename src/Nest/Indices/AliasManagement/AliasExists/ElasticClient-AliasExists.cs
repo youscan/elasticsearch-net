@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 
-namespace Nest
+namespace Nest500
 {
 	using System.Threading;
 	using AliasExistConverter = Func<IApiCallDetails, Stream, ExistsResponse>;

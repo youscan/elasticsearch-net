@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	public partial interface IPropertiesDescriptor<T, out TReturnType>
 		where T : class

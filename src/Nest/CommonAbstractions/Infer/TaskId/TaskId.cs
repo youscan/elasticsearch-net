@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Globalization;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 
-namespace Nest
+namespace Nest500
 {
 	public class TaskId : IUrlParameter, IEquatable<TaskId>
 	{

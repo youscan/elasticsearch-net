@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	[JsonConverter(typeof(VerbatimDictionaryKeysJsonConverter<Aliases, IndexName, IAlias>))]
 	public interface IAliases : IIsADictionary<IndexName, IAlias> { }

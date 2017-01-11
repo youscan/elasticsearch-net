@@ -1,10 +1,10 @@
 using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	[JsonConverter(typeof(TimeJsonConverter))]
 	public class Time : IComparable<Time>, IEquatable<Time>

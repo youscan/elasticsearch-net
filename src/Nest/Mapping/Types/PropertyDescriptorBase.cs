@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace Nest
+namespace Nest500
 {
 	public abstract class PropertyDescriptorBase<TDescriptor, TInterface, T>
 		: DescriptorBase<TDescriptor, TInterface>, IProperty

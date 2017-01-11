@@ -1,4 +1,4 @@
-﻿namespace Nest
+﻿namespace Nest500
 {
 	public abstract class DocValuesPropertyDescriptorBase<TDescriptor, TInterface, T>
 	: CorePropertyDescriptorBase<TDescriptor, TInterface, T>, IDocValuesProperty

@@ -1,9 +1,9 @@
 using System;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Nest
+namespace Nest500
 {
 	internal class ServerErrorJsonConverter : JsonConverter
 	{

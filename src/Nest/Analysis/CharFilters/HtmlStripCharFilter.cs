@@ -1,4 +1,4 @@
-﻿namespace Nest
+﻿namespace Nest500
 {
 	/// <summary>
 	/// A char filter of type html_strip stripping out HTML elements from an analyzed text.

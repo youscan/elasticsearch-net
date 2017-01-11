@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace Nest
+namespace Nest500
 {
 	internal static class CovariantSearch
 	{

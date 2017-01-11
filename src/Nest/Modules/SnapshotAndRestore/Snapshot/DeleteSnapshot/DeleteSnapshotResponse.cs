@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Nest
+namespace Nest500
 {
 	public interface IDeleteSnapshotResponse : IAcknowledgedResponse { }
 

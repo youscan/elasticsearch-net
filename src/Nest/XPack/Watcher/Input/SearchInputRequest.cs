@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Nest
+namespace Nest500
 {
 	[JsonObject]
 	[JsonConverter(typeof(ReadAsTypeJsonConverter<SearchInputRequest>))]

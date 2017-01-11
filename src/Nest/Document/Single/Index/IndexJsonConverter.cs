@@ -1,4 +1,4 @@
-﻿namespace Nest
+﻿namespace Nest500
 {
 	internal class IndexJsonConverter : DocumentJsonConverterBase<IIndexRequest>
 	{

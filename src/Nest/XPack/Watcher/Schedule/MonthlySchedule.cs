@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Nest
+namespace Nest500
 {
 	[JsonObject]
 	[JsonConverter(typeof(ScheduleJsonConverter<IMonthlySchedule, MonthlySchedule, ITimeOfMonth>))]

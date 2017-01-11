@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Nest
+namespace Nest500
 {
 	/// <summary>
-	/// A reindex implementation that uses <see cref="IElasticClient.ScrollAll{T}(Nest.IScrollAllRequest,System.Threading.CancellationToken)"/>
+	/// A reindex implementation that uses <see cref="IElasticClient.ScrollAll{T}(IScrollAllRequest,System.Threading.CancellationToken)"/>
 	/// and <see cref="IElasticClient.BulkAll{T}(IBulkAllRequest{T}, System.Threading.CancellationToken)"/> to compose a reindex pipeline.
 	///
-	/// <para> This differs from <see cref="IElasticClient.ReindexOnServer(System.Func{Nest.ReindexOnServerDescriptor,Nest.IReindexOnServerRequest})"/> in
+	/// <para> This differs from <see cref="IElasticClient.ReindexOnServer(System.Func{ReindexOnServerDescriptor,IReindexOnServerRequest})"/> in
 	/// that documents are fetched from Elasticsearch, transformed on the client side, then sent back to Elasticsearch.
 	/// </para>
 	///

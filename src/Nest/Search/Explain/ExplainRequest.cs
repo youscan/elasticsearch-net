@@ -1,8 +1,8 @@
 ﻿using System;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	public partial interface IExplainRequest<TDocument> where TDocument : class
 	{

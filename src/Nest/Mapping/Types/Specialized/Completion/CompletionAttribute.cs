@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Nest
+namespace Nest500
 {
 	public class CompletionAttribute : ElasticsearchDocValuesPropertyAttributeBase, ICompletionProperty
 	{

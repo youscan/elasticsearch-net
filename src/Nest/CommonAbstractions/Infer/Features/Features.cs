@@ -1,8 +1,8 @@
 ﻿using System;
-using Elasticsearch.Net;
+using Elasticsearch500.Net;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest500
 {
 	[JsonConverter(typeof(FeaturesJsonConverter))]
 	public class Features : IUrlParameter

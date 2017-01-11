@@ -2,7 +2,7 @@
 using System;
 using Newtonsoft.Json.Linq;
 
-namespace Nest
+namespace Nest500
 {
 	public class ScriptedMetricAggregate : MetricAggregateBase
 	{

@@ -1,4 +1,4 @@
-﻿namespace Nest
+﻿namespace Nest500
 {
 	public class NestedAttribute : ObjectAttribute, INestedProperty
 	{
