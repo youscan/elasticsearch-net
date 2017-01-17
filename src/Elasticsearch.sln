@@ -1,4 +1,5 @@
-﻿Microsoft Visual Studio Solution File, Format Version 12.00
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
@@ -14,12 +15,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Build", "_Build", "{432D55
 		..\build.sh = ..\build.sh
 		..\contributing.md = ..\contributing.md
 		..\build\Elasticsearch.Net.nuspec = ..\build\Elasticsearch.Net.nuspec
+		..\global.json = ..\global.json
 		..\license.txt = ..\license.txt
 		..\build\NEST.nuspec = ..\build\NEST.nuspec
 		..\paket.bat = ..\paket.bat
 		..\paket.dependencies = ..\paket.dependencies
 		..\readme.md = ..\readme.md
-		..\global.json = ..\global.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Code Generation", "Code Generation", "{93331BEE-0AA0-47B7-B1D2-BD5BD31634D1}"
@@ -39,6 +40,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmarking", "Benchmarking\Benchmarking.csproj", "{9BB0AB7E-F08E-4D3E-A9E7-7C71318E8666}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Profiling", "Profiling\Profiling.csproj", "{523B5383-B67D-462F-825D-FAE057E6B17D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YsTest191", "YsTest191\YsTest191.csproj", "{0C60A72F-9AF5-4D1B-8B4E-7645A4B140A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -76,6 +79,10 @@ Global
 		{523B5383-B67D-462F-825D-FAE057E6B17D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{523B5383-B67D-462F-825D-FAE057E6B17D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{523B5383-B67D-462F-825D-FAE057E6B17D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C60A72F-9AF5-4D1B-8B4E-7645A4B140A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C60A72F-9AF5-4D1B-8B4E-7645A4B140A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C60A72F-9AF5-4D1B-8B4E-7645A4B140A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C60A72F-9AF5-4D1B-8B4E-7645A4B140A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
