@@ -563,7 +563,7 @@ NUGET
       System.Reactive.Windows.Threading (>= 3.1.1) - framework: >= net45, winv4.5.1, wpav8.1
       System.Reactive.WindowsRuntime (>= 3.1.1) - framework: winv4.5.1, wpav8.1
     System.Reactive.Core (3.1.1) - framework: >= net45, >= netstandard10, winv4.5.1, wpav8.1
-      System.Reactive.Interfaces (>= 3.1.1) - framework: >= net45, >= netstandard10
+      System.Reactive.Interfaces (>= 3.1.1) - framework: >= net45, >= netstandard10, netcore10
     System.Reactive.Interfaces (3.1.1) - framework: >= net45, >= netstandard10
     System.Reactive.Linq (3.1.1)
       System.Reactive.Core (>= 3.1.1) - framework: >= net45, >= netstandard10
@@ -891,20 +891,20 @@ NUGET
       System.Reflection (>= 4.1.0-rc2-24027) - framework: >= netstandard10
       System.Runtime (>= 4.1.0-rc2-24027) - framework: >= netstandard10
   remote: https://www.myget.org/F/xunit
-    xunit (2.2.0-beta3-build3330)
-      xunit.assert (2.2.0-beta3-build3330)
-      xunit.core (2.2.0-beta3-build3330)
-    xunit.assert (2.2.0-beta3-build3330)
+    xunit (2.2.0-beta3-build3335)
+      xunit.assert (2.2.0-beta3-build3335)
+      xunit.core (2.2.0-beta3-build3335)
+    xunit.assert (2.2.0-beta3-build3335)
       NETStandard.Library (>= 1.6) - framework: >= netstandard10
-    xunit.core (2.2.0-beta3-build3330)
-      xunit.extensibility.core (2.2.0-beta3-build3330)
-      xunit.extensibility.execution (2.2.0-beta3-build3330)
-    xunit.extensibility.core (2.2.0-beta3-build3330)
+    xunit.core (2.2.0-beta3-build3335)
+      xunit.extensibility.core (2.2.0-beta3-build3335)
+      xunit.extensibility.execution (2.2.0-beta3-build3335)
+    xunit.extensibility.core (2.2.0-beta3-build3335)
       NETStandard.Library (>= 1.6) - framework: >= netstandard10
       xunit.abstractions (>= 2.0.1) - framework: >= netstandard10, portable-net45+win8+wp8+wpa81
-    xunit.extensibility.execution (2.2.0-beta3-build3330)
+    xunit.extensibility.execution (2.2.0-beta3-build3335)
       NETStandard.Library (>= 1.6) - framework: >= netstandard10
-      xunit.extensibility.core (2.2.0-beta3-build3330) - framework: >= netstandard10, portable-net45+win8+wp8+wpa81
+      xunit.extensibility.core (2.2.0-beta3-build3335) - framework: >= netstandard10, portable-net45+win8+wp8+wpa81
 
 GROUP build
 NUGET
@@ -915,4 +915,4 @@ NUGET
     gitlink (2.4.0-unstable0064)
     Zlib.Portable (1.11) - framework: >= netstandard11, portable-net45+sl5+win8, portable-net45+win8, portable-net45+win8+wp8+wpa81
   remote: https://www.myget.org/F/xunit
-    xunit.runner.console (2.2.0-beta3-build3330)
+    xunit.runner.console (2.2.0-beta3-build3335)
