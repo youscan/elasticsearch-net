@@ -1,4 +1,4 @@
-﻿namespace Nest
+﻿namespace Nest252
 {
 	public static class PropertyNameExtensions
 	{

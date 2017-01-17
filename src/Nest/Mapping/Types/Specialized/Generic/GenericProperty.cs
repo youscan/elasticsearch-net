@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest252
 {
 	/// <summary>
 	/// A generic property to map properties that may be of different types.

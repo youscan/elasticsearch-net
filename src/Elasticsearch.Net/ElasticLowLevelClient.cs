@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Elasticsearch.Net
+namespace Elasticsearch252.Net
 {
 	/// <summary>
 	/// Low level client that exposes all of elasticsearch API endpoints but leaves you in charge of building request and handling the response

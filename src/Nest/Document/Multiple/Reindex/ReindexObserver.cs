@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nest
+namespace Nest252
 {
 	public class ReindexObserver<T> : CoordinatedRequestObserverBase<IReindexResponse<T>> where T : class
 	{

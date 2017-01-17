@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System;
 
-namespace Nest
+namespace Nest252
 {
 	public interface ITermVectorsResponse : IResponse
 	{

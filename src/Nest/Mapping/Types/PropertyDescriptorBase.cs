@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq.Expressions;
-using Elasticsearch.Net;
+using Elasticsearch252.Net;
 
-namespace Nest
+namespace Nest252
 {
 	public abstract class PropertyDescriptorBase<TDescriptor, TInterface, T>
 		: DescriptorBase<TDescriptor, TInterface>, IProperty

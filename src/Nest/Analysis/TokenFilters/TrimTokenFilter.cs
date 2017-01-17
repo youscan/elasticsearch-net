@@ -1,4 +1,4 @@
-﻿namespace Nest
+﻿namespace Nest252
 {
 	/// <summary>
 	/// The trim token filter trims surrounding whitespaces around a token.

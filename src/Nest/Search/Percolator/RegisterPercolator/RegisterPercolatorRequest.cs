@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Elasticsearch.Net;
+using Elasticsearch252.Net;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest252
 {
 	// This does not represent a dedicated API in elasticsearch, its syntactic sugar for indexing percolate documents
 

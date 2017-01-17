@@ -1,5 +1,5 @@
 ﻿using System;
-using Nest;
+using Nest252;
 using Tests.Framework;
 
 namespace Tests.Analysis.Analyzers
@@ -100,9 +100,9 @@ namespace Tests.Analysis.Analyzers
 		public static IndexSettings InitializerExample =>
 			new IndexSettings
 			{
-				Analysis = new Nest.Analysis
+				Analysis = new Nest252.Analysis
 				{
-					Analyzers = new Nest.Analyzers
+					Analyzers = new Nest252.Analyzers
 					{
 						{ "default", new KeywordAnalyzer() },
 							{ "myCustom", new CustomAnalyzer

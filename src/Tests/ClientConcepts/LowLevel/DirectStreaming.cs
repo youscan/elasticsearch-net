@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using Nest;
+using Nest252;
 using System;
 using Tests.Framework;
 

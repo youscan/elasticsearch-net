@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Bogus;
-using Nest;
+using Nest252;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 

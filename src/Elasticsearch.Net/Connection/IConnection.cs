@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Elasticsearch.Net
+namespace Elasticsearch252.Net
 {
 	public interface IConnection : IDisposable
 	{

@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Nest;
+using Nest252;
 using Tests.Framework;
 using static Tests.Framework.UrlTester;
 

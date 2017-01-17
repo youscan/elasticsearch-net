@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Elasticsearch.Net;
+using Elasticsearch252.Net;
 using FluentAssertions;
-using Nest;
+using Nest252;
 using Newtonsoft.Json;
 using Tests.ClientConcepts.LowLevel;
 using Tests.Framework;
 using Tests.Framework.MockData;
 using static Tests.Framework.RoundTripper;
-using static Nest.Infer;
-using Field = Nest.Field;
+using static Nest252.Infer;
+using Field = Nest252.Field;
 using Xunit;
 
 namespace Tests.ClientConcepts.HighLevel.Inference

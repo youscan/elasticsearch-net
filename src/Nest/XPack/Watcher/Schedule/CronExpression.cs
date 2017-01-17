@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest252
 {
 	[JsonConverter(typeof(CronExpressionJsonConverter))]
 	public class CronExpression : ScheduleBase, IEquatable<CronExpression>

@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Converters;
 using System.Runtime.Serialization;
 
-namespace Nest
+namespace Nest252
 {
 	[JsonConverter(typeof(StringEnumConverter))]
 	public enum ActionType

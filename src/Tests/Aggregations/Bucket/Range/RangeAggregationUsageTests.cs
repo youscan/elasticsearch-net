@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using Nest;
+using Nest252;
 using Tests.Framework;
 using Tests.Framework.Integration;
 using Tests.Framework.MockData;
-using static Nest.Infer;
+using static Nest252.Infer;
 
 namespace Tests.Aggregations.Bucket.Range
 {
@@ -52,11 +52,11 @@ namespace Tests.Aggregations.Bucket.Range
 				Aggregations = new RangeAggregation("commit_ranges")
 				{
 					Field = Field<Project>(p => p.NumberOfCommits),
-					Ranges = new List<Nest.Range>
+					Ranges = new List<Nest252.Range>
 					{
-						{ new Nest.Range { To = 100 } },
-						{ new Nest.Range { From = 100, To = 500 } },
-						{ new Nest.Range { From = 500 } }
+						{ new Nest252.Range { To = 100 } },
+						{ new Nest252.Range { From = 100, To = 500 } },
+						{ new Nest252.Range { From = 500 } }
 					}
 				}
 			};

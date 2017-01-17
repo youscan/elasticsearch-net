@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Elasticsearch.Net;
-using Nest;
+using Elasticsearch252.Net;
+using Nest252;
 using FluentAssertions;
 using Tests.Framework;
 using Xunit;

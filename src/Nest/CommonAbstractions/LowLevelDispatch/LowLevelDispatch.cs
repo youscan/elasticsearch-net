@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using Elasticsearch.Net;
+using Elasticsearch252.Net;
 
-namespace Nest
+namespace Nest252
 {
 	internal partial class LowLevelDispatch
 	{

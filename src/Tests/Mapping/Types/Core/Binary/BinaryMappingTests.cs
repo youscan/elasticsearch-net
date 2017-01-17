@@ -1,5 +1,5 @@
 ﻿using System;
-using Nest;
+using Nest252;
 #pragma warning disable 618 // Usage of IndexName
 
 namespace Tests.Mapping.Types.Core.Binary

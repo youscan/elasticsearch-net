@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using Nest;
+using Nest252;
 using Newtonsoft.Json.Linq;
 using Tests.Framework.Integration;
 using Tests.Framework.MockData;
-using static Nest.Infer;
+using static Nest252.Infer;
 
 namespace Tests.QueryDsl.Joining.Nested
 {

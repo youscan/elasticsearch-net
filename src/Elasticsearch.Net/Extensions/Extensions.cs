@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace Elasticsearch.Net
+namespace Elasticsearch252.Net
 {
 	internal static class Extensions
 	{

@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Nest;
+using Nest252;
 using Xunit;
 using Tests.Framework.MockData;
 
 namespace Tests.Mapping.Types.Specialized.Attachment
 {
-	public class AttachmentMappingTests : TypeMappingTestBase<Nest.Attachment>
+	public class AttachmentMappingTests : TypeMappingTestBase<Nest252.Attachment>
 	{
 		protected override object ExpectJson => new
 		{
@@ -67,7 +67,7 @@ namespace Tests.Mapping.Types.Specialized.Attachment
 			// TODO: Implement
 		}
 
-		protected override Func<PropertiesDescriptor<Nest.Attachment>, IPromise<IProperties>> FluentProperties => p => p
+		protected override Func<PropertiesDescriptor<Nest252.Attachment>, IPromise<IProperties>> FluentProperties => p => p
 			.Attachment(a => a
 				.Name(n => n.Content)
 				.AuthorField(d => d
@@ -76,7 +76,7 @@ namespace Tests.Mapping.Types.Specialized.Attachment
 				.FileField(d => d
 					.Name(n => n.Content)
 				)
-				.ContentLengthField((NumberPropertyDescriptor<Nest.Attachment> d) => d
+				.ContentLengthField((NumberPropertyDescriptor<Nest252.Attachment> d) => d
 					.Name(n => n.ContentLength)
 				)
 				.ContentTypeField(d => d
@@ -88,7 +88,7 @@ namespace Tests.Mapping.Types.Specialized.Attachment
 				.KeywordsField(d => d
 					.Name(n => n.Keywords)
 				)
-				.LanguageField((StringPropertyDescriptor<Nest.Attachment> d) => d
+				.LanguageField((StringPropertyDescriptor<Nest252.Attachment> d) => d
 					.Name(n => n.Language)
 					.DocValues()
 					.NotAnalyzed()

@@ -3,9 +3,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
-using Elasticsearch.Net;
+using Elasticsearch252.Net;
 
-namespace Nest
+namespace Nest252
 {
 	public class RestoreObservable : IDisposable, IObservable<IRecoveryStatusResponse>
 	{

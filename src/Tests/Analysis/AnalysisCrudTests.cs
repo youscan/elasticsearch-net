@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using FluentAssertions;
-using Nest;
+using Nest252;
 using Tests.Framework;
 using Tests.Framework.Integration;
 using Xunit;
@@ -39,7 +39,7 @@ namespace Tests.Analysis
 		{
 			Settings = new IndexSettings
 			{
-				Analysis = new Nest.Analysis
+				Analysis = new Nest252.Analysis
 				{
 					Analyzers = Analyzers.AnalyzerUsageTests.InitializerExample.Analysis.Analyzers,
 					CharFilters = CharFilters.CharFilterUsageTests.InitializerExample.Analysis.CharFilters,
@@ -72,7 +72,7 @@ namespace Tests.Analysis
 			requestAsync: (s, c, r) => c.GetIndexSettingsAsync(r)
 		);
 
-		protected GetIndexSettingsRequest GetInitializer(string indexName) => new GetIndexSettingsRequest(Nest.Indices.Index(indexName)) { };
+		protected GetIndexSettingsRequest GetInitializer(string indexName) => new GetIndexSettingsRequest(Nest252.Indices.Index(indexName)) { };
 		protected IGetIndexSettingsRequest GetFluent(string indexName, GetIndexSettingsDescriptor u) => u.Index(indexName);
 
 		/**
@@ -138,9 +138,9 @@ namespace Tests.Analysis
 		{
 			IndexSettings = new IndexSettings
 			{
-				Analysis = new Nest.Analysis
+				Analysis = new Nest252.Analysis
 				{
-					CharFilters = new Nest.CharFilters {{"differentHtml", new HtmlStripCharFilter {}}}
+					CharFilters = new Nest252.CharFilters {{"differentHtml", new HtmlStripCharFilter {}}}
 				}
 			}
 		};

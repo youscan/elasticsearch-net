@@ -2,7 +2,7 @@ using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Nest
+namespace Nest252
 {
 	internal class EpochSecondsDateTimeJsonConverter : DateTimeConverterBase
 	{

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using FluentAssertions;
-using Nest;
+using Nest252;
 using Newtonsoft.Json;
 using Tests.Framework;
 

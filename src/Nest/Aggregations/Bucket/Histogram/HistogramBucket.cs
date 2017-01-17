@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Nest
+namespace Nest252
 {
 	public class HistogramBucket : BucketBase, IBucket
 	{

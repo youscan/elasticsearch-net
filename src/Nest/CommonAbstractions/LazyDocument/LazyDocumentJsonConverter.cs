@@ -2,7 +2,7 @@ using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Nest
+namespace Nest252
 {
 	internal class LazyDocumentJsonConverter : JsonConverter
 	{

@@ -1,4 +1,4 @@
-﻿using Nest;
+﻿using Nest252;
 using Tests.Framework.Integration;
 using Tests.Framework.MockData;
 
@@ -38,13 +38,13 @@ namespace Tests.QueryDsl.Geo.DistanceRange
 			Field = Infer.Field<Project>(p=>p.Location),
 			DistanceType = GeoDistanceType.Arc,
 			Coerce = true,
-			GreaterThanOrEqualTo = Nest.Distance.Kilometers(200),
+			GreaterThanOrEqualTo = Nest252.Distance.Kilometers(200),
 			IgnoreMalformed = true,
-			GreaterThan = Nest.Distance.Kilometers(200),
-			LessThan = Nest.Distance.Miles(400),
+			GreaterThan = Nest252.Distance.Kilometers(200),
+			LessThan = Nest252.Distance.Miles(400),
 			Location = new GeoLocation(40, -70),
 			OptimizeBoundingBox = GeoOptimizeBBox.Indexed,
-			LessThanOrEqualTo = Nest.Distance.Miles(400),
+			LessThanOrEqualTo = Nest252.Distance.Miles(400),
 			ValidationMethod = GeoValidationMethod.Strict
 		};
 
@@ -60,8 +60,8 @@ namespace Tests.QueryDsl.Geo.DistanceRange
 				.IgnoreMalformed()
 				.Location(new GeoLocation(40, -70))
 				.Optimize(GeoOptimizeBBox.Indexed)
-				.LessThanOrEqualTo(Nest.Distance.Miles(400))
-				.LessThan(Nest.Distance.Miles(400))
+				.LessThanOrEqualTo(Nest252.Distance.Miles(400))
+				.LessThan(Nest252.Distance.Miles(400))
 				.ValidationMethod(GeoValidationMethod.Strict)
 			);
 

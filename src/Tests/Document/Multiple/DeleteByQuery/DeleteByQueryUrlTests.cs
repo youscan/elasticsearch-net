@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using Nest;
+using Nest252;
 using Tests.Framework;
 using Tests.Framework.MockData;
 using static Tests.Framework.UrlTester;
-using static Nest.Infer;
+using static Nest252.Infer;
 
 namespace Tests.Document.Multiple.DeleteByQuery
 {

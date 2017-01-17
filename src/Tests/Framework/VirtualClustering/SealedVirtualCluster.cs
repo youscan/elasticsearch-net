@@ -1,6 +1,6 @@
 using System;
-using Elasticsearch.Net;
-using Nest;
+using Elasticsearch252.Net;
+using Nest252;
 
 namespace Tests.Framework
 {

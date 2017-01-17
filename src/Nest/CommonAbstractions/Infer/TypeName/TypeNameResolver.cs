@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 
-namespace Nest
+namespace Nest252
 {
 	public class TypeNameResolver
 	{

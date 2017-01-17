@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Tests.Framework;
-using static Elasticsearch.Net.AuditEvent;
+using static Elasticsearch252.Net.AuditEvent;
 
 namespace Tests.ClientConcepts.ConnectionPooling.FailOver
 {

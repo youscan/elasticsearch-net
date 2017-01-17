@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest252
 {
 	[JsonObject]
 	public class Throwable

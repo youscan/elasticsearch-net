@@ -1,4 +1,4 @@
-﻿namespace Nest
+﻿namespace Nest252
 {
 	/// <summary>
 	/// A token filter of type reverse that simply reverses the tokens.

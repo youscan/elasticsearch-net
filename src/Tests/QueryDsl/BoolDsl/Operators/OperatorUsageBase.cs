@@ -1,6 +1,6 @@
 using System;
 using FluentAssertions;
-using Nest;
+using Nest252;
 using Tests.Framework.MockData;
 
 namespace Tests.QueryDsl.BoolDsl.Operators

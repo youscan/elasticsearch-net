@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest252
 {
 	internal class IndexRequestJsonConverter : JsonConverter
 	{

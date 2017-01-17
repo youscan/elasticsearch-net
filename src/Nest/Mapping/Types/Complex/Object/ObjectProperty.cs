@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest252
 {
 	[JsonObject(MemberSerialization.OptIn)]
 	public interface IObjectProperty : IProperty

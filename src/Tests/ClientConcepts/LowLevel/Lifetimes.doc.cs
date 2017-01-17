@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Net;
 using System.Threading.Tasks;
-using Elasticsearch.Net;
+using Elasticsearch252.Net;
 using FluentAssertions;
-using Nest;
+using Nest252;
 using Newtonsoft.Json;
 using Tests.Framework;
 

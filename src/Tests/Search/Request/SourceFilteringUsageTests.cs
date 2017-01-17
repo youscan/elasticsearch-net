@@ -1,11 +1,11 @@
 using System;
 using Tests.Framework.Integration;
 using Tests.Framework.MockData;
-using Nest;
+using Nest252;
 using FluentAssertions;
 using Tests.Framework;
 using Newtonsoft.Json;
-using static Nest.Infer;
+using static Nest252.Infer;
 
 namespace Tests.Search.Request
 {

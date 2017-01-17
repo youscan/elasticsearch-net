@@ -1,9 +1,9 @@
 using System;
-using Elasticsearch.Net;
+using Elasticsearch252.Net;
 using FluentAssertions;
-using Nest;
+using Nest252;
 using Tests.Framework.MockData;
-using static Nest.Infer;
+using static Nest252.Infer;
 
 
 namespace Tests.Framework.Integration
@@ -71,7 +71,7 @@ namespace Tests.Framework.Integration
 					(d,c) => d.Document(c).Parent(c.ProjectName)
 				)
 			);
-			this.Client.Refresh(Nest.Indices.Index<Project>().And<Developer>());
+			this.Client.Refresh(Nest252.Indices.Index<Project>().And<Developer>());
 		}
 
 		private void CreateIndicesAndSeedIndexData()

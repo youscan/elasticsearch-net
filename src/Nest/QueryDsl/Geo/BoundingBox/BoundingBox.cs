@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest252
 {
 	[JsonConverter(typeof(ReadAsTypeJsonConverter<BoundingBox>))]
 	public interface IBoundingBox

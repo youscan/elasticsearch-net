@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Elasticsearch.Net;
-using Nest;
+using Elasticsearch252.Net;
+using Nest252;
 using Tests.Framework;
 using Tests.Framework.Integration;
 using Tests.Framework.MockData;
 using Xunit;
-using static Nest.Infer;
+using static Nest252.Infer;
 using System.Threading.Tasks;
 using FluentAssertions;
 using System.Linq;

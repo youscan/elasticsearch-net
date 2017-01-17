@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest252
 {
 	[JsonConverter(typeof(ReadAsTypeJsonConverter<FieldLookup>))]
 	public interface IFieldLookup

@@ -1,7 +1,7 @@
 ﻿using System;
-using Elasticsearch.Net;
+using Elasticsearch252.Net;
 using FluentAssertions;
-using Nest;
+using Nest252;
 using Tests.Framework;
 
 namespace Tests.CodeStandards.Serialization
@@ -19,7 +19,7 @@ namespace Tests.CodeStandards.Serialization
 			var c = new ElasticClient(settings);
 
 
-			var serialized = c.Serializer.SerializeToString(new Nest.Analysis { CharFilters = new CharFilters() });
+			var serialized = c.Serializer.SerializeToString(new Nest252.Analysis { CharFilters = new CharFilters() });
 			serialized.Should().NotContain("char_filters").And.NotContain("charFilters");
 			serialized.Should().Contain("char_filter");
 

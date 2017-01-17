@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest252
 {
 	[JsonConverter(typeof(VerbatimDictionaryKeysJsonConverter<Warmers, TypeName, IWarmer>))]
 	public interface IWarmers : IIsADictionary<TypeName, IWarmer> { }

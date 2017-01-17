@@ -1,6 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
-using Nest;
+using Nest252;
 using Tests.Framework.MockData;
 
 namespace Profiling.Async

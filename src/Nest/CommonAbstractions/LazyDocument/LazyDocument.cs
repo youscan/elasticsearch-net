@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Nest
+namespace Nest252
 {
 	[JsonConverter(typeof(LazyDocumentJsonConverter))]
 	public interface ILazyDocument

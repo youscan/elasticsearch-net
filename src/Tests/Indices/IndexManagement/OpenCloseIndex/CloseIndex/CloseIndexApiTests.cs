@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Elasticsearch.Net;
-using Nest;
+using Elasticsearch252.Net;
+using Nest252;
 using Tests.Framework;
 using Tests.Framework.Integration;
 using Xunit;
-using static Nest.Infer;
+using static Nest252.Infer;
 
 namespace Tests.Indices.IndexManagement.OpenCloseIndex.CloseIndex
 {

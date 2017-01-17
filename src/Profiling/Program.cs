@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Nest;
+using Nest252;
 using Profiling.Async;
 using Tests.Framework;
 

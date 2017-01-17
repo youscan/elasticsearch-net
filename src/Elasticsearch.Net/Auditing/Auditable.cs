@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Elasticsearch.Net
+namespace Elasticsearch252.Net
 {
 	internal class Auditable : IDisposable
 	{

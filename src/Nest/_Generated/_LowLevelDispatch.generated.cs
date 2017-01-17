@@ -4,13 +4,13 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Elasticsearch.Net;
-using static Elasticsearch.Net.HttpMethod;
+using Elasticsearch252.Net;
+using static Elasticsearch252.Net.HttpMethod;
 
 //Generated File Please Do Not Edit Manually
 
 
-namespace Nest
+namespace Nest252
 {
 	///<summary>This dispatches highlevel requests into the proper lowlevel client overload method</summary>
 	internal partial class LowLevelDispatch

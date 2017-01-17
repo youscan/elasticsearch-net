@@ -1,4 +1,4 @@
-namespace Nest
+namespace Nest252
 {
 	public abstract class ExponentialDecayFunctionBase<TOrigin, TScale> : DecayFunctionBase<TOrigin, TScale>
 	{

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using FluentAssertions;
-using Nest;
+using Nest252;
 using Tests.Framework;
 using Tests.Framework.MockData;
 using Tests.QueryDsl.BoolDsl.Operators;
-using static Nest.Infer;
+using static Nest252.Infer;
 
 namespace Tests.QueryDsl.BoolDsl
 {

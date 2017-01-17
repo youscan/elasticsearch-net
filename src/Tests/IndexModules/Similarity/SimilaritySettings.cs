@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Nest;
+using Nest252;
 using Tests.Framework;
 
 namespace Tests.IndexModules.Similarity

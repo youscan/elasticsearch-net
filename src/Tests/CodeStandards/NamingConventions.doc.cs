@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using Elasticsearch.Net;
+using Elasticsearch252.Net;
 using FluentAssertions;
-using Nest;
-using Nest.Aggregations.Visitor;
+using Nest252;
+using Nest252.Aggregations.Visitor;
 using Tests.Framework;
 
 namespace Tests.CodeStandards

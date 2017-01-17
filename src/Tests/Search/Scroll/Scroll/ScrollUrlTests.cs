@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Nest;
+using Nest252;
 using Tests.Framework;
 using Tests.Framework.MockData;
 using static Tests.Framework.UrlTester;

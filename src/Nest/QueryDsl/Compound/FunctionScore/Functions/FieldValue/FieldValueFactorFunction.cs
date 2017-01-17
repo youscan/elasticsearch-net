@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Nest
+namespace Nest252
 {
 	[JsonObject(MemberSerialization = MemberSerialization.OptIn)]
 	public interface IFieldValueFactorFunction : IScoreFunction

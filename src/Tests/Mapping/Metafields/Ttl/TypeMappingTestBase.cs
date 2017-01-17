@@ -1,12 +1,12 @@
 ﻿using System;
-using Nest;
+using Nest252;
 using Tests.Framework;
 using static Tests.Framework.RoundTripper;
 using Tests.Framework.MockData;
 using Tests.Framework.Integration;
 using System.Collections.Generic;
-using Elasticsearch.Net;
-using static Nest.Infer;
+using Elasticsearch252.Net;
+using static Nest252.Infer;
 
 #pragma warning disable 618
 

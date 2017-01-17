@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Linq;
 
-namespace Nest
+namespace Nest252
 {
 	[JsonObject]
 	[JsonConverter(typeof(SuggestOptionJsonConverter))]

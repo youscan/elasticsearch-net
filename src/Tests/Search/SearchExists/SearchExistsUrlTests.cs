@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Nest;
+using Nest252;
 using Tests.Framework;
 using Tests.Framework.MockData;
 using static Tests.Framework.UrlTester;
@@ -51,9 +51,9 @@ namespace Tests.Search.SearchExists
 			await GET("/_search/exists")
 				.Fluent(c => c.SearchExists<Project>(s => s.AllTypes().AllIndices()))
 				.Request(c => c.SearchExists(new SearchExistsRequest()))
-				.Request(c => c.SearchExists(new SearchExistsRequest<Project>(Nest.Indices.All, Types.All)))
+				.Request(c => c.SearchExists(new SearchExistsRequest<Project>(Nest252.Indices.All, Types.All)))
 				.FluentAsync(c => c.SearchExistsAsync<Project>(s => s.AllIndices().Type(Types.All)))
-				.RequestAsync(c => c.SearchExistsAsync(new SearchExistsRequest<Project>(Nest.Indices.All, Types.All)))
+				.RequestAsync(c => c.SearchExistsAsync(new SearchExistsRequest<Project>(Nest252.Indices.All, Types.All)))
 				.RequestAsync(c => c.SearchExistsAsync(new SearchExistsRequest()))
 				;
 
@@ -61,9 +61,9 @@ namespace Tests.Search.SearchExists
 			await POST("/_search/exists")
 				.Fluent(c => c.SearchExists<Project>(s => s.AllTypes().AllIndices().Query(q => q.MatchAll())))
 				.Request(c => c.SearchExists(new SearchExistsRequest { Query = new MatchAllQuery() }))
-				.Request(c => c.SearchExists(new SearchExistsRequest<Project>(Nest.Indices.All, Types.All) { Query = new MatchAllQuery() }))
+				.Request(c => c.SearchExists(new SearchExistsRequest<Project>(Nest252.Indices.All, Types.All) { Query = new MatchAllQuery() }))
 				.FluentAsync(c => c.SearchExistsAsync<Project>(s => s.AllIndices().Type(Types.All).Query(q => q.MatchAll())))
-				.RequestAsync(c => c.SearchExistsAsync(new SearchExistsRequest<Project>(Nest.Indices.All, Types.All) { Query = new MatchAllQuery() }))
+				.RequestAsync(c => c.SearchExistsAsync(new SearchExistsRequest<Project>(Nest252.Indices.All, Types.All) { Query = new MatchAllQuery() }))
 				.RequestAsync(c => c.SearchExistsAsync(new SearchExistsRequest { Query = new MatchAllQuery() }))
                 ;
 		}

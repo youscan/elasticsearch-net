@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Nest;
+using Nest252;
 using Tests.Framework;
 
 namespace Tests.Indices.Monitoring.IndicesRecovery
@@ -9,9 +9,9 @@ namespace Tests.Indices.Monitoring.IndicesRecovery
 		[U] public async Task Urls()
 		{
 			await UrlTester.GET($"/_recovery")
-				.Fluent(c => c.RecoveryStatus(Nest.Indices.All))
+				.Fluent(c => c.RecoveryStatus(Nest252.Indices.All))
 				.Request(c => c.RecoveryStatus(new RecoveryStatusRequest()))
-				.FluentAsync(c => c.RecoveryStatusAsync(Nest.Indices.All))
+				.FluentAsync(c => c.RecoveryStatusAsync(Nest252.Indices.All))
 				.RequestAsync(c => c.RecoveryStatusAsync(new RecoveryStatusRequest()))
 				;
 

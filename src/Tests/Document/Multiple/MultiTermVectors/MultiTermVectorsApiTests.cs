@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq;
-using Elasticsearch.Net;
+using Elasticsearch252.Net;
 using FluentAssertions;
-using Nest;
+using Nest252;
 using Tests.Framework;
 using Tests.Framework.Integration;
 using Tests.Framework.MockData;
 using Xunit;
-using static Nest.Infer;
+using static Nest252.Infer;
 
 namespace Tests.Document.Multiple.MultiTermVectors
 {

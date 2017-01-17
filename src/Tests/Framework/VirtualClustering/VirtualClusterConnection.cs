@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Elasticsearch.Net;
+using Elasticsearch252.Net;
 using FluentAssertions;
 using Tests.Framework.MockResponses;
 

@@ -1,4 +1,4 @@
-﻿namespace Elasticsearch.Net
+﻿namespace Elasticsearch252.Net
 {
 	public class VoidResponse { }
 }

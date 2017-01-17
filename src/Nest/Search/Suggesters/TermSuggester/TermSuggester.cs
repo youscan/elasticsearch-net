@@ -1,8 +1,8 @@
-﻿using Elasticsearch.Net;
+﻿using Elasticsearch252.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Nest
+namespace Nest252
 {
 	[JsonObject(MemberSerialization.OptIn)]
 	[JsonConverter(typeof(ReadAsTypeJsonConverter<TermSuggester>))]

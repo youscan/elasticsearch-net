@@ -5,10 +5,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Elasticsearch.Net;
+using Elasticsearch252.Net;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest252
 {
 	/// <summary>
 	/// Provides the connection settings for NEST's <see cref="ElasticClient"/>

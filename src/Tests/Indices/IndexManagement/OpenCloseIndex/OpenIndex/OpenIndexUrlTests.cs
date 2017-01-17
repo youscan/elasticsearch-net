@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Nest;
+using Nest252;
 using Tests.Framework;
 using Tests.Framework.MockData;
-using static Nest.Indices;
+using static Nest252.Indices;
 using static Tests.Framework.UrlTester;
 
 namespace Tests.Indices.IndexManagement.OpenOpenIndex.OpenIndex

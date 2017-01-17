@@ -1,10 +1,10 @@
-﻿using Elasticsearch.Net;
+﻿using Elasticsearch252.Net;
 using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 
-namespace Nest
+namespace Nest252
 {
 	public class SnapshotObservable : IDisposable, IObservable<ISnapshotStatusResponse>
 	{

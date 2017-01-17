@@ -1,4 +1,4 @@
-namespace Nest
+namespace Nest252
 {
 	public abstract class LinearDecayFunctionBase<TOrigin, TScale> : DecayFunctionBase<TOrigin, TScale>
 	{

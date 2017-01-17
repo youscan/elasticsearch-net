@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest252
 {
 	[JsonConverter(typeof(ReadAsTypeJsonConverter<TimestampField>))]
 	[Obsolete("use a normal date field and set its value explicitly")]

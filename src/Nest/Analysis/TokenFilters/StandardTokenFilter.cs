@@ -1,4 +1,4 @@
-﻿namespace Nest
+﻿namespace Nest252
 {
 	/// <summary>
 	/// A token filter of type standard that normalizes tokens extracted with the Standard Tokenizer.

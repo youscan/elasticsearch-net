@@ -1,7 +1,7 @@
 ﻿using System;
 #pragma warning disable 612, 618
 
-namespace Nest
+namespace Nest252
 {
 	[Obsolete("Scheduled to be removed in 5.0.0.  Use ICatNodeAttributesRequest instead.")]
 	public partial interface ICatNodeattrsRequest { }

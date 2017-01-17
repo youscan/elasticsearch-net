@@ -1,6 +1,6 @@
-﻿using Elasticsearch.Net;
+﻿using Elasticsearch252.Net;
 using FluentAssertions;
-using Nest;
+using Nest252;
 using Tests.Framework;
 using Tests.Framework.MockData;
 
@@ -19,11 +19,11 @@ namespace Tests.ClientConcepts.HighLevel.Inference
 		[U]
 		public void ImplicitConversionFromString()
 		{
-			Nest.Indices singleIndexFromString = "name";
-			Nest.Indices multipleIndicesFromString = "name1, name2";
-			Nest.Indices multipleIndicesFromStringArray = new [] { "name1", "name2" };
-			Nest.Indices allFromString = "_all";
-			Nest.Indices allWithOthersFromString = "_all, name2";
+			Nest252.Indices singleIndexFromString = "name";
+			Nest252.Indices multipleIndicesFromString = "name1, name2";
+			Nest252.Indices multipleIndicesFromStringArray = new [] { "name1", "name2" };
+			Nest252.Indices allFromString = "_all";
+			Nest252.Indices allWithOthersFromString = "_all, name2";
 
 			singleIndexFromString.Match(
 				all => all.Should().BeNull(),
@@ -62,8 +62,8 @@ namespace Tests.ClientConcepts.HighLevel.Inference
 		{
 			var client = TestClient.Default;
 
-			var singleString = Nest.Indices.Index("name1"); // <1> specifying a single index using a string
-			var singleTyped = Nest.Indices.Index<Project>(); //<2> specifying a single index using a type
+			var singleString = Nest252.Indices.Index("name1"); // <1> specifying a single index using a string
+			var singleTyped = Nest252.Indices.Index<Project>(); //<2> specifying a single index using a type
 
 			ISearchRequest singleStringRequest = new SearchDescriptor<Project>().Index(singleString);
 			ISearchRequest singleTypedRequest = new SearchDescriptor<Project>().Index(singleTyped);
@@ -71,7 +71,7 @@ namespace Tests.ClientConcepts.HighLevel.Inference
 			((IUrlParameter)singleStringRequest.Index).GetString(client.ConnectionSettings).Should().Be("name1");
 			((IUrlParameter)singleTypedRequest.Index).GetString(client.ConnectionSettings).Should().Be("project");
 
-			var invalidSingleString = Nest.Indices.Index("name1, name2"); //<3> an **invalid** single index name
+			var invalidSingleString = Nest252.Indices.Index("name1, name2"); //<3> an **invalid** single index name
 		}
 
 		/**==== Specifying multiple indices
@@ -82,8 +82,8 @@ namespace Tests.ClientConcepts.HighLevel.Inference
 		{
 			var client = TestClient.Default;
 
-			var manyStrings = Nest.Indices.Index("name1", "name2"); //<1> specifying multiple indices using strings
-			var manyTypes = Nest.Indices.Index<Project>().And<Developer>(); //<2> specifying multiple indices using types
+			var manyStrings = Nest252.Indices.Index("name1", "name2"); //<1> specifying multiple indices using strings
+			var manyTypes = Nest252.Indices.Index<Project>().And<Developer>(); //<2> specifying multiple indices using types
 
 			ISearchRequest manyStringRequest = new SearchDescriptor<Project>().Index(manyStrings);
 			ISearchRequest manyTypedRequest = new SearchDescriptor<Project>().Index(manyTypes);
@@ -111,8 +111,8 @@ namespace Tests.ClientConcepts.HighLevel.Inference
 		{
 			var client = TestClient.Default;
 
-			var indicesAll = Nest.Indices.All;
-			var allIndices = Nest.Indices.AllIndices;
+			var indicesAll = Nest252.Indices.All;
+			var allIndices = Nest252.Indices.AllIndices;
 
 			ISearchRequest indicesAllRequest = new SearchDescriptor<Project>().Index(indicesAll);
 			ISearchRequest allIndicesRequest = new SearchDescriptor<Project>().Index(allIndices);

@@ -1,5 +1,5 @@
 ﻿using System;
-using Nest;
+using Nest252;
 
 namespace Tests.Mapping.Types.Specialized.Murmur3Hash
 {

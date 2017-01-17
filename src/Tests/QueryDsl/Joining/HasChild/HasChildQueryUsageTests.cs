@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Nest;
+using Nest252;
 using Tests.Framework.Integration;
 using Tests.Framework.MockData;
 

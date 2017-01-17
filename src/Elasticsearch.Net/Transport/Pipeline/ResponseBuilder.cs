@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Elasticsearch.Net
+namespace Elasticsearch252.Net
 {
 	public class ResponseBuilder<TReturn>
 		where TReturn : class

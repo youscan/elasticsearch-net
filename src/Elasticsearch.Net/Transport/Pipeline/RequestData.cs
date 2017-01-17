@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading;
 using Purify;
 
-namespace Elasticsearch.Net
+namespace Elasticsearch252.Net
 {
 	public class RequestData
 	{

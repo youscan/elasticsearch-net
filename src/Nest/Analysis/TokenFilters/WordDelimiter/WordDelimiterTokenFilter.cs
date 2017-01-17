@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest252
 {
 	/// <summary>
 	/// Named word_delimiter, it Splits words into subwords and performs optional transformations on subword groups.

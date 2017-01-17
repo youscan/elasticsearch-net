@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nest
+namespace Nest252
 {
 	public class ObjectAttribute : ElasticsearchPropertyAttributeBase, IObjectProperty
 	{

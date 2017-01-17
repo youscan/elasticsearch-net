@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
-using Elasticsearch.Net;
+using Elasticsearch252.Net;
 using FluentAssertions;
 using Tests.Framework;
 

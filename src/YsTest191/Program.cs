@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Nest;
+using Nest252;
+using Elasticsearch252.Net;
 
 namespace YsTest191
 {

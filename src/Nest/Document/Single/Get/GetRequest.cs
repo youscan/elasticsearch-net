@@ -1,4 +1,4 @@
-﻿namespace Nest
+﻿namespace Nest252
 {
 	public partial interface IGetRequest { }
 	public interface IGetRequest<T> : IGetRequest where T : class { }

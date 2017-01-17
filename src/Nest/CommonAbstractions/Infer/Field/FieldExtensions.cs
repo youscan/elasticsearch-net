@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace Nest
+namespace Nest252
 {
 	internal static class FieldExtensions
 	{

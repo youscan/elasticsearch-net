@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using Nest;
+using Nest252;
 using Tests.Framework.Integration;
 using Tests.Framework.MockData;
-using static Nest.Infer;
+using static Nest252.Infer;
 
 namespace Tests.Aggregations.Bucket.GeoDistance
 {
@@ -58,11 +58,11 @@ namespace Tests.Aggregations.Bucket.GeoDistance
 				{
 					Field = Field((Project p) => p.Location),
 					Origin = "52.376, 4.894",
-					Ranges = new List<Nest.Range>
+					Ranges = new List<Nest252.Range>
 					{
-						new Nest.Range { To = 100 },
-						new Nest.Range { From = 100, To = 300 },
-						new Nest.Range { From = 300 }
+						new Nest252.Range { To = 100 },
+						new Nest252.Range { From = 100, To = 300 },
+						new Nest252.Range { From = 300 }
 					}
 				}
 			};

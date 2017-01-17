@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Nest
+namespace Nest252
 {
 	public interface IEmailAttachments : IIsADictionary<string, IEmailAttachment> {}
 

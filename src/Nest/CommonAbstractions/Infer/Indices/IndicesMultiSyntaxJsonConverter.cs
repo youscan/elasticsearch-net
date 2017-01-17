@@ -1,8 +1,8 @@
 ﻿using System;
-using Elasticsearch.Net;
+using Elasticsearch252.Net;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest252
 {
 	internal class IndicesMultiSyntaxJsonConverter : JsonConverter
 	{

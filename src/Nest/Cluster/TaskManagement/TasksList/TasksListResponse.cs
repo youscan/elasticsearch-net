@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Nest
+namespace Nest252
 {
 	[JsonObject(MemberSerialization.OptIn)]
 	public interface ITasksListResponse: IResponse

@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Reflection;
 using FluentAssertions;
-using Nest;
-using Nest.Aggregations.Visitor;
+using Nest252;
+using Nest252.Aggregations.Visitor;
 using Tests.Framework;
 
 namespace Tests.Aggregations

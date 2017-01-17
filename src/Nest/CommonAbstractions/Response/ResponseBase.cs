@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Text;
-using Elasticsearch.Net;
+using Elasticsearch252.Net;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest252
 {
 	public interface IResponse : IBodyWithApiCallDetails
 	{

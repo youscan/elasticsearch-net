@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Nest
+namespace Nest252
 {
 	[JsonObject]
 	[JsonConverter(typeof(ReadAsTypeJsonConverter<HttpInputRequest>))]

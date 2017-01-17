@@ -1,9 +1,9 @@
 ﻿using System;
-using Elasticsearch.Net;
+using Elasticsearch252.Net;
 using Newtonsoft.Json;
 using System.Linq.Expressions;
 
-namespace Nest
+namespace Nest252
 {
 	public partial interface ITermVectorsRequest<TDocument>
 		where TDocument : class
@@ -32,7 +32,7 @@ namespace Nest
 	public partial class TermVectorsRequest<TDocument>
 		where TDocument : class
 	{
-		Elasticsearch.Net.HttpMethod IRequest.HttpMethod => (this.Document != null || this.Filter != null) ? Elasticsearch.Net.HttpMethod.POST : Elasticsearch.Net.HttpMethod.GET;
+		Elasticsearch252.Net.HttpMethod IRequest.HttpMethod => (this.Document != null || this.Filter != null) ? Elasticsearch252.Net.HttpMethod.POST : Elasticsearch252.Net.HttpMethod.GET;
 
 		/// <summary>
 		/// An optional document to get term vectors for instead of using an already indexed document

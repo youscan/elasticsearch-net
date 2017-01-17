@@ -1,5 +1,5 @@
 ﻿using System;
-using Elasticsearch.Net;
+using Elasticsearch252.Net;
 using FluentAssertions;
 using Tests.Framework;
 

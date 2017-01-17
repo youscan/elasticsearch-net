@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest252
 {
 	[JsonConverter(typeof(ReadAsTypeJsonConverter<SourceField>))]
 	public interface ISourceField : IFieldMapping

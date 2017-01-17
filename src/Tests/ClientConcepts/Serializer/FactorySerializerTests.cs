@@ -4,10 +4,10 @@ using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using Tests.Framework;
-using Elasticsearch.Net;
+using Elasticsearch252.Net;
 using FluentAssertions;
 using Xunit;
-using Nest;
+using Nest252;
 using Newtonsoft.Json;
 using System.Text;
 

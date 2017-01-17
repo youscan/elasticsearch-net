@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace Nest
+namespace Nest252
 {
 	public abstract class IsADictionaryBase<TKey, TValue> : IIsADictionary<TKey, TValue>
 	{

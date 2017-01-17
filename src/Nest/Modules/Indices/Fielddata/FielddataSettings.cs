@@ -1,4 +1,4 @@
-namespace Nest
+namespace Nest252
 {
 	///<inheritdoc/>
 	public class FielddataSettings 

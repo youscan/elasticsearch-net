@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Elasticsearch.Net;
+using Elasticsearch252.Net;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest252
 {
 	public partial interface IPercolateCountRequest<TDocument> : IPercolateOperation
 		where TDocument : class

@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Elasticsearch.Net;
+using Elasticsearch252.Net;
 
-namespace Nest
+namespace Nest252
 {
 	[ContractJsonConverter(typeof(FieldsJsonConverter))]
 	public class Fields : IUrlParameter, IEnumerable<Field>

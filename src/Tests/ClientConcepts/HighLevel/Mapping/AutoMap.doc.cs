@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Nest;
+using Nest252;
 using Newtonsoft.Json;
 using Tests.Framework;
 using static Tests.Framework.RoundTripper;

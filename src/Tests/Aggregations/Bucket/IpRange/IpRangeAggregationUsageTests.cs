@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using FluentAssertions;
-using Nest;
+using Nest252;
 using Tests.Framework;
 using Tests.Framework.Integration;
 using Tests.Framework.MockData;
-using static Nest.Infer;
+using static Nest252.Infer;
 
 namespace Tests.Aggregations.Bucket.IpRange
 {
@@ -49,10 +49,10 @@ namespace Tests.Aggregations.Bucket.IpRange
 				Aggregations = new IpRangeAggregation("ip_ranges")
 				{
 					Field = Field((Project p) => p.LeadDeveloper.IPAddress),
-					Ranges = new List<Nest.IpRange>
+					Ranges = new List<Nest252.IpRange>
 					{
-						new Nest.IpRange { To = "10.0.0.5" },
-						new Nest.IpRange { From = "10.0.0.5" }
+						new Nest252.IpRange { To = "10.0.0.5" },
+						new Nest252.IpRange { From = "10.0.0.5" }
 					}
 				}
 			};

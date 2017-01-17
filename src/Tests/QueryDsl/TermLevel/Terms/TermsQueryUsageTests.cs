@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Nest;
+using Nest252;
 using Tests.Framework.Integration;
 using Tests.Framework.MockData;
 

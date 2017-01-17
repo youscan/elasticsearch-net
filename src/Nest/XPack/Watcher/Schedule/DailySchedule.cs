@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Nest
+namespace Nest252
 {
 	[JsonObject]
 	[JsonConverter(typeof(ReadAsTypeJsonConverter<TimeOfDay>))]

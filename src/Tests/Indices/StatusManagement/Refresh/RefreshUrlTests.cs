@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Nest;
+using Nest252;
 using Tests.Framework;
 using static Tests.Framework.UrlTester;
-using static Nest.Indices;
+using static Nest252.Indices;
 
 namespace Tests.Indices.StatusManagement.Refresh
 {

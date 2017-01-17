@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest252
 {
 	public interface IMultiGetHit<out T> where T : class
 	{

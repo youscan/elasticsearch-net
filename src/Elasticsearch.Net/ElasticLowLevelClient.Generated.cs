@@ -4,12 +4,12 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Elasticsearch.Net;
-using static Elasticsearch.Net.HttpMethod;
+using Elasticsearch252.Net;
+using static Elasticsearch252.Net.HttpMethod;
 
 ///Generated File Please Do Not Edit Manually
 	
-namespace Elasticsearch.Net
+namespace Elasticsearch252.Net
 {
 	///<summary>
 	///Raw operations with elasticsearch

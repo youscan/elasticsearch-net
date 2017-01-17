@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Elasticsearch.Net;
+using Elasticsearch252.Net;
 using System.Threading;
 
-namespace Nest
+namespace Nest252
 {
 	public partial interface IElasticClient
 	{

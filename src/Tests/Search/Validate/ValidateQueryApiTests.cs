@@ -2,8 +2,8 @@
 using Tests.Framework.Integration;
 using Tests.Framework.MockData;
 using Xunit;
-using Nest;
-using Elasticsearch.Net;
+using Nest252;
+using Elasticsearch252.Net;
 using FluentAssertions;
 
 namespace Tests.Search.Validate

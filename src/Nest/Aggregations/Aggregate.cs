@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Nest
+namespace Nest252
 {
 	/// <summary>
 	/// Represents the result of an aggregation on the response

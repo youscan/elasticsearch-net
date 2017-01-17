@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest252
 {
 	[JsonObject(MemberSerialization.OptIn)]
 	[JsonConverter(typeof(ReserializeJsonConverter<InputContainer, IInputContainer>))]

@@ -1,9 +1,9 @@
 using System;
 using System.IO;
 using System.Text;
-using Elasticsearch.Net;
+using Elasticsearch252.Net;
 using FluentAssertions;
-using Nest;
+using Nest252;
 using Tests.Framework;
 
 namespace Tests.Reproduce

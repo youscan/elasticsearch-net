@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace Elasticsearch.Net
+namespace Elasticsearch252.Net
 {
 	public interface IApiCallDetails
 	{

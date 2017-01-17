@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nest
+namespace Nest252
 {
 	public abstract class ActionsDescriptorBase<TDescriptor, TInterface>
 		: DescriptorBase<TDescriptor, TInterface>, IAction

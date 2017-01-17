@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 
-namespace Elasticsearch.Net
+namespace Elasticsearch252.Net
 {
 	internal static class NameValueCollectionExtensions
 	{

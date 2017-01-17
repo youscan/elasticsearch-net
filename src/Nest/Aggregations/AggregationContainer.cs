@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Nest.Aggregations.Visitor;
+using Nest252.Aggregations.Visitor;
 using Newtonsoft.Json;
 
-namespace Nest
+namespace Nest252
 {
 	[JsonConverter(typeof(VerbatimDictionaryKeysJsonConverter))]
 	public class AggregationDictionary : IsADictionaryBase<string, IAggregationContainer>

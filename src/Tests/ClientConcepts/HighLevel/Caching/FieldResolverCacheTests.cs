@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using Nest;
+using Nest252;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,7 +11,7 @@ using FluentAssertions.Common;
 using Tests.Framework;
 using Tests.Framework.MockData;
 using Xunit.Abstractions;
-using static Nest.Infer;
+using static Nest252.Infer;
 using Xunit.Sdk;
 
 namespace Tests.ClientConcepts.HighLevel.Caching

@@ -1,5 +1,5 @@
 ﻿using System;
-using Nest;
+using Nest252;
 using Tests.Framework;
 
 namespace Tests.Analysis.CharFilters
@@ -48,9 +48,9 @@ namespace Tests.Analysis.CharFilters
 		public static IndexSettings InitializerExample =>
 			new IndexSettings
 			{
-				Analysis = new Nest.Analysis
+				Analysis = new Nest252.Analysis
 				{
-					CharFilters = new Nest.CharFilters
+					CharFilters = new Nest252.CharFilters
 					{
 							{ "stripMe", new HtmlStripCharFilter { } },
 							{ "patterned", new PatternReplaceCharFilter { Pattern = "x", Replacement = "y" } },

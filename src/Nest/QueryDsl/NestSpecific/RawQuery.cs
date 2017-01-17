@@ -1,7 +1,7 @@
 ﻿
 using System;
 
-namespace Nest
+namespace Nest252
 {
 	public interface IRawQuery : IQuery
 	{

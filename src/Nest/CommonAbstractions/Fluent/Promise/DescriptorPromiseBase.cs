@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace Nest
+namespace Nest252
 {
 	public interface IPromise<out TValue> where TValue : class
 	{

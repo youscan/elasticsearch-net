@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace Nest
+namespace Nest252
 {
 	[JsonObject]
 	[JsonConverter(typeof(ReadAsTypeJsonConverter<SearchTransform>))]

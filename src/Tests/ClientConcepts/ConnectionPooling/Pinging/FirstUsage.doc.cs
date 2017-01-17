@@ -1,11 +1,11 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-using Elasticsearch.Net;
+using Elasticsearch252.Net;
 using FluentAssertions;
 using Tests.Framework;
 using static Tests.Framework.TimesHelper;
-using static Elasticsearch.Net.AuditEvent;
+using static Elasticsearch252.Net.AuditEvent;
 
 namespace Tests.ClientConcepts.ConnectionPooling.Pinging
 {

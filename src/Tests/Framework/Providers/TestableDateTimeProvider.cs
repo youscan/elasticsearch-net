@@ -1,5 +1,5 @@
 ﻿using System;
-using Elasticsearch.Net;
+using Elasticsearch252.Net;
 
 namespace Tests.Framework
 {

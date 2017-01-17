@@ -1,7 +1,7 @@
-﻿using Elasticsearch.Net;
-using Nest;
+﻿using Elasticsearch252.Net;
+using Nest252;
 using Tests.Framework;
-using static Nest.Indices;
+using static Nest252.Indices;
 using static Tests.Framework.RoundTripper;
 
 namespace Tests.ClientConcepts.HighLevel.Inference

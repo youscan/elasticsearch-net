@@ -8,8 +8,8 @@ using Tests.Framework.Integration;
 using Tests.Framework.MockData;
 using Xunit;
 
-using Elasticsearch.Net;
-using Nest;
+using Elasticsearch252.Net;
+using Nest252;
 using FluentAssertions;
 
 namespace Tests.Reproduce

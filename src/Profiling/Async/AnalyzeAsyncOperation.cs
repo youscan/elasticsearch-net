@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Bogus.DataSets;
-using Nest;
+using Nest252;
 
 namespace Profiling.Async
 {

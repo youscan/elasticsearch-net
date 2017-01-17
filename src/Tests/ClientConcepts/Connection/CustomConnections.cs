@@ -1,6 +1,6 @@
-﻿using Elasticsearch.Net;
+﻿using Elasticsearch252.Net;
 using FluentAssertions;
-using Nest;
+using Nest252;
 using System;
 using System.Collections.Generic;
 using System.Linq;

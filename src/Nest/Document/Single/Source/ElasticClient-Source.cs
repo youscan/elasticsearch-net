@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Nest
+namespace Nest252
 {
 	public partial interface IElasticClient
 	{

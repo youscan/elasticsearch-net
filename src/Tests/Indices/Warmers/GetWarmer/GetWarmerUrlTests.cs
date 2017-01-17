@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Nest;
+using Nest252;
 using Tests.Framework;
 using static Tests.Framework.UrlTester;
 
@@ -20,10 +20,10 @@ namespace Tests.Indices.Warmers.GetWarmer
 
 			var index = "indexx";
 			await GET($"/{index}/_warmer")
-				.Fluent(c => c.GetWarmer(w=>w.Index(Nest.Indices.Index(index))))
-				.Request(c => c.GetWarmer(new GetWarmerRequest(Nest.Indices.Index(index))))
+				.Fluent(c => c.GetWarmer(w=>w.Index(Nest252.Indices.Index(index))))
+				.Request(c => c.GetWarmer(new GetWarmerRequest(Nest252.Indices.Index(index))))
 				.FluentAsync(c => c.GetWarmerAsync(w=>w.Index(index)))
-				.RequestAsync(c => c.GetWarmerAsync(new GetWarmerRequest(Nest.Indices.Index(index))))
+				.RequestAsync(c => c.GetWarmerAsync(new GetWarmerRequest(Nest252.Indices.Index(index))))
 				;
 
 			await GET($"/{index}/_warmer/{name}")

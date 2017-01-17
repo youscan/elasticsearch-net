@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Elasticsearch.Net;
+using Elasticsearch252.Net;
 using Newtonsoft.Json;
 using System;
 
-namespace Nest
+namespace Nest252
 {
 	public interface IPercolateCountResponse : IResponse
 	{

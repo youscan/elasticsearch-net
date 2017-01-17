@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Elasticsearch.Net;
-using Nest;
+using Elasticsearch252.Net;
+using Nest252;
 using Tests.Framework;
 using Tests.Framework.Integration;
 using Xunit;
-using static Nest.Infer;
+using static Nest252.Infer;
 
 namespace Tests.Indices.IndexSettings.UpdateIndicesSettings
 {
@@ -52,7 +52,7 @@ namespace Tests.Indices.IndexSettings.UpdateIndicesSettings
 
 		protected override UpdateIndexSettingsRequest Initializer => new UpdateIndexSettingsRequest(CallIsolatedValue)
 		{
-			IndexSettings = new Nest.IndexSettings
+			IndexSettings = new Nest252.IndexSettings
 			{
 				BlocksWrite = false,
 				NumberOfReplicas = 2

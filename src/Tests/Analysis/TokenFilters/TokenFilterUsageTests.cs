@@ -1,5 +1,5 @@
 ﻿using System;
-using Nest;
+using Nest252;
 using Tests.Framework;
 
 namespace Tests.Analysis.TokenFilters
@@ -348,9 +348,9 @@ namespace Tests.Analysis.TokenFilters
 		public static IndexSettings InitializerExample =>
 			new IndexSettings
 			{
-				Analysis = new Nest.Analysis
+				Analysis = new Nest252.Analysis
 				{
-					TokenFilters = new Nest.TokenFilters
+					TokenFilters = new Nest252.TokenFilters
 					{
 							{ "myAscii", new AsciiFoldingTokenFilter { PreserveOriginal = true } },
 							{ "myCommonGrams", new CommonGramsTokenFilter { QueryMode = true, IgnoreCase = true, CommonWords = new [] {"x", "y", "z"} } },

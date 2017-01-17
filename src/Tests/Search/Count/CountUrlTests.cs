@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Nest;
+using Nest252;
 using Tests.Framework;
 using Tests.Framework.MockData;
 using static Tests.Framework.UrlTester;
@@ -54,9 +54,9 @@ namespace Tests.Search.Count
 			await POST("/_count")
 				.Fluent(c=>c.Count<Project>(s=>s.AllTypes().AllIndices()))
 				.Request(c=>c.Count<Project>(new CountRequest()))
-				.Request(c=>c.Count<Project>(new CountRequest<Project>(Nest.Indices.All, Types.All)))
+				.Request(c=>c.Count<Project>(new CountRequest<Project>(Nest252.Indices.All, Types.All)))
 				.FluentAsync(c=>c.CountAsync<Project>(s=>s.AllIndices().Type(Types.All)))
-				.RequestAsync(c=>c.CountAsync<Project>(new CountRequest<Project>(Nest.Indices.All, Types.All)))
+				.RequestAsync(c=>c.CountAsync<Project>(new CountRequest<Project>(Nest252.Indices.All, Types.All)))
 				.RequestAsync(c=>c.CountAsync<Project>(new CountRequest()))
 				;
 		}
