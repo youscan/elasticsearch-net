@@ -65,7 +65,7 @@ namespace Nest252
 					}
 				}
 
-				if (!o.FullName.StartsWith("Nest.", StringComparison.OrdinalIgnoreCase)) return contract;
+				if (!o.FullName.StartsWith(nameof(Nest252) + ".", StringComparison.OrdinalIgnoreCase)) return contract;
 				if (ApplyExactContractJsonAttribute(o, contract)) return contract;
 				if (ApplyContractJsonAttribute(o, contract)) return contract;
 

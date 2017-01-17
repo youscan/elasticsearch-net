@@ -20,7 +20,7 @@ namespace Nest252
 			if (typeProperty == null) return null;
 
 			var typePropertyValue = typeProperty.Value.ToString();
-			var itemType = Type.GetType("Nest." + typePropertyValue + "Similarity", false, true);
+			var itemType = Type.GetType(nameof(Nest252) + "." + typePropertyValue + "Similarity", false, true);
 			if (itemType != null) return o.ToObject(itemType, ElasticContractResolver.Empty);
 
 			var dict = o.ToObject<Dictionary<string, object>>();
