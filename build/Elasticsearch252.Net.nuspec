@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+	<metadata>
+		<id>Elasticsearch252.Net</id>
+		<version>2.5.2</version>
+		<title>Elasticsearch.Net - Elasticsearch .NET low level client</title>
+		<authors>Elastic and contributors</authors>
+		<owners>Elastic</owners>
+		<licenseUrl>https://github.com/elastic/elasticsearch-net/blob/master/license.txt</licenseUrl>
+		<projectUrl>https://github.com/elastic/elasticsearch-net</projectUrl>
+		<iconUrl>https://raw.githubusercontent.com/elastic/elasticsearch-net/master/build/nuget-icon.png</iconUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>Elasticsearch.Net</description>
+		<summary>Exposes all the elasticsearch API endpoints but leaves you in control of building the request and response bodies. Comes with built in cluster failover/connection pooling support.</summary>
+		<releaseNotes>See https://github.com/elastic/elasticsearch-net/releases/tag/2.5.2</releaseNotes>
+		<copyright>2014-2016 Elasticsearch BV</copyright>
+		<tags>elasticsearch,elastic,search,lucene,nest</tags>
+		<dependencies>
+			<group targetFramework=".NETFramework4.5" />
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="output\v4.5\Elasticsearch.Net\Elasticsearch252.Net.dll" target="lib\net45"/>
+		<file src="output\v4.5\Elasticsearch.Net\Elasticsearch252.Net.pdb" target="lib\net45"/>
+		<file src="output\v4.5\Elasticsearch.Net\Elasticsearch252.Net.XML" target="lib\net45"/>
+	</files>
+</package>

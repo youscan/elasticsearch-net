@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+	<metadata>
+		<id>NEST252</id>
+		<version>2.5.2</version>
+		<title>NEST - Elasticsearch .NET high level client</title>
+		<authors>Elastic and contributors</authors>
+		<owners>Elastic</owners>
+		<licenseUrl>https://github.com/elastic/elasticsearch-net/blob/master/license.txt</licenseUrl>
+		<projectUrl>https://github.com/elastic/elasticsearch-net</projectUrl>
+		<iconUrl>https://raw.githubusercontent.com/elastic/elasticsearch-net/master/build/nuget-icon.png</iconUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>Strongly typed interface to Elasticsearch. Fluent and classic object initializer mappings of requests and responses. Uses and exposes Elasticsearch.Net</description>
+        <summary>Strongly typed interface to Elasticsearch. Fluent and classic object initializer mappings of requests and responses. Uses and exposes Elasticsearch.Net</summary>
+		<releaseNotes>See https://github.com/elastic/elasticsearch-net/releases/tag/2.5.2</releaseNotes>
+		<copyright>2014-2016 Elasticsearch BV</copyright>
+		<tags>elasticsearch,elastic,search,lucene,nest</tags>
+		<dependencies>
+			<group targetFramework=".NETFramework4.5">
+				<dependency id="Elasticsearch252.Net" version="[2.5.2]" />
+				<dependency id="Newtonsoft.Json" version="[9,10)" />
+			</group>
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="output\v4.5\Nest\Nest252.dll" target="lib\net45"/>
+		<file src="output\v4.5\Nest\Nest252.pdb" target="lib\net45"/>
+		<file src="output\v4.5\Nest\Nest252.XML" target="lib\net45"/>
+	</files>
+</package>

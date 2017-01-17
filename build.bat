@@ -21,7 +21,7 @@ REM		create a canary nuget package based on the current version if [feed] and [a
 REM		also pushes to upstream (myget)
 
 SET TARGET="build"
-SET VERSION=
+SET VERSION=2.5.2
 SET ESVERSIONS=
 SET SKIPTESTS=0
 SET APIKEY=
