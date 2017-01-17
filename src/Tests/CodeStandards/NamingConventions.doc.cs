@@ -149,7 +149,7 @@ namespace Tests.CodeStandards
 
 			var exceptions = new List<Type>
 			{
-				nestAssembly.GetType("Elasticsearch.Net.DotNetCoreTypeExtensions"),
+				nestAssembly.GetType("Elasticsearch252.Net.DotNetCoreTypeExtensions"),
 				typeof(AggregationWalker),
 				typeof(AggregationVisitor),
 				typeof(IAggregationVisitor),
@@ -163,7 +163,7 @@ namespace Tests.CodeStandards
 			var types = nestAssembly.GetTypes();
 			var typesNotInNestNamespace = types
 				.Where(t => !exceptions.Contains(t))
-				.Where(t => t.Namespace != "Nest")
+				.Where(t => t.Namespace != "Nest252")
 				.Where(t => !t.Name.StartsWith("<"))
 				.Where(t => IsValidTypeNameOrIdentifier(t.Name, true))
 				.ToList();
@@ -195,7 +195,7 @@ namespace Tests.CodeStandards
 			var types = elasticsearchNetAssembly.GetTypes();
 			var typesNotIElasticsearchNetNamespace = types
 				.Where(t => !exceptions.Contains(t))
-				.Where(t => t.Namespace != "Elasticsearch.Net")
+				.Where(t => t.Namespace != "Elasticsearch252.Net")
 				.Where(t => !t.Name.StartsWith("<"))
 				.Where(t => IsValidTypeNameOrIdentifier(t.Name, true))
 				.ToList();
