@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>release-notes</id>
+    <version>0.6.0</version>
+    <title>release-notes: a dotnet tool to generate release notes from GitHub</title>
+    <authors>release-notes</authors>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <icon>nuget-icon.png</icon>
+    <projectUrl>https://github.com/nullean/release-notes</projectUrl>
+    <description>Generate release notes from closed github issues and PR's through the power of version labels</description>
+    <releaseNotes>https://github.com/nullean/release-notes/releases</releaseNotes>
+    <packageTypes>
+      <packageType name="DotnetTool" />
+    </packageTypes>
+    <repository url="https://github.com/nullean/release-notes" />
+  </metadata>
+</package>
